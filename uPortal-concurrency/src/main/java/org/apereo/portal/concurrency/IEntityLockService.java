@@ -59,7 +59,7 @@ public interface IEntityLockService {
      * @param newType int
      * @exception LockingException
      */
-    public void convert(IEntityLock lock, int newType) throws LockingException;
+    public void convert(IEntityLock lock, int newType);
     /**
      * Attempts to change the lock's <code>lockType</code> to <code>newType</code>.
      *
@@ -68,14 +68,14 @@ public interface IEntityLockService {
      * @param newDuration int
      * @exception org.apereo.portal.concurrency.LockingException
      */
-    public void convert(IEntityLock lock, int newType, int newDuration) throws LockingException;
+    public void convert(IEntityLock lock, int newType, int newDuration);
     /**
      * Answer if this <code>IEntityLock</code> exists in the store.
      *
      * @return boolean
      * @param lock
      */
-    public boolean existsInStore(IEntityLock lock) throws LockingException;
+    public boolean existsInStore(IEntityLock lock);
     /**
      * Answers if this <code>IEntityLock</code> represents a lock that is still good. To be valid, a
      * lock must exist in the underlying store and be unexpired and unreleased.
@@ -83,7 +83,7 @@ public interface IEntityLockService {
      * @param lock IEntityLock
      * @exception org.apereo.portal.concurrency.LockingException
      */
-    public boolean isValid(IEntityLock lock) throws LockingException;
+    public boolean isValid(IEntityLock lock);
     /**
      * Returns a lock for the entity, lock type and owner.
      *
@@ -94,8 +94,7 @@ public interface IEntityLockService {
      * @param owner String
      * @exception org.apereo.portal.concurrency.LockingException
      */
-    public IEntityLock newLock(Class entityType, String entityKey, int lockType, String owner)
-            throws LockingException;
+    public IEntityLock newLock(Class entityType, String entityKey, int lockType, String owner);
     /**
      * Returns a lock for the entity, lock type and owner.
      *
@@ -108,8 +107,7 @@ public interface IEntityLockService {
      * @exception org.apereo.portal.concurrency.LockingException
      */
     public IEntityLock newLock(
-            Class entityType, String entityKey, int lockType, String owner, int durationSecs)
-            throws LockingException;
+            Class entityType, String entityKey, int lockType, String owner, int durationSecs);
     /**
      * Returns a lock for the entity, lock type and owner.
      *
@@ -119,8 +117,7 @@ public interface IEntityLockService {
      * @param owner String
      * @exception org.apereo.portal.concurrency.LockingException
      */
-    public IEntityLock newLock(EntityIdentifier entityID, int lockType, String owner)
-            throws LockingException;
+    public IEntityLock newLock(EntityIdentifier entityID, int lockType, String owner);
     /**
      * Returns a lock for the entity, lock type and owner.
      *
@@ -132,8 +129,7 @@ public interface IEntityLockService {
      * @exception org.apereo.portal.concurrency.LockingException
      */
     public IEntityLock newLock(
-            EntityIdentifier entityID, int lockType, String owner, int durationSecs)
-            throws LockingException;
+            EntityIdentifier entityID, int lockType, String owner, int durationSecs);
 
     /**
      * Releases the <code>IEntityLock</code>.
@@ -141,7 +137,7 @@ public interface IEntityLockService {
      * @param lock IEntityLock
      * @exception org.apereo.portal.concurrency.LockingException
      */
-    public void release(IEntityLock lock) throws LockingException;
+    public void release(IEntityLock lock);
 
     /**
      * Extends the expiration time of the lock by the default increment.
@@ -149,7 +145,7 @@ public interface IEntityLockService {
      * @param lock IEntityLock
      * @exception org.apereo.portal.concurrency.LockingException
      */
-    public void renew(IEntityLock lock) throws LockingException;
+    public void renew(IEntityLock lock);
 
     /**
      * Extends the expiration time of the lock by <code>duration</code> seconds.
@@ -158,5 +154,5 @@ public interface IEntityLockService {
      * @param duration
      * @exception LockingException
      */
-    public void renew(IEntityLock lock, int duration) throws LockingException;
+    public void renew(IEntityLock lock, int duration);
 }

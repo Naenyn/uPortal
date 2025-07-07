@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 import org.apereo.portal.i18n.ILocaleStore;

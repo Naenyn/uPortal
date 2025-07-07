@@ -14,32 +14,8 @@
  */
 package org.apereo.portal.dao.usertype;
 
-import org.hibernate.HibernateException;
-import org.jadira.usertype.spi.shared.AbstractStringColumnMapper;
-
-/** */
-public class NullSafeStringColumnMapper extends AbstractStringColumnMapper<String> {
-    private static final long serialVersionUID = 1L;
-
-    public static final char NOT_NULL_PREFIX = '_';
-
-    @Override
-    public String fromNonNullValue(String s) {
-        if (s.charAt(0) != NOT_NULL_PREFIX) {
-            throw new HibernateException(
-                    "Persistent storage of "
-                            + this.getClass().getName()
-                            + " corrupted, database contained string ["
-                            + s
-                            + "] which should be prefixed by: "
-                            + NOT_NULL_PREFIX);
-        }
-
-        return s.substring(1);
-    }
-
-    @Override
-    public String toNonNullValue(String value) {
-        return NOT_NULL_PREFIX + value;
-    }
+/** Placeholder - functionality moved to NullSafeStringType */
+public class NullSafeStringColumnMapper {
+    // Constant still used by PortletPreferenceImpl
+    public static final String NOT_NULL_PREFIX = "N";
 }

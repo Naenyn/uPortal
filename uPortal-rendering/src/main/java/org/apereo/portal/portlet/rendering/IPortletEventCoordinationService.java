@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.portlet.rendering;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.pluto.container.EventCoordinationService;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 

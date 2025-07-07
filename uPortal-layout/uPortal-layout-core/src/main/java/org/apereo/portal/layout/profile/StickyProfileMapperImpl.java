@@ -17,14 +17,13 @@ package org.apereo.portal.layout.profile;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.Validate;
 import org.apereo.portal.security.IPerson;
 import org.apereo.portal.security.IdentitySwapperManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationListener;
 
 /**
@@ -175,7 +174,6 @@ public class StickyProfileMapperImpl
         this.profileSelectionRegistry = profileSelectionRegistry;
     }
 
-    @Required
     public void setMappings(Map<String, String> mappings) {
 
         Validate.notNull(mappings);

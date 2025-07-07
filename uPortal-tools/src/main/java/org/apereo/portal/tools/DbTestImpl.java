@@ -110,7 +110,7 @@ public class DbTestImpl implements HibernateConfigurationAware, DbTest {
                 final HibernateConfiguration hibernateConfiguration = configEntry.getValue();
                 final SessionFactoryImplementor sessionFactory =
                         hibernateConfiguration.getSessionFactory();
-                final Dialect dialect = sessionFactory.getDialect();
+                final Dialect dialect = sessionFactory.getJdbcServices().getDialect();
 
                 logger.info("\t" + persistenceUnit + ": " + dialect);
             } catch (Exception e) {

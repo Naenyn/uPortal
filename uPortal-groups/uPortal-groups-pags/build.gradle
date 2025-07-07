@@ -13,6 +13,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "org.dom4j:dom4j:${dom4jVersion}"
 
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernateJpamodelgenVersion}"
     compileOnly "${servletApiDependency}"
@@ -37,4 +38,11 @@ sourceSets {
 
 tasks.withType(JavaCompile) {
     options.annotationProcessorGeneratedSourcesDirectory = file(generatedSourcesDir)
+}
+
+// Fix task dependency issue
+sourcesJar {
+    mustRunAfter compileTestJava
+    from 'src/main/java'
+    from 'src/main/resources'
 }

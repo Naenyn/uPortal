@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.url;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 
 /** Wrapper for all portal responses */
 public class PortalHttpServletResponseWrapper extends HttpServletResponseWrapper {
@@ -29,20 +29,10 @@ public class PortalHttpServletResponseWrapper extends HttpServletResponseWrapper
      * encoding URLs is not thread-safe in Tomcat, sync around url encoding
      */
     @Override
-    public String encodeRedirectUrl(String url) {
-        return this.encodeRedirectURL(url);
-    }
-
-    @Override
     public String encodeRedirectURL(String url) {
         synchronized (this.urlEncodingMutex) {
             return super.encodeRedirectURL(url);
         }
-    }
-
-    @Override
-    public String encodeUrl(String url) {
-        return this.encodeURL(url);
     }
 
     @Override

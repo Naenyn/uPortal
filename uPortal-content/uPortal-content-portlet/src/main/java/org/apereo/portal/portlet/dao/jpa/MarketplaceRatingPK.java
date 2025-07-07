@@ -15,12 +15,12 @@
 package org.apereo.portal.portlet.dao.jpa;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SecondaryTable;
-import javax.persistence.SecondaryTables;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SecondaryTable;
+import jakarta.persistence.SecondaryTables;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apereo.portal.portlet.om.IPortletDefinition;

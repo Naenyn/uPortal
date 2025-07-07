@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.jpa;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 /** Event fired immediately before the {@link EntityManager} is closed */
 public class EntityManagerClosingEvent extends AbstractEntityManagerEvent {

@@ -22,25 +22,25 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapKey;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapKey;
+import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Version;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.layout.om.IStylesheetDescriptor;
 import org.apereo.portal.layout.om.IStylesheetUserPreferences;
@@ -91,7 +91,7 @@ class StylesheetUserPreferencesImpl implements IStylesheetUserPreferences {
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "PROP_NAME", nullable = false, length = 500)
     @Column(name = "PROP_VALUE", nullable = false, length = 2000)
-    @Type(type = "nullSafeString") // only applies to map values
+    @Type(org.apereo.portal.dao.usertype.NullSafeStringType.class) // only applies to map values
     @CollectionTable(
             name = "UP_SS_USER_PREF_OUTPUT_PROP",
             joinColumns = @JoinColumn(name = "SS_USER_PREF_ID", nullable = false))
@@ -102,7 +102,7 @@ class StylesheetUserPreferencesImpl implements IStylesheetUserPreferences {
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "PARAM_NAME", nullable = false, length = 500)
     @Column(name = "PARAM_VALUE", nullable = false, length = 2000)
-    @Type(type = "nullSafeString") // only applies to map values
+    @Type(org.apereo.portal.dao.usertype.NullSafeStringType.class) // only applies to map values
     @CollectionTable(
             name = "UP_SS_USER_PREF_PARAM",
             joinColumns = @JoinColumn(name = "SS_USER_PREF_ID", nullable = false))

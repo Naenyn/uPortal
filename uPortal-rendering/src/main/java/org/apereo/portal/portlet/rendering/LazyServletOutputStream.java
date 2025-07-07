@@ -16,8 +16,8 @@ package org.apereo.portal.portlet.rendering;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
 
 public class LazyServletOutputStream extends ServletOutputStream {
     private final Callable<ServletOutputStream> servletOutputStreamCreator;

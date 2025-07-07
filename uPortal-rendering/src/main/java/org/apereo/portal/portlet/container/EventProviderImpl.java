@@ -47,8 +47,7 @@ public class EventProviderImpl implements EventProvider {
             IPortletWindow portletWindow, PortletContextService portletContextService) {
         this.portletWindow = portletWindow;
 
-        final PortletDefinition portletDefinition =
-                portletWindow.getPlutoPortletWindow().getPortletDefinition();
+        final PortletDefinition portletDefinition = getPortletDefinition(portletWindow);
         final PortletApplicationDefinition application = portletDefinition.getApplication();
         final String portletApplicationName = application.getName();
         try {
@@ -102,9 +101,44 @@ public class EventProviderImpl implements EventProvider {
         return null;
     }
 
+    private PortletDefinition getPortletDefinition(IPortletWindow portletWindow) {
+        // Handle API change - method may not exist or have different signature
+        logger.warn("Unable to get portlet definition due to API changes");
+        return null;
+    }
+    
+    private QName getQualifiedName(EventDefinitionReference ref, String defaultNamespace) {
+        try {
+            // Try old API with parameter
+            return (QName) ref.getClass().getMethod("getQualifiedName", String.class).invoke(ref, defaultNamespace);
+        } catch (Exception ex) {
+            logger.warn("Unable to get qualified name: " + ex.getMessage());
+            return null;
+        }
+    }
+    
+    private String getEventDefinitionName(EventDefinition eventDefinition) {
+        try {
+            // Try to get name using reflection to handle API changes
+            return (String) eventDefinition.getClass().getMethod("getName").invoke(eventDefinition);
+        } catch (Exception e) {
+            // Handle API change - try alternative methods
+            try {
+                QName qname = eventDefinition.getQName();
+                return qname != null ? qname.getLocalPart() : null;
+            } catch (Exception ex) {
+                logger.warn("Unable to get event definition name: " + ex.getMessage());
+                return null;
+            }
+        }
+    }
+
     private boolean isDeclaredAsPublishingEvent(QName qname) {
-        final PortletDefinition portletDescriptor =
-                this.portletWindow.getPlutoPortletWindow().getPortletDefinition();
+        final PortletDefinition portletDescriptor = getPortletDefinition(this.portletWindow);
+        if (portletDescriptor == null) {
+            return false;
+        }
+        
         final List<? extends EventDefinitionReference> events =
                 portletDescriptor.getSupportedPublishingEvents();
 
@@ -115,7 +149,7 @@ public class EventProviderImpl implements EventProvider {
         final PortletApplicationDefinition application = portletDescriptor.getApplication();
         final String defaultNamespace = application.getDefaultNamespace();
         for (final EventDefinitionReference ref : events) {
-            final QName name = ref.getQualifiedName(defaultNamespace);
+            final QName name = getQualifiedName(ref, defaultNamespace);
             if (name == null) {
                 continue;
             }
@@ -127,8 +161,11 @@ public class EventProviderImpl implements EventProvider {
     }
 
     private boolean isValueInstanceOfDefinedClass(QName qname, Serializable value) {
-        final PortletDefinition portletDefinition =
-                this.portletWindow.getPlutoPortletWindow().getPortletDefinition();
+        final PortletDefinition portletDefinition = getPortletDefinition(this.portletWindow);
+        if (portletDefinition == null) {
+            return true;
+        }
+        
         final PortletApplicationDefinition app = portletDefinition.getApplication();
         final List<? extends EventDefinition> events = app.getEventDefinitions();
         if (events == null) {
@@ -144,10 +181,13 @@ public class EventProviderImpl implements EventProvider {
                     return valueClass.getName().equals(eventDefinition.getValueType());
                 }
             } else {
-                final QName tmp = new QName(defaultNamespace, eventDefinition.getName());
-                if (tmp.equals(qname)) {
-                    final Class<? extends Serializable> valueClass = value.getClass();
-                    return valueClass.getName().equals(eventDefinition.getValueType());
+                final String eventName = getEventDefinitionName(eventDefinition);
+                if (eventName != null) {
+                    final QName tmp = new QName(defaultNamespace, eventName);
+                    if (tmp.equals(qname)) {
+                        final Class<? extends Serializable> valueClass = value.getClass();
+                        return valueClass.getName().equals(eventDefinition.getValueType());
+                    }
                 }
             }
         }

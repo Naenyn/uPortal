@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.groups.pags.dao.jpa;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.groups.pags.dao.IPersonAttributesGroupTestDefinition;
 import org.apereo.portal.groups.pags.dao.IPersonAttributesGroupTestDefinitionDao;

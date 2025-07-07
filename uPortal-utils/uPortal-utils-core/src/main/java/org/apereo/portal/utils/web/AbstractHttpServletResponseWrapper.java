@@ -18,10 +18,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Locale;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,17 +95,8 @@ public abstract class AbstractHttpServletResponseWrapper implements HttpServletR
         return this.httpServletResponse.getContentType();
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public String encodeUrl(String url) {
-        return this.httpServletResponse.encodeUrl(url);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public String encodeRedirectUrl(String url) {
-        return this.httpServletResponse.encodeRedirectUrl(url);
-    }
+    // Deprecated methods encodeUrl and encodeRedirectUrl removed in Jakarta EE
+    // Use encodeURL and encodeRedirectURL instead
 
     @Override
     public ServletOutputStream getOutputStream() throws IOException {
@@ -192,11 +183,8 @@ public abstract class AbstractHttpServletResponseWrapper implements HttpServletR
         this.httpServletResponse.setStatus(sc);
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public void setStatus(int sc, String sm) {
-        this.httpServletResponse.setStatus(sc, sm);
-    }
+    // Deprecated setStatus(int, String) method removed in Jakarta EE
+    // Use setStatus(int) and sendError(int, String) instead
 
     @Override
     public int getBufferSize() {

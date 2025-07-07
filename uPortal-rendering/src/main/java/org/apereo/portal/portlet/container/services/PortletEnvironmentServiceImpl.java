@@ -26,8 +26,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletEnvironmentService;
 import org.apache.pluto.container.PortletEventResponseContext;
@@ -90,6 +90,10 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService 
         return new ScopingPortletSessionImpl(
                 portletEntityId, portletContext, portletWindow, session);
     }
+    
+
+    
+
 
     @Override
     public ActionRequest createActionRequest(

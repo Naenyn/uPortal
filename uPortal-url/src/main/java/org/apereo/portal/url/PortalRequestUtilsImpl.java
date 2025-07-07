@@ -14,9 +14,10 @@
  */
 package org.apereo.portal.url;
 
+import java.util.Map;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.utils.web.PortletHttpServletRequestWrapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -34,7 +35,6 @@ import org.springframework.web.portlet.context.PortletRequestAttributes;
 @Service("portalRequestUtils")
 public class PortalRequestUtilsImpl implements IPortalRequestUtils {
 
-    @Override
     public HttpServletRequest getPortletHttpRequest(PortletRequest portletRequest) {
         final HttpServletRequest portalRequest =
                 (HttpServletRequest)
@@ -63,7 +63,6 @@ public class PortalRequestUtilsImpl implements IPortalRequestUtils {
         return portletRequest;
     }
 
-    @Override
     public HttpServletRequest getOriginalPortletOrPortalRequest(HttpServletRequest request) {
         final HttpServletRequest portletRequest =
                 (HttpServletRequest)
@@ -76,7 +75,6 @@ public class PortalRequestUtilsImpl implements IPortalRequestUtils {
         return this.getOriginalPortalRequest(request);
     }
 
-    @Override
     public HttpServletRequest getOriginalPortalRequest(WebRequest request) {
         final HttpServletRequest portalRequest =
                 (HttpServletRequest)
@@ -102,7 +100,6 @@ public class PortalRequestUtilsImpl implements IPortalRequestUtils {
                         + "'");
     }
 
-    @Override
     public HttpServletResponse getOriginalPortalResponse(PortletRequest portletRequest) {
         final HttpServletResponse portalResponse =
                 (HttpServletResponse)
@@ -135,6 +132,56 @@ public class PortalRequestUtilsImpl implements IPortalRequestUtils {
     }
 
     @Override
+    public HttpServletRequest getOriginalPortalRequest(Object request) {
+        if (request instanceof HttpServletRequest) {
+            return getOriginalPortalRequest((HttpServletRequest) request);
+        }
+        throw new IllegalArgumentException("Unsupported request type: " + request.getClass());
+    }
+    
+    @Override
+    public HttpServletRequest getPortletHttpRequest(Object portletRequest) {
+        if (portletRequest instanceof PortletRequest) {
+            return getPortletHttpRequest((PortletRequest) portletRequest);
+        }
+        throw new IllegalArgumentException("Unsupported request type: " + portletRequest.getClass());
+    }
+    
+    @Override
+    public HttpServletResponse getOriginalPortalResponse(Object portletRequest) {
+        if (portletRequest instanceof PortletRequest) {
+            return getOriginalPortalResponse((PortletRequest) portletRequest);
+        }
+        throw new IllegalArgumentException("Unsupported request type: " + portletRequest.getClass());
+    }
+    
+    @Override
+    public HttpServletResponse getOriginalPortalResponse(HttpServletResponse response) {
+        return response;
+    }
+    
+    @Override
+    public String getRequestURL(HttpServletRequest request) {
+        return request.getRequestURL().toString();
+    }
+    
+    @Override
+    public String getRequestURL(HttpServletRequest request, Map<String, String[]> parameters) {
+        StringBuilder url = new StringBuilder(request.getRequestURL());
+        if (parameters != null && !parameters.isEmpty()) {
+            url.append("?");
+            boolean first = true;
+            for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+                for (String value : entry.getValue()) {
+                    if (!first) url.append("&");
+                    url.append(entry.getKey()).append("=").append(value);
+                    first = false;
+                }
+            }
+        }
+        return url.toString();
+    }
+    
     public HttpServletRequest getCurrentPortalRequest() {
         final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 

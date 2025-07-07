@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.rendering.xslt;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.layout.IStylesheetUserPreferencesService.PreferencesScope;
 
 public class StructureStylesheetDescriptorTransformerConfigurationSource

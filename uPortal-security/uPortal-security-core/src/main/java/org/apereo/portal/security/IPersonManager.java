@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.security;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /** Manages the storage of an IPerson object in a user's session. */
 public interface IPersonManager {

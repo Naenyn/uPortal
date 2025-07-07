@@ -2,10 +2,9 @@ package org.apereo.portal.url;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
 /** Customizer to replace a text by a serverName. */
@@ -18,7 +17,6 @@ public class UrlMultiServerNameCustomizer implements IAuthUrlCustomizer {
 
     private String serverNameTextReplacement = "_CURRENT_SERVER_NAME_";
 
-    @Required
     public void setAllServerNames(final Set<String> serverNames) {
         this.allServerNames = new LinkedHashSet<>(serverNames);
         Assert.notEmpty(this.allServerNames, "The attribute serverNames should not be empty");
@@ -31,10 +29,12 @@ public class UrlMultiServerNameCustomizer implements IAuthUrlCustomizer {
         this.serverNameTextReplacement = serverNameTextReplacement;
     }
 
+    @Override
     public boolean supports(final HttpServletRequest request, final String url) {
         return url != null && url.contains(serverNameTextReplacement);
     }
 
+    @Override
     public String customizeUrl(final HttpServletRequest request, final String url) {
         if (url != null && !url.isEmpty() && supports(request, url)) {
             final String updateUrl =

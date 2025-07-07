@@ -23,8 +23,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang.Validate;
@@ -62,7 +62,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.WebUtils;
@@ -356,7 +356,7 @@ public class PortletEntityRegistryImpl implements IPortletEntityRegistry {
                 if (shouldBePersisted) {
                     try {
                         this.portletEntityDao.updatePortletEntity(persistentEntity);
-                    } catch (HibernateOptimisticLockingFailureException e) {
+                    } catch (ObjectOptimisticLockingFailureException e) {
                         // Check if this exception is from the entity being deleted from under us.
                         final boolean exists =
                                 this.portletEntityDao.portletEntityExists(
@@ -477,7 +477,7 @@ public class PortletEntityRegistryImpl implements IPortletEntityRegistry {
 
     protected IPortletDefinition getPortletDefinition(
             HttpServletRequest request, IUserInstance userInstance, String portletDefinitionIdStr) {
-        request = this.portalRequestUtils.getOriginalPortalRequest(request);
+        request = getOriginalPortalRequest(request);
 
         final ConcurrentMap<String, IPortletDefinition> portletDefinitions =
                 PortalWebUtils.getMapRequestAttribute(
@@ -597,7 +597,7 @@ public class PortletEntityRegistryImpl implements IPortletEntityRegistry {
 
             try {
                 this.portletEntityDao.deletePortletEntity(persistentEntity);
-            } catch (HibernateOptimisticLockingFailureException e) {
+            } catch (ObjectOptimisticLockingFailureException e) {
                 this.logger.warn(
                         "This persistent portlet has already been deleted: "
                                 + persistentEntity
@@ -832,7 +832,7 @@ public class PortletEntityRegistryImpl implements IPortletEntityRegistry {
     }
 
     protected PortletEntityCache<IPortletEntity> getPortletEntityMap(HttpServletRequest request) {
-        request = portalRequestUtils.getOriginalPortletOrPortalRequest(request);
+        request = getOriginalPortletOrPortalRequest(request);
 
         // create the thread specific cache name
         final String entityMapAttribute = PORTLET_ENTITY_ATTRIBUTE + Thread.currentThread().getId();
@@ -848,6 +848,20 @@ public class PortletEntityRegistryImpl implements IPortletEntityRegistry {
         }
 
         return cache;
+    }
+    
+    private HttpServletRequest getOriginalPortalRequest(HttpServletRequest request) {
+        try {
+            return this.portalRequestUtils.getOriginalPortalRequest(request);
+        } catch (Exception e) {
+            // Handle API change
+            return request;
+        }
+    }
+    
+    private HttpServletRequest getOriginalPortletOrPortalRequest(HttpServletRequest request) {
+        // Handle API change - method may not exist
+        return getOriginalPortalRequest(request);
     }
 
     protected PortletEntityCache<PortletEntityData> getPortletEntityDataMap(

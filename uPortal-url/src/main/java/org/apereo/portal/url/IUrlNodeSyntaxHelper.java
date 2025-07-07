@@ -15,7 +15,7 @@
 package org.apereo.portal.url;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.dao.usertype.FunctionalNameType;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 

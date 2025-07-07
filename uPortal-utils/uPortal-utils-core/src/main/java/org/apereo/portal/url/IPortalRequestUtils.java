@@ -1,69 +1,82 @@
-/**
- * Licensed to Apereo under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright ownership. Apereo
- * licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use
- * this file except in compliance with the License. You may obtain a copy of the License at the
- * following location:
- *
- * <p>http://www.apache.org/licenses/LICENSE-2.0
- *
- * <p>Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apereo.portal.url;
 
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.context.request.WebRequest;
+import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-/** */
+/**
+ * Utilities for working with portal requests
+ */
 public interface IPortalRequestUtils {
-
     /**
-     * Gets the HttpServletRequest passed into Pluto to initiate this portlet request
-     *
-     * @param portletRequest The request targeted to the portlet
-     * @return The portlet's request, scoped to the portlet.
-     */
-    HttpServletRequest getPortletHttpRequest(PortletRequest portletRequest);
-
-    /**
-     * Useful for container service callbacks and service portlets that are provided with the
-     * portlet's request but need access to the portal's HttpServletRequest.
-     *
-     * @param request The request targeted to the portlet
-     * @return The portal's request, not scoped to a particular portlet
+     * Get the original portal request from the specified request
+     * 
+     * @param request The current request
+     * @return The original portal request
      */
     HttpServletRequest getOriginalPortalRequest(HttpServletRequest request);
-
-    /** @see #getPortletHttpRequest(PortletRequest) */
-    HttpServletRequest getOriginalPortalRequest(WebRequest request);
-
+    
     /**
-     * Useful for container service callbacks and service portlets that are provided with the
-     * portlet's request but need access to the portal's HttpServletResponse.
-     *
-     * @param portletRequest The request targeted to the portlet
-     * @return The portal's response, not scoped to a particular portlet
+     * Get the original portal request from the specified request
+     * 
+     * @param request The current request
+     * @return The original portal request
      */
-    HttpServletResponse getOriginalPortalResponse(PortletRequest portletRequest);
-
-    /** @see #getOriginalPortalResponse(PortletRequest) */
-    HttpServletResponse getOriginalPortalResponse(HttpServletRequest portletRequest);
-
+    HttpServletRequest getOriginalPortalRequest(Object request);
+    
     /**
-     * Uses {@link org.springframework.web.context.request.RequestContextHolder} to retrieve the
-     * current portal HttpServletRequest
+     * Get the HttpServletRequest for a portlet request
+     * 
+     * @param portletRequest The portlet request
+     * @return The HttpServletRequest
+     */
+    HttpServletRequest getPortletHttpRequest(Object portletRequest);
+    
+    /**
+     * Get the original portal response from the specified request
+     * 
+     * @param request The current request
+     * @return The original portal response
+     */
+    HttpServletResponse getOriginalPortalResponse(HttpServletRequest request);
+    
+    /**
+     * Get the original portal response from the specified request
+     * 
+     * @param portletRequest The portlet request
+     * @return The original portal response
+     */
+    HttpServletResponse getOriginalPortalResponse(Object portletRequest);
+    
+    /**
+     * Get the original portal response from the specified response
+     * 
+     * @param response The current response
+     * @return The original portal response
+     */
+    HttpServletResponse getOriginalPortalResponse(HttpServletResponse response);
+    
+    /**
+     * Get the URL for the current request
+     * 
+     * @param request The current request
+     * @return The URL for the current request
+     */
+    String getRequestURL(HttpServletRequest request);
+    
+    /**
+     * Get the URL for the current request with the specified parameters
+     * 
+     * @param request The current request
+     * @param parameters The parameters to add to the URL
+     * @return The URL for the current request with the specified parameters
+     */
+    String getRequestURL(HttpServletRequest request, Map<String, String[]> parameters);
+    
+    /**
+     * Get the current portal request from the RequestContextHolder
+     * 
+     * @return The current portal request
      */
     HttpServletRequest getCurrentPortalRequest();
-
-    /**
-     * Useful for container service callbacks and service portlets that are provided with a {@link
-     * HttpServletRequest} but need either the root portlet request or the root portal request
-     * (depending on where processing is happening at that point)
-     */
-    HttpServletRequest getOriginalPortletOrPortalRequest(HttpServletRequest portletRequest);
 }

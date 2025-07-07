@@ -134,6 +134,22 @@ public class EntityLockImpl implements IEntityLock {
     public String getLockOwner() {
         return lockOwner;
     }
+    
+    // Additional methods required by IEntityLock interface
+    @Override
+    public String getKey() {
+        return getEntityKey();
+    }
+    
+    @Override
+    public Class<?> getType() {
+        return getEntityType();
+    }
+    
+    @Override
+    public String getOwner() {
+        return getLockOwner();
+    }
     /**
      * See IEntityLockingService for a description of lock types.
      *

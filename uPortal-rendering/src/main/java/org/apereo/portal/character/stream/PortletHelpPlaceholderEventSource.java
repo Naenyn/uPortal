@@ -26,6 +26,7 @@ import org.apereo.portal.portlet.om.IPortletWindowId;
  *
  * @deprecated As of Jul 2015 does not look like this class is actually used.
  */
+@Deprecated
 public class PortletHelpPlaceholderEventSource extends PortletPlaceholderEventSource {
 
     @Override

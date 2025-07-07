@@ -17,21 +17,21 @@ package org.apereo.portal.portlet.dao.jpa;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Version;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.pluto.container.PortletPreference;
@@ -75,7 +75,7 @@ public class PortletPreferenceImpl implements IPortletPreference, Cloneable {
     private final long entityVersion;
 
     @Column(name = "PREF_NAME", length = 100000)
-    @Type(type = "org.hibernate.type.StringType")
+    @Type(org.apereo.portal.dao.usertype.NullSafeStringType.class)
     @Lob
     private String name = null;
 
@@ -87,7 +87,7 @@ public class PortletPreferenceImpl implements IPortletPreference, Cloneable {
     @IndexColumn(name = "VALUE_ORDER")
     @Lob
     @Column(name = "PREF_VALUE", length = 100000)
-    @Type(type = "org.hibernate.type.StringType")
+    @Type(org.apereo.portal.dao.usertype.NullSafeStringType.class)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Fetch(FetchMode.JOIN)
     private List<String> values = new ArrayList<>(0);
@@ -205,7 +205,7 @@ public class PortletPreferenceImpl implements IPortletPreference, Cloneable {
 
     /*
      * (non-Javadoc)
-     * @see org.apache.pluto.container.PortletPreference#setValues(java.lang.String[])
+     * @see org.apereo.portal.portlet.om.IPortletPreference#setValues(java.lang.String[])
      */
     @Override
     public void setValues(String[] values) {

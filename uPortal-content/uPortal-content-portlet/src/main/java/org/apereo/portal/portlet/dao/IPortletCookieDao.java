@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.portlet.dao;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.apereo.portal.portlet.om.IPortalCookie;
 import org.apereo.portal.portlet.om.IPortletCookie;
 

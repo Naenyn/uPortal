@@ -14,11 +14,87 @@
  */
 package org.apereo.portal.dao.usertype;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import javax.portlet.WindowState;
-import org.jadira.usertype.spi.shared.AbstractSingleColumnUserType;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.usertype.UserType;
 
 /** Converts portlet WindowState objects to/from strings. */
-public class WindowStateType
-        extends AbstractSingleColumnUserType<WindowState, String, WindowStateColumnMapper> {
-    private static final long serialVersionUID = 1L;
+public class WindowStateType implements UserType<WindowState> {
+    @Override
+    public int getSqlType() {
+        return Types.VARCHAR;
+    }
+
+    @Override
+    public Class<WindowState> returnedClass() {
+        return WindowState.class;
+    }
+
+    @Override
+    public boolean equals(WindowState x, WindowState y) {
+        if (x == y) {
+            return true;
+        }
+        if (x == null || y == null) {
+            return false;
+        }
+        return x.equals(y);
+    }
+
+    @Override
+    public int hashCode(WindowState x) {
+        return x == null ? 0 : x.hashCode();
+    }
+
+    @Override
+    public WindowState nullSafeGet(ResultSet rs, int position, SharedSessionContractImplementor session, Object owner)
+            throws SQLException {
+        String value = rs.getString(position);
+        if (rs.wasNull() || value == null) {
+            return null;
+        }
+        return new WindowState(value);
+    }
+
+    @Override
+    public void nullSafeSet(PreparedStatement st, WindowState value, int index, SharedSessionContractImplementor session)
+            throws SQLException {
+        if (value == null) {
+            st.setNull(index, Types.VARCHAR);
+        } else {
+            st.setString(index, value.toString());
+        }
+    }
+
+    @Override
+    public WindowState deepCopy(WindowState value) {
+        if (value == null) {
+            return null;
+        }
+        return new WindowState(value.toString());
+    }
+
+    @Override
+    public boolean isMutable() {
+        return false;
+    }
+
+    @Override
+    public java.io.Serializable disassemble(WindowState value) {
+        return (java.io.Serializable) deepCopy(value);
+    }
+
+    @Override
+    public WindowState assemble(java.io.Serializable cached, Object owner) {
+        return deepCopy((WindowState) cached);
+    }
+
+    @Override
+    public WindowState replace(WindowState detached, WindowState managed, Object owner) {
+        return deepCopy(detached);
+    }
 }

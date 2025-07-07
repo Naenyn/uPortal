@@ -63,7 +63,7 @@ public final class CharacterDataEventImpl implements CharacterDataEvent {
     private int hash = 0;
 
     private CharacterDataEventImpl(String data) {
-        Assert.notNull(data);
+        Assert.notNull(data, "data must not be null");
         this.data = data;
     }
 

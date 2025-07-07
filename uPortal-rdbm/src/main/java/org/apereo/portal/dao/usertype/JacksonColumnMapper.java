@@ -25,13 +25,19 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import java.io.IOException;
 import org.apereo.portal.spring.beans.factory.ObjectMapperFactoryBean;
-import org.jadira.usertype.spi.shared.AbstractStringColumnMapper;
+import org.hibernate.usertype.UserType;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  * Mapper that read/writes objects to JSON. Uses a 2 step serialization/deserialization process so
  * the object's type can be recorded in the JSON data
  */
-public class JacksonColumnMapper extends AbstractStringColumnMapper<Object> {
+public class JacksonColumnMapper implements UserType<Object> {
     private static final long serialVersionUID = 1L;
 
     private final LoadingCache<Class<?>, ObjectWriter> typedObjectWriters =
@@ -83,6 +89,68 @@ public class JacksonColumnMapper extends AbstractStringColumnMapper<Object> {
     }
 
     @Override
+    public int getSqlType() {
+        return Types.VARCHAR;
+    }
+
+    @Override
+    public Class<Object> returnedClass() {
+        return Object.class;
+    }
+
+    @Override
+    public boolean equals(Object x, Object y) {
+        return (x == y) || (x != null && x.equals(y));
+    }
+
+    @Override
+    public int hashCode(Object x) {
+        return x != null ? x.hashCode() : 0;
+    }
+
+    @Override
+    public Object nullSafeGet(ResultSet rs, int position, SharedSessionContractImplementor session, Object owner) throws SQLException {
+        String value = rs.getString(position);
+        if (value == null) {
+            return null;
+        }
+        return fromNonNullValue(value);
+    }
+
+    @Override
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws SQLException {
+        if (value == null) {
+            st.setNull(index, Types.VARCHAR);
+        } else {
+            st.setString(index, toNonNullValue(value));
+        }
+    }
+
+    @Override
+    public Object deepCopy(Object value) {
+        return value; // Assuming immutable objects
+    }
+
+    @Override
+    public boolean isMutable() {
+        return false;
+    }
+
+    @Override
+    public Serializable disassemble(Object value) {
+        return (Serializable) deepCopy(value);
+    }
+
+    @Override
+    public Object assemble(Serializable cached, Object owner) {
+        return deepCopy(cached);
+    }
+
+    @Override
+    public Object replace(Object original, Object target, Object owner) {
+        return deepCopy(original);
+    }
+
     public final Object fromNonNullValue(String s) {
         try {
             final JsonWrapper jsonWrapper = objectReader.readValue(s);
@@ -90,12 +158,9 @@ public class JacksonColumnMapper extends AbstractStringColumnMapper<Object> {
             return typeReader.readValue(jsonWrapper.getValue());
         } catch (JsonProcessingException e) {
             throw new IllegalArgumentException("Could not read from JSON: " + s, e);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Could not read from JSON: " + s, e);
         }
     }
 
-    @Override
     public final String toNonNullValue(Object value) {
         try {
             final Class<? extends Object> type = value.getClass();

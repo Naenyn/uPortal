@@ -20,8 +20,8 @@ import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.AuthorizationException;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 
@@ -63,7 +63,7 @@ public interface IPortletRenderer {
     public static final String THEME_NAME_PROPERTY = "org.jasig.portlet.THEME_NAME";
 
     /**
-     * {@link javax.servlet.http.HttpServletRequest} attributes specific to the {@link
+     * {@link jakarta.servlet.http.HttpServletRequest} attributes specific to the {@link
      * IPortletRenderer} must be prefixed with this value to be sure they are protected from
      * manipulation by the portlet.
      */

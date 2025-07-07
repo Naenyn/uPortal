@@ -5,9 +5,14 @@ buildscript {
     }
     dependencies {
         classpath "org.jasig.resourceserver:resource-server-core:${resourceServerVersion}"
-        classpath "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
-        classpath 'com.sun.xml.bind:jaxb-xjc:2.3.9'
+        // Modern JAXB implementation for Java 17
+        classpath 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+        classpath 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
+        classpath 'org.glassfish.jaxb:jaxb-core:4.0.3'
+        // Legacy javax JAXB bridge for compatibility
+        classpath 'javax.xml.bind:jaxb-api:2.3.1'
         classpath 'com.sun.xml.bind:jaxb-impl:2.3.9'
+        classpath 'javax.activation:activation:1.1.1'
     }
 }
 
@@ -43,6 +48,31 @@ dependencies {
     api project(':uPortal-soffit:uPortal-soffit-connector')
     api project(':uPortal-utils:uPortal-utils-jmx')
     api project(':uPortal-utils:uPortal-utils-url')
+    
+    // Jakarta EE dependencies for Java 17 compatibility
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+    implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.0'
+    implementation 'jakarta.activation:jakarta.activation-api:2.1.2'
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    implementation 'jakarta.management.j2ee:jakarta.management.j2ee-api:1.1.4'
+    
+    // Modern JAXB implementation for Java 17 compatibility
+    runtimeOnly 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
+    runtimeOnly 'org.glassfish.jaxb:jaxb-core:4.0.3'
+    // Legacy javax JAXB bridge for ResourcesAggregator
+    runtimeOnly 'javax.xml.bind:jaxb-api:2.3.1'
+    runtimeOnly 'com.sun.xml.bind:jaxb-impl:2.3.9'
+    runtimeOnly 'javax.activation:activation:1.1.1'
+    
+    // Groovy dependencies
+    implementation 'org.codehaus.groovy:groovy:3.0.19'
+    implementation 'org.codehaus.groovy:groovy-jsr223:3.0.19'
+    
+    // DOM4J dependency
+    implementation 'org.dom4j:dom4j:2.1.3'
 
     compileOnly "org.apereo.service.persondir:person-directory-api:${personDirectoryVersion}"
     compileOnly "${servletApiDependency}"
@@ -59,7 +89,7 @@ dependencies {
     runtimeOnly "joda-time:joda-time-jsptags:${jodaTimeJsptagsVersion}"
     runtimeOnly "org.aspectj:aspectjweaver:${aspectjVersion}"
     runtimeOnly "org.codehaus.groovy:groovy-jsr223:${groovyVersion}"
-    runtimeOnly "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+    // hibernate-entitymanager is no longer needed in Hibernate 6 - functionality is in hibernate-core
     runtimeOnly "org.jasig.cas.client:cas-client-support-distributed-ehcache:${casClientVersion}"
     runtimeOnly "org.jasig.ehcache:ehcache-jgroups3replication:${ehcacheJgroups3ReplicationVersion}"
     runtimeOnly "org.jasig.portlet.utils:portlet-ws-util:${apereoPortletUtilsVersion}"
@@ -76,6 +106,7 @@ dependencies {
 
     webjars "org.webjars.npm:bootstrap:${bootstrapVersion}"
     webjars "org.webjars.npm:core-js-bundle:${coreJsBundleVersion}"
+    webjars "org.webjars.npm:jquery:${jqueryVersion}"
     webjars "org.webjars.npm:jstree:${jstreeVersion}"
     webjars "org.webjars.npm:regenerator-runtime:${regeneratorRuntimeVersion}"
     webjars "org.webjars.npm:webcomponents__webcomponentsjs:${webComponentPolyfillVersion}"
@@ -85,6 +116,8 @@ dependencies {
 node {
     version = nodejsVersion
     download = true
+    // Suppress Java 17 warnings for Node.js processes
+    nodeProjectDir = file("${project.projectDir}")
 }
 
 // Support for filtering properties files
@@ -128,6 +161,23 @@ import org.jasig.resource.aggr.ResourcesAggregator
 import org.jasig.resource.aggr.ResourcesAggregatorImpl
 task aggregateRespondrSkins {
     doLast {
+        // Configure JAXB for Java 17 compatibility
+        System.setProperty("javax.xml.bind.JAXBContextFactory", "com.sun.xml.bind.v2.JAXBContextFactory")
+        System.setProperty("javax.xml.bind.context.factory", "com.sun.xml.bind.v2.JAXBContextFactory")
+        
+        // Set up proper classloader with JAXB dependencies
+        def originalClassLoader = Thread.currentThread().getContextClassLoader()
+        def jaxbUrls = []
+        configurations.runtimeClasspath.each { file ->
+            if (file.name.contains('jaxb') || file.name.contains('activation')) {
+                jaxbUrls.add(file.toURI().toURL())
+            }
+        }
+        def jaxbClassLoader = new URLClassLoader(jaxbUrls as URL[], originalClassLoader)
+        Thread.currentThread().setContextClassLoader(jaxbClassLoader)
+        
+        try {
+        
         final ResourcesAggregator aggr = new ResourcesAggregatorImpl();
         aggr.setDisplayJsWarnings(false);
 
@@ -147,7 +197,10 @@ task aggregateRespondrSkins {
                 .addAdditionalSourceDirectory(fullOutputDirectory)
                 .setSharedJavaScriptDirectory(sharedJavaScriptDirectory);
         aggr.aggregate(aggregationRequest);
-
+        } finally {
+            // Restore original classloader
+            Thread.currentThread().setContextClassLoader(originalClassLoader)
+        }
     }
 }
 

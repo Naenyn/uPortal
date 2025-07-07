@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.xpath.XPathExpression;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -273,7 +273,7 @@ public class UrlSyntaxProviderImpl implements IUrlSyntaxProvider {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalRequestInfo(javax.servlet.http.HttpServletRequest)
+     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalRequestInfo(jakarta.servlet.http.HttpServletRequest)
      */
     @Override
     public IPortalRequestInfo getPortalRequestInfo(HttpServletRequest request) {

@@ -81,8 +81,11 @@ public class ProfileSelectionDaoImpl extends BasePortalJpaDao implements IProfil
     public IProfileSelection readProfileSelectionForUser(final String userName) {
 
         final NaturalIdQuery<ProfileSelection> query = createNaturalIdQuery(ProfileSelection.class);
-        query.using(ProfileSelection_.userName, userName);
-
-        return query.load();
+        // Using string-based approach instead of metamodel due to Jakarta namespace transition
+        return this.getEntityManager().createQuery(
+                "SELECT p FROM ProfileSelection p WHERE p.userName = :userName", 
+                ProfileSelection.class)
+                .setParameter("userName", userName)
+                .getSingleResult();
     }
 }

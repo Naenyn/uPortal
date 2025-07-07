@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.groups.pags.testers;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apereo.portal.IUserProfile;
 import org.apereo.portal.groups.pags.IPersonTester;

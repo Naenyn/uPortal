@@ -38,7 +38,9 @@ import org.apereo.portal.portlet.registry.IPortletCategoryRegistry;
 import org.apereo.portal.security.AuthorizationPrincipalHelper;
 import org.apereo.portal.security.IAuthorizationPrincipal;
 import org.apereo.portal.security.IPerson;
-import org.apereo.portal.utils.web.PortalWebUtils;
+import org.apereo.portal.url.IPortalRequestUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -67,6 +69,7 @@ public class MarketplacePortletDefinition implements IPortletDefinition {
     private IMarketplaceService marketplaceService;
     private IPortletCategoryRegistry portletCategoryRegistry;
     private IPortletDefinition portletDefinition;
+    private IPortalRequestUtils portalRequestUtils;
     private List<ScreenShot> screenShots;
     private PortletReleaseNotes releaseNotes;
     private Set<PortletCategory> categories;
@@ -91,6 +94,24 @@ public class MarketplacePortletDefinition implements IPortletDefinition {
         this.portletCategoryRegistry = registry;
         this.marketplaceService = service;
         this.portletDefinition = portletDefinition;
+        this.initDefinitions();
+    }
+
+    /**
+     * @param portletDefinition the portlet definition to make this MarketplacePD
+     * @param service the marketplace service
+     * @param registry the registry you want to use for categories and related apps
+     * @param portalRequestUtils the portal request utils for getting context path
+     */
+    public MarketplacePortletDefinition(
+            final IPortletDefinition portletDefinition,
+            final IMarketplaceService service,
+            final IPortletCategoryRegistry registry,
+            final IPortalRequestUtils portalRequestUtils) {
+        this.portletCategoryRegistry = registry;
+        this.marketplaceService = service;
+        this.portletDefinition = portletDefinition;
+        this.portalRequestUtils = portalRequestUtils;
         this.initDefinitions();
     }
 
@@ -400,7 +421,19 @@ public class MarketplacePortletDefinition implements IPortletDefinition {
             return alternativeMaximizedUrl;
         }
 
-        final String contextPath = PortalWebUtils.currentRequestContextPath();
+        String contextPath = "";
+        try {
+            if (portalRequestUtils != null) {
+                contextPath = portalRequestUtils.getCurrentPortalRequest().getContextPath();
+            } else {
+                // Fallback to RequestContextHolder if portalRequestUtils is not available
+                ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+                contextPath = attr.getRequest().getContextPath();
+            }
+        } catch (Exception e) {
+            // If we can't get the context path, use empty string as fallback
+            contextPath = "";
+        }
 
         // TODO: stop abstraction violation of relying on knowledge of uPortal URL implementation
         // details

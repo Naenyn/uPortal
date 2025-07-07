@@ -1,6 +1,6 @@
 package org.apereo.portal.url;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -26,10 +26,12 @@ public class UrlCasParamAppenderCustomizer implements IAuthUrlCustomizer, Initia
         this.paramToAppend = paramToAppend;
     }
 
+    @Override
     public boolean supports(final HttpServletRequest request, final String url) {
         return url != null && url.matches(applyCondition);
     }
 
+    @Override
     public String customizeUrl(final HttpServletRequest request, final String url) {
         if (url != null && !url.isEmpty() && supports(request, url)) {
             final String updatedUrl = url + "&" + paramToAppend;

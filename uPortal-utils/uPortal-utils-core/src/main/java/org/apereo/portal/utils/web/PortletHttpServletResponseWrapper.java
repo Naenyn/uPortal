@@ -21,9 +21,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.output.CountingOutputStream;
 import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.io.output.NullWriter;
@@ -178,14 +178,7 @@ public class PortletHttpServletResponseWrapper extends AbstractHttpServletRespon
                 "Ignoring call to HttpServletResponse.setStatus({}) from {}", sc, portletWindow);
     }
 
-    @Override
-    public void setStatus(int sc, String sm) {
-        this.logger.warn(
-                "Ignoring call to HttpServletResponse.setStatus({}, {}) from {}",
-                sc,
-                sm,
-                portletWindow);
-    }
+    // Deprecated setStatus(int, String) method removed in Jakarta EE
 
     @Override
     public void addCookie(Cookie cookie) {

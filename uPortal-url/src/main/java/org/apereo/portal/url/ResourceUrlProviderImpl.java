@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.url;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.om.IPortletWindow;
 
 /** Simple handling for resource URL generation */
@@ -34,7 +34,6 @@ public class ResourceUrlProviderImpl implements IPortletResourcePortalUrl {
      * (non-Javadoc)
      * @see org.apache.pluto.container.ResourceURLProvider#setAbsoluteURL(java.lang.String)
      */
-    @Override
     public void setAbsoluteURL(String path) {
         this.path = path;
     }
@@ -43,7 +42,6 @@ public class ResourceUrlProviderImpl implements IPortletResourcePortalUrl {
      * (non-Javadoc)
      * @see org.apache.pluto.container.ResourceURLProvider#setFullPath(java.lang.String)
      */
-    @Override
     public void setFullPath(String path) {
         this.path = path;
     }

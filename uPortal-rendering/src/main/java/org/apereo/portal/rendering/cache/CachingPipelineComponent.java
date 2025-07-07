@@ -19,8 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.apereo.portal.rendering.PipelineComponentWrapper;
@@ -63,7 +63,7 @@ public abstract class CachingPipelineComponent<R, E> extends PipelineComponentWr
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.PipelineComponent#getEventReader(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.PipelineComponent#getEventReader(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @SuppressWarnings("unchecked")
     @Override

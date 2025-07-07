@@ -45,6 +45,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import javax.annotation.Resource;
+import java.io.Serializable;
 import org.apereo.portal.ICounterStore;
 import org.apereo.portal.jpa.BasePortalJpaDao;
 import org.hibernate.id.IdentifierGeneratorHelper;
@@ -53,8 +54,7 @@ import org.hibernate.id.enhanced.AccessCallback;
 import org.hibernate.id.enhanced.Optimizer;
 import org.hibernate.id.enhanced.OptimizerFactory;
 import org.hibernate.id.enhanced.TableGenerator;
-import org.hibernate.type.IntegerType;
-import org.hibernate.type.Type;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -82,7 +82,7 @@ public class HibernateStyleCounterStore implements ICounterStore {
             "INSERT INTO UP_SEQUENCE (SEQUENCE_NAME, SEQUENCE_VALUE) VALUES (?, ?)";
 
     private static final int MAX_ATTEMPTS = 3;
-    private final Type identifierType = IntegerType.INSTANCE;
+    private final Class<Integer> identifierType = Integer.class;
 
     private final ConcurrentMap<String, Callable<Optimizer>> counterOptimizers =
             new ConcurrentHashMap<String, Callable<Optimizer>>();
@@ -133,12 +133,27 @@ public class HibernateStyleCounterStore implements ICounterStore {
                                 }
 
                                 o =
-                                        OptimizerFactory.buildOptimizer(
-                                                OptimizerFactory.StandardOptimizerDescriptor.POOLED
-                                                        .getExternalName(),
-                                                identifierType.getReturnedClass(),
-                                                incrementSize,
-                                                initialValue);
+                                        new Optimizer() {
+                                            @Override
+                                            public Serializable generate(AccessCallback callback) {
+                                                return callback.getNextValue().makeValue();
+                                            }
+                                            
+                                            @Override
+                                            public boolean applyIncrementSizeToSourceValues() {
+                                                return false;
+                                            }
+                                            
+                                            @Override
+                                            public int getIncrementSize() {
+                                                return incrementSize;
+                                            }
+                                            
+                                            @Override
+                                            public IntegralDataTypeHolder getLastSourceValue() {
+                                                return null;
+                                            }
+                                        };
                                 this.optimizer = o;
                             }
 
@@ -176,6 +191,15 @@ public class HibernateStyleCounterStore implements ICounterStore {
                         new AccessCallback() {
                             @Override
                             public IntegralDataTypeHolder getNextValue() {
+                                return getNextValueInternal();
+                            }
+                            
+                            @Override
+                            public String getTenantIdentifier() {
+                                return null;
+                            }
+                            
+                            private IntegralDataTypeHolder getNextValueInternal() {
 
                                 IntegralDataTypeHolder result = null;
                                 for (int i = 0; result == null && i < MAX_ATTEMPTS; i++) {
@@ -192,7 +216,7 @@ public class HibernateStyleCounterStore implements ICounterStore {
                                                                     IdentifierGeneratorHelper
                                                                             .getIntegralDataTypeHolder(
                                                                                     identifierType
-                                                                                            .getReturnedClass());
+                                                                                            );
 
                                                             // Try and load the current value,
                                                             // returns true if the expected row

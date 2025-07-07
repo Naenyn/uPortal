@@ -18,15 +18,15 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 /** Manages execution of {@link IRequestParameterProcessor}s. */
-public class RequestParameterProcessorInterceptor extends HandlerInterceptorAdapter {
+public class RequestParameterProcessorInterceptor implements HandlerInterceptor {
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     private List<IRequestParameterProcessor> dynamicRequestParameterProcessors =
@@ -73,7 +73,7 @@ public class RequestParameterProcessorInterceptor extends HandlerInterceptorAdap
      *
      * @see
      *     org.apereo.portal.url.processing.IRequestParameterController#processParameters(org.apereo.portal.url.IWritableHttpServletRequest,
-     *     javax.servlet.http.HttpServletResponse)
+     *     jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public boolean preHandle(

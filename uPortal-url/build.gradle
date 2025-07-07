@@ -1,18 +1,19 @@
 description = "Apereo uPortal URL"
 
 dependencies {
-    api project(':uPortal-content:uPortal-content-portlet')
-    api project(':uPortal-groups:uPortal-groups-core')
-    api project(':uPortal-security:uPortal-security-core')
-
-    compileOnly "org.apache.portals.pluto:pluto-container-api:${plutoVersion}"
-    compileOnly "org.apache.portals.pluto:pluto-container:${plutoVersion}"
-    compileOnly "${portletApiDependency}"
-    compileOnly "${servletApiDependency}"
-
-    testImplementation "${servletApiDependency}"
-    testImplementation "${portletApiDependency}"
-    testImplementation "org.apache.portals.pluto:pluto-container:${plutoVersion}"
-    testImplementation "org.apache.portals.pluto:pluto-container-api:${plutoVersion}"
-
+    implementation "${servletApiDependency}"
+    implementation "org.springframework:spring-web:${springVersion}"
+    implementation "org.springframework:spring-context:${springVersion}"
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "org.springframework.webflow:spring-webflow:${springWebflowVersion}"
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "${portletApiDependency}"
+    // implementation "org.apache.pluto:pluto-container-api:${plutoVersion}"
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    implementation project(':uPortal-core')
+    implementation project(':uPortal-layout:uPortal-layout-core')
+    implementation project(':uPortal-content:uPortal-content-portlet')
+    implementation project(':uPortal-groups:uPortal-groups-core')
+    implementation project(':uPortal-security:uPortal-security-core')
+    implementation project(':uPortal-utils:uPortal-utils-core')
 }

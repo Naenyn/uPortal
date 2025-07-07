@@ -15,7 +15,7 @@
 package org.apereo.portal.character.stream.events;
 
 import java.util.Collection;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.stream.events.StartElement;
 import org.apereo.portal.character.stream.BasePlaceholderEventSource;
 import org.apereo.portal.rendering.StAXSerializingComponent;

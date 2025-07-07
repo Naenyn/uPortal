@@ -8,7 +8,8 @@ dependencies {
     api project(':uPortal-api:uPortal-api-internal')
     api project(':uPortal-io:uPortal-io-types')
 
-    implementation "javax.mail:mail:${javaxMailVersion}"
+    implementation "jakarta.mail:jakarta.mail-api:${jakartaMailVersion}"
+    implementation "org.eclipse.angus:jakarta.mail:${jakartaMailVersion}"
 
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernateJpamodelgenVersion}" // Required for javac -s
     compileOnly "${servletApiDependency}"

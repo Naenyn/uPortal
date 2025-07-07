@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.portlet.ValidatorException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Preference;
@@ -62,7 +62,7 @@ public class GuestPortletEntityPreferencesImpl
 
     @Override
     protected IPortletEntity getInitializationContext() {
-        final HttpServletRequest containerRequest =
+        final jakarta.servlet.http.HttpServletRequest containerRequest =
                 this.portletRequestContext.getContainerRequest();
         return this.portletEntityRegistry.getPortletEntity(containerRequest, portletEntityId);
     }
@@ -76,7 +76,7 @@ public class GuestPortletEntityPreferencesImpl
     protected void loadTargetPortletPreferences(
             IPortletEntity portletEntity,
             Map<String, IPortletPreference> targetPortletPreferences) {
-        final HttpServletRequest containerRequest =
+        final jakarta.servlet.http.HttpServletRequest containerRequest =
                 this.portletRequestContext.getContainerRequest();
         final Map<String, IPortletPreference> sessionPreferences =
                 this.getSessionPreferences(portletEntityId, containerRequest);
@@ -122,7 +122,7 @@ public class GuestPortletEntityPreferencesImpl
             return false;
         }
 
-        final HttpServletRequest containerRequest = portletRequestContext.getContainerRequest();
+        final jakarta.servlet.http.HttpServletRequest containerRequest = portletRequestContext.getContainerRequest();
         this.storeSessionPreferences(portletEntityId, containerRequest, targetPortletPreferences);
 
         return true;

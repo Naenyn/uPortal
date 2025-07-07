@@ -16,14 +16,14 @@ package org.apereo.portal.i18n.dao.jpa;
 
 import java.io.Serializable;
 import java.util.Locale;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 import org.apereo.portal.i18n.Message;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -67,9 +67,9 @@ class MessageImpl implements Message, Serializable {
     }
 
     MessageImpl(String code, Locale locale, String value) {
-        Assert.notNull(code);
-        Assert.notNull(locale);
-        Assert.notNull(value);
+        Assert.notNull(code, "Code cannot be null");
+        Assert.notNull(locale, "Locale cannot be null");
+        Assert.notNull(value, "Value cannot be null");
 
         this.code = code;
         this.locale = locale;

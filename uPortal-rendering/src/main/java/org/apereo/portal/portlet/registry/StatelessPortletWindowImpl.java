@@ -175,7 +175,6 @@ class StatelessPortletWindowImpl implements IPortletWindow, PortletWindow {
      * (non-Javadoc)
      * @see org.apache.pluto.container.PortletWindow#getPortletDefinition()
      */
-    @Override
     public PortletDefinition getPortletDefinition() {
         return this.portletDefinition;
     }

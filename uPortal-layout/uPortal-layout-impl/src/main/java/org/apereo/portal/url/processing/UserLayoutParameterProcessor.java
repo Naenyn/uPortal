@@ -15,8 +15,8 @@
 package org.apereo.portal.url.processing;
 
 import java.util.Enumeration;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.IUserPreferencesManager;
 import org.apereo.portal.layout.IStylesheetUserPreferencesService;
 import org.apereo.portal.layout.IStylesheetUserPreferencesService.PreferencesScope;

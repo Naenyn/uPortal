@@ -15,7 +15,7 @@
 package org.apereo.portal.portlet.container.cache;
 
 import javax.portlet.CacheControl;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 import org.apereo.portal.portlet.rendering.PortletRenderResult;
 

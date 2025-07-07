@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.portlet.container;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletResponseContext;
@@ -98,10 +98,10 @@ public abstract class AbstractPortletContextImpl {
      * invocation
      *
      * @see org.apache.pluto.container.PortletRequestContext#init(javax.portlet.PortletConfig,
-     *     javax.servlet.ServletContext, HttpServletRequest, HttpServletResponse)
+     *     jakarta.servlet.ServletContext, HttpServletRequest, HttpServletResponse)
      * @see
-     *     org.apache.pluto.container.PortletResponseContext#init(javax.servlet.http.HttpServletRequest,
-     *     javax.servlet.http.HttpServletResponse)
+     *     org.apache.pluto.container.PortletResponseContext#init(jakarta.servlet.http.HttpServletRequest,
+     *     jakarta.servlet.http.HttpServletResponse)
      */
     public void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         Assert.notNull(servletRequest, "servletRequest cannot be null");

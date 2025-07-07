@@ -16,14 +16,14 @@ package org.apereo.portal.concurrency.locking;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Version;
 import org.apache.commons.lang.Validate;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
@@ -133,7 +133,7 @@ public class ClusterMutex implements Serializable {
 
     /** Mark the mutex as locked by the specific server */
     void lock(String serverId) {
-        Assert.notNull(serverId);
+        Assert.notNull(serverId, "serverId must not be null");
         if (this.locked) {
             throw new IllegalStateException("Cannot lock already locked mutex: " + this);
         }
@@ -156,6 +156,36 @@ public class ClusterMutex implements Serializable {
     /** @param lastUpdate the lastUpdate to set */
     void updateLock() {
         this.lastUpdate = new Date();
+    }
+    
+    /** Check if the mutex has expired based on the given date */
+    public boolean isExpired(Date now) {
+        if (!this.locked) {
+            return false;
+        }
+        // Consider expired if not updated in the last 5 minutes
+        long fiveMinutesAgo = now.getTime() - (5 * 60 * 1000);
+        return this.lastUpdate.getTime() < fiveMinutesAgo;
+    }
+    
+    /** Set the last update time */
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+    
+    /** Set the expiration date (alias for setLastUpdate for compatibility) */
+    public void setExpirationDate(Date expirationDate) {
+        this.lastUpdate = expirationDate;
+    }
+    
+    /** Set the server ID */
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
+    }
+    
+    /** Set the locked state */
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     /* (non-Javadoc)

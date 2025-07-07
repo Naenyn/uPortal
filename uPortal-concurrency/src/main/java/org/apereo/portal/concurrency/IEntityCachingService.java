@@ -43,7 +43,7 @@ public interface IEntityCachingService {
      * @param ent org.apereo.portal.concurrency.IBasicEntity
      * @exception org.apereo.portal.concurrency.CachingException
      */
-    void add(IBasicEntity ent) throws CachingException;
+    void add(IBasicEntity ent);
 
     /**
      * Returns the cached entity identified by type and key.
@@ -53,7 +53,7 @@ public interface IEntityCachingService {
      * @return IBasicEntity entity
      * @exception org.apereo.portal.concurrency.CachingException
      */
-    IBasicEntity get(Class<? extends IBasicEntity> type, String key) throws CachingException;
+    IBasicEntity get(Class<? extends IBasicEntity> type, String key);
 
     /**
      * Removes the cached entity identified by type and key from the cache and notifies peer caches.
@@ -62,7 +62,7 @@ public interface IEntityCachingService {
      * @param key String
      * @exception CachingException
      */
-    void remove(Class<? extends IBasicEntity> type, String key) throws CachingException;
+    void remove(Class<? extends IBasicEntity> type, String key);
 
     /**
      * Updates the entity in the cache and notifies peer caches.
@@ -70,5 +70,5 @@ public interface IEntityCachingService {
      * @param ent org.apereo.portal.concurrency.IBasicEntity
      * @exception org.apereo.portal.concurrency.CachingException
      */
-    void update(IBasicEntity ent) throws CachingException;
+    void update(IBasicEntity ent);
 }

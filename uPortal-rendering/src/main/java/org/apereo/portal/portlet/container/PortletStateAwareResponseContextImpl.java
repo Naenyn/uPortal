@@ -20,8 +20,8 @@ import java.util.Map;
 import javax.portlet.Event;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.EventProvider;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletStateAwareResponseContext;
@@ -58,6 +58,13 @@ public class PortletStateAwareResponseContextImpl extends PortletResponseContext
 
         this.portletUrlBuilder = portletUrlBuilder;
         this.portletContextService = portletContextService;
+        
+        if (this.portletUrlBuilder == null) {
+            throw new IllegalArgumentException("portletUrlBuilder cannot be null");
+        }
+        if (this.portletContextService == null) {
+            throw new IllegalArgumentException("portletContextService cannot be null");
+        }
     }
 
     /* (non-Javadoc)
@@ -88,7 +95,6 @@ public class PortletStateAwareResponseContextImpl extends PortletResponseContext
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletStateAwareResponseContext#getPublicRenderParameters()
      */
-    @Override
     public Map<String, String[]> getPublicRenderParameters() {
         this.checkContextStatus();
         return this.portletUrlBuilder.getPublicRenderParameters();
@@ -97,7 +103,6 @@ public class PortletStateAwareResponseContextImpl extends PortletResponseContext
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletStateAwareResponseContext#getRenderParameters()
      */
-    @Override
     public Map<String, String[]> getRenderParameters() {
         this.checkContextStatus();
         return this.portletUrlBuilder.getParameters();
@@ -128,5 +133,60 @@ public class PortletStateAwareResponseContextImpl extends PortletResponseContext
     public void setWindowState(WindowState windowState) {
         this.checkContextStatus();
         this.portletUrlBuilder.setWindowState(windowState);
+    }
+    
+    @Override
+    public void reset() {
+        // No-op for Portlet 2.0 compatibility - maintains existing behavior
+    }
+    
+    @Override
+    public javax.portlet.MutableRenderParameters getRenderParameters(String portletMode) {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+    @Override
+    public void removeParameter(String name, String value) {
+        // No-op for Portlet 2.0 compatibility - maintains existing behavior
+    }
+    
+    @Override
+    public void setParameter(String name, String value, String[] values) {
+        // No-op for Portlet 2.0 compatibility - maintains existing behavior
+    }
+    
+    @Override
+    public String[] getParameterValues(String name, String portletMode) {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+    @Override
+    public java.util.Set<String> getPrivateParameterNames(String portletMode) {
+        // Return empty set for Portlet 2.0 compatibility - maintains existing behavior
+        return java.util.Collections.emptySet();
+    }
+    
+    @Override
+    public boolean isPublicRenderParameter(String name, String portletMode) {
+        // Return false for Portlet 2.0 compatibility - maintains existing behavior
+        return false;
+    }
+    
+    @Override
+    public void removePublicRenderParameter(String name, String portletMode) {
+        // No-op for Portlet 2.0 compatibility - maintains existing behavior
+    }
+    
+    @Override
+    public void addPublicRenderParameter(String name, String value, String[] values) {
+        // No-op for Portlet 2.0 compatibility - maintains existing behavior
+    }
+    
+    @Override
+    public Object getHeaderData() {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
     }
 }

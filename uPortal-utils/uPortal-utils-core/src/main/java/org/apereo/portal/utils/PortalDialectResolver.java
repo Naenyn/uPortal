@@ -20,15 +20,20 @@ import org.apereo.portal.utils.hibernate4.dialects.MySQL5InnoDBCompressedDialect
 import org.apereo.portal.utils.hibernate4.dialects.Oracle12ForceClobDialect;
 import org.apereo.portal.utils.hibernate4.dialects.PostgreSQL81Dialect;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.SQLServer2005Dialect;
-import org.hibernate.service.jdbc.dialect.internal.AbstractDialectResolver;
+import org.hibernate.dialect.SQLServerDialect;
+import org.hibernate.engine.jdbc.dialect.spi.DialectResolver;
+import org.hibernate.engine.jdbc.dialect.spi.DialectResolutionInfo;
 
 /** */
-public class PortalDialectResolver extends AbstractDialectResolver {
+public class PortalDialectResolver implements DialectResolver {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected final Dialect resolveDialectInternal(DatabaseMetaData metaData) throws SQLException {
+    public Dialect resolveDialect(DialectResolutionInfo info) {
+        return null;
+    }
+    
+    public Dialect resolveDialect(DatabaseMetaData metaData) throws SQLException {
         final String databaseName = metaData.getDatabaseProductName();
         final int databaseMajorVersion = metaData.getDatabaseMajorVersion();
         final int databaseMinorVersion = metaData.getDatabaseMinorVersion();
@@ -51,7 +56,7 @@ public class PortalDialectResolver extends AbstractDialectResolver {
         // This is due to a jTDS not supporting SQL Server 2008+, hence does not support some new
         // types like TIME.
         if ("Microsoft SQL Server".equals(databaseName) && databaseMajorVersion > 9) {
-            return new SQLServer2005Dialect();
+            return new SQLServerDialect();
         }
 
         return null;

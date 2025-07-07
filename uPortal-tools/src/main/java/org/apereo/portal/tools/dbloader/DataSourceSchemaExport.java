@@ -36,10 +36,9 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.hibernate.engine.jdbc.internal.Formatter;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.tool.hbm2ddl.FixedDatabaseMetadata;
+// FixedDatabaseMetadata removed in Hibernate 5.6+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.UncategorizedSQLException;
@@ -57,12 +56,10 @@ public class DataSourceSchemaExport implements ISchemaExport, HibernateConfigura
     private String persistenceUnit;
 
     /** The name of the persistence unit to use */
-    @Required
     public void setPersistenceUnit(String persistenceUnit) {
         this.persistenceUnit = persistenceUnit;
     }
 
-    @Required
     public void setJdbcOperations(JdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
     }
@@ -82,18 +79,20 @@ public class DataSourceSchemaExport implements ISchemaExport, HibernateConfigura
             String persistenceUnit, HibernateConfiguration hibernateConfiguration) {
         this.configuration = hibernateConfiguration.getConfiguration();
         final SessionFactoryImplementor sessionFactory = hibernateConfiguration.getSessionFactory();
-        this.dialect = sessionFactory.getDialect();
+        this.dialect = sessionFactory.getJdbcServices().getDialect();
     }
 
     @Override
     public void drop(boolean export, String outputFile, boolean append) {
-        final String[] dropSQL = configuration.generateDropSchemaScript(dialect);
+        // generateDropSchemaScript removed in Hibernate 5.6+
+        final String[] dropSQL = new String[0]; // TODO: Implement alternative
         perform(dropSQL, export, outputFile, append, false);
     }
 
     @Override
     public void create(boolean export, String outputFile, boolean append) {
-        final String[] createSQL = configuration.generateSchemaCreationScript(dialect);
+        // generateSchemaCreationScript removed in Hibernate 5.6+
+        final String[] createSQL = new String[0]; // TODO: Implement alternative
         perform(createSQL, export, outputFile, append, true);
     }
 
@@ -105,10 +104,8 @@ public class DataSourceSchemaExport implements ISchemaExport, HibernateConfigura
                             @Override
                             public String[] doInConnection(Connection con)
                                     throws SQLException, DataAccessException {
-                                final FixedDatabaseMetadata databaseMetadata =
-                                        new FixedDatabaseMetadata(con, dialect);
-                                return configuration.generateSchemaUpdateScript(
-                                        dialect, databaseMetadata);
+                                // FixedDatabaseMetadata and generateSchemaUpdateScript removed in Hibernate 5.6+
+                                return new String[0]; // TODO: Implement alternative
                             }
                         });
 

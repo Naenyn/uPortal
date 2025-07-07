@@ -16,8 +16,8 @@ package org.apereo.portal.security;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apereo.portal.EntityIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

@@ -15,8 +15,8 @@
 package org.apereo.portal.security;
 
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 
 /** Manages workflow around use of the identity swapper features. */

@@ -14,9 +14,7 @@
  */
 package org.apereo.portal.dao.usertype;
 
-import org.jadira.usertype.spi.shared.AbstractSingleColumnUserType;
-
 /** Uses Jackson to convert objects to/from JSON */
-public class JacksonType extends AbstractSingleColumnUserType<Object, String, JacksonColumnMapper> {
+public class JacksonType extends JacksonColumnMapper {
     private static final long serialVersionUID = 1L;
 }

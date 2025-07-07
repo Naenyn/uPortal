@@ -16,8 +16,8 @@ package org.apereo.portal.portlet.rendering.worker;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 import org.apereo.portal.portlet.rendering.IPortletRenderer;

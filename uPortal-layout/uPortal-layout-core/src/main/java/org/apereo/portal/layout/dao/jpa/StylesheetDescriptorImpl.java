@@ -20,20 +20,20 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKey;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKey;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Version;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.dao.usertype.FunctionalNameType;
 import org.apereo.portal.layout.om.ILayoutAttributeDescriptor;
@@ -83,7 +83,7 @@ public class StylesheetDescriptorImpl implements IStylesheetDescriptor {
 
     @NaturalId
     @Column(name = "SS_NAME", length = 100, nullable = false)
-    @Type(type = "fname")
+    @Type(org.apereo.portal.dao.usertype.FunctionalNameType.class)
     private final String name;
 
     @Column(name = "URL_SYNTAX_HELPER_NAME", length = 100)

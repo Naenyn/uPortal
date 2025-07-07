@@ -38,7 +38,8 @@ public class MapBackedEntityCache implements IEntityCache {
     @Override
     public void add(IBasicEntity entity) throws CachingException {
         final EntityIdentifier entityIdentifier = entity.getEntityIdentifier();
-        final Class<? extends IBasicEntity> addType = entityIdentifier.getType();
+        @SuppressWarnings("unchecked")
+        final Class<? extends IBasicEntity> addType = (Class<? extends IBasicEntity>) entityIdentifier.getType();
 
         if (!this.entityType.isAssignableFrom(addType)) {
             throw new CachingException(

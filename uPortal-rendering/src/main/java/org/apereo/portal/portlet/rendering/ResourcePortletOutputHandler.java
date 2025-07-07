@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 /** PortletOutputHandler that delegates all methods directly to a {@link HttpServletResponse} */
 public class ResourcePortletOutputHandler implements PortletResourceOutputHandler {

@@ -15,7 +15,7 @@
 package org.apereo.portal.portlet.registry;
 
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.stream.events.StartElement;
 import org.apache.pluto.container.PortletWindow;
 import org.apereo.portal.layout.IUserLayoutManager;

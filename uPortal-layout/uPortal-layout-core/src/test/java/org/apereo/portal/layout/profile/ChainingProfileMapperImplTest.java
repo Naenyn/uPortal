@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.layout.IUserLayoutStore;
 import org.apereo.portal.security.IPerson;
 import org.junit.Before;

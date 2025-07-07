@@ -71,7 +71,7 @@ public class PortalSearchResults implements Serializable {
     }
 
     protected Set<String> getTabs(SearchResult result) {
-        final List<String> types = result.getType();
+        final List<String> types = result.getTypes();
 
         // Result set no type, use the default tab
         if (types == null || types.isEmpty()) {

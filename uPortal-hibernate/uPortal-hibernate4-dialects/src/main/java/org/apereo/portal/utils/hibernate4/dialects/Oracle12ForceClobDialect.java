@@ -1,7 +1,7 @@
 package org.apereo.portal.utils.hibernate4.dialects;
 
 import java.sql.Types;
-import org.hibernate.dialect.Oracle10gDialect;
+import org.hibernate.dialect.OracleDialect;
 
 /**
  * When using Oracle 10g dialect with Oracle 12, ensure strings over 4000 characters are handled
@@ -11,7 +11,7 @@ import org.hibernate.dialect.Oracle10gDialect;
  *
  * @since 5.3
  */
-public class Oracle12ForceClobDialect extends Oracle10gDialect {
+public class Oracle12ForceClobDialect extends OracleDialect {
 
     public Oracle12ForceClobDialect() {
 

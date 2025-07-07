@@ -10,14 +10,14 @@ dependencies {
     api project(':uPortal-utils:uPortal-utils-core')
 
     implementation "com.google.guava:guava:${guavaVersion}"
-    implementation("dom4j:dom4j:${dom4jVersion}"){
+    implementation("org.dom4j:dom4j:${dom4jVersion}"){
         exclude group: 'xml-apis', module: 'xml-apis'
     }
 
     testImplementation "${portletApiDependency}"
     testImplementation "${servletApiDependency}"
 
-    compileOnly "org.apache.portals.pluto:pluto-container-api:${plutoVersion}"
+    // compileOnly "org.apache.portals.pluto:pluto-container-api:${plutoVersion}"
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernateJpamodelgenVersion}"
     compileOnly "${servletApiDependency}"
 
@@ -42,4 +42,9 @@ sourceSets {
 
 tasks.withType(JavaCompile) {
     options.annotationProcessorGeneratedSourcesDirectory = file(generatedSourcesDir)
+}
+
+// Fix task dependency issue
+sourcesJar {
+    mustRunAfter compileTestJava
 }

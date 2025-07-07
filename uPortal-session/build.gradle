@@ -3,12 +3,20 @@ description = "Apereo uPortal Session"
 dependencies {
     implementation "org.springframework:spring-web:${springVersion}"
     implementation "org.springframework.session:spring-session-data-redis:${springSessionVersion}"
+    implementation "redis.clients:jedis:3.9.0"
 
     compileOnly "${servletApiDependency}"
 
     testImplementation "${servletApiDependency}"
-    testImplementation "com.github.stefanbirkner:system-rules:1.19.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.10.2"
+    testImplementation "org.mockito:mockito-junit-jupiter:5.10.0"
+    testImplementation "com.github.stefanbirkner:system-lambda:1.2.1"
 
     testRuntimeOnly "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
     testRuntimeOnly "org.slf4j:slf4j-api:${slf4jVersion}"
+}
+
+test {
+    useJUnitPlatform()
 }

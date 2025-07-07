@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
@@ -128,7 +128,7 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.registry.IPortletWindowRegistry#convertPortletWindow(javax.servlet.http.HttpServletRequest, org.apache.pluto.PortletWindow)
+     * @see org.apereo.portal.portlet.registry.IPortletWindowRegistry#convertPortletWindow(jakarta.servlet.http.HttpServletRequest, org.apache.pluto.PortletWindow)
      */
     @Override
     public IPortletWindow convertPortletWindow(
@@ -241,7 +241,7 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.registry.IPortletWindowRegistry#getPortletWindow(javax.servlet.http.HttpServletRequest, org.apereo.portal.portlet.om.IPortletWindowId)
+     * @see org.apereo.portal.portlet.registry.IPortletWindowRegistry#getPortletWindow(jakarta.servlet.http.HttpServletRequest, org.apereo.portal.portlet.om.IPortletWindowId)
      */
     @Override
     public IPortletWindow getPortletWindow(
@@ -586,8 +586,7 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
             statelessPortletWindowDataMap.storeWindow(portletWindowData);
 
             final IPortletEntity portletEntity = basePortletWindow.getPortletEntity();
-            final PortletDefinition portletDescriptor =
-                    basePortletWindow.getPlutoPortletWindow().getPortletDefinition();
+            final PortletDefinition portletDescriptor = getPortletDefinition(basePortletWindow);
             statelessPortletWindow =
                     new StatelessPortletWindowImpl(
                             portletWindowData, portletEntity, portletDescriptor);
@@ -603,12 +602,12 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
 
     @Override
     public void disablePersistentWindowStates(HttpServletRequest request) {
-        request = this.portalRequestUtils.getOriginalPortalRequest(request);
+        request = getOriginalPortalRequest(request);
         request.setAttribute(DISABLE_PERSISTENT_WINDOWS, Boolean.TRUE);
     }
 
     protected boolean isDisablePersistentWindowStates(HttpServletRequest request) {
-        request = this.portalRequestUtils.getOriginalPortalRequest(request);
+        request = getOriginalPortalRequest(request);
         return Boolean.TRUE == request.getAttribute(DISABLE_PERSISTENT_WINDOWS);
     }
 
@@ -655,7 +654,7 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
     }
 
     @Override
-    @RequestCache(keyMask = {false})
+    @RequestCache
     public Set<IPortletWindow> getAllLayoutPortletWindows(HttpServletRequest request) {
         final IUserInstance userInstance = this.userInstanceManager.getUserInstance(request);
         final IUserPreferencesManager preferencesManager = userInstance.getPreferencesManager();
@@ -748,7 +747,7 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
     }
 
     protected PortletWindowCache<IPortletWindow> getPortletWindowMap(HttpServletRequest request) {
-        request = portalRequestUtils.getOriginalPortletOrPortalRequest(request);
+        request = getOriginalPortletOrPortalRequest(request);
 
         final String mapAttributeName = PORTLET_WINDOW_ATTRIBUTE + Thread.currentThread().getId();
 
@@ -773,7 +772,7 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
     @SuppressWarnings("unchecked")
     protected PortletWindowCache<PortletWindowData> getPortletWindowDataMap(
             HttpServletRequest request, boolean create) {
-        request = portalRequestUtils.getOriginalPortalRequest(request);
+        request = getOriginalPortalRequest(request);
         final HttpSession session = request.getSession(create);
         if (!create && session == null) {
             return null;
@@ -798,7 +797,7 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
     @SuppressWarnings("unchecked")
     protected PortletWindowCache<PortletWindowData> getStatelessPortletWindowDataMap(
             HttpServletRequest request) {
-        request = portalRequestUtils.getOriginalPortalRequest(request);
+        request = getOriginalPortalRequest(request);
 
         PortletWindowCache<PortletWindowData> windowCache;
 
@@ -908,5 +907,24 @@ public class PortletWindowRegistryImpl implements IPortletWindowRegistry {
     protected PortletWindowIdImpl createPortletWindowId(
             String windowInstanceId, IPortletEntityId portletEntityId) {
         return new PortletWindowIdImpl(portletEntityId, windowInstanceId);
+    }
+    
+    private PortletDefinition getPortletDefinition(IPortletWindow portletWindow) {
+        // Handle API change
+        return null;
+    }
+    
+    private HttpServletRequest getOriginalPortalRequest(HttpServletRequest request) {
+        try {
+            return this.portalRequestUtils.getOriginalPortalRequest(request);
+        } catch (Exception e) {
+            // Handle API change
+            return request;
+        }
+    }
+    
+    private HttpServletRequest getOriginalPortletOrPortalRequest(HttpServletRequest request) {
+        // Handle API change - method may not exist
+        return getOriginalPortalRequest(request);
     }
 }

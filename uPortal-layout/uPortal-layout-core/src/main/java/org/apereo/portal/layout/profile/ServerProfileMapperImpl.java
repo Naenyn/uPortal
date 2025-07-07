@@ -16,12 +16,11 @@ package org.apereo.portal.layout.profile;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.Validate;
 import org.apereo.portal.security.IPerson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Returns the specified profile FName for a given server specified in the server regular expression
@@ -45,7 +44,6 @@ public class ServerProfileMapperImpl implements IProfileMapper {
      *
      * @param serverRegex
      */
-    @Required
     public void setServerRegex(String serverRegex) {
         Validate.notBlank(serverRegex);
         this.serverRegex = serverRegex;

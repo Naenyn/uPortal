@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.portlet.container;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEventResponseContext;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -48,4 +48,23 @@ public class PortletEventResponseContextImpl extends PortletStateAwareResponseCo
                 portletContextService,
                 portletCookieService);
     }
+    
+    @Override
+    public void reset() {
+        // No-op for Portlet 2.0 compatibility - reset not used
+    }
+    
+    @Override
+    public javax.portlet.MutableRenderParameters getRenderParameters(String portletMode) {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+    @Override
+    public Object getHeaderData() {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+
 }

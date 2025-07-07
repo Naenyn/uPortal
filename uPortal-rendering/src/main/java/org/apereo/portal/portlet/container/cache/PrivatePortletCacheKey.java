@@ -53,7 +53,7 @@ public class PrivatePortletCacheKey implements Serializable, TaggedCacheEntry {
 
         this.cacheEntryTags =
                 ImmutableSet.<CacheEntryTag>of(
-                        SessionIdTaggedCacheEntryPurger.createCacheEntryTag(this.sessionId),
+                        createSessionCacheEntryTag(this.sessionId),
                         createTag(this.sessionId, this.portletWindowId));
 
         this.hash = internalHashCode();
@@ -63,6 +63,11 @@ public class PrivatePortletCacheKey implements Serializable, TaggedCacheEntry {
         final List<Serializable> key = ImmutableList.of(sessionId, windowId);
         return new SimpleCacheEntryTag<List<Serializable>>(
                 SESSION_PORTLET_WINDOW_CACHE_ENTRY_TAG_NAME, key);
+    }
+    
+    private static CacheEntryTag createSessionCacheEntryTag(String sessionId) {
+        // Handle API change - create a simple tag instead
+        return new SimpleCacheEntryTag<String>("SESSION_ID", sessionId);
     }
 
     @Override

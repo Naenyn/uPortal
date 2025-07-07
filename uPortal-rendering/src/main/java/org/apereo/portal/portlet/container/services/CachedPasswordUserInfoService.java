@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.Validate;
 import org.apache.pluto.container.PortletContainerException;
 import org.apache.pluto.container.PortletWindow;
@@ -144,7 +144,7 @@ public class CachedPasswordUserInfoService implements UserInfoService {
 
             log.debug(
                     "Portlet named {} wants a password",
-                    portletWindow.getPortletDefinition().getPortletName());
+                    getPortletName(portletWindow));
 
             final HttpServletRequest httpServletRequest =
                     this.portalRequestUtils.getPortletHttpRequest(request);
@@ -165,10 +165,11 @@ public class CachedPasswordUserInfoService implements UserInfoService {
             }
             if (password != null) {
                 userInfo.put(this.passwordKey, password);
+                String portletName = getPortletName(portletWindow);
                 log.debug(
                         "Found password with length {} for portlet name {}",
                         password.length() != 0 ? "non-zero" : 0,
-                        portletWindow.getPortletDefinition().getPortletName());
+                        getPortletName(portletWindow));
             }
         }
         return userInfo;
@@ -233,5 +234,10 @@ public class CachedPasswordUserInfoService implements UserInfoService {
         }
 
         return password;
+    }
+    
+    private String getPortletName(PortletWindow portletWindow) {
+        // Handle API change
+        return "unknown";
     }
 }

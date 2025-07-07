@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.portlet.container.properties;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.utils.Populator;
 import org.springframework.core.Ordered;

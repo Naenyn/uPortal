@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.security.IPerson;
 import org.slf4j.Logger;
@@ -55,7 +55,7 @@ public class UserAgentProfileMapper implements IProfileMapper {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.layout.profile.IProfileMapper#getProfileFname(org.apereo.portal.security.IPerson, javax.servlet.http.HttpServletRequest)
+     * @see org.apereo.portal.layout.profile.IProfileMapper#getProfileFname(org.apereo.portal.security.IPerson, jakarta.servlet.http.HttpServletRequest)
      */
     @Override
     public String getProfileFname(IPerson person, HttpServletRequest request) {

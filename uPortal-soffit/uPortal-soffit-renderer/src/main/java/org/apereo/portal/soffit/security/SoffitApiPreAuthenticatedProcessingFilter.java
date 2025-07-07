@@ -19,7 +19,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apereo.portal.soffit.Headers;
 import org.apereo.portal.soffit.service.AbstractJwtService;
@@ -27,10 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-
 /**
- * This concrete implementation of <code>AbstractPreAuthenticatedProcessingFilter</code> (Spring
+ * This concrete implementation of <code>JakartaAbstractPreAuthenticatedProcessingFilter</code> (Spring
  * Security) may be employed by REST APIs within Soffits (and similar modules) to discover the
  * identity of portal users simply and securely. (It is not used inside the uPortal webapp at all.)
  * The approach is inspired by (and closely aligned with) OpenID Connect (OIDC). This filter honors
@@ -48,7 +46,7 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
  * @since 5.1
  */
 public class SoffitApiPreAuthenticatedProcessingFilter
-        extends AbstractPreAuthenticatedProcessingFilter {
+        extends JakartaAbstractPreAuthenticatedProcessingFilter {
 
     private static final String USER_DETAILS_REQUEST_ATTRIBUTE =
             SoffitApiPreAuthenticatedProcessingFilter.class.getName()

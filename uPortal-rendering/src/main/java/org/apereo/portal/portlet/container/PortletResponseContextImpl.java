@@ -14,9 +14,9 @@
  */
 package org.apereo.portal.portlet.container;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -55,16 +55,19 @@ public class PortletResponseContextImpl extends AbstractPortletContextImpl
                 containerResponse,
                 portletCookieService);
 
-        Assert.notNull(requestPropertiesManager, "requestPropertiesManager can not be null");
+        if (requestPropertiesManager == null) {
+            throw new IllegalArgumentException("requestPropertiesManager can not be null");
+        }
 
         this.requestPropertiesManager = requestPropertiesManager;
     }
 
-    @Override
     public void addProperty(Cookie cookie) {
         final IPortletWindowId portletWindowId = this.portletWindow.getPortletWindowId();
         this.portletCookieService.addCookie(this.servletRequest, portletWindowId, cookie);
     }
+    
+
 
     @Override
     public final void addProperty(String key, Element element) {
@@ -140,4 +143,57 @@ public class PortletResponseContextImpl extends AbstractPortletContextImpl
     public boolean isReleased() {
         return this.released;
     }
+    
+    // Minimal stub for Pluto 3.x compatibility - maintains Portlet 2.0 behavior
+    @Override
+    public void setActionScopedId(String actionScopedId, String[] values) {
+        // No-op for Portlet 2.0 compatibility - action scoping not used
+    }
+    
+    @Override
+    public void processHttpHeaders() {
+        // No-op for Portlet 2.0 compatibility - HTTP header processing not used
+    }
+    
+    @Override
+    public java.util.Collection<String> getPropertyNames() {
+        // Return empty collection for Portlet 2.0 compatibility
+        return java.util.Collections.emptyList();
+    }
+    
+    @Override
+    public java.util.Collection<String> getPropertyValues(String name) {
+        // Return empty collection for Portlet 2.0 compatibility - maintains existing behavior
+        return java.util.Collections.emptyList();
+    }
+    
+    @Override
+    public String getProperty(String name) {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+    @Override
+    public void addProperty(javax.servlet.http.Cookie cookie) {
+        // No-op for Portlet 2.0 compatibility - maintains existing behavior
+    }
+    
+    @Override
+    public org.apache.pluto.container.PortletURLProvider getPortletURLProvider(org.apache.pluto.container.PortletURLProvider.TYPE type) {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+    @Override
+    public Object getHeaderData() {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+    @Override
+    public boolean isSetPropsAllowed() {
+        // Return true for Portlet 2.0 compatibility - maintains existing behavior
+        return true;
+    }
+    
 }

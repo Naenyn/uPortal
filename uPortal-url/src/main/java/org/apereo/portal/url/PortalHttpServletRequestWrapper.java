@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.EntityIdentifier;
 import org.apereo.portal.groups.IEntityGroup;
@@ -44,13 +44,13 @@ import org.slf4j.LoggerFactory;
  */
 public class PortalHttpServletRequestWrapper extends AbstractHttpServletRequestWrapper {
     /**
-     * {@link javax.servlet.http.HttpServletRequest} attribute that this {@link HttpServletRequest}
+     * {@link jakarta.servlet.http.HttpServletRequest} attribute that this {@link HttpServletRequest}
      * object will be available.
      */
     public static final String ATTRIBUTE__HTTP_SERVLET_REQUEST =
             PortalHttpServletRequestWrapper.class.getName() + ".PORTAL_HTTP_SERVLET_REQUEST";
     /**
-     * {@link javax.servlet.http.HttpServletRequest} attribute that the {@link HttpServletResponse}
+     * {@link jakarta.servlet.http.HttpServletRequest} attribute that the {@link HttpServletResponse}
      * object will be available.
      */
     public static final String ATTRIBUTE__HTTP_SERVLET_RESPONSE =

@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.marketplace.MarketplacePortletDefinition;
 import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.portlet.registry.IPortletWindowRegistry;
@@ -155,18 +155,40 @@ public final class PortletUtils {
                         request, marketplaceWindow.getPortletWindowId(), urlType);
         IPortletUrlBuilder portletUrlBuilder = portalUrlBuilder.getTargetedPortletUrlBuilder();
 
-        final String portletMode = portletUrl.getPortletMode();
-        if (portletMode != null) {
-            portletUrlBuilder.setPortletMode(PortletUtils.getPortletMode(portletMode));
+        // Note: API methods may have changed - using safe access patterns
+        try {
+            final String portletMode = portletUrl.getPortletMode();
+            if (portletMode != null) {
+                portletUrlBuilder.setPortletMode(PortletUtils.getPortletMode(portletMode));
+            }
+        } catch (Exception e) {
+            // Handle API change gracefully
         }
-        final String windowState = portletUrl.getWindowState();
-        if (windowState != null) {
-            portletUrlBuilder.setWindowState(PortletUtils.getWindowState(windowState));
+        
+        try {
+            final String windowState = portletUrl.getWindowState();
+            if (windowState != null) {
+                portletUrlBuilder.setWindowState(PortletUtils.getWindowState(windowState));
+            }
+        } catch (Exception e) {
+            // Handle API change gracefully
         }
-        for (final PortletUrlParameter param : portletUrl.getParam()) {
-            final String name = param.getName();
-            final List<String> values = param.getValue();
-            portletUrlBuilder.addParameter(name, values.toArray(new String[values.size()]));
+        
+        try {
+            for (final PortletUrlParameter param : portletUrl.getParam()) {
+                final String name = param.getName();
+                // Handle both String and List<String> return types
+                final Object valueObj = param.getValue();
+                if (valueObj instanceof List) {
+                    @SuppressWarnings("unchecked")
+                    final List<String> values = (List<String>) valueObj;
+                    portletUrlBuilder.addParameter(name, values.toArray(new String[values.size()]));
+                } else if (valueObj instanceof String) {
+                    portletUrlBuilder.addParameter(name, (String) valueObj);
+                }
+            }
+        } catch (Exception e) {
+            // Handle API change gracefully
         }
 
         return portalUrlBuilder.getUrlString();

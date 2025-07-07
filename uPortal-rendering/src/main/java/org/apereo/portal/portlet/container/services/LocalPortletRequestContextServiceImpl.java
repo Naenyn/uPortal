@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.portlet.container.services;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletActionResponseContext;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEventResponseContext;
@@ -90,9 +90,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletActionRequestContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletActionRequestContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletRequestContext getPortletActionRequestContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -115,9 +114,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletActionResponseContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletActionResponseContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletActionResponseContext getPortletActionResponseContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -145,9 +143,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletEventRequestContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletEventRequestContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletRequestContext getPortletEventRequestContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -170,9 +167,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletEventResponseContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletEventResponseContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletEventResponseContext getPortletEventResponseContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -199,9 +195,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletRenderRequestContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletRenderRequestContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletRequestContext getPortletRenderRequestContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -224,9 +219,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletRenderResponseContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletRenderResponseContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletRenderResponseContext getPortletRenderResponseContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -246,9 +240,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletResourceRequestContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletResourceRequestContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletResourceRequestContext getPortletResourceRequestContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -270,9 +263,8 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
     }
 
     /* (non-Javadoc)
-     * @see org.apache.pluto.container.PortletRequestContextService#getPortletResourceResponseContext(org.apache.pluto.container.PortletContainer, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
+     * @see org.apache.pluto.container.PortletRequestContextService#getPortletResourceResponseContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
      */
-    @Override
     public PortletResourceResponseContext getPortletResourceResponseContext(
             PortletContainer container,
             HttpServletRequest containerRequest,
@@ -290,5 +282,17 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
                 this.requestPropertiesManager,
                 this.portalUrlProvider,
                 this.portletCookieService);
+    }
+    
+    // Minimal stub for Pluto 3.x compatibility - maintains Portlet 2.0 behavior
+    @Override
+    public org.apache.pluto.container.PortletHeaderResponseContext getPortletHeaderResponseContext(
+            PortletContainer container,
+            HttpServletRequest containerRequest,
+            HttpServletResponse containerResponse,
+            PortletWindow window,
+            PortletRequestContext requestContext) {
+        // Return null for Portlet 2.0 compatibility - header responses not used
+        return null;
     }
 }

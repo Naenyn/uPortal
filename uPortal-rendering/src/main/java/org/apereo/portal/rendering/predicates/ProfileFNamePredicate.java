@@ -15,13 +15,12 @@
 package org.apereo.portal.rendering.predicates;
 
 import java.util.function.Predicate;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.user.IUserInstance;
 import org.apereo.portal.user.IUserInstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
 /**
@@ -70,11 +69,10 @@ public class ProfileFNamePredicate implements Predicate<HttpServletRequest> {
 
     @Autowired
     public void setUserInstanceManager(final IUserInstanceManager userInstanceManager) {
-        Assert.notNull(userInstanceManager);
+        Assert.notNull(userInstanceManager, "userInstanceManager cannot be null");
         this.userInstanceManager = userInstanceManager;
     }
 
-    @Required
     public void setProfileFNameToMatch(final String profileFNameToMatch) {
         this.profileFNameToMatch = profileFNameToMatch;
     }

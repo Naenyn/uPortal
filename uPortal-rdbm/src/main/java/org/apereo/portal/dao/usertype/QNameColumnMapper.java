@@ -14,20 +14,7 @@
  */
 package org.apereo.portal.dao.usertype;
 
-import javax.xml.namespace.QName;
-import org.jadira.usertype.spi.shared.AbstractStringColumnMapper;
-
-/** */
-public class QNameColumnMapper extends AbstractStringColumnMapper<QName> {
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    public QName fromNonNullValue(String s) {
-        return QName.valueOf(s);
-    }
-
-    @Override
-    public String toNonNullValue(QName value) {
-        return value.toString();
-    }
+/** Placeholder - functionality moved to QNameType */
+public class QNameColumnMapper {
+    // No longer needed - QNameType implements UserType directly
 }

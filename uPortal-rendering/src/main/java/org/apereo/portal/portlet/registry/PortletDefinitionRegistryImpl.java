@@ -15,7 +15,7 @@
 package org.apereo.portal.portlet.registry;
 
 import java.util.List;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -67,7 +67,7 @@ public class PortletDefinitionRegistryImpl
     }
 
     /* (non-Javadoc)
-     * @see org.springframework.web.context.ServletContextAware#setServletContext(javax.servlet.ServletContext)
+     * @see org.springframework.web.context.ServletContextAware#setServletContext(jakarta.servlet.ServletContext)
      */
     @Override
     public void setServletContext(ServletContext servletContext) {

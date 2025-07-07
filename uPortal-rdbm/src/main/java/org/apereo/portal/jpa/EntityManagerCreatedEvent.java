@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.jpa;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 /** Event fired immediately after the {@link EntityManager} is created */
 public class EntityManagerCreatedEvent extends AbstractEntityManagerEvent {

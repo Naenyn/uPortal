@@ -39,7 +39,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getCacheability()
      */
-    @Override
     public String getCacheability() {
         return this.portletUrlBuilder.getCacheability();
     }
@@ -47,7 +46,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getPortletMode()
      */
-    @Override
     public PortletMode getPortletMode() {
         return this.portletUrlBuilder.getPortletMode();
     }
@@ -55,7 +53,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getProperties()
      */
-    @Override
     public Map<String, List<String>> getProperties() {
         // TODO
         return Collections.emptyMap();
@@ -64,7 +61,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getPublicRenderParameters()
      */
-    @Override
     public Map<String, String[]> getPublicRenderParameters() {
         // TODO
         return Collections.emptyMap();
@@ -73,7 +69,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getRenderParameters()
      */
-    @Override
     public Map<String, String[]> getRenderParameters() {
         return this.portletUrlBuilder.getParameters();
     }
@@ -81,7 +76,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getResourceID()
      */
-    @Override
     public String getResourceID() {
         return this.portletUrlBuilder.getResourceId();
     }
@@ -89,7 +83,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getType()
      */
-    @Override
     public TYPE getType() {
         final IPortalUrlBuilder portalUrlBuilder = this.portletUrlBuilder.getPortalUrlBuilder();
         final UrlType urlType = portalUrlBuilder.getUrlType();
@@ -99,7 +92,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#getWindowState()
      */
-    @Override
     public WindowState getWindowState() {
         return this.portletUrlBuilder.getWindowState();
     }
@@ -107,7 +99,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#isSecure()
      */
-    @Override
     public boolean isSecure() {
         // TODO not supported yet
         return false;
@@ -116,7 +107,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#setCacheability(java.lang.String)
      */
-    @Override
     public void setCacheability(String cacheability) {
         this.portletUrlBuilder.setCacheability(cacheability);
     }
@@ -124,7 +114,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#setPortletMode(javax.portlet.PortletMode)
      */
-    @Override
     public void setPortletMode(PortletMode mode) {
         this.portletUrlBuilder.setPortletMode(mode);
     }
@@ -132,7 +121,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#setResourceID(java.lang.String)
      */
-    @Override
     public void setResourceID(String resourceId) {
         this.portletUrlBuilder.setResourceId(resourceId);
     }
@@ -140,7 +128,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#setSecure(boolean)
      */
-    @Override
     public void setSecure(boolean secure) throws PortletSecurityException {
         // TODO not supported yet
     }
@@ -148,7 +135,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#setWindowState(javax.portlet.WindowState)
      */
-    @Override
     public void setWindowState(WindowState state) {
         this.portletUrlBuilder.setWindowState(state);
     }
@@ -156,7 +142,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#toURL()
      */
-    @Override
     public String toURL() {
         final IPortalUrlBuilder portalUrlBuilder = this.portletUrlBuilder.getPortalUrlBuilder();
         return portalUrlBuilder.getUrlString();
@@ -165,7 +150,6 @@ public class PortletURLProviderImpl implements PortletURLProvider {
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletURLProvider#write(java.io.Writer, boolean)
      */
-    @Override
     public void write(Writer out, boolean escapeXML) throws IOException {
         final String url = this.toURL();
         if (escapeXML) {

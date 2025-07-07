@@ -37,7 +37,8 @@ public abstract class AbstractEntityCachingService implements IEntityCachingServ
     @Override
     public void add(IBasicEntity entity) throws CachingException {
         final EntityIdentifier entityIdentifier = entity.getEntityIdentifier();
-        final Class<? extends IBasicEntity> entityType = entityIdentifier.getType();
+        @SuppressWarnings("unchecked")
+        final Class<? extends IBasicEntity> entityType = (Class<? extends IBasicEntity>) entityIdentifier.getType();
         final IEntityCache entityCache = this.getCache(entityType);
 
         entityCache.add(entity);

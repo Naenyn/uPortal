@@ -14,9 +14,9 @@
  */
 package org.apereo.portal.portlet.rendering.worker;
 
-import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.persistence.EntityManager;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 import org.springframework.orm.jpa.EntityManagerHolder;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
@@ -71,7 +71,7 @@ public class JpaPortletExecutionInterceptor extends OpenEntityManagerInViewInter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#preSubmit(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext)
+     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#preSubmit(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext)
      */
     @Override
     public void preSubmit(

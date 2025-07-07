@@ -15,6 +15,7 @@
 package org.apereo.portal.version;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.apereo.portal.version.om.Version;
 
 /** Base class for versions that implements a "correct" equals hashCode, equals and toString */
@@ -30,7 +31,7 @@ public abstract class AbstractVersion implements Version, Serializable {
 
     @Override
     public final boolean isAfter(Version other) {
-        return compareTo(other) > 1;
+        return compareTo(other) > 0;
     }
 
     @Override
@@ -61,7 +62,7 @@ public abstract class AbstractVersion implements Version, Serializable {
 
         final Integer l = getLocal();
         final Integer ol = o.getLocal();
-        if (l == ol) {
+        if (Objects.equals(l, ol)) {
             return 0;
         }
         if (l == null) {

@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.utils.web;
 
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.ServletRequestListener;
+import jakarta.servlet.ServletRequestEvent;
+import jakarta.servlet.ServletRequestListener;
 import org.apereo.portal.utils.SerializableObject;
 
 /**

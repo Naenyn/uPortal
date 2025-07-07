@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.url;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Generates a URL string from a {@link IPortalUrlBuilder} or parses a request URL into {@link

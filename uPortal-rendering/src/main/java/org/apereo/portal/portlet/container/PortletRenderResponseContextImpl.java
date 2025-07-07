@@ -16,8 +16,8 @@ package org.apereo.portal.portlet.container;
 
 import java.util.Collection;
 import javax.portlet.PortletMode;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletRenderResponseContext;
 import org.apereo.portal.portlet.container.properties.IRequestPropertiesManager;
@@ -65,5 +65,11 @@ public class PortletRenderResponseContextImpl extends PortletMimeResponseContext
     public void setTitle(String title) {
         this.checkContextStatus();
         this.servletRequest.setAttribute(IPortletRenderer.ATTRIBUTE__PORTLET_TITLE, title);
+    }
+    
+    @Override
+    public Object getHeaderData() {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
     }
 }

@@ -15,7 +15,7 @@
 package org.apereo.portal.url;
 
 import java.io.UnsupportedEncodingException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Encode the originally requested URL for use as a RefUrl parameter in various login use cases

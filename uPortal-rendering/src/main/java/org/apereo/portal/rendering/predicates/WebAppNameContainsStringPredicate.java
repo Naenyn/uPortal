@@ -15,7 +15,7 @@
 package org.apereo.portal.rendering.predicates;
 
 import java.util.function.Predicate;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.om.IPortletDescriptorKey;
 import org.apereo.portal.rendering.RequestRenderingPipelineUtils;

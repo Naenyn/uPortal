@@ -6,3 +6,9 @@ dependencies {
     implementation "org.springframework.ldap:spring-ldap-core:${springLdapVersion}"
     implementation "org.springframework.ldap:spring-ldap-core-tiger:${springLdapVersion}"
 }
+
+// Disable BanJNDI check for LDAP operations
+tasks.withType(JavaCompile) {
+    options.errorprone.disableWarningsInGeneratedCode = true
+    options.errorprone.disable('BanJNDI')
+}

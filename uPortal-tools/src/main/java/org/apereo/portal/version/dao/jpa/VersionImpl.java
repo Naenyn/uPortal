@@ -14,13 +14,13 @@
  */
 package org.apereo.portal.version.dao.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 import org.apereo.portal.version.AbstractVersion;
 import org.apereo.portal.version.om.Version;
 import org.hibernate.annotations.NaturalId;
@@ -40,13 +40,13 @@ class VersionImpl extends AbstractVersion {
     @Column(name = "VERSION_ID")
     private final long id;
 
-    @javax.persistence.Version
+    @jakarta.persistence.Version
     @Column(name = "ENTITY_VERSION")
     private final long entityVersion;
 
     @NaturalId
     @Column(name = "PRODUCT", length = 128, nullable = false)
-    @Type(type = "fname")
+    @Type(org.apereo.portal.dao.usertype.FunctionalNameType.class)
     private final String product;
 
     @Column(name = "MAJOR_VER", nullable = false)

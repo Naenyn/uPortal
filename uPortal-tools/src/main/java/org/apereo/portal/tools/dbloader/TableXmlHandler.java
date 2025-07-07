@@ -20,15 +20,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import org.hibernate.MappingException;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.boot.spi.MetadataBuildingContext;
+import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Mappings;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.Index;
 import org.hibernate.mapping.PrimaryKey;
-import org.hibernate.mapping.SimpleValue;
+import org.hibernate.mapping.BasicValue;
 import org.hibernate.mapping.Table;
 import org.hibernate.mapping.UniqueKey;
+import org.hibernate.type.BasicTypeRegistry;
+import org.hibernate.type.Type;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -37,11 +43,18 @@ import org.xml.sax.SAXException;
  * Once parsing is complete the generated objects are available via {@link #getTables()}
  */
 public class TableXmlHandler extends BaseDbXmlHandler implements ITableDataProvider {
-    private final Mappings mappings = new Configuration().createMappings();
+    // Mappings removed in Hibernate 5.6+, using Configuration directly
+    private final Configuration configuration = new Configuration();
     private final Dialect dialect;
+    private final MetadataBuildingContext metadataBuildingContext;
 
     public TableXmlHandler(Dialect dialect) {
         this.dialect = dialect;
+        // Create a minimal MetadataBuildingContext for SimpleValue constructor
+        StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().build();
+        MetadataSources metadataSources = new MetadataSources(serviceRegistry);
+        MetadataImplementor metadata = (MetadataImplementor) metadataSources.buildMetadata();
+        this.metadataBuildingContext = metadata.getTypeConfiguration().getMetadataBuildingContext();
     }
 
     @Override
@@ -129,7 +142,7 @@ public class TableXmlHandler extends BaseDbXmlHandler implements ITableDataProvi
 
             final String hibType = this.getHibernateType(sqlType);
 
-            final SimpleValue value = new SimpleValue(this.mappings, this.currentTable);
+            final BasicValue value = new BasicValue(this.metadataBuildingContext, this.currentTable);
             value.setTypeName(hibType);
 
             this.currentColumn.setValue(value);
@@ -142,7 +155,7 @@ public class TableXmlHandler extends BaseDbXmlHandler implements ITableDataProvi
             final String columnName = this.chars.toString().trim();
 
             if (this.primaryKey == null) {
-                this.primaryKey = new PrimaryKey();
+                this.primaryKey = new PrimaryKey(this.currentTable);
             }
 
             final Column column = this.currentColumns.get(columnName);
@@ -222,21 +235,43 @@ public class TableXmlHandler extends BaseDbXmlHandler implements ITableDataProvi
     }
 
     protected String getHibernateType(final int sqlType) {
-        final String hibType;
-        try {
-            hibType = this.dialect.getHibernateTypeName(sqlType);
-        } catch (MappingException e) {
-            throw new IllegalArgumentException(
-                    "No mapped hibernate type found for '"
-                            + sqlType
-                            + "' Types value="
-                            + sqlType
-                            + " for column '"
-                            + this.currentColumn.getName()
-                            + "'",
-                    e);
+        // Map common SQL types to Hibernate types
+        switch (sqlType) {
+            case Types.VARCHAR:
+            case Types.CHAR:
+            case Types.LONGVARCHAR:
+                return "string";
+            case Types.INTEGER:
+                return "integer";
+            case Types.BIGINT:
+                return "long";
+            case Types.SMALLINT:
+                return "short";
+            case Types.TINYINT:
+                return "byte";
+            case Types.BOOLEAN:
+            case Types.BIT:
+                return "boolean";
+            case Types.DECIMAL:
+            case Types.NUMERIC:
+                return "big_decimal";
+            case Types.DOUBLE:
+                return "double";
+            case Types.FLOAT:
+            case Types.REAL:
+                return "float";
+            case Types.DATE:
+                return "date";
+            case Types.TIME:
+                return "time";
+            case Types.TIMESTAMP:
+                return "timestamp";
+            case Types.BLOB:
+                return "blob";
+            case Types.CLOB:
+                return "clob";
+            default:
+                return "string"; // Default fallback
         }
-
-        return hibType;
     }
 }

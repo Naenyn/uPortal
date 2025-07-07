@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.portlet.MimeResponse;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.ServletResponse;
 
 /** Used to handle output from portlet render and resource requests. */
 public interface PortletOutputHandler {

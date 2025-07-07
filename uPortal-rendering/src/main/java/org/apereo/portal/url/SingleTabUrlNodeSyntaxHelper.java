@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.xpath.XPathExpression;
 import org.apache.commons.lang.StringUtils;
 import org.apereo.portal.IUserPreferencesManager;
@@ -176,7 +176,7 @@ public class SingleTabUrlNodeSyntaxHelper implements IUrlNodeSyntaxHelper {
         return null;
     }
 
-    @RequestCache(keyMask = {false, true})
+    @RequestCache
     @Override
     public List<String> getFolderNamesForLayoutNode(
             HttpServletRequest request, String layoutNodeId) {
@@ -353,7 +353,7 @@ public class SingleTabUrlNodeSyntaxHelper implements IUrlNodeSyntaxHelper {
         return nodeId;
     }
 
-    @RequestCache(keyMask = {false, true})
+    @RequestCache
     @Override
     public String getFolderNameForPortlet(
             HttpServletRequest request, IPortletWindowId portletWindowId) {

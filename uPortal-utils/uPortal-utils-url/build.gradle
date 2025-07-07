@@ -4,8 +4,8 @@ dependencies {
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "org.springframework:spring-beans:${springVersion}"
     implementation "org.springframework:spring-core:${springVersion}"
+    implementation "${servletApiDependency}"
 
-    compileOnly "org.apache.portals.pluto:pluto-container:${plutoVersion}"
+    // compileOnly "org.apache.portals.pluto:pluto-container:${plutoVersion}"
     compileOnly "${portletApiDependency}"
-    compileOnly "${servletApiDependency}"
 }

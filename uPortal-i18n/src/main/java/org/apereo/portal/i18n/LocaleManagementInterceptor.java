@@ -15,9 +15,9 @@
 package org.apereo.portal.i18n;
 
 import java.util.Locale;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
@@ -25,7 +25,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * use <code>response.getLocale()</code> in order to determine the portal locale whenever request
  * object is available.
  */
-public class LocaleManagementInterceptor extends HandlerInterceptorAdapter {
+public class LocaleManagementInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(

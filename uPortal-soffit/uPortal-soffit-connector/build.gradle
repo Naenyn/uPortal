@@ -1,5 +1,7 @@
 description = "Apereo uPortal Soffit Connector"
 
+apply from: 'spring-webmvc-portlet.gradle'
+
 dependencies {
     api project(':uPortal-groups:uPortal-groups-core')
     api project(':uPortal-i18n')
@@ -9,7 +11,7 @@ dependencies {
     implementation "commons-io:commons-io:${commonsIoVersion}"
     implementation "net.sf.ehcache:ehcache-core:${ehcacheVersion}"
     implementation "org.apache.httpcomponents:httpclient:${httpclientVersion}"
-    implementation "org.springframework:spring-webmvc-portlet:${springVersion}"
+    // Spring WebMVC Portlet is now included from spring-webmvc-portlet.gradle
 
     compileOnly "org.apache.portals.pluto:pluto-container-api:${plutoVersion}"
     compileOnly "${portletApiDependency}"

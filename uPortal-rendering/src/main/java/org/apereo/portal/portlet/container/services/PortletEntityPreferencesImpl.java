@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
 import org.apache.pluto.container.om.portlet.Preference;
@@ -63,7 +63,7 @@ public class PortletEntityPreferencesImpl extends AbstractPortletPreferencesImpl
 
     @Override
     protected IPortletEntity getInitializationContext() {
-        final HttpServletRequest containerRequest =
+        final javax.servlet.http.HttpServletRequest containerRequest =
                 this.portletRequestContext.getContainerRequest();
         return this.portletEntityRegistry.getPortletEntity(containerRequest, portletEntityId);
     }
@@ -108,7 +108,7 @@ public class PortletEntityPreferencesImpl extends AbstractPortletPreferencesImpl
 
     @Override
     protected boolean storeInternal() {
-        final HttpServletRequest containerRequest = portletRequestContext.getContainerRequest();
+        final jakarta.servlet.http.HttpServletRequest containerRequest = portletRequestContext.getContainerRequest();
 
         final IPortletEntity portletEntity =
                 this.portletEntityRegistry.getPortletEntity(containerRequest, portletEntityId);

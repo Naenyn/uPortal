@@ -14,12 +14,9 @@
  */
 package org.apereo.portal.dao.usertype;
 
-import org.jadira.usertype.spi.shared.AbstractStringColumnMapper;
-
-public class FunctionalNameColumnMapper extends AbstractStringColumnMapper<String> {
+public class FunctionalNameColumnMapper {
     private static final long serialVersionUID = 1L;
 
-    @Override
     public String fromNonNullValue(String s) {
         if (!FunctionalNameType.isValid(s)) {
             throw new IllegalArgumentException(
@@ -32,7 +29,6 @@ public class FunctionalNameColumnMapper extends AbstractStringColumnMapper<Strin
         return s;
     }
 
-    @Override
     public String toNonNullValue(String value) {
         if (!FunctionalNameType.isValid(value)) {
             throw new IllegalArgumentException(

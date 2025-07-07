@@ -16,8 +16,8 @@ package org.apereo.portal.portlet.container.services;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import org.apereo.portal.portlet.om.IPortletCookie;
 import org.joda.time.DateTime;
 
@@ -41,10 +41,10 @@ class SessionOnlyPortletCookieImpl implements IPortletCookie, Serializable {
     SessionOnlyPortletCookieImpl(Cookie cookie) {
         this.name = cookie.getName();
         this.value = cookie.getValue();
-        this.comment = cookie.getComment();
+        this.comment = null; // getComment() is deprecated
         this.domain = cookie.getDomain();
         this.path = cookie.getPath();
-        this.version = cookie.getVersion();
+        this.version = 0; // getVersion() is deprecated
         this.secure = cookie.getSecure();
 
         setMaxAge(cookie.getMaxAge());
@@ -146,29 +146,34 @@ class SessionOnlyPortletCookieImpl implements IPortletCookie, Serializable {
     /* (non-Javadoc)
      * @see org.apereo.portal.portlet.om.IPortletCookie#toCookie()
      */
-    @Override
-    public Cookie toCookie() {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setComment(comment);
-        if (domain != null) {
-            cookie.setDomain(domain);
-        }
-        cookie.setMaxAge(getMaxAge());
-        cookie.setPath(path);
-        cookie.setSecure(secure);
-        cookie.setVersion(version);
-        return cookie;
-    }
+
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.om.IPortletCookie#updateFromCookie(javax.servlet.http.Cookie)
+     * @see org.apereo.portal.portlet.om.IPortletCookie#updateFromCookie(jakarta.servlet.http.Cookie)
      */
     @Override
     public void updateFromCookie(Cookie cookie) {
-        this.setComment(cookie.getComment());
+        // Skip deprecated getComment() method
         this.setDomain(cookie.getDomain());
         this.setExpires(DateTime.now().plusSeconds(cookie.getMaxAge()));
         this.setPath(cookie.getPath());
         this.setSecure(cookie.getSecure());
         this.setValue(cookie.getValue());
     }
+    
+    @Override
+    public javax.servlet.http.Cookie toCookie() {
+        // Convert to javax cookie for compatibility
+        javax.servlet.http.Cookie javaxCookie = new javax.servlet.http.Cookie(name, value);
+        if (domain != null) {
+            javaxCookie.setDomain(domain);
+        }
+        javaxCookie.setMaxAge(getMaxAge());
+        if (path != null) {
+            javaxCookie.setPath(path);
+        }
+        javaxCookie.setSecure(secure);
+        return javaxCookie;
+    }
+    
+
 }

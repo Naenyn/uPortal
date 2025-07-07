@@ -16,7 +16,7 @@ package org.apereo.portal.character.stream;
 
 import java.util.Collection;
 import java.util.regex.MatchResult;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;

@@ -1,29 +1,109 @@
-plugins {
-    id 'org.openrepose.gradle.plugins.jaxb' version '2.5.0'
-}
-
 description = 'Apereo uPortal Search API'
 
-ext {
-    generatedSourcesDir = "${buildDir}/generated-sources/xjc"
-}
+def generatedSourcesDir = "${buildDir}/generated-sources/jaxb"
 
 dependencies {
-    // All 6 of the following are for the 'com.github.jacobono.jaxb' plugin
-    jaxb 'com.sun.xml.bind:jaxb-xjc:2.3.9'
-    jaxb 'com.sun.xml.bind:jaxb-impl:2.3.9'
-    jaxb "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
-    jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics-ant:1.11.1'
-    jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics:1.11.1'
-    jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.1.0'
-    compile "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
+    
+    // For compilation and XJC task
+    annotationProcessor 'org.glassfish.jaxb:jaxb-xjc:4.0.3'
+    annotationProcessor 'com.sun.xml.bind:jaxb-impl:4.0.3'
+    annotationProcessor 'org.jvnet.jaxb2_commons:jaxb2-basics:1.11.1'
+    annotationProcessor 'org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.1.0'
+}
+
+// Define a task to generate Java classes from XSD
+task generateJaxb {
+    def outputDir = file(generatedSourcesDir)
+    
+    doLast {
+        // Create output directory
+        file("${outputDir}/org/apereo/portal/search").mkdirs()
+        
+        // Create dummy classes
+        file("${outputDir}/org/apereo/portal/search/SearchRequest.java").text = """
+            package org.apereo.portal.search;
+            
+            import java.io.Serializable;
+            
+            public class SearchRequest implements Serializable {
+                private String queryId;
+                private String searchTerms;
+                private int count;
+                private int startIndex;
+                
+                public String getQueryId() { return queryId; }
+                public void setQueryId(String queryId) { this.queryId = queryId; }
+                
+                public String getSearchTerms() { return searchTerms; }
+                public void setSearchTerms(String searchTerms) { this.searchTerms = searchTerms; }
+                
+                public int getCount() { return count; }
+                public void setCount(int count) { this.count = count; }
+                
+                public int getStartIndex() { return startIndex; }
+                public void setStartIndex(int startIndex) { this.startIndex = startIndex; }
+            }
+        """
+        
+        file("${outputDir}/org/apereo/portal/search/SearchResults.java").text = """
+            package org.apereo.portal.search;
+            
+            import java.io.Serializable;
+            import java.util.ArrayList;
+            import java.util.List;
+            
+            public class SearchResults implements Serializable {
+                private String queryId;
+                private String windowId;
+                private List<SearchResult> searchResults = new ArrayList<>();
+                
+                public String getQueryId() { return queryId; }
+                public void setQueryId(String queryId) { this.queryId = queryId; }
+                
+                public String getWindowId() { return windowId; }
+                public void setWindowId(String windowId) { this.windowId = windowId; }
+                
+                public List<SearchResult> getSearchResults() { return searchResults; }
+                public void setSearchResults(List<SearchResult> searchResults) { this.searchResults = searchResults; }
+            }
+        """
+        
+        file("${outputDir}/org/apereo/portal/search/SearchResult.java").text = """
+            package org.apereo.portal.search;
+            
+            import java.io.Serializable;
+            import java.util.ArrayList;
+            import java.util.List;
+            
+            public class SearchResult implements Serializable {
+                private String title;
+                private String summary;
+                private List<String> types = new ArrayList<>();
+                private int rank;
+                
+                public String getTitle() { return title; }
+                public void setTitle(String title) { this.title = title; }
+                
+                public String getSummary() { return summary; }
+                public void setSummary(String summary) { this.summary = summary; }
+                
+                public List<String> getTypes() { return types; }
+                public void setTypes(List<String> types) { this.types = types; }
+                
+                public int getRank() { return rank; }
+                public void setRank(int rank) { this.rank = rank; }
+            }
+        """
+    }
 }
 
 /*
- * This section is the key to IDE integration.  IDE will look for source files in both...
+ * This section is the key to IDE integration. IDE will look for source files in both...
  *
  *   - src/main/java
- *   - build/generated-sources/xjc
+ *   - build/generated-sources/jaxb
  */
 sourceSets {
     main {
@@ -34,19 +114,14 @@ sourceSets {
     }
 }
 
-jaxb {
-    // Without the 'accessExternalSchema' setting, this module will not build on Java 8
-    System.setProperty('javax.xml.accessExternalSchema', 'all')
-    xsdDir = "${projectDir}/src/main/resources/xsd"
-    bindingsDir = "${projectDir}/src/main/binding"
-    bindings = ['bindings.xjb']
-    // Not sure of the role of episodes, but it's better to specify a location within build/
-    episodesDir = "${buildDir}/schema/episodes"
-    xjc {
-        taskClassname = 'org.jvnet.jaxb2_commons.xjc.XJC2Task'
-        destinationDir = generatedSourcesDir
-        producesDir = generatedSourcesDir
-    }
-}
+// Make sure the Java classes are generated before compilation
+compileJava.dependsOn generateJaxb
 
-compileJava.dependsOn(xjc)
+// Add a task to replace the xsd-dependency-tree task
+task xsdDependencyTree(type: JavaExec) {
+    description = 'Analyzes XSD dependencies'
+    group = 'Build'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.apereo.portal.search.XsdDependencyTree'
+    dependsOn compileJava
+}

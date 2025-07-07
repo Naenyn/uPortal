@@ -31,20 +31,17 @@ import org.springframework.session.web.context.AbstractHttpSessionApplicationIni
 public class RedisSessionInitializer extends AbstractHttpSessionApplicationInitializer {
 
     public RedisSessionInitializer() {
-        // MUST pass null here to avoid having Spring Session create a root WebApplicationContext
-        // that does not work with the current uPortal setup.
-        super((Class<?>[]) null);
+        // Default constructor
     }
 
     @Override
-    public void onStartup(javax.servlet.ServletContext servletContext)
-            throws javax.servlet.ServletException {
+    public void onStartup(jakarta.servlet.ServletContext servletContext) {
         if (REDIS_STORE_TYPE.equals(this.getStoreTypeConfiguredValue())) {
             super.onStartup(servletContext);
         }
     }
 
-    private String getStoreTypeConfiguredValue() {
+    public String getStoreTypeConfiguredValue() {
         String result = System.getProperty(SESSION_STORE_TYPE_SYSTEM_PROPERTY_NAME);
         if (result == null) {
             result = System.getenv(SESSION_STORE_TYPE_ENV_PROPERTY_NAME);

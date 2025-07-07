@@ -18,7 +18,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 
 /**

@@ -15,8 +15,8 @@
 package org.apereo.portal.portlet.container;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.PortletContainer;
@@ -85,4 +85,30 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
 
         return null;
     }
+    
+    // Minimal stub for Pluto 3.x compatibility - maintains Portlet 2.0 behavior
+    @Override
+    public void setBeanManager(javax.enterprise.inject.spi.BeanManager beanManager) {
+        // No-op for Portlet 2.0 compatibility - CDI not used
+    }
+    
+    @Override
+    public javax.enterprise.inject.spi.BeanManager getBeanManager() {
+        // Return null for Portlet 2.0 compatibility - CDI not used
+        return null;
+    }
+    
+    @Override
+    public Object getPortletAsyncContext() {
+        // Return null for Portlet 2.0 compatibility - async not supported
+        return null;
+    }
+    
+    @Override
+    public javax.servlet.AsyncContext startAsync(javax.servlet.ServletRequest servletRequest, javax.servlet.ServletResponse servletResponse) {
+        // Return null for Portlet 2.0 compatibility - async not supported
+        return null;
+    }
+    
+
 }

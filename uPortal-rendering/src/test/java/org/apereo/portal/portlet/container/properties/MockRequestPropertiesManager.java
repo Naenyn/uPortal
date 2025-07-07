@@ -16,7 +16,7 @@ package org.apereo.portal.portlet.container.properties;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.ArrayUtils;
 import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.url.ParameterMap;

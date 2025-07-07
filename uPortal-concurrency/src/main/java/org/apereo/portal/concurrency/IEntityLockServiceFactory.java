@@ -22,5 +22,5 @@ public interface IEntityLockServiceFactory {
      * @return org.apereo.portal.concurrency.IEntityLockService
      * @exception org.apereo.portal.concurrency.LockingException
      */
-    public IEntityLockService newLockService() throws LockingException;
+    public IEntityLockService newLockService();
 }

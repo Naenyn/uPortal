@@ -16,7 +16,7 @@ package org.apereo.portal.url;
 
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.concurrency.caching.RequestCache;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.om.IPortletEntity;
@@ -67,7 +67,7 @@ public class MobileUrlNodeSyntaxHelper implements IUrlNodeSyntaxHelper {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getDefaultLayoutNodeId(javax.servlet.http.HttpServletRequest)
+     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getDefaultLayoutNodeId(jakarta.servlet.http.HttpServletRequest)
      */
     @Override
     public String getDefaultLayoutNodeId(HttpServletRequest httpServletRequest) {
@@ -76,9 +76,9 @@ public class MobileUrlNodeSyntaxHelper implements IUrlNodeSyntaxHelper {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getFolderNamesForLayoutNode(javax.servlet.http.HttpServletRequest, java.lang.String)
+     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getFolderNamesForLayoutNode(jakarta.servlet.http.HttpServletRequest, java.lang.String)
      */
-    @RequestCache(keyMask = {false, true})
+    @RequestCache
     @Override
     public List<String> getFolderNamesForLayoutNode(
             HttpServletRequest request, String layoutNodeId) {
@@ -87,7 +87,7 @@ public class MobileUrlNodeSyntaxHelper implements IUrlNodeSyntaxHelper {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getLayoutNodeForFolderNames(javax.servlet.http.HttpServletRequest, java.util.List)
+     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getLayoutNodeForFolderNames(jakarta.servlet.http.HttpServletRequest, java.util.List)
      */
     @Override
     public String getLayoutNodeForFolderNames(
@@ -96,9 +96,9 @@ public class MobileUrlNodeSyntaxHelper implements IUrlNodeSyntaxHelper {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getFolderNameForPortlet(javax.servlet.http.HttpServletRequest, org.apereo.portal.portlet.om.IPortletWindowId)
+     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getFolderNameForPortlet(jakarta.servlet.http.HttpServletRequest, org.apereo.portal.portlet.om.IPortletWindowId)
      */
-    @RequestCache(keyMask = {false, true})
+    @RequestCache
     @Override
     public String getFolderNameForPortlet(
             HttpServletRequest request, IPortletWindowId portletWindowId) {
@@ -115,7 +115,7 @@ public class MobileUrlNodeSyntaxHelper implements IUrlNodeSyntaxHelper {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getPortletForFolderName(javax.servlet.http.HttpServletRequest, java.lang.String, java.lang.String)
+     * @see org.apereo.portal.url.IUrlNodeSyntaxHelper#getPortletForFolderName(jakarta.servlet.http.HttpServletRequest, java.lang.String, java.lang.String)
      */
     @Override
     public IPortletWindowId getPortletForFolderName(

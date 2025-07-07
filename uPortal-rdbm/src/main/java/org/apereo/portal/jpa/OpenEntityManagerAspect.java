@@ -16,8 +16,8 @@ package org.apereo.portal.jpa;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import org.apereo.portal.utils.cache.CacheKey;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -91,9 +91,9 @@ public class OpenEntityManagerAspect implements ApplicationContextAware {
      * @return the transactional EntityManager, or <code>null</code> if none
      * @throws IllegalStateException if this accessor is not configured with an EntityManagerFactory
      * @see
-     *     EntityManagerFactoryUtils#getTransactionalEntityManager(javax.persistence.EntityManagerFactory)
+     *     EntityManagerFactoryUtils#getTransactionalEntityManager(jakarta.persistence.EntityManagerFactory)
      * @see
-     *     EntityManagerFactoryUtils#getTransactionalEntityManager(javax.persistence.EntityManagerFactory,
+     *     EntityManagerFactoryUtils#getTransactionalEntityManager(jakarta.persistence.EntityManagerFactory,
      *     java.util.Map)
      */
     protected EntityManager getTransactionalEntityManager(EntityManagerFactory emf)
@@ -151,7 +151,7 @@ public class OpenEntityManagerAspect implements ApplicationContextAware {
      * <p>Can be overridden in subclasses.
      *
      * @param emf the EntityManagerFactory to use
-     * @see javax.persistence.EntityManagerFactory#createEntityManager()
+     * @see jakarta.persistence.EntityManagerFactory#createEntityManager()
      */
     protected EntityManager createEntityManager(EntityManagerFactory emf) {
         return emf.createEntityManager();

@@ -34,3 +34,8 @@ sourceSets {
 tasks.withType(JavaCompile) {
     options.annotationProcessorGeneratedSourcesDirectory = file(generatedSourcesDir)
 }
+
+// Fix task dependency issue
+sourcesJar {
+    mustRunAfter compileTestJava
+}

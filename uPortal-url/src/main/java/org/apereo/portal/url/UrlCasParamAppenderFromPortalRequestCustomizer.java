@@ -1,6 +1,6 @@
 package org.apereo.portal.url;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.pluto.container.impl.HttpServletPortletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -336,7 +336,7 @@ public class RDBMEntityLockStore implements IEntityLockStore {
      */
     private void primAdd(IEntityLock lock, Connection conn) throws SQLException, LockingException {
         Integer typeID =
-                EntityTypesLocator.getEntityTypes().getEntityIDFromType(lock.getEntityType());
+                EntityTypesLocator.getEntityTypes().getEntityIDFromType((Class<? extends org.apereo.portal.IBasicEntity>) lock.getEntityType());
         String key = lock.getEntityKey();
         int lockType = lock.getLockType();
         Timestamp ts = new Timestamp(lock.getExpirationTime().getTime());
@@ -377,7 +377,7 @@ public class RDBMEntityLockStore implements IEntityLockStore {
     private void primDelete(IEntityLock lock, Connection conn)
             throws LockingException, SQLException {
         Integer typeID =
-                EntityTypesLocator.getEntityTypes().getEntityIDFromType(lock.getEntityType());
+                EntityTypesLocator.getEntityTypes().getEntityIDFromType((Class<? extends org.apereo.portal.IBasicEntity>) lock.getEntityType());
         String key = lock.getEntityKey();
         int lockType = lock.getLockType();
         Timestamp ts = new Timestamp(lock.getExpirationTime().getTime());
@@ -501,7 +501,7 @@ public class RDBMEntityLockStore implements IEntityLockStore {
     private void primUpdate(IEntityLock lock, Date newExpiration, Integer newType, Connection conn)
             throws SQLException, LockingException {
         Integer typeID =
-                EntityTypesLocator.getEntityTypes().getEntityIDFromType(lock.getEntityType());
+                EntityTypesLocator.getEntityTypes().getEntityIDFromType((Class<? extends org.apereo.portal.IBasicEntity>) lock.getEntityType());
         String key = lock.getEntityKey();
         int oldLockType = lock.getLockType();
         int newLockType = (newType == null) ? oldLockType : newType;

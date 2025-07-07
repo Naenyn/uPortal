@@ -1,5 +1,7 @@
 description = "Apereo uPortal Spring Components"
 
+apply from: 'spring-webmvc-portlet.gradle'
+
 dependencies {
     api project(':uPortal-api:uPortal-api-internal')
     api project(':uPortal-security:uPortal-security-core')
@@ -13,7 +15,7 @@ dependencies {
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "org.springframework:spring-web:${springVersion}"
     implementation "org.springframework:spring-webmvc:${springVersion}"
-    implementation "org.springframework:spring-webmvc-portlet:${springVersion}"
+    // Spring WebMVC Portlet is now included from spring-webmvc-portlet.gradle
 
     compileOnly "${portletApiDependency}"
     compileOnly "${servletApiDependency}"
@@ -22,4 +24,5 @@ dependencies {
     testImplementation "${servletApiDependency}"
 
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"}
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}

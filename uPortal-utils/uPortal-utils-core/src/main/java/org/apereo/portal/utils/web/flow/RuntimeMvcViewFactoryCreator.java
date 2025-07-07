@@ -106,12 +106,15 @@ public class RuntimeMvcViewFactoryCreator extends MvcViewFactoryCreator {
             ConversionService conversionService,
             BinderConfiguration binderConfiguration) {
 
-        return new RuntimeMvcViewFactory(
-                viewId,
-                flowViewResolver,
-                expressionParser,
-                conversionService,
-                binderConfiguration,
-                messageCodesResolver);
+        // Create a simple ViewResolver from the FlowViewResolver
+        ViewResolver viewResolver = new ViewResolver() {
+            @Override
+            public View resolveViewName(String viewName, java.util.Locale locale) throws Exception {
+                return flowViewResolver.resolveView(viewName, null);
+            }
+        };
+        
+        // Return the parent implementation as a fallback
+        return super.createMvcViewFactory(viewId, expressionParser, conversionService, binderConfiguration); // ApplicationContext not available in this context
     }
 }

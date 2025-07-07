@@ -19,12 +19,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.ParameterExpression;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.i18n.Message;
 import org.apereo.portal.i18n.dao.IMessageDao;
@@ -60,13 +60,13 @@ public class JpaMessageDao extends BasePortalJpaDao implements IMessageDao {
                                 criteriaQuery.where(
                                         cb.and(
                                                 cb.equal(
-                                                        root.get(MessageImpl_.code), codeParameter),
+                                                        root.get("code"), codeParameter),
                                                 cb.equal(
-                                                        root.get(MessageImpl_.locale),
+                                                        root.get("locale"),
                                                         localeParameter)));
                                 criteriaQuery.orderBy(
-                                        cb.asc(root.get(MessageImpl_.code)),
-                                        cb.asc(root.get(MessageImpl_.locale)));
+                                        cb.asc(root.get("code")),
+                                        cb.asc(root.get("locale")));
 
                                 return criteriaQuery;
                             }
@@ -83,8 +83,8 @@ public class JpaMessageDao extends BasePortalJpaDao implements IMessageDao {
                                         criteriaQuery.from(MessageImpl.class);
                                 criteriaQuery.select(root);
                                 criteriaQuery.where(
-                                        cb.equal(root.get(MessageImpl_.code), codeParameter));
-                                criteriaQuery.orderBy(cb.asc(root.get(MessageImpl_.locale)));
+                                        cb.equal(root.get("code"), codeParameter));
+                                criteriaQuery.orderBy(cb.asc(root.get("locale")));
 
                                 return criteriaQuery;
                             }
@@ -101,8 +101,8 @@ public class JpaMessageDao extends BasePortalJpaDao implements IMessageDao {
                                         criteriaQuery.from(MessageImpl.class);
                                 criteriaQuery.select(root);
                                 criteriaQuery.where(
-                                        cb.equal(root.get(MessageImpl_.locale), localeParameter));
-                                criteriaQuery.orderBy(cb.asc(root.get(MessageImpl_.code)));
+                                        cb.equal(root.get("locale"), localeParameter));
+                                criteriaQuery.orderBy(cb.asc(root.get("code")));
 
                                 return criteriaQuery;
                             }
@@ -117,8 +117,8 @@ public class JpaMessageDao extends BasePortalJpaDao implements IMessageDao {
                                         cb.createQuery(String.class);
                                 final Root<MessageImpl> root =
                                         criteriaQuery.from(MessageImpl.class);
-                                criteriaQuery.select(root.get(MessageImpl_.code));
-                                criteriaQuery.groupBy(root.get(MessageImpl_.code));
+                                criteriaQuery.select(root.get("code"));
+                                criteriaQuery.groupBy(root.get("code"));
                                 return criteriaQuery;
                             }
                         });

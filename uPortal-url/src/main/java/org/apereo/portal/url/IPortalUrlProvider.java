@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.url;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 
 /** Provides portal URL builders */

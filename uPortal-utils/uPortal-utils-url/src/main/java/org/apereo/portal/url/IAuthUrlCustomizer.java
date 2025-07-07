@@ -1,6 +1,6 @@
 package org.apereo.portal.url;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /** Customize CAS or any other authentication URL. */
 public interface IAuthUrlCustomizer {

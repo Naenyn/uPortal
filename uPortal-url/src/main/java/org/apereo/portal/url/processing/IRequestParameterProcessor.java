@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.url.processing;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Provides APIs a class can implement if it wishes to be part of the request parameter processing

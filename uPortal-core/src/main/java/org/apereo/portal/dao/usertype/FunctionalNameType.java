@@ -14,14 +14,85 @@
  */
 package org.apereo.portal.dao.usertype;
 
+import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jadira.usertype.spi.shared.AbstractSingleColumnUserType;
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.usertype.UserType;
 
 /** Uses a regular expression to validate strings coming to/from the database. */
-public class FunctionalNameType
-        extends AbstractSingleColumnUserType<String, String, FunctionalNameColumnMapper> {
+public class FunctionalNameType implements UserType<String> {
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public int getSqlType() {
+        return Types.VARCHAR;
+    }
+
+    @Override
+    public Class<String> returnedClass() {
+        return String.class;
+    }
+
+    @Override
+    public boolean equals(String x, String y) {
+        if (x == y) return true;
+        if (x == null || y == null) return false;
+        return x.equals(y);
+    }
+
+    @Override
+    public int hashCode(String x) {
+        return x == null ? 0 : x.hashCode();
+    }
+
+    @Override
+    public String nullSafeGet(ResultSet rs, int position, SharedSessionContractImplementor session, Object owner)
+            throws SQLException {
+        String value = rs.getString(position);
+        return rs.wasNull() ? null : value;
+    }
+
+    @Override
+    public void nullSafeSet(PreparedStatement st, String value, int index, SharedSessionContractImplementor session)
+            throws SQLException {
+        if (value == null) {
+            st.setNull(index, Types.VARCHAR);
+        } else {
+            validate(value);
+            st.setString(index, value);
+        }
+    }
+
+    @Override
+    public String deepCopy(String value) {
+        return value; // String is immutable
+    }
+
+    @Override
+    public boolean isMutable() {
+        return false;
+    }
+
+    @Override
+    public Serializable disassemble(String value) {
+        return value;
+    }
+
+    @Override
+    public String assemble(Serializable cached, Object owner) {
+        return (String) cached;
+    }
+
+    @Override
+    public String replace(String detached, String managed, Object owner) {
+        return detached;
+    }
 
     public static final Pattern INVALID_CHARS_PATTERN = Pattern.compile("[^\\w-]");
     public static final Pattern VALID_FNAME_PATTERN = Pattern.compile("^[\\w-]+$");

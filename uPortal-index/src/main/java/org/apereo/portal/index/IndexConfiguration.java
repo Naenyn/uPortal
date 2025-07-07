@@ -17,7 +17,7 @@ package org.apereo.portal.index;
 import java.io.IOException;
 import java.nio.file.Paths;
 import javax.annotation.PostConstruct;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;

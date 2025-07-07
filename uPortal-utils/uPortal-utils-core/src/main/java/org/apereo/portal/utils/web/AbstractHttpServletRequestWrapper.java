@@ -22,21 +22,21 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUpgradeHandler;
-import javax.servlet.http.Part;
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpUpgradeHandler;
+import jakarta.servlet.http.Part;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -202,10 +202,8 @@ public abstract class AbstractHttpServletRequestWrapper implements HttpServletRe
         return this.httpServletRequest.getReader();
     }
 
-    @Override
-    public String getRealPath(String path) {
-        return this.getServletContext().getRealPath(path);
-    }
+    // Deprecated getRealPath method removed in Jakarta EE
+    // Use ServletContext.getRealPath() directly instead
 
     @Override
     public String getRemoteAddr() {
@@ -287,11 +285,8 @@ public abstract class AbstractHttpServletRequestWrapper implements HttpServletRe
         return this.httpServletRequest.isRequestedSessionIdFromCookie();
     }
 
-    /** @see HttpServletRequest#isRequestedSessionIdFromUrl() */
-    @Override
-    public boolean isRequestedSessionIdFromUrl() {
-        return this.isRequestedSessionIdFromURL();
-    }
+    // Deprecated isRequestedSessionIdFromUrl() method removed in Jakarta EE
+    // Use isRequestedSessionIdFromURL() instead
 
     @Override
     public boolean isRequestedSessionIdFromURL() {
@@ -403,5 +398,20 @@ public abstract class AbstractHttpServletRequestWrapper implements HttpServletRe
     public <T extends HttpUpgradeHandler> T upgrade(Class<T> aClass)
             throws IOException, ServletException {
         return this.httpServletRequest.upgrade(aClass);
+    }
+
+    @Override
+    public jakarta.servlet.ServletConnection getServletConnection() {
+        return this.httpServletRequest.getServletConnection();
+    }
+
+    @Override
+    public String getProtocolRequestId() {
+        return this.httpServletRequest.getProtocolRequestId();
+    }
+
+    @Override
+    public String getRequestId() {
+        return this.httpServletRequest.getRequestId();
     }
 }

@@ -17,7 +17,7 @@ package org.apereo.portal.utils.hibernate4.dialects;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
-import org.hibernate.dialect.MySQL5InnoDBDialect;
+import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.type.descriptor.ValueBinder;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.JavaTypeDescriptor;
@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Uses the COMPRESSED row format in an InnoDB engine, needed for long index support with UTF-8 */
-public class MySQL5InnoDBCompressedDialect extends MySQL5InnoDBDialect {
+public class MySQL5InnoDBCompressedDialect extends MySQLDialect {
 
     public MySQL5InnoDBCompressedDialect() {
         super();

@@ -15,7 +15,7 @@
 package org.apereo.portal.portlet.container.services;
 
 import javax.portlet.PortletPreferences;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.pluto.container.PortletRequestContext;
 import org.apache.pluto.container.PortletWindow;
 import org.apereo.portal.jpa.BasePortalJpaDao;
@@ -82,7 +82,7 @@ public class PortletPreferencesFactoryImpl implements PortletPreferencesFactory 
     @Override
     public PortletPreferences createPortletPreferences(
             final PortletRequestContext requestContext, boolean render) {
-        final HttpServletRequest containerRequest = requestContext.getContainerRequest();
+        final jakarta.servlet.http.HttpServletRequest containerRequest = requestContext.getContainerRequest();
         final PortletWindow plutoPortletWindow = requestContext.getPortletWindow();
         final IPortletWindow portletWindow =
                 portletWindowRegistry.convertPortletWindow(containerRequest, plutoPortletWindow);

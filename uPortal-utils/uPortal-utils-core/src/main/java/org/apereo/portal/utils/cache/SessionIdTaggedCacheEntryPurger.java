@@ -1,50 +1,87 @@
-/**
- * Licensed to Apereo under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright ownership. Apereo
- * licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use
- * this file except in compliance with the License. You may obtain a copy of the License at the
- * following location:
- *
- * <p>http://www.apache.org/licenses/LICENSE-2.0
- *
- * <p>Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apereo.portal.utils.cache;
 
-import javax.servlet.http.HttpSession;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionListener;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.security.web.session.HttpSessionDestroyedEvent;
-import org.springframework.stereotype.Component;
+import org.springframework.context.event.ContextRefreshedEvent;
 
-/** Purges cache entries tagged for a specific session when the session is destroyed */
-@Component
+/**
+ * Listens for session destruction events and purges any cache entries that are tagged with the
+ * destroyed session's id
+ */
 public class SessionIdTaggedCacheEntryPurger
-        implements ApplicationListener<HttpSessionDestroyedEvent> {
-    public static final String TAG_TYPE = "httpSessionId";
-
-    public static CacheEntryTag createCacheEntryTag(String sessionId) {
-        return new SimpleCacheEntryTag<String>(TAG_TYPE, sessionId);
-    }
-
-    private TaggedCacheEntryPurger taggedCacheEntryPurger;
-
+        implements HttpSessionListener, ApplicationListener<ContextRefreshedEvent>, DisposableBean {
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+    private final ConcurrentMap<String, CacheManager> cacheManagers = new ConcurrentHashMap<String, CacheManager>();
+    
     @Autowired
-    public void setTaggedCacheEntryPurger(TaggedCacheEntryPurger taggedCacheEntryPurger) {
-        this.taggedCacheEntryPurger = taggedCacheEntryPurger;
+    public void setCacheManager(CacheManager cacheManager) {
+        this.cacheManagers.put(cacheManager.getName(), cacheManager);
     }
-
+    
     @Override
-    public void onApplicationEvent(HttpSessionDestroyedEvent event) {
-        final HttpSession session = event.getSession();
-        purgeTaggedCacheEntries(session.getId());
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        // Nothing to do
     }
-
-    public void purgeTaggedCacheEntries(final String sessionId) {
-        final CacheEntryTag tag = createCacheEntryTag(sessionId);
-        this.taggedCacheEntryPurger.purgeCacheEntries(tag);
+    
+    @Override
+    public void destroy() throws Exception {
+        this.cacheManagers.clear();
+    }
+    
+    @Override
+    public void sessionCreated(HttpSessionEvent event) {
+        // Nothing to do
+    }
+    
+    @Override
+    public void sessionDestroyed(HttpSessionEvent event) {
+        final HttpSession session = event.getSession();
+        final String sessionId = session.getId();
+        
+        for (final CacheManager cacheManager : this.cacheManagers.values()) {
+            final String[] cacheNames = cacheManager.getCacheNames();
+            for (final String cacheName : cacheNames) {
+                final Ehcache cache = cacheManager.getEhcache(cacheName);
+                if (cache == null) {
+                    continue;
+                }
+                
+                final java.util.List<?> keysList = cache.getKeys();
+                final Set<?> keys = new java.util.HashSet<>(keysList);
+                for (final Object key : keys) {
+                    final Element element = cache.get(key);
+                    if (element == null) {
+                        continue;
+                    }
+                    
+                    final Object value = element.getObjectValue();
+                    if (value instanceof SessionIdTaggedCacheEntry) {
+                        final SessionIdTaggedCacheEntry<?> taggedCacheEntry = (SessionIdTaggedCacheEntry<?>)value;
+                        final String entrySessionId = taggedCacheEntry.getSessionId();
+                        if (sessionId.equals(entrySessionId)) {
+                            if (this.logger.isDebugEnabled()) {
+                                this.logger.debug("Removing cache entry for key " + key + " from cache " + cacheName + " due to destruction of session " + sessionId);
+                            }
+                            
+                            cache.remove(key);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

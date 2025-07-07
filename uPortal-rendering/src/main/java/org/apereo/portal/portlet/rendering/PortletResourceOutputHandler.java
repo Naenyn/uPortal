@@ -16,8 +16,8 @@ package org.apereo.portal.portlet.rendering;
 
 import java.util.Locale;
 import javax.portlet.ResourceResponse;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 /** Used to handle output from portlet resource requests. */
 public interface PortletResourceOutputHandler extends PortletOutputHandler {

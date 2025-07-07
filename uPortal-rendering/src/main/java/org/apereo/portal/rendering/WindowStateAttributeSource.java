@@ -15,7 +15,7 @@
 package org.apereo.portal.rendering;
 
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.om.IPortletWindow;
 
 /**

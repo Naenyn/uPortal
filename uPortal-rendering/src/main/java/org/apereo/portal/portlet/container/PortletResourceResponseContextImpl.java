@@ -17,8 +17,8 @@ package org.apereo.portal.portlet.container;
 import java.nio.charset.Charset;
 import java.util.Locale;
 import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.http.HeaderElement;
 import org.apache.http.entity.ContentType;
@@ -138,5 +138,29 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
         }
 
         return false;
+    }
+    
+    @Override
+    public java.util.Collection<String> getPropertyNames() {
+        // Return empty collection for Portlet 2.0 compatibility
+        return java.util.Collections.emptyList();
+    }
+    
+    @Override
+    public java.util.Collection<String> getPropertyValues(String name) {
+        // Return empty collection for Portlet 2.0 compatibility - maintains existing behavior
+        return java.util.Collections.emptyList();
+    }
+    
+    @Override
+    public String getProperty(String name) {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
+    }
+    
+    @Override
+    public Object getHeaderData() {
+        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+        return null;
     }
 }

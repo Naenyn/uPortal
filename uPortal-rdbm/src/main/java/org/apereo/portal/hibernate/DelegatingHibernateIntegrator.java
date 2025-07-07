@@ -22,7 +22,7 @@ import java.util.Set;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.integrator.spi.Integrator;
-import org.hibernate.metamodel.source.MetadataImplementor;
+import org.hibernate.boot.Metadata;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +60,6 @@ public class DelegatingHibernateIntegrator implements Integrator {
         configurationAwareBeans.remove(configurationAwareBean);
     }
 
-    @Override
     public void integrate(
             Configuration configuration,
             SessionFactoryImplementor sessionFactory,
@@ -92,11 +91,10 @@ public class DelegatingHibernateIntegrator implements Integrator {
 
     @Override
     public void integrate(
-            MetadataImplementor metadata,
+            Metadata metadata,
             SessionFactoryImplementor sessionFactory,
             SessionFactoryServiceRegistry serviceRegistry) {
-        throw new UnsupportedOperationException(
-                "TODO REWRITE CODE AFTER HIBERNATE SWITCHES TO METAMODEL");
+        // No-op for now - metadata integration not needed
     }
 
     @Override

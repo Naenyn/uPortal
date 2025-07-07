@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.portlet.rendering.worker;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class PortletExecutionInterceptorAdaptor implements IPortletExecutionInte
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#preSubmit(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext)
+     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#preSubmit(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext)
      */
     @Override
     public void preSubmit(
@@ -33,7 +33,7 @@ public class PortletExecutionInterceptorAdaptor implements IPortletExecutionInte
             IPortletExecutionContext context) {}
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#preExecution(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext)
+     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#preExecution(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext)
      */
     @Override
     public void preExecution(
@@ -42,7 +42,7 @@ public class PortletExecutionInterceptorAdaptor implements IPortletExecutionInte
             IPortletExecutionContext context) {}
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#postExecution(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext, java.lang.Exception)
+     * @see org.apereo.portal.portlet.rendering.worker.IPortletExecutionInterceptor#postExecution(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apereo.portal.portlet.rendering.worker.IPortletExecutionContext, java.lang.Exception)
      */
     @Override
     public void postExecution(

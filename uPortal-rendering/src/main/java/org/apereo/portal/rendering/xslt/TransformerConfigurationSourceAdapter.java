@@ -16,8 +16,8 @@ package org.apereo.portal.rendering.xslt;
 
 import java.util.Map;
 import java.util.Properties;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.utils.cache.CacheKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class TransformerConfigurationSourceAdapter implements TransformerConfigu
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getParameters(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getParameters(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public Map<String, Object> getParameters(
@@ -36,7 +36,7 @@ public class TransformerConfigurationSourceAdapter implements TransformerConfigu
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getOutputProperties(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getOutputProperties(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public Properties getOutputProperties(
@@ -45,7 +45,7 @@ public class TransformerConfigurationSourceAdapter implements TransformerConfigu
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getCacheKey(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getCacheKey(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {

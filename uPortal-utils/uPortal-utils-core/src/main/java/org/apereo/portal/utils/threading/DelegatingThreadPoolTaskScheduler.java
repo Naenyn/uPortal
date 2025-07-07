@@ -1,20 +1,7 @@
-/**
- * Licensed to Apereo under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright ownership. Apereo
- * licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use
- * this file except in compliance with the License. You may obtain a copy of the License at the
- * following location:
- *
- * <p>http://www.apache.org/licenses/LICENSE-2.0
- *
- * <p>Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apereo.portal.utils.threading;
 
-import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Delayed;
@@ -22,322 +9,400 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import org.joda.time.ReadableDuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.core.task.TaskRejectedException;
 import org.springframework.scheduling.SchedulingTaskExecutor;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.scheduling.support.ScheduledMethodRunnable;
+import org.springframework.scheduling.concurrent.ExecutorConfigurationSupport;
+import org.springframework.scheduling.support.TaskUtils;
+import org.springframework.util.Assert;
+import org.springframework.util.ErrorHandler;
 
 /**
- * Scheduling thread pool that upon invocation of the scheduled task immediately delegates execution
- * to another {@link ExecutorService}. Also adds a configurable start delay to scheduled tasks
+ * Delegates to a target {@link TaskScheduler} for all operations. Allows for a target scheduler to
+ * be swapped out at runtime.
  */
-public class DelegatingThreadPoolTaskScheduler extends ThreadPoolTaskScheduler
-        implements TaskScheduler, SchedulingTaskExecutor {
-    private static final long serialVersionUID = 1L;
+public class DelegatingThreadPoolTaskScheduler
+        implements TaskScheduler, SchedulingTaskExecutor, InitializingBean, DisposableBean {
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private volatile long initialized = System.currentTimeMillis();
-    private volatile long lastStartDelay = 0;
+    private TaskScheduler targetScheduler;
+    private ExecutorService targetExecutor;
+    private ScheduledExecutorService targetScheduledExecutor;
 
-    private ExecutorService executorService;
-    private long initialDelay = 0;
+    private ErrorHandler errorHandler;
 
-    public void setExecutorService(ExecutorService executorService) {
-        this.executorService = executorService;
-    }
+    public void setTargetScheduler(TaskScheduler targetScheduler) {
+        this.targetScheduler = targetScheduler;
 
-    /**
-     * delay to add to the start date for all scheduled tasks
-     *
-     * @param initialDelay Delay before starting ANY scheduled task
-     */
-    public void setInitialDelay(ReadableDuration initialDelay) {
-        this.initialDelay = initialDelay.getMillis();
-        this.lastStartDelay = this.initialDelay;
-    }
-
-    @Override
-    public void afterPropertiesSet() {
-        this.initialized = System.currentTimeMillis();
-        super.afterPropertiesSet();
-    }
-
-    /** @return the additional start delay to add to any scheduled task */
-    protected long getAdditionalStartDelay() {
-        // Only bother recalculating the start delay if the last time it was resulted in a delay
-        if (this.lastStartDelay != 0) {
-            this.lastStartDelay =
-                    Math.max(
-                            0, this.initialDelay - (System.currentTimeMillis() - this.initialized));
-            logger.debug("Calculated additionalStartDelay of: " + this.lastStartDelay);
+        if (targetScheduler instanceof ExecutorService) {
+            this.targetExecutor = (ExecutorService) targetScheduler;
+        } else {
+            this.targetExecutor = null;
         }
 
-        return this.lastStartDelay;
-    }
-
-    protected Date getDelayedStartDate(Date startDate) {
-        final long additionalStartDelay = this.getAdditionalStartDelay();
-        if (additionalStartDelay > 0) {
-            final Date newStartDate = new Date(startDate.getTime() + additionalStartDelay);
-            logger.debug(
-                    "Updated startDate with additionalStartDelay from "
-                            + startDate
-                            + " to "
-                            + newStartDate);
-            return newStartDate;
+        if (targetScheduler instanceof ScheduledExecutorService) {
+            this.targetScheduledExecutor = (ScheduledExecutorService) targetScheduler;
+        } else {
+            this.targetScheduledExecutor = null;
         }
-
-        return startDate;
     }
 
-    protected Runnable wrapRunnable(Runnable task) {
-        if (task instanceof ScheduledMethodRunnable) {
-            final Method method = ((ScheduledMethodRunnable) task).getMethod();
-            final String methodName = method.getName();
-            return new ThreadNamingRunnable("-" + methodName, task);
+    public void setErrorHandler(ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Assert.notNull(this.targetScheduler, "targetScheduler must not be null");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        if (this.targetScheduler instanceof DisposableBean) {
+            ((DisposableBean) this.targetScheduler).destroy();
         }
-
-        return task;
     }
 
     @Override
-    public void execute(Runnable task, long startTimeout) {
-        task = wrapRunnable(task);
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        super.execute(delegatingRunnable, startTimeout);
-    }
-
-    @Override
-    public Future<?> submit(Runnable task) {
-        task = wrapRunnable(task);
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        return super.submit(delegatingRunnable);
-    }
-
-    @Override
-    public <T> Future<T> submit(Callable<T> task) {
-        final DelegatingCallable<T> delegatingCallable =
-                new DelegatingCallable<>(this.executorService, task);
-        final Future<Future<T>> future = super.submit(delegatingCallable);
-
-        return new DelegatingForwardingFuture<>(future);
-    }
-
-    @Override
-    public void execute(Runnable task) {
-        task = wrapRunnable(task);
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        super.execute(delegatingRunnable);
-    }
-
-    @Override
-    public ScheduledFuture<?> schedule(Runnable task, final Trigger trigger) {
-        task = wrapRunnable(task);
-        // Wrap the trigger so that the first call to nextExecutionTime adds in the
-        // additionalStartDelay
-        final Trigger wrappedTrigger =
-                new Trigger() {
-                    boolean firstExecution = false;
-
-                    @Override
-                    public Date nextExecutionTime(TriggerContext triggerContext) {
-                        Date nextExecutionTime = trigger.nextExecutionTime(triggerContext);
-                        if (nextExecutionTime == null) {
-                            return null;
-                        }
-
-                        if (firstExecution) {
-                            nextExecutionTime = getDelayedStartDate(nextExecutionTime);
-                            firstExecution = true;
-                        }
-                        return nextExecutionTime;
-                    }
-                };
-
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        @SuppressWarnings("unchecked")
-        final ScheduledFuture<?> future = super.schedule(delegatingRunnable, wrappedTrigger);
-        return (ScheduledFuture<ScheduledFuture<?>>)
-                new DelegatingForwardingScheduledFuture(future);
+    public ScheduledFuture<?> schedule(Runnable task, Trigger trigger) {
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            return this.targetScheduler.schedule(r, trigger);
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
+        }
     }
 
     @Override
     public ScheduledFuture<?> schedule(Runnable task, Date startTime) {
-        startTime = getDelayedStartDate(startTime);
-
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        @SuppressWarnings("unchecked")
-        final ScheduledFuture<?> future = super.schedule(delegatingRunnable, startTime);
-        return (ScheduledFuture<ScheduledFuture<?>>)
-                new DelegatingForwardingScheduledFuture(future);
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            return this.targetScheduler.schedule(r, startTime);
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
+        }
     }
 
     @Override
     public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, Date startTime, long period) {
-        task = wrapRunnable(task);
-        startTime = getDelayedStartDate(startTime); // Add scheduled task delay
-        startTime = new Date(startTime.getTime() + period); // Add period to inital run time
-
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        @SuppressWarnings("unchecked")
-        final ScheduledFuture<?> future =
-                super.scheduleAtFixedRate(delegatingRunnable, startTime, period);
-        return (ScheduledFuture<ScheduledFuture<?>>)
-                new DelegatingForwardingScheduledFuture(future);
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            return this.targetScheduler.scheduleAtFixedRate(r, startTime, period);
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
+        }
     }
 
     @Override
     public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, long period) {
-        task = wrapRunnable(task);
-        final long additionalStartDelay = this.getAdditionalStartDelay();
-        if (additionalStartDelay > 0) {
-            // If there is an additional delay use the alternate call which includes a startTime
-            return this.scheduleAtFixedRate(task, new Date(), period);
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            return this.targetScheduler.scheduleAtFixedRate(r, period);
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
         }
-
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        @SuppressWarnings("unchecked")
-        final ScheduledFuture<?> future = super.scheduleAtFixedRate(delegatingRunnable, period);
-        return (ScheduledFuture<ScheduledFuture<?>>)
-                new DelegatingForwardingScheduledFuture(future);
     }
 
     @Override
     public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, Date startTime, long delay) {
-        task = wrapRunnable(task);
-        startTime = getDelayedStartDate(startTime); // Add scheduled task delay
-        startTime = new Date(startTime.getTime() + delay); // Add period to inital run time
-
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        @SuppressWarnings("unchecked")
-        final ScheduledFuture<?> future =
-                super.scheduleWithFixedDelay(delegatingRunnable, startTime, delay);
-        return (ScheduledFuture<ScheduledFuture<?>>)
-                new DelegatingForwardingScheduledFuture(future);
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            return this.targetScheduler.scheduleWithFixedDelay(r, startTime, delay);
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
+        }
     }
 
     @Override
     public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, long delay) {
-        task = wrapRunnable(task);
-        final long additionalStartDelay = this.getAdditionalStartDelay();
-        if (additionalStartDelay > 0) {
-            // If there is an additional delay use the alternate call which includes a startTime
-            return this.scheduleWithFixedDelay(task, new Date(), delay);
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            return this.targetScheduler.scheduleWithFixedDelay(r, delay);
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
         }
-
-        final DelegatingRunnable delegatingRunnable =
-                new DelegatingRunnable(this.executorService, task);
-        @SuppressWarnings("unchecked")
-        final ScheduledFuture<?> future = super.scheduleWithFixedDelay(delegatingRunnable, delay);
-        return (ScheduledFuture<ScheduledFuture<?>>)
-                new DelegatingForwardingScheduledFuture(future);
     }
 
-    private static class DelegatingRunnable implements Runnable {
-        private final ExecutorService executorService;
-        private final Runnable runnable;
+    @Override
+    public void execute(Runnable task) {
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            if (this.targetExecutor != null) {
+                this.targetExecutor.execute(r);
+            } else {
+                final Date now = new Date();
+                this.targetScheduler.schedule(
+                        r,
+                        new Trigger() {
+                            @Override
+                            public Instant nextExecution(TriggerContext triggerContext) {
+                                return now.toInstant();
+                            }
+                        });
+            }
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
+        }
+    }
 
-        public DelegatingRunnable(ExecutorService executorService, Runnable runnable) {
-            this.executorService = executorService;
-            this.runnable = runnable;
+    @Override
+    public Future<?> submit(Runnable task) {
+        try {
+            ErrorHandlingRunnable r = new ErrorHandlingRunnable(task);
+            if (this.targetExecutor != null) {
+                return this.targetExecutor.submit(r);
+            }
+
+            FutureScheduledTask<Object> futureTask = new FutureScheduledTask<Object>(r, null);
+            final Date now = new Date();
+            final ScheduledFuture<?> scheduledFuture =
+                    this.targetScheduler.schedule(
+                            futureTask,
+                            new Trigger() {
+                                @Override
+                                public Instant nextExecution(TriggerContext triggerContext) {
+                                    return now.toInstant();
+                                }
+                            });
+            futureTask.setScheduledFuture(scheduledFuture);
+            return futureTask;
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
+        }
+    }
+
+    @Override
+    public <T> Future<T> submit(Callable<T> task) {
+        try {
+            if (this.targetExecutor != null) {
+                return this.targetExecutor.submit(task);
+            }
+
+            FutureScheduledTask<T> futureTask = new FutureScheduledTask<T>(task);
+            final Date now = new Date();
+            final ScheduledFuture<?> scheduledFuture =
+                    this.targetScheduler.schedule(
+                            futureTask,
+                            new Trigger() {
+                                @Override
+                                public Instant nextExecution(TriggerContext triggerContext) {
+                                    return now.toInstant();
+                                }
+                            });
+            futureTask.setScheduledFuture(scheduledFuture);
+            return futureTask;
+        } catch (TaskRejectedException ex) {
+            throw ex;
+        } catch (RejectedExecutionException ex) {
+            throw new TaskRejectedException("Executor [" + targetScheduler + "] did not accept task: " + task, ex);
+        }
+    }
+
+    @Override
+    public void execute(Runnable task, long startTimeout) {
+        execute(task);
+    }
+
+    @Override
+    public boolean prefersShortLivedTasks() {
+        if (this.targetExecutor instanceof SchedulingTaskExecutor) {
+            return ((SchedulingTaskExecutor) this.targetExecutor).prefersShortLivedTasks();
+        }
+        return true;
+    }
+
+    // Spring 6 Duration-based methods
+    @Override
+    public ScheduledFuture<?> schedule(Runnable task, Instant startTime) {
+        return schedule(task, Date.from(startTime));
+    }
+
+    @Override
+    public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, Instant startTime, Duration period) {
+        return scheduleAtFixedRate(task, Date.from(startTime), period.toMillis());
+    }
+
+    @Override
+    public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, Duration period) {
+        return scheduleAtFixedRate(task, period.toMillis());
+    }
+
+    @Override
+    public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, Instant startTime, Duration delay) {
+        return scheduleWithFixedDelay(task, Date.from(startTime), delay.toMillis());
+    }
+
+    @Override
+    public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, Duration delay) {
+        return scheduleWithFixedDelay(task, delay.toMillis());
+    }
+
+    private class ErrorHandlingRunnable implements Runnable {
+        private final Runnable delegate;
+
+        public ErrorHandlingRunnable(Runnable delegate) {
+            this.delegate = delegate;
         }
 
         @Override
         public void run() {
             try {
-                executorService.submit(this.runnable);
-            } catch (RejectedExecutionException e) {
-                throw new RejectedExecutionException(
-                        "Failed to execute scheduled task " + this.runnable, e);
+                this.delegate.run();
+            } catch (Throwable t) {
+                if (errorHandler != null) {
+                    errorHandler.handleError(t);
+                } else {
+                    TaskUtils.LOG_AND_SUPPRESS_ERROR_HANDLER.handleError(t);
+                }
             }
-        }
-    }
-
-    private static class DelegatingCallable<T> implements Callable<Future<T>> {
-        private final ExecutorService executorService;
-        private final Callable<T> callable;
-
-        public DelegatingCallable(ExecutorService executorService, Callable<T> callable) {
-            this.executorService = executorService;
-            this.callable = callable;
         }
 
         @Override
-        public Future<T> call() throws Exception {
-            try {
-                return executorService.submit(this.callable);
-            } catch (RejectedExecutionException e) {
-                throw new RejectedExecutionException(
-                        "Failed to execute scheduled task " + this.callable, e);
-            }
+        public String toString() {
+            return "ErrorHandlingRunnable [delegate=" + this.delegate + "]";
         }
     }
 
-    private static class DelegatingForwardingFuture<V> implements Future<V> {
-        private final Future<? extends Future<V>> future;
+    private static class FutureScheduledTask<V> implements ScheduledFuture<V>, Runnable, Callable<V> {
+        private final Object task;
+        private final V result;
+        private volatile ScheduledFuture<?> scheduledFuture;
+        private volatile Exception executionException;
+        private volatile boolean done = false;
 
-        public DelegatingForwardingFuture(Future<? extends Future<V>> future) {
-            this.future = future;
+        public FutureScheduledTask(Runnable task, V result) {
+            this.task = task;
+            this.result = result;
+        }
+
+        public FutureScheduledTask(Callable<V> task) {
+            this.task = task;
+            this.result = null;
+        }
+
+        public void setScheduledFuture(ScheduledFuture<?> scheduledFuture) {
+            this.scheduledFuture = scheduledFuture;
+        }
+
+        @Override
+        public void run() {
+            try {
+                final Runnable runnable = (Runnable) this.task;
+                runnable.run();
+            } catch (Exception e) {
+                this.executionException = e;
+            } finally {
+                this.done = true;
+            }
+        }
+
+        @Override
+        public V call() throws Exception {
+            try {
+                @SuppressWarnings("unchecked")
+                final Callable<V> callable = (Callable<V>) this.task;
+                return callable.call();
+            } catch (Exception e) {
+                this.executionException = e;
+                throw e;
+            } finally {
+                this.done = true;
+            }
+        }
+
+        @Override
+        public long getDelay(TimeUnit unit) {
+            if (this.scheduledFuture != null) {
+                return this.scheduledFuture.getDelay(unit);
+            }
+            return 0;
+        }
+
+        @Override
+        public int compareTo(Delayed o) {
+            if (this.scheduledFuture != null) {
+                return this.scheduledFuture.compareTo(o);
+            }
+            return 0;
+        }
+
+        @Override
+        public boolean cancel(boolean mayInterruptIfRunning) {
+            if (this.scheduledFuture != null) {
+                return this.scheduledFuture.cancel(mayInterruptIfRunning);
+            }
+            return false;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            if (this.scheduledFuture != null) {
+                return this.scheduledFuture.isCancelled();
+            }
+            return false;
+        }
+
+        @Override
+        public boolean isDone() {
+            return this.done;
         }
 
         @Override
         public V get() throws InterruptedException, ExecutionException {
-            return this.future.get().get();
+            if (this.executionException != null) {
+                throw new ExecutionException(this.executionException);
+            }
+            if (this.done) {
+                return this.result;
+            }
+            if (this.scheduledFuture != null) {
+                this.scheduledFuture.get();
+            }
+            return this.result;
         }
 
         @Override
         public V get(long timeout, TimeUnit unit)
                 throws InterruptedException, ExecutionException, TimeoutException {
-            return this.future.get(timeout, unit).get(timeout, unit);
-        }
-
-        @Override
-        public boolean cancel(boolean mayInterruptIfRunning) {
-            return this.future.cancel(mayInterruptIfRunning);
-        }
-
-        @Override
-        public boolean isCancelled() {
-            return this.future.isCancelled();
-        }
-
-        @Override
-        public boolean isDone() {
-            return this.future.isDone();
-        }
-    }
-
-    private static class DelegatingForwardingScheduledFuture<V>
-            extends DelegatingForwardingFuture<V> implements ScheduledFuture<V> {
-        private final ScheduledFuture<ScheduledFuture<V>> future;
-
-        public DelegatingForwardingScheduledFuture(
-                ScheduledFuture<ScheduledFuture<V>> scheduledFuture) {
-            super(scheduledFuture);
-            this.future = scheduledFuture;
-        }
-
-        @Override
-        public long getDelay(TimeUnit unit) {
-            return this.future.getDelay(unit);
-        }
-
-        @Override
-        public int compareTo(Delayed o) {
-            return this.future.compareTo(o);
+            if (this.executionException != null) {
+                throw new ExecutionException(this.executionException);
+            }
+            if (this.done) {
+                return this.result;
+            }
+            if (this.scheduledFuture != null) {
+                this.scheduledFuture.get(timeout, unit);
+            }
+            return this.result;
         }
     }
 }

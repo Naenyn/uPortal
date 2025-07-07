@@ -14,10 +14,10 @@
  */
 package org.apereo.portal.layout.dao.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.layout.om.IStylesheetData;
 import org.hibernate.annotations.Type;
@@ -29,7 +29,7 @@ abstract class AbstractStylesheetDataImpl implements IStylesheetData {
     private final String name;
 
     @Column(name = "DEFAULT_VALUE", length = 500)
-    @Type(type = "nullSafeString")
+    @Type(org.apereo.portal.dao.usertype.NullSafeStringType.class)
     private String defaultValue;
 
     @Column(name = "PERSISTENCE_SCOPE", nullable = false)

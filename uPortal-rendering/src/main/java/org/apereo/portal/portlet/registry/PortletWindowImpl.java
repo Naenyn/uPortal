@@ -67,7 +67,6 @@ class PortletWindowImpl implements IPortletWindow, PortletWindow {
         return this.portletEntity.getPortletEntityId();
     }
 
-    @Override
     public PortletDefinition getPortletDefinition() {
         return this.portletDefinition;
     }

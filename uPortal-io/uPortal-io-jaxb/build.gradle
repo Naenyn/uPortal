@@ -1,22 +1,25 @@
-plugins {
-    id 'org.openrepose.gradle.plugins.jaxb' version '2.5.0'
-}
-
 description = 'Apereo uPortal Import/Export JAXB Data Model'
 
-ext {
-    generatedSourcesDir = "${buildDir}/generated-sources/xjc"
+def generatedSourcesDir = "${buildDir}/generated-sources/xjc"
+
+configurations {
+    jaxb
 }
 
 dependencies {
-    // All 6 of the following are for the 'com.github.jacobono.jaxb' plugin
+    // JAXB dependencies for Java 17
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
+    
+    // For JAXB generation and compilation of generated classes
     jaxb 'com.sun.xml.bind:jaxb-xjc:2.3.9'
     jaxb 'com.sun.xml.bind:jaxb-impl:2.3.9'
     jaxb "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
-    jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics-ant:1.11.1'
     jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics:1.11.1'
-    jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.1.0'
-    compile "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    
+    // Needed for compiling generated classes that use javax.xml.bind annotations
+    implementation "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    implementation 'com.sun.xml.bind:jaxb-impl:2.3.9'
 }
 
 /*
@@ -28,24 +31,36 @@ dependencies {
 sourceSets {
     main {
         java {
-            // srcDir 'src/main/java'
+            srcDir 'src/main/java'
             srcDir generatedSourcesDir
         }
     }
 }
 
-jaxb {
-    // Without the 'accessExternalSchema' setting, this module will not build on Java 8
-    System.setProperty('javax.xml.accessExternalSchema', 'all')
-    xsdDir = "${projectDir}/src/main/resources/xsd"
-    bindingsDir = "${projectDir}/src/main/binding"
-    bindings = ['bindings.xjb']
-    // Not sure of the role of episodes, but it's better to specify a location within build/
-    episodesDir = "${buildDir}/schema/episodes"
-    xjc {
-        taskClassname = 'org.jvnet.jaxb2_commons.xjc.XJC2Task'
-        destinationDir = generatedSourcesDir
-        producesDir = generatedSourcesDir
+// Manual JAXB generation task
+task xjc {
+    def outputDir = file(generatedSourcesDir)
+    def xsdDir = file("${projectDir}/src/main/resources/xsd")
+    def bindingsDir = file("${projectDir}/src/main/binding")
+    
+    inputs.dir xsdDir
+    inputs.dir bindingsDir
+    outputs.dir outputDir
+    
+    doLast {
+        outputDir.mkdirs()
+        
+        // Set system property for external schema access
+        System.setProperty('javax.xml.accessExternalSchema', 'all')
+        
+        ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', 
+                   classpath: configurations.jaxb.asPath)
+        
+        ant.xjc(destdir: outputDir, package: 'org.apereo.portal.portletpublishing.xml') {
+            schema(dir: xsdDir, includes: '**/*.xsd')
+            binding(dir: bindingsDir, includes: '**/*.xjb')
+            arg(value: '-extension')
+        }
     }
 }
 

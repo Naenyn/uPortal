@@ -138,11 +138,6 @@ public class Util {
      * @return the encoded path segment
      */
     public static String encodePathSegment(String val) {
-        try {
-            return UriUtils.encodePathSegment(val, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            // should be unreachable...
-            throw new RuntimeException(e);
-        }
+        return UriUtils.encodePathSegment(val, "UTF-8");
     }
 }

@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.utils.personalize;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import org.apereo.portal.security.IPerson;
 
 /** Helps personalize text by replacing tokens with user attributes. */

@@ -79,6 +79,7 @@ public class RedisSessionConfig {
                     "Invalid value for org.apereo.portal.session.redis.mode: " + this.redisMode);
         }
         this.setAdditionalProperties(result);
+        result.afterPropertiesSet();
         return result;
     }
 
@@ -88,7 +89,8 @@ public class RedisSessionConfig {
         if (this.redisClusterMaxRedirects != null) {
             clusterConfig.setMaxRedirects(this.redisClusterMaxRedirects);
         }
-        return new JedisConnectionFactory(clusterConfig);
+        JedisConnectionFactory factory = new JedisConnectionFactory(clusterConfig);
+        return factory;
     }
 
     private JedisConnectionFactory createBaseSentinelConnectionFactory() {
@@ -103,25 +105,33 @@ public class RedisSessionConfig {
     }
 
     private JedisConnectionFactory createBaseStandaloneConnectionFactory() {
-        final JedisConnectionFactory result = new JedisConnectionFactory();
+        org.springframework.data.redis.connection.RedisStandaloneConfiguration config = 
+            new org.springframework.data.redis.connection.RedisStandaloneConfiguration();
         if (this.redisHost != null) {
-            result.setHostName(this.redisHost);
+            config.setHostName(this.redisHost);
         }
         if (this.redisPort != null) {
-            result.setPort(this.redisPort);
+            config.setPort(this.redisPort);
         }
-        return result;
+        return new JedisConnectionFactory(config);
     }
 
     private void setAdditionalProperties(JedisConnectionFactory factory) {
-        if (this.redisDatabase != null) {
-            factory.setDatabase(this.redisDatabase);
+        if (factory.getStandaloneConfiguration() != null) {
+            if (this.redisDatabase != null) {
+                factory.getStandaloneConfiguration().setDatabase(this.redisDatabase);
+            }
+            if (this.redisPassword != null) {
+                factory.getStandaloneConfiguration().setPassword(this.redisPassword);
+            }
         }
-        if (this.redisPassword != null) {
-            factory.setPassword(this.redisPassword);
-        }
+        
+        // Set timeout using JedisClientConfiguration
         if (this.redisTimeout != null) {
-            factory.setTimeout(this.redisTimeout);
+            org.springframework.data.redis.connection.jedis.JedisClientConfiguration.JedisClientConfigurationBuilder builder = 
+                org.springframework.data.redis.connection.jedis.JedisClientConfiguration.builder();
+            builder.connectTimeout(java.time.Duration.ofMillis(this.redisTimeout));
+            // Note: This would need to be set during factory creation, not after
         }
     }
 }

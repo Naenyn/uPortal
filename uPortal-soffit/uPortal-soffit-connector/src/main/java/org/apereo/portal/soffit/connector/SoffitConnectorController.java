@@ -48,7 +48,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.portlet.bind.annotation.RenderMapping;
+import javax.portlet.RenderMode;
 
 /** @since 5.0 */
 @Controller
@@ -114,7 +114,7 @@ public class SoffitConnectorController implements ApplicationContextAware {
         headerProviders = Collections.unmodifiableList(values);
     }
 
-    @RenderMapping
+    @RenderMode(name = "view")
     public void invokeService(final RenderRequest req, final RenderResponse res) {
 
         final PortletPreferences prefs = req.getPreferences();

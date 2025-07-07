@@ -18,8 +18,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.i18n.LocaleManager;
 import org.apereo.portal.user.IUserInstance;
 import org.apereo.portal.user.IUserInstanceManager;
@@ -45,7 +45,7 @@ public class LocaleTransformerConfigurationSource extends TransformerConfigurati
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getParameters(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getParameters(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public Map<String, Object> getParameters(
@@ -64,7 +64,7 @@ public class LocaleTransformerConfigurationSource extends TransformerConfigurati
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getCacheKey(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getCacheKey(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {

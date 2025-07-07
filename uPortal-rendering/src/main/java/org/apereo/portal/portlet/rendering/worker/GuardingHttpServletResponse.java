@@ -18,11 +18,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 
 /**
  * Wrapper for a {@link HttpServletResponse} that makes the response inaccessible once the worker
@@ -44,7 +44,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addCookie(javax.servlet.http.Cookie)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addCookie(jakarta.servlet.http.Cookie)
      */
     @Override
     public void addCookie(Cookie cookie) {
@@ -53,7 +53,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#containsHeader(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#containsHeader(java.lang.String)
      */
     @Override
     public boolean containsHeader(String name) {
@@ -62,7 +62,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#encodeURL(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#encodeURL(java.lang.String)
      */
     @Override
     public String encodeURL(String url) {
@@ -71,7 +71,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#encodeRedirectURL(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#encodeRedirectURL(java.lang.String)
      */
     @Override
     public String encodeRedirectURL(String url) {
@@ -79,26 +79,10 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
         return super.encodeRedirectURL(url);
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#encodeUrl(java.lang.String)
-     */
-    @Override
-    public String encodeUrl(String url) {
-        this.checkState();
-        return super.encodeUrl(url);
-    }
+
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#encodeRedirectUrl(java.lang.String)
-     */
-    @Override
-    public String encodeRedirectUrl(String url) {
-        this.checkState();
-        return super.encodeRedirectUrl(url);
-    }
-
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#sendError(int, java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#sendError(int, java.lang.String)
      */
     @Override
     public void sendError(int sc, String msg) throws IOException {
@@ -107,7 +91,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#sendError(int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#sendError(int)
      */
     @Override
     public void sendError(int sc) throws IOException {
@@ -116,7 +100,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.String)
      */
     @Override
     public void sendRedirect(String location) throws IOException {
@@ -125,7 +109,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setDateHeader(java.lang.String, long)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setDateHeader(java.lang.String, long)
      */
     @Override
     public void setDateHeader(String name, long date) {
@@ -134,7 +118,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addDateHeader(java.lang.String, long)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addDateHeader(java.lang.String, long)
      */
     @Override
     public void addDateHeader(String name, long date) {
@@ -143,7 +127,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setHeader(java.lang.String, java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setHeader(java.lang.String, java.lang.String)
      */
     @Override
     public void setHeader(String name, String value) {
@@ -152,7 +136,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addHeader(java.lang.String, java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addHeader(java.lang.String, java.lang.String)
      */
     @Override
     public void addHeader(String name, String value) {
@@ -161,7 +145,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setIntHeader(java.lang.String, int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setIntHeader(java.lang.String, int)
      */
     @Override
     public void setIntHeader(String name, int value) {
@@ -170,7 +154,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addIntHeader(java.lang.String, int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addIntHeader(java.lang.String, int)
      */
     @Override
     public void addIntHeader(String name, int value) {
@@ -179,7 +163,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setStatus(int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setStatus(int)
      */
     @Override
     public void setStatus(int sc) {
@@ -187,17 +171,10 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
         super.setStatus(sc);
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setStatus(int, java.lang.String)
-     */
-    @Override
-    public void setStatus(int sc, String sm) {
-        this.checkState();
-        super.setStatus(sc, sm);
-    }
+
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getResponse()
+     * @see jakarta.servlet.ServletResponseWrapper#getResponse()
      */
     @Override
     public ServletResponse getResponse() {
@@ -206,7 +183,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setResponse(javax.servlet.ServletResponse)
+     * @see jakarta.servlet.ServletResponseWrapper#setResponse(jakarta.servlet.ServletResponse)
      */
     @Override
     public void setResponse(ServletResponse response) {
@@ -215,7 +192,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setCharacterEncoding(java.lang.String)
+     * @see jakarta.servlet.ServletResponseWrapper#setCharacterEncoding(java.lang.String)
      */
     @Override
     public void setCharacterEncoding(String charset) {
@@ -224,7 +201,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getCharacterEncoding()
+     * @see jakarta.servlet.ServletResponseWrapper#getCharacterEncoding()
      */
     @Override
     public String getCharacterEncoding() {
@@ -233,7 +210,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getOutputStream()
+     * @see jakarta.servlet.ServletResponseWrapper#getOutputStream()
      */
     @Override
     public ServletOutputStream getOutputStream() throws IOException {
@@ -242,7 +219,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getWriter()
+     * @see jakarta.servlet.ServletResponseWrapper#getWriter()
      */
     @Override
     public PrintWriter getWriter() throws IOException {
@@ -251,7 +228,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setContentLength(int)
+     * @see jakarta.servlet.ServletResponseWrapper#setContentLength(int)
      */
     @Override
     public void setContentLength(int len) {
@@ -260,7 +237,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setContentType(java.lang.String)
+     * @see jakarta.servlet.ServletResponseWrapper#setContentType(java.lang.String)
      */
     @Override
     public void setContentType(String type) {
@@ -269,7 +246,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getContentType()
+     * @see jakarta.servlet.ServletResponseWrapper#getContentType()
      */
     @Override
     public String getContentType() {
@@ -278,7 +255,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setBufferSize(int)
+     * @see jakarta.servlet.ServletResponseWrapper#setBufferSize(int)
      */
     @Override
     public void setBufferSize(int size) {
@@ -287,7 +264,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getBufferSize()
+     * @see jakarta.servlet.ServletResponseWrapper#getBufferSize()
      */
     @Override
     public int getBufferSize() {
@@ -296,7 +273,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#flushBuffer()
+     * @see jakarta.servlet.ServletResponseWrapper#flushBuffer()
      */
     @Override
     public void flushBuffer() throws IOException {
@@ -305,7 +282,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#isCommitted()
+     * @see jakarta.servlet.ServletResponseWrapper#isCommitted()
      */
     @Override
     public boolean isCommitted() {
@@ -314,7 +291,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#reset()
+     * @see jakarta.servlet.ServletResponseWrapper#reset()
      */
     @Override
     public void reset() {
@@ -323,7 +300,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#resetBuffer()
+     * @see jakarta.servlet.ServletResponseWrapper#resetBuffer()
      */
     @Override
     public void resetBuffer() {
@@ -332,7 +309,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setLocale(java.util.Locale)
+     * @see jakarta.servlet.ServletResponseWrapper#setLocale(java.util.Locale)
      */
     @Override
     public void setLocale(Locale loc) {
@@ -341,7 +318,7 @@ public class GuardingHttpServletResponse extends HttpServletResponseWrapper {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getLocale()
+     * @see jakarta.servlet.ServletResponseWrapper#getLocale()
      */
     @Override
     public Locale getLocale() {

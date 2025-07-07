@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.portlet.CacheControl;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.portlet.rendering.PortletResourceOutputHandler;
 
 /** Extension of {@link CachingPortletOutputHandler} that adds support for resource requests */

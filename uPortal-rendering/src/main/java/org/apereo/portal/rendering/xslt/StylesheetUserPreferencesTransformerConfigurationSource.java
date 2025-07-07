@@ -17,8 +17,8 @@ package org.apereo.portal.rendering.xslt;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.layout.IStylesheetUserPreferencesService;
 import org.apereo.portal.layout.IStylesheetUserPreferencesService.PreferencesScope;
 import org.apereo.portal.utils.MapPopulator;
@@ -50,7 +50,7 @@ public abstract class StylesheetUserPreferencesTransformerConfigurationSource
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getTransformerConfigurationKey(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getTransformerConfigurationKey(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public final CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {
@@ -69,7 +69,7 @@ public abstract class StylesheetUserPreferencesTransformerConfigurationSource
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getTransformerParameters(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerConfigurationSource#getTransformerParameters(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public final Map<String, Object> getParameters(

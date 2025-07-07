@@ -8,6 +8,7 @@ dependencies {
 
     implementation "org.apache.httpcomponents:httpcore:${httpcomponentsVersion}"
     implementation "org.apache.commons:commons-pool2:${commonsPoolVersion}"
+    implementation "javax.servlet:javax.servlet-api:4.0.1"
     api("org.apache.portals.pluto:pluto-container:${plutoVersion}") {
         exclude group: 'javax.xml.bind', module: 'jaxb-api'
         exclude group: 'com.sun.xml.bind', module: 'jaxb-impl'
@@ -22,5 +23,6 @@ dependencies {
     compileOnly "javax.ccpp:ccpp:${ccppVersion}"
     compileOnly "org.apache.portals.pluto:pluto-container-driver-api:${plutoVersion}"
     compileOnly "${portletApiDependency}"
+    compileOnly "javax.portlet:portlet-api:3.0.1"
     compileOnly "${servletApiDependency}"
 }

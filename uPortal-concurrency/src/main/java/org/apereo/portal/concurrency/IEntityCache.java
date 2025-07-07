@@ -21,7 +21,7 @@ import org.apereo.portal.IBasicEntity;
 public interface IEntityCache {
 
     /** @param entity - the entity to be cached. */
-    public void add(IBasicEntity entity) throws CachingException;
+    public void add(IBasicEntity entity);
 
     /**
      * Purge stale entries from the cache.
@@ -29,10 +29,10 @@ public interface IEntityCache {
      * @deprecated This is the responsibility of the cache or cache manager code
      */
     @Deprecated
-    public void cleanupCache() throws CachingException;
+    public void cleanupCache();
 
     /** Remove all entries from the cache. */
-    public void clearCache() throws CachingException;
+    public void clearCache();
 
     /**
      * @param key the key of the entity.
@@ -47,7 +47,7 @@ public interface IEntityCache {
     public Class<? extends IBasicEntity> getEntityType();
 
     /** @param entityKey - the key of the entity to be un-cached. */
-    public void remove(String entityKey) throws CachingException;
+    public void remove(String entityKey);
 
     /**
      * Answers the number of entries in the cache. May return -1 if the cache does not make this
@@ -56,5 +56,5 @@ public interface IEntityCache {
     public int size();
 
     /** @param entity - the entity to be updated in the cache. */
-    public void update(IBasicEntity entity) throws CachingException;
+    public void update(IBasicEntity entity);
 }

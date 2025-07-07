@@ -60,10 +60,7 @@ public class RequestScopedEventsTrackerImpl
         request = this.portalRequestUtils.getOriginalPortalRequest(request);
 
         final ConcurrentMap<PortalEvent, Boolean> renderEvents =
-                PortalWebUtils.getMapRequestAttribute(request, REQUEST_EVENTS, false);
-        if (renderEvents == null) {
-            return Collections.emptySet();
-        }
+                PortalWebUtils.getMapRequestAttribute(request, REQUEST_EVENTS);
 
         return Collections.unmodifiableSet(renderEvents.keySet());
     }

@@ -16,19 +16,45 @@ package org.apereo.portal.dao.usertype;
 
 import javax.portlet.WindowState;
 import org.apereo.portal.portlet.PortletUtils;
-import org.jadira.usertype.spi.shared.AbstractStringColumnMapper;
+import org.hibernate.type.descriptor.java.AbstractClassJavaType;
+import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
 
-/** */
-public class WindowStateColumnMapper extends AbstractStringColumnMapper<WindowState> {
-    private static final long serialVersionUID = 1L;
+/** Hibernate 6 compatible WindowState type descriptor */
+public class WindowStateColumnMapper extends AbstractClassJavaType<WindowState> {
 
-    @Override
-    public WindowState fromNonNullValue(String s) {
-        return PortletUtils.getWindowState(s);
+    public WindowStateColumnMapper() {
+        super(WindowState.class);
     }
 
     @Override
-    public String toNonNullValue(WindowState value) {
-        return value.toString();
+    public String toString(WindowState value) {
+        return value == null ? null : value.toString();
+    }
+
+    @Override
+    public WindowState fromString(CharSequence string) {
+        return string == null ? null : PortletUtils.getWindowState(string.toString());
+    }
+
+    @Override
+    public <X> X unwrap(WindowState value, Class<X> type, org.hibernate.type.descriptor.WrapperOptions options) {
+        if (value == null) {
+            return null;
+        }
+        if (String.class.isAssignableFrom(type)) {
+            return (X) value.toString();
+        }
+        throw unknownUnwrap(type);
+    }
+
+    @Override
+    public <X> WindowState wrap(X value, org.hibernate.type.descriptor.WrapperOptions options) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof String) {
+            return PortletUtils.getWindowState((String) value);
+        }
+        throw unknownWrap(value.getClass());
     }
 }

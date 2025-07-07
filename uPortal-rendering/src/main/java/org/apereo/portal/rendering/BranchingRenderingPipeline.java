@@ -16,12 +16,11 @@ package org.apereo.portal.rendering;
 
 import java.io.IOException;
 import java.util.function.Predicate;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 
 /**
  * A Rendering Pipeline that proceeds down one of two branches depending upon a Predicate.
@@ -63,17 +62,14 @@ public class BranchingRenderingPipeline implements IPortalRenderingPipeline {
         }
     }
 
-    @Required
     public void setPredicate(Predicate<HttpServletRequest> predicate) {
         this.predicate = predicate;
     }
 
-    @Required
     public void setTruePipe(IPortalRenderingPipeline truePipe) {
         this.truePipe = truePipe;
     }
 
-    @Required
     public void setFalsePipe(IPortalRenderingPipeline falsePipe) {
         this.falsePipe = falsePipe;
     }

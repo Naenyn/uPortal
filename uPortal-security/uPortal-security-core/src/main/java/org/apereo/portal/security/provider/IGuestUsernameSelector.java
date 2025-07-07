@@ -1,6 +1,6 @@
 package org.apereo.portal.security.provider;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This interface supports pluggable strategies for multiple guest user accounts. Zero instances of

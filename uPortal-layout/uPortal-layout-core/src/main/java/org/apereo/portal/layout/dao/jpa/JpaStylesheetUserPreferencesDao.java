@@ -16,12 +16,12 @@ package org.apereo.portal.layout.dao.jpa;
 
 import com.google.common.base.Function;
 import java.util.List;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.ParameterExpression;
+import jakarta.persistence.criteria.Root;
 import org.apereo.portal.IUserProfile;
 import org.apereo.portal.jpa.BasePortalJpaDao;
 import org.apereo.portal.layout.dao.IStylesheetUserPreferencesDao;
@@ -86,18 +86,15 @@ public class JpaStylesheetUserPreferencesDao extends BasePortalJpaDao
                                         cb.and(
                                                 cb.equal(
                                                         descriptorRoot.get(
-                                                                StylesheetUserPreferencesImpl_
-                                                                        .userId),
+                                                                "userId"),
                                                         userIdParameter),
                                                 cb.equal(
                                                         descriptorRoot.get(
-                                                                StylesheetUserPreferencesImpl_
-                                                                        .stylesheetDescriptor),
+                                                                "stylesheetDescriptor"),
                                                         stylesheetDescriptorParameter),
                                                 cb.equal(
                                                         descriptorRoot.get(
-                                                                StylesheetUserPreferencesImpl_
-                                                                        .profileId),
+                                                                "profileId"),
                                                         profileIdParameter)));
 
                                 return criteriaQuery;
@@ -120,7 +117,7 @@ public class JpaStylesheetUserPreferencesDao extends BasePortalJpaDao
                                 criteriaQuery.where(
                                         cb.equal(
                                                 descriptorRoot.get(
-                                                        StylesheetUserPreferencesImpl_.userId),
+                                                        "userId"),
                                                 userIdParameter));
 
                                 return criteriaQuery;
@@ -130,9 +127,9 @@ public class JpaStylesheetUserPreferencesDao extends BasePortalJpaDao
 
     /** Add the needed fetches to a critera query */
     protected void addFetches(final Root<StylesheetUserPreferencesImpl> descriptorRoot) {
-        descriptorRoot.fetch(StylesheetUserPreferencesImpl_.layoutAttributes, JoinType.LEFT);
-        descriptorRoot.fetch(StylesheetUserPreferencesImpl_.outputProperties, JoinType.LEFT);
-        descriptorRoot.fetch(StylesheetUserPreferencesImpl_.parameters, JoinType.LEFT);
+        descriptorRoot.fetch("layoutAttributes", JoinType.LEFT);
+        descriptorRoot.fetch("outputProperties", JoinType.LEFT);
+        descriptorRoot.fetch("parameters", JoinType.LEFT);
     }
 
     @Override

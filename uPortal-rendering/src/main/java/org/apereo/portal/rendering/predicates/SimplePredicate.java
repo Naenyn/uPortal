@@ -16,8 +16,7 @@ package org.apereo.portal.rendering.predicates;
 
 import java.util.function.Predicate;
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Required;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * It's great that Java 8 provides native, language-level support for predicates, but they don't
@@ -32,7 +31,6 @@ public class SimplePredicate implements Predicate<HttpServletRequest> {
     private String valueString;
     private boolean value;
 
-    @Required
     public void setValue(String value) {
         this.valueString = value;
     }

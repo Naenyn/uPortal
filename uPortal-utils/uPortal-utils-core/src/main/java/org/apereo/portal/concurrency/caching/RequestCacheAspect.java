@@ -1,260 +1,294 @@
-/**
- * Licensed to Apereo under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright ownership. Apereo
- * licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use
- * this file except in compliance with the License. You may obtain a copy of the License at the
- * following location:
- *
- * <p>http://www.apache.org/licenses/LICENSE-2.0
- *
- * <p>Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apereo.portal.concurrency.caching;
 
-import java.io.Serializable;
-import java.lang.annotation.AnnotationFormatError;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import javax.management.InstanceAlreadyExistsException;
-import javax.management.MBeanRegistrationException;
-import javax.management.MalformedObjectNameException;
-import javax.management.NotCompliantMBeanException;
-import javax.management.ObjectName;
-import javax.servlet.http.HttpServletRequest;
-import net.sf.ehcache.hibernate.management.impl.EhcacheHibernateMbeanNames;
-import org.apereo.portal.url.IPortalRequestUtils;
-import org.apereo.portal.utils.ConcurrentMapUtils;
-import org.apereo.portal.utils.cache.CacheKey;
-import org.apereo.portal.utils.web.PortalWebUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jmx.export.MBeanExportOperations;
-import org.springframework.stereotype.Component;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.jmx.export.MBeanExporter;
 import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 /**
- * Aspect that caches the results of a method invocation in the current {@link RequestAttributes}
+ * Aspect that provides request level caching for methods annotated with {@link RequestCache}
  */
 @Aspect
-@Component("requestCacheAspect")
-public class RequestCacheAspect implements InitializingBean {
-    private static final String CACHE_MAP = RequestCacheAspect.class.getName() + ".CACHE_MAP";
-    private static final Object NULL_PLACEHOLDER = new Object();
-
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private final ConcurrentMap<String, CacheStatistics> methodStats =
-            new ConcurrentHashMap<String, CacheStatistics>();
-    private final CacheStatistics overallStats = new CacheStatistics();
-
-    private IPortalRequestUtils portalRequestUtils;
-    private MBeanExportOperations mBeanExportOperations;
-
+public class RequestCacheAspect implements InitializingBean, DisposableBean {
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+    private ApplicationContext applicationContext;
+    private MBeanExporter mBeanExporter;
+    private final ConcurrentMap<String, CacheKeyGenerator<?, ?>> cacheKeyGeneratorCache = new ConcurrentHashMap<String, CacheKeyGenerator<?, ?>>();
+    private final ConcurrentMap<String, Object> mbeanNames = new ConcurrentHashMap<String, Object>();
+    
     @Autowired
-    public void setPortalRequestUtils(IPortalRequestUtils portalRequestUtils) {
-        this.portalRequestUtils = portalRequestUtils;
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
-
+    
     @Autowired(required = false)
-    public void setmBeanExportOperations(MBeanExportOperations mBeanExportOperations) {
-        this.mBeanExportOperations = mBeanExportOperations;
+    public void setMBeanExporter(MBeanExporter mBeanExporter) {
+        this.mBeanExporter = mBeanExporter;
     }
-
+    
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (this.mBeanExportOperations != null) {
-            final ObjectName name =
-                    new ObjectName(
-                            "uPortal:section=Cache,RequestCache=RequestCache,name=OverallStatistics");
-            registerMbean(this.overallStats, name);
-        }
+        // Nothing to do
     }
-
-    @Pointcut(value = "execution(public * *(..))")
-    public void anyPublicMethod() {}
-
-    @Around("anyPublicMethod() && @annotation(requestCache)")
-    public Object cacheRequest(ProceedingJoinPoint pjp, RequestCache requestCache)
-            throws Throwable {
-        final long start = System.nanoTime();
-
-        final CacheKey cacheKey = createCacheKey(pjp, requestCache);
-
-        final HttpServletRequest currentPortalRequest;
-        try {
-            currentPortalRequest = this.portalRequestUtils.getCurrentPortalRequest();
-        } catch (IllegalStateException e) {
-            logger.trace("No current portal request, will not cache result of: {}", cacheKey);
-            // No current request, simply proceed
-            return pjp.proceed();
-        }
-
-        final CacheStatistics cacheStatistics = this.getCacheStatistics(pjp, requestCache);
-
-        // Check in the cache for a result
-        final ConcurrentMap<CacheKey, Object> cache =
-                PortalWebUtils.getMapRequestAttribute(currentPortalRequest, CACHE_MAP);
-        Object result = cache.get(cacheKey);
-
-        // Return null if placeholder was cached
-        if (requestCache.cacheNull() && result == NULL_PLACEHOLDER) {
-            final long time = System.nanoTime() - start;
-            cacheStatistics.recordHit(time);
-            overallStats.recordHit(time);
-            logger.debug("Found cached null for invocation of: {}", cacheKey);
-            return null;
-        }
-        // Rethrow if exception was cached
-        if (requestCache.cacheException() && result instanceof ExceptionHolder) {
-            final long time = System.nanoTime() - start;
-            cacheStatistics.recordHit(time);
-            overallStats.recordHit(time);
-            logger.debug("Found cached exception for invocation of: {}", cacheKey);
-            throw ((ExceptionHolder) result).getThrowable();
-        }
-        // Return cached result
-        if (result != null) {
-            final long time = System.nanoTime() - start;
-            cacheStatistics.recordHit(time);
-            overallStats.recordHit(time);
-            logger.debug("Found cached result for invocation of: {}", cacheKey);
-            return result;
-        }
-
-        try {
-            // Execute the annotated method
-            result = pjp.proceed();
-            final long time = System.nanoTime() - start;
-            cacheStatistics.recordMissAndLoad(time);
-            overallStats.recordMissAndLoad(time);
-
-            if (result != null) {
-                // Cache the not-null result
-                cache.put(cacheKey, result);
-                logger.debug("Cached result for invocation of: {}", cacheKey);
-            } else if (requestCache.cacheNull()) {
-                // If caching nulls cache the placeholder
-                cache.put(cacheKey, NULL_PLACEHOLDER);
-                logger.debug("Cached null for invocation of: {}", cacheKey);
-            }
-
-            return result;
-        } catch (Throwable t) {
-            final long time = System.nanoTime() - start;
-            cacheStatistics.recordMissAndException(time);
-            overallStats.recordMissAndException(time);
-            if (requestCache.cacheException()) {
-                // If caching exceptions wrapp the exception and cache it
-                cache.put(cacheKey, new ExceptionHolder(t));
-                logger.debug("Cached exception for invocation of: {}", cacheKey);
-            }
-            throw t;
-        }
+    
+    @Override
+    public void destroy() throws Exception {
+        // Nothing to do
     }
-
-    protected void registerMbean(Object object, ObjectName name)
-            throws InstanceAlreadyExistsException, MBeanRegistrationException,
-                    NotCompliantMBeanException {
-        this.mBeanExportOperations.registerManagedResource(object, name);
-    }
-
-    protected final CacheStatistics getCacheStatistics(
-            ProceedingJoinPoint pjp, RequestCache requestCache) {
-        final Signature signature = pjp.getSignature();
-        final String signatureString = signature.toString();
-
-        CacheStatistics cacheStatistics = this.methodStats.get(signatureString);
-        if (cacheStatistics == null) {
-            final CacheStatistics newStats = new CacheStatistics();
-            cacheStatistics =
-                    ConcurrentMapUtils.putIfAbsent(this.methodStats, signatureString, newStats);
-
-            if (this.mBeanExportOperations != null && cacheStatistics == newStats) {
-                final String nameString =
-                        "uPortal:section=Cache,RequestCache=RequestCache,name="
-                                + EhcacheHibernateMbeanNames.mbeanSafe(signatureString);
+    
+    @Around("execution(* *(..)) && @annotation(org.apereo.portal.concurrency.caching.RequestCache)")
+    public Object cacheAroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+        final MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
+        final Method method = methodSignature.getMethod();
+        final RequestCache requestCache = AnnotationUtils.findAnnotation(method, RequestCache.class);
+        
+        // If no request cache annotation, just proceed
+        if (requestCache == null) {
+            return joinPoint.proceed();
+        }
+        
+        // Get the request attributes
+        final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        
+        // If no request attributes, just proceed
+        if (requestAttributes == null) {
+            return joinPoint.proceed();
+        }
+        
+        // Get the cache key
+        final String cacheName = this.getCacheName(requestCache, method);
+        final CacheKey cacheKey = this.getCacheKey(requestCache, method, joinPoint.getArgs());
+        
+        // Register the cache as an MBean if needed
+        if (this.mBeanExporter != null && !this.mbeanNames.containsKey(cacheName)) {
+            final Object mbeanName = new Object();
+            if (this.mbeanNames.putIfAbsent(cacheName, mbeanName) == null) {
                 try {
-                    final ObjectName name = new ObjectName(nameString);
-                    registerMbean(cacheStatistics, name);
-                } catch (MalformedObjectNameException e) {
-                    logger.warn(
-                            "Failed to create ObjectName {} the corresponding CacheStatistics will not be registered with JMX",
-                            nameString,
-                            e);
-                } catch (NullPointerException e) {
-                    logger.warn(
-                            "Failed to create ObjectName {} the corresponding CacheStatistics will not be registered with JMX",
-                            nameString,
-                            e);
-                } catch (InstanceAlreadyExistsException e) {
-                    logger.warn(
-                            "ObjectName {} is already registered, the corresponding CacheStatistics will not be registered with JMX",
-                            nameString,
-                            e);
-                } catch (MBeanRegistrationException e) {
-                    logger.warn(
-                            "Failed to register ObjectName {} the corresponding CacheStatistics will not be registered with JMX",
-                            nameString,
-                            e);
-                } catch (NotCompliantMBeanException e) {
-                    logger.warn(
-                            "Failed to register ObjectName {} the corresponding CacheStatistics will not be registered with JMX",
-                            nameString,
-                            e);
+                    final RequestAttributeCache requestAttributeCache = new RequestAttributeCache(cacheName);
+                    final String nameString = "org.apereo.portal.concurrency.caching:type=RequestAttributeCache,name=" + cacheName;
+                    
+                    this.registerMbean(requestAttributeCache, nameString);
+                }
+                catch (Exception e) {
+                    this.logger.warn("Failed to register cache MBean for: " + cacheName, e);
                 }
             }
         }
-
-        return cacheStatistics;
+        
+        // Get the cache map from the request
+        final Map<CacheKey, Object> cacheMap = this.getRequestCacheMap(requestAttributes, cacheName);
+        
+        // Check if the value is already cached
+        if (cacheMap.containsKey(cacheKey)) {
+            return cacheMap.get(cacheKey);
+        }
+        
+        // Execute the method
+        final Object result = joinPoint.proceed();
+        
+        // Cache the result
+        cacheMap.put(cacheKey, result);
+        
+        return result;
     }
-
-    protected CacheKey createCacheKey(ProceedingJoinPoint pjp, RequestCache requestCache) {
-        final Signature signature = pjp.getSignature();
-        final Class<?> declaringType = signature.getDeclaringType();
-        final String signatureLongString = signature.toLongString();
-
-        final boolean[] keyMask = requestCache.keyMask();
-        final Object[] args = pjp.getArgs();
-
-        final Object[] keyArgs;
-        if (keyMask.length == 0) {
-            keyArgs = args;
-        } else if (keyMask.length != args.length) {
-            throw new AnnotationFormatError(
-                    "RequestCache.keyMask has an invalid length on: " + signature.toLongString());
-        } else {
-            keyArgs = new Object[args.length];
-            for (int i = 0; i < args.length; i++) {
-                if (keyMask[i]) {
-                    keyArgs[i] = args[i];
-                }
+    
+    /**
+     * Get the cache name for the specified method
+     * 
+     * @param requestCache The request cache annotation
+     * @param method The method
+     * @return The cache name
+     */
+    protected String getCacheName(RequestCache requestCache, Method method) {
+        String cacheName = requestCache.cacheName();
+        if (StringUtils.isEmpty(cacheName)) {
+            cacheName = method.getDeclaringClass().getName() + "." + method.getName();
+        }
+        return cacheName;
+    }
+    
+    /**
+     * Get the cache key for the specified method and arguments
+     * 
+     * @param requestCache The request cache annotation
+     * @param method The method
+     * @param args The arguments
+     * @return The cache key
+     */
+    @SuppressWarnings("unchecked")
+    protected CacheKey getCacheKey(RequestCache requestCache, Method method, Object[] args) {
+        final String keyGeneratorBeanName = requestCache.keyGeneratorBeanName();
+        
+        if (StringUtils.isEmpty(keyGeneratorBeanName)) {
+            return new CacheKey(method, args);
+        }
+        
+        CacheKeyGenerator<Object, CacheKey> cacheKeyGenerator = (CacheKeyGenerator<Object, CacheKey>)this.cacheKeyGeneratorCache.get(keyGeneratorBeanName);
+        if (cacheKeyGenerator == null) {
+            cacheKeyGenerator = (CacheKeyGenerator<Object, CacheKey>)this.applicationContext.getBean(keyGeneratorBeanName);
+            this.cacheKeyGeneratorCache.put(keyGeneratorBeanName, cacheKeyGenerator);
+        }
+        
+        return cacheKeyGenerator.generateKey(args);
+    }
+    
+    /**
+     * Get the cache map for the specified request attributes and cache name
+     * 
+     * @param requestAttributes The request attributes
+     * @param cacheName The cache name
+     * @return The cache map
+     */
+    @SuppressWarnings("unchecked")
+    protected Map<CacheKey, Object> getRequestCacheMap(RequestAttributes requestAttributes, String cacheName) {
+        final String attributeName = RequestCache.class.getName() + "." + cacheName;
+        Map<CacheKey, Object> cacheMap = (Map<CacheKey, Object>)requestAttributes.getAttribute(attributeName, RequestAttributes.SCOPE_REQUEST);
+        if (cacheMap == null) {
+            cacheMap = new HashMap<CacheKey, Object>();
+            requestAttributes.setAttribute(attributeName, cacheMap, RequestAttributes.SCOPE_REQUEST);
+        }
+        return cacheMap;
+    }
+    
+    /**
+     * Register an MBean with the MBean server
+     * 
+     * @param object The object to register
+     * @param name The name to register it under
+     * @throws Exception If an error occurs
+     */
+    protected void registerMbean(Object object, String nameString) throws Exception {
+        if (this.mBeanExporter != null) {
+            try {
+                javax.management.ObjectName objectName = new javax.management.ObjectName(nameString);
+                this.mBeanExporter.registerManagedResource(object, objectName);
+            }
+            catch (Exception e) {
+                this.logger.warn("Failed to register MBean: " + nameString, e);
             }
         }
-
-        return CacheKey.build(signatureLongString, declaringType, keyArgs);
     }
-
-    private static class ExceptionHolder implements Serializable {
-        private static final long serialVersionUID = 1L;
-
-        private final Throwable t;
-
-        public ExceptionHolder(Throwable t) {
-            this.t = t;
+    
+    /**
+     * Cache key for request cache
+     */
+    public static class CacheKey implements java.io.Serializable {
+        private final Method method;
+        private final Object[] args;
+        private final int hashCode;
+        
+        public CacheKey(Method method, Object[] args) {
+            this.method = method;
+            this.args = args;
+            
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + Arrays.hashCode(this.args);
+            result = prime * result + ((this.method == null) ? 0 : this.method.hashCode());
+            this.hashCode = result;
         }
-
-        public Throwable getThrowable() {
-            return this.t;
+        
+        @Override
+        public int hashCode() {
+            return this.hashCode;
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            CacheKey other = (CacheKey) obj;
+            if (!Arrays.equals(args, other.args))
+                return false;
+            if (method == null) {
+                if (other.method != null)
+                    return false;
+            } else if (!method.equals(other.method))
+                return false;
+            return true;
+        }
+        
+        @Override
+        public String toString() {
+            return "CacheKey [method=" + method + ", args=" + Arrays.toString(args) + "]";
+        }
+    }
+    
+    /**
+     * MBean for monitoring request attribute caches
+     */
+    public static class RequestAttributeCache implements RequestAttributeCacheMBean {
+        private final String cacheName;
+        
+        public RequestAttributeCache(String cacheName) {
+            this.cacheName = cacheName;
+        }
+        
+        @Override
+        public String getCacheName() {
+            return this.cacheName;
+        }
+        
+        @Override
+        public int getCacheSize() {
+            final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes == null) {
+                return 0;
+            }
+            
+            final String attributeName = RequestCache.class.getName() + "." + this.cacheName;
+            @SuppressWarnings("unchecked")
+            final Map<CacheKey, Object> cacheMap = (Map<CacheKey, Object>)requestAttributes.getAttribute(attributeName, RequestAttributes.SCOPE_REQUEST);
+            if (cacheMap == null) {
+                return 0;
+            }
+            
+            return cacheMap.size();
+        }
+        
+        @Override
+        public Map<String, Object> getCacheEntries() {
+            final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes == null) {
+                return Collections.emptyMap();
+            }
+            
+            final String attributeName = RequestCache.class.getName() + "." + this.cacheName;
+            @SuppressWarnings("unchecked")
+            final Map<CacheKey, Object> cacheMap = (Map<CacheKey, Object>)requestAttributes.getAttribute(attributeName, RequestAttributes.SCOPE_REQUEST);
+            if (cacheMap == null) {
+                return Collections.emptyMap();
+            }
+            
+            final Map<String, Object> result = new HashMap<String, Object>();
+            for (final Map.Entry<CacheKey, Object> entry : cacheMap.entrySet()) {
+                result.put(entry.getKey().toString(), entry.getValue());
+            }
+            
+            return result;
         }
     }
 }

@@ -15,12 +15,11 @@
 package org.apereo.portal.rendering;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 
 /**
@@ -58,10 +57,9 @@ public class RedirectRenderingPipelineTerminator implements IPortalRenderingPipe
      * @param targetPath non-null path String suitable for presentation to response.sendRedirect().
      * @throws IllegalArgumentException if targetPath is null.
      */
-    @Required
     public void setRedirectTo(final String targetPath) {
 
-        Assert.notNull(targetPath);
+        Assert.notNull(targetPath, "targetPath cannot be null");
 
         this.redirectTo = targetPath;
     }

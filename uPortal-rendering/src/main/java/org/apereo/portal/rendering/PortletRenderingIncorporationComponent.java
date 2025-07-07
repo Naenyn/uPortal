@@ -15,8 +15,8 @@
 package org.apereo.portal.rendering;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.character.stream.CharacterEventReader;
 import org.apereo.portal.character.stream.FilteringCharacterEventReader;
 import org.apereo.portal.character.stream.events.CharacterDataEventImpl;
@@ -41,7 +41,7 @@ public class PortletRenderingIncorporationComponent extends CharacterPipelineCom
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.PipelineComponent#getCacheKey(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.PipelineComponent#getCacheKey(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {
@@ -53,7 +53,7 @@ public class PortletRenderingIncorporationComponent extends CharacterPipelineCom
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.PipelineComponent#getEventReader(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.PipelineComponent#getEventReader(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public PipelineEventReader<CharacterEventReader, CharacterEvent> getEventReader(

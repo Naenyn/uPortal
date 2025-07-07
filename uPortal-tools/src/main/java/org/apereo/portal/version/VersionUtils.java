@@ -14,6 +14,7 @@
  */
 package org.apereo.portal.version;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apereo.portal.version.om.Version;
@@ -80,7 +81,7 @@ public class VersionUtils {
 
         final Integer l1 = v1.getLocal();
         final Integer l2 = v2.getLocal();
-        if (l1 != l2 && (l1 == null || l2 == null || !l1.equals(l2))) {
+        if (!Objects.equals(l1, l2)) {
             return Version.Field.PATCH;
         }
 

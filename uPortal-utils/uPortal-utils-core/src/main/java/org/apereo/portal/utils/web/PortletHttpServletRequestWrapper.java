@@ -19,13 +19,13 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.async.WebAsyncUtils;
 
 /** Scopes set request attributes to just this request. */
 public class PortletHttpServletRequestWrapper extends AbstractHttpServletRequestWrapper {
     /**
-     * {@link javax.servlet.http.HttpServletRequest} attribute that this {@link HttpServletRequest}
+     * {@link jakarta.servlet.http.HttpServletRequest} attribute that this {@link HttpServletRequest}
      * object will be available.
      */
     public static final String ATTRIBUTE__HTTP_SERVLET_REQUEST =

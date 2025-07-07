@@ -22,44 +22,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apereo.portal.portlet.dao.IPortletTypeDao;
 import org.apereo.portal.portlet.om.IPortletType;
 import org.apereo.portal.portlet.registry.IPortletTypeRegistry;
 import org.apereo.portal.portletpublishing.xml.PortletPublishingDefinition;
 import org.apereo.portal.portletpublishing.xml.Step;
-import org.apereo.portal.xml.PortletDescriptor;
+import org.apereo.portal.portletpublishing.xml.PortletDescriptor;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class XmlChannelPublishingDefinitionDaoTest {
 
-    @InjectMocks private XmlChannelPublishingDefinitionDao xmlChannelPublishingDefinitionDao;
-
+    private XmlChannelPublishingDefinitionDao xmlChannelPublishingDefinitionDao;
+    
     @Mock private IPortletTypeRegistry portletTypeRegistry;
-
-    @Mock private IPortletTypeDao portletTypeDao;
-
     @Mock private IPortletType portletType;
-
-    @Mock private Map<Integer, PortletPublishingDefinition> cpdCache = getCpdCache();
+    
+    private Map<Integer, PortletPublishingDefinition> cpdCache;
 
     @Before
     public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        List<IPortletType> portletTypes = new ArrayList();
-        xmlChannelPublishingDefinitionDao.setCpdCache(getCpdCache());
+        MockitoAnnotations.openMocks(this);
+        xmlChannelPublishingDefinitionDao = new XmlChannelPublishingDefinitionDao();
+        xmlChannelPublishingDefinitionDao.setPortletTypeRegistry(portletTypeRegistry);
+        
+        cpdCache = getCpdCache();
+        xmlChannelPublishingDefinitionDao.setCpdCache(cpdCache);
         xmlChannelPublishingDefinitionDao.afterPropertiesSet();
+        
         when(portletType.getId()).thenReturn(1010);
         when(portletType.getName()).thenReturn("Advanced CMS");
         when(portletType.getDescription()).thenReturn("Displays configured HTML content");
-        when(portletType.getCpdUri())
-                .thenReturn("/org/apereo/portal/portlets/CMS/AdvancedCMSPortlet.cpd.xml");
-        when(portletTypeRegistry.getPortletType("CHN123")).thenReturn(portletType);
+        when(portletType.getCpdUri()).thenReturn("/org/apereo/portal/portlets/CMS/AdvancedCMSPortlet.cpd.xml");
+        
+        List<IPortletType> portletTypes = new ArrayList<>();
         portletTypes.add(portletType);
         when(portletTypeRegistry.getPortletTypes()).thenReturn(portletTypes);
+        
         assertNotNull(xmlChannelPublishingDefinitionDao);
     }
 
@@ -67,7 +67,7 @@ public class XmlChannelPublishingDefinitionDaoTest {
     public void testGetChannelPublishingDefinitions() {
         Map<IPortletType, PortletPublishingDefinition> results =
                 xmlChannelPublishingDefinitionDao.getChannelPublishingDefinitions();
-        assertEquals(results.size(), 1);
+        assertEquals(1, results.size());
     }
 
     @Test

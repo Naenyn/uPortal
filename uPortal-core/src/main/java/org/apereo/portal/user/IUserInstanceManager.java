@@ -18,7 +18,7 @@ package org.apereo.portal.user;
  * Copyright 2007 The JA-SIG Collaborative. All rights reserved. See license distributed with this
  * file and available online at http://www.uportal.org/license.html
  */
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.PortalException;
 
 /** Determines which {@link IUserInstance} object to use for a given request. */

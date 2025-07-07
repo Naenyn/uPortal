@@ -35,7 +35,7 @@ import org.apereo.services.persondir.support.merger.ReplacingAttributeAdder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+
 
 /**
  * This bean is the root of the User Attributes subsystem in uPortal. It provides support for
@@ -65,7 +65,7 @@ public class PortalRootPersonAttributeDao extends AbstractFlatteningPersonAttrib
     }
 
     /** @param delegatePersonAttributeDao the delegatePersonAttributeDao to set */
-    @Required
+
     public void setDelegatePersonAttributeDao(IPersonAttributeDao delegatePersonAttributeDao) {
         Validate.notNull(delegatePersonAttributeDao, "delegatePersonAttributeDao can not be null");
         this.delegatePersonAttributeDao = delegatePersonAttributeDao;

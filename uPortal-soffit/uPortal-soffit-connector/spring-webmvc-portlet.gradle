@@ -1,0 +1,6 @@
+// Spring WebMVC Portlet was removed in Spring 6
+// Replaced with direct portlet API usage
+dependencies {
+    implementation "${portletApiDependency}"
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+}
