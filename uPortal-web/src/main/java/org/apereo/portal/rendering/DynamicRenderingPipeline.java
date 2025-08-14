@@ -16,8 +16,8 @@ package org.apereo.portal.rendering;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.transform.OutputKeys;
 import org.apereo.portal.character.stream.CharacterEventReader;
 import org.apereo.portal.character.stream.events.CharacterDataEvent;

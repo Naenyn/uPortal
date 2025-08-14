@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.apache.commons.lang.StringUtils;
 import org.apereo.portal.spring.spel.IPortalSpELService;
 import org.apereo.portal.spring.spel.PortalSpELServiceImpl;

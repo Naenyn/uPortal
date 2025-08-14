@@ -16,18 +16,18 @@ package org.apereo.portal.events.aggr.dao.jpa;
 
 import com.google.common.collect.ComparisonChain;
 import java.io.Serializable;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.PostLoad;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.PostUpdate;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Transient;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.events.aggr.AcademicTermDetail;
 import org.apereo.portal.events.aggr.EventDateTimeUtils;
@@ -63,12 +63,12 @@ public class AcademicTermDetailImpl implements AcademicTermDetail, Serializable 
 
     @NaturalId
     @Column(name = "TERM_START", nullable = false)
-    @Type(type = "dateTime")
+    // @Type annotation removed - Hibernate 6 has built-in support for DateTime
     private DateTime start;
 
     @NaturalId
     @Column(name = "TERM_END", nullable = false)
-    @Type(type = "dateTime")
+    // @Type annotation removed - Hibernate 6 has built-in support for DateTime
     private DateTime end;
 
     @Column(name = "TERM_NAME", nullable = false)

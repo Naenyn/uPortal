@@ -39,7 +39,7 @@ public class PrefValueDynamicSkinCssFileNamer implements DynamicSkinCssFileNamer
     public PrefValueDynamicSkinCssFileNamer() {}
 
     public PrefValueDynamicSkinCssFileNamer(final String prefName) {
-        Assert.hasText(prefName);
+        Assert.hasText(prefName, "Preference name cannot be null or empty");
         this.preferenceName = prefName;
     }
 

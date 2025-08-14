@@ -376,26 +376,31 @@ public class PortletRequestContextImpl extends AbstractPortletContextImpl
         return null;
     }
 
-    // Interface compliance methods - these implement the PortletRequestContext interface
-    // Return javax types as expected by the interface, converting from internal jakarta types
+    // PortletRequestContext interface implementation
+    // These methods satisfy the interface requirements using translation helper
+    
     @Override
-    public HttpServletResponse getServletResponse() {
-        return ServletTypeMapper.toJavax(this.servletResponse);
+    public javax.servlet.http.HttpServletResponse getServletResponse() {
+        // Convert internal jakarta type to javax type for interface compliance
+        return ServletTypeMapper.toJavax(this.getJakartaServletResponse());
     }
 
     @Override
-    public HttpServletRequest getServletRequest() {
-        return ServletTypeMapper.toJavax(this.servletRequest);
+    public javax.servlet.http.HttpServletRequest getServletRequest() {
+        // Convert internal jakarta type to javax type for interface compliance
+        return ServletTypeMapper.toJavax(this.getJakartaServletRequest());
     }
 
     @Override
-    public HttpServletResponse getContainerResponse() {
-        return ServletTypeMapper.toJavax(this.containerResponse);
+    public javax.servlet.http.HttpServletResponse getContainerResponse() {
+        // Convert internal jakarta type to javax type for interface compliance  
+        return ServletTypeMapper.toJavax(this.getJakartaContainerResponse());
     }
 
     @Override
-    public HttpServletRequest getContainerRequest() {
-        return ServletTypeMapper.toJavax(this.containerRequest);
+    public javax.servlet.http.HttpServletRequest getContainerRequest() {
+        // Convert internal jakarta type to javax type for interface compliance
+        return ServletTypeMapper.toJavax(this.getJakartaContainerRequest());
     }
 
     // Interface compliance methods (javax types for PortletRequestContext interface)

@@ -70,18 +70,16 @@ public abstract class AbstractPortletContextImpl {
     }
 
     /**
-     * @see org.apache.pluto.container.PortletRequestContext#getContainerRequest()
-     * @see org.apache.pluto.container.PortletResponseContext#getContainerRequest()
+     * Internal method returning jakarta container request
      */
-    public HttpServletRequest getContainerRequest() {
+    public HttpServletRequest getJakartaContainerRequest() {
         return this.containerRequest;
     }
 
     /**
-     * @see org.apache.pluto.container.PortletRequestContext#getContainerResponse()
-     * @see org.apache.pluto.container.PortletResponseContext#getContainerResponse()
+     * Internal method returning jakarta container response
      */
-    public HttpServletResponse getContainerResponse() {
+    public HttpServletResponse getJakartaContainerResponse() {
         return this.containerResponse;
     }
 
@@ -112,18 +110,16 @@ public abstract class AbstractPortletContextImpl {
     }
 
     /**
-     * @see org.apache.pluto.container.PortletRequestContext#getServletRequest()
-     * @see org.apache.pluto.container.PortletResponseContext#getServletRequest()
+     * Internal method returning jakarta servlet request
      */
-    public HttpServletRequest getServletRequest() {
+    public HttpServletRequest getJakartaServletRequest() {
         return this.servletRequest;
     }
 
     /**
-     * @see org.apache.pluto.container.PortletRequestContext#getServletResponse()
-     * @see org.apache.pluto.container.PortletResponseContext#getServletResponse()
+     * Internal method returning jakarta servlet response
      */
-    public HttpServletResponse getServletResponse() {
+    public HttpServletResponse getJakartaServletResponse() {
         return this.servletResponse;
     }
 }

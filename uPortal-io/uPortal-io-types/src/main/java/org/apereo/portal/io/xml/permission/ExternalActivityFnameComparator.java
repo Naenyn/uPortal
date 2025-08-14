@@ -16,6 +16,9 @@ package org.apereo.portal.io.xml.permission;
 
 import org.apereo.portal.utils.ComparableExtractingComparator;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalActivity;
+
 /** Compare ExternalActivity based on fname */
 public class ExternalActivityFnameComparator
         extends ComparableExtractingComparator<ExternalActivity, String> {

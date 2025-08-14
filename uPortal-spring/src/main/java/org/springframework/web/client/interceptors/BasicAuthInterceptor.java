@@ -18,7 +18,7 @@ import java.io.IOException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -32,7 +32,6 @@ public class BasicAuthInterceptor implements ClientHttpRequestInterceptor {
     private PropertyResolver propertyResolver;
     private String authHeader;
 
-    @Required
     public void setId(String id) {
         this.id = id;
     }

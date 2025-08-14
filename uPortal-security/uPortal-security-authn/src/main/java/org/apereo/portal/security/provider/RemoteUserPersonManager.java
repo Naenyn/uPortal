@@ -15,8 +15,8 @@
 package org.apereo.portal.security.provider;
 
 import java.util.Enumeration;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apereo.portal.security.IPerson;
 import org.apereo.portal.security.ISecurityContext;
 import org.apereo.portal.security.PortalSecurityException;

@@ -16,6 +16,9 @@ package org.apereo.portal.io.xml.eventaggr;
 
 import org.apereo.portal.utils.ComparableExtractingComparator;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalAggregatedDimensionConfig;
+
 /** Compare dimension configs by type */
 public class ExternalAggregatedDimensionConfigComparator
         extends ComparableExtractingComparator<ExternalAggregatedDimensionConfig, String> {

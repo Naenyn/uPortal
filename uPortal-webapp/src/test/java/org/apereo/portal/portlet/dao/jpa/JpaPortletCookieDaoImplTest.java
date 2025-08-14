@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.concurrent.Callable;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.apereo.portal.portlet.dao.IPortletCookieDao;
 import org.apereo.portal.portlet.om.IPortalCookie;
 import org.apereo.portal.test.BasePortalJpaDaoTest;

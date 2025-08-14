@@ -15,7 +15,7 @@
 package org.apereo.portal.json.rendering;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import junit.framework.Assert;
 import org.apereo.portal.rest.layout.LayoutJsonV1RenderingController;
 import org.junit.Before;

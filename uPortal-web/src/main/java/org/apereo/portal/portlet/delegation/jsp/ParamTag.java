@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.portlet.delegation.jsp;
 
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.TagSupport;
 
 /** Parameter tag, uses the {@link ParameterizableTag} as a parent to add parameters */
 public class ParamTag extends TagSupport {

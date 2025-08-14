@@ -51,6 +51,7 @@ import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.portlet.registry.IPortletWindowRegistry;
 import org.apereo.portal.portlet.session.ScopingPortletSessionImpl;
 import org.apereo.portal.url.IPortalRequestUtils;
+import org.apereo.portal.portlet.container.ServletTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +79,7 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService 
 
     @Override
     public PortletSession createPortletSession(
-            PortletContext portletContext, PortletWindow portletWindow, HttpSession session) {
+            PortletContext portletContext, PortletWindow portletWindow, javax.servlet.http.HttpSession session) {
         // TODO pluto 1.1 PortletEnvironmentService#createPortletSession passed in the request; now
         // use IPortalRequestUtils#getCurrentPortalRequest()?
         final HttpServletRequest request = portalRequestUtils.getCurrentPortalRequest();
@@ -87,6 +88,7 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService 
         final IPortletEntity portletEntity = internalPortletWindow.getPortletEntity();
         final IPortletEntityId portletEntityId = portletEntity.getPortletEntityId();
 
+        // ScopingPortletSessionImpl expects javax.servlet.http.HttpSession, so pass the original session
         return new ScopingPortletSessionImpl(
                 portletEntityId, portletContext, portletWindow, session);
     }
@@ -149,6 +151,18 @@ public class PortletEnvironmentServiceImpl implements PortletEnvironmentService 
     public ResourceResponse createResourceResponse(
             PortletResourceResponseContext responseContext, String requestCacheLevel) {
         return new ExtendedResourceResponseImpl(responseContext, requestCacheLevel);
+    }
+    
+    @Override
+    public javax.portlet.HeaderResponse createHeaderResponse(org.apache.pluto.container.PortletHeaderResponseContext responseContext) {
+        // Return null for Portlet 2.0 compatibility - header responses not used
+        return null;
+    }
+    
+    @Override
+    public javax.portlet.HeaderRequest createHeaderRequest(org.apache.pluto.container.PortletRequestContext requestContext, org.apache.pluto.container.PortletHeaderResponseContext responseContext) {
+        // Return null for Portlet 2.0 compatibility - header requests not used
+        return null;
     }
 
     private static final class ExtendedActionRequestImpl extends ActionRequestImpl {

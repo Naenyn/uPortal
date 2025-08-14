@@ -180,7 +180,7 @@ public class StylesheetUserPreferencesServiceImpl implements IStylesheetUserPref
 
                     final Map<String, T> outputProperties =
                             PortalWebUtils.getMapSessionAttribute(
-                                    session, mapKey + stylesheetPreferencesKey.toString(), false);
+                                    session, mapKey + stylesheetPreferencesKey.toString());
                     if (outputProperties == null) {
                         return null;
                     }
@@ -191,7 +191,7 @@ public class StylesheetUserPreferencesServiceImpl implements IStylesheetUserPref
                 {
                     final Map<String, T> outputProperties =
                             PortalWebUtils.getMapRequestAttribute(
-                                    request, mapKey + stylesheetPreferencesKey.toString(), false);
+                                    request, mapKey + stylesheetPreferencesKey.toString());
                     if (outputProperties == null) {
                         return null;
                     }
@@ -253,7 +253,7 @@ public class StylesheetUserPreferencesServiceImpl implements IStylesheetUserPref
 
                     final Map<String, T> outputProperties =
                             PortalWebUtils.getMapSessionAttribute(
-                                    session, mapKey + stylesheetPreferencesKey.toString(), false);
+                                    session, mapKey + stylesheetPreferencesKey.toString());
                     if (outputProperties == null) {
                         return null;
                     }
@@ -264,7 +264,7 @@ public class StylesheetUserPreferencesServiceImpl implements IStylesheetUserPref
                 {
                     final Map<String, T> outputProperties =
                             PortalWebUtils.getMapRequestAttribute(
-                                    request, mapKey + stylesheetPreferencesKey.toString(), false);
+                                    request, mapKey + stylesheetPreferencesKey.toString());
                     if (outputProperties == null) {
                         return null;
                     }
@@ -358,15 +358,13 @@ public class StylesheetUserPreferencesServiceImpl implements IStylesheetUserPref
             sessionOutputProperties =
                     PortalWebUtils.getMapSessionAttribute(
                             session,
-                            OUTPUT_PROPERTIES_KEY + stylesheetPreferencesKey.toString(),
-                            false);
+                            OUTPUT_PROPERTIES_KEY + stylesheetPreferencesKey.toString());
         }
 
         final Map<String, String> requestOutputProperties =
                 PortalWebUtils.getMapRequestAttribute(
                         request,
-                        OUTPUT_PROPERTIES_KEY + stylesheetPreferencesKey.toString(),
-                        false);
+                        OUTPUT_PROPERTIES_KEY + stylesheetPreferencesKey.toString());
 
         // Try getting each output property to populate the Properties
         for (final IOutputPropertyDescriptor outputPropertyDescriptor :
@@ -619,14 +617,12 @@ public class StylesheetUserPreferencesServiceImpl implements IStylesheetUserPref
             sessionStylesheetParameters =
                     PortalWebUtils.getMapSessionAttribute(
                             session,
-                            STYLESHEET_PARAMETERS_KEY + stylesheetPreferencesKey.toString(),
-                            false);
+                            STYLESHEET_PARAMETERS_KEY + stylesheetPreferencesKey.toString());
         }
         final Map<String, String> requestStylesheetParameters =
                 PortalWebUtils.getMapRequestAttribute(
                         request,
-                        STYLESHEET_PARAMETERS_KEY + stylesheetPreferencesKey.toString(),
-                        false);
+                        STYLESHEET_PARAMETERS_KEY + stylesheetPreferencesKey.toString());
 
         // Try getting each stylesheet parameter to populate the Map
         for (final IStylesheetParameterDescriptor stylesheetParameterDescriptor :
@@ -832,14 +828,14 @@ public class StylesheetUserPreferencesServiceImpl implements IStylesheetUserPref
     protected ConcurrentMap<String, Map<String, String>> getRequestLayoutAttributes(
             HttpServletRequest request, StylesheetPreferencesKey stylesheetPreferencesKey) {
         return PortalWebUtils.getMapRequestAttribute(
-                request, LAYOUT_ATTRIBUTES_KEY + stylesheetPreferencesKey.toString(), false);
+                request, LAYOUT_ATTRIBUTES_KEY + stylesheetPreferencesKey.toString());
     }
 
     /** @return Map<nodeId, Map<name, value>> */
     protected ConcurrentMap<String, Map<String, String>> getSessionLayoutAttributes(
             HttpSession session, StylesheetPreferencesKey stylesheetPreferencesKey) {
         return PortalWebUtils.getMapSessionAttribute(
-                session, LAYOUT_ATTRIBUTES_KEY + stylesheetPreferencesKey.toString(), false);
+                session, LAYOUT_ATTRIBUTES_KEY + stylesheetPreferencesKey.toString());
     }
 
     @Transactional

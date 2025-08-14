@@ -37,7 +37,7 @@ public class UniqueTokenBasedDynamicSkinCssFileNamer implements DynamicSkinCssFi
 
     public UniqueTokenBasedDynamicSkinCssFileNamer(
             final DynamicSkinUniqueTokenGenerator generator) {
-        Assert.notNull(generator);
+        Assert.notNull(generator, "DynamicSkinUniqueTokenGenerator cannot be null");
         this.uniqueTokenGenerator = generator;
     }
 
@@ -46,7 +46,7 @@ public class UniqueTokenBasedDynamicSkinCssFileNamer implements DynamicSkinCssFi
             @Value("${dynamic-skin.skin-prefix:skin}") final String prefix,
             final DynamicSkinUniqueTokenGenerator generator) {
         this(generator);
-        Assert.notNull(prefix);
+        Assert.notNull(prefix, "Prefix cannot be null");
         this.prefix = prefix;
     }
 

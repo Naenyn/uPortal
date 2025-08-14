@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.spring.web.servlet;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.DispatcherServlet;
 

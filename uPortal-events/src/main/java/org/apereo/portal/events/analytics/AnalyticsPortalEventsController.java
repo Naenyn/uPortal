@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apereo.portal.events.PortalEvent;
 import org.apereo.portal.rest.utils.ErrorResponse;

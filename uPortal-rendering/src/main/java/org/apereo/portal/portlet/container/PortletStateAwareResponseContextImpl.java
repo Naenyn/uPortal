@@ -23,6 +23,7 @@ import javax.portlet.WindowState;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.pluto.container.EventProvider;
+import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletStateAwareResponseContext;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -184,9 +185,5 @@ public class PortletStateAwareResponseContextImpl extends PortletResponseContext
         // No-op for Portlet 2.0 compatibility - maintains existing behavior
     }
     
-    @Override
-    public Object getHeaderData() {
-        // Return null for Portlet 2.0 compatibility - maintains existing behavior
-        return null;
-    }
+
 }

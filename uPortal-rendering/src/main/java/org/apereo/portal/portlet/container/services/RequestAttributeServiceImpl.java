@@ -135,6 +135,7 @@ public class RequestAttributeServiceImpl implements RequestAttributeService {
                 this.portletDefinitionRegistry.getParentPortletApplicationDescriptor(
                         portletDefinition.getPortletDefinitionId());
 
+        // Use the real Pluto 3.0 API
         return portletApplicationDescriptor.getUserAttributes();
     }
 }

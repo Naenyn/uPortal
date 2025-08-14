@@ -17,10 +17,10 @@ package org.apereo.portal.events.aggr.dao.jpa;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
-import javax.persistence.Transient;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.PostUpdate;
+import jakarta.persistence.Transient;
 import org.apereo.portal.events.aggr.BaseAggregatedDimensionConfig;
 import org.apereo.portal.utils.IncludeExcludeUtils;
 

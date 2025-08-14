@@ -15,8 +15,8 @@
 package org.apereo.portal.events.aggr;
 
 import java.util.Map;
-import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.FlushModeType;
 import org.apereo.portal.events.PortalEvent;
 import org.apereo.portal.events.aggr.session.EventSession;
 import org.joda.time.DateTime;

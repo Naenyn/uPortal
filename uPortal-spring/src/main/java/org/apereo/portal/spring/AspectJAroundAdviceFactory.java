@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import org.springframework.aop.aspectj.AspectJAroundAdvice;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.aspectj.SingletonAspectInstanceFactory;
-import org.springframework.beans.factory.annotation.Required;
+
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.util.ReflectionUtils;
 
@@ -29,22 +29,18 @@ public class AspectJAroundAdviceFactory extends AbstractFactoryBean<AspectJAroun
     private Class<?>[] args = new Class<?>[0];
     private AspectJExpressionPointcut pointcut;
 
-    @Required
     public void setAspect(Object aspect) {
         this.aspect = aspect;
     }
 
-    @Required
     public void setMethod(String method) {
         this.method = method;
     }
 
-    @Required
     public void setArgs(Class<?>[] args) {
         this.args = args;
     }
 
-    @Required
     public void setPointcut(AspectJExpressionPointcut pointcut) {
         this.pointcut = pointcut;
     }

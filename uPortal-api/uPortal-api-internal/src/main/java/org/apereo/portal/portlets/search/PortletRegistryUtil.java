@@ -18,7 +18,7 @@
  */
 package org.apereo.portal.portlets.search;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.PortletUtils;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.om.IPortletWindow;

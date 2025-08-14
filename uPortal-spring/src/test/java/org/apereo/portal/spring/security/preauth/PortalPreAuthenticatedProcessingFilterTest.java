@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import org.apereo.portal.layout.profile.ProfileSelectionEvent;
 import org.apereo.portal.security.ISecurityContext;
 import org.apereo.portal.security.mvc.LoginController;

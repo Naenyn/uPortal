@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.IUserPreferencesManager;
 import org.apereo.portal.api.portlet.DelegationRequest;
 import org.apereo.portal.layout.IUserLayoutManager;
@@ -89,7 +89,7 @@ public class PortalUrlProviderImpl implements IPortalUrlProvider {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IPortalUrlProvider#getDefaultUrl(javax.servlet.http.HttpServletRequest)
+     * @see org.apereo.portal.url.IPortalUrlProvider#getDefaultUrl(jakarta.servlet.http.HttpServletRequest)
      */
     @Override
     public IPortalUrlBuilder getDefaultUrl(HttpServletRequest request) {
@@ -100,7 +100,7 @@ public class PortalUrlProviderImpl implements IPortalUrlProvider {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalUrlBuilderByLayoutNode(javax.servlet.http.HttpServletRequest, java.lang.String, org.apereo.portal.url.UrlType)
+     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalUrlBuilderByLayoutNode(jakarta.servlet.http.HttpServletRequest, java.lang.String, org.apereo.portal.url.UrlType)
      */
     @Override
     public IPortalUrlBuilder getPortalUrlBuilderByLayoutNode(
@@ -136,7 +136,7 @@ public class PortalUrlProviderImpl implements IPortalUrlProvider {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalUrlBuilderByPortletWindow(javax.servlet.http.HttpServletRequest, org.apereo.portal.portlet.om.IPortletWindowId, org.apereo.portal.url.UrlType)
+     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalUrlBuilderByPortletWindow(jakarta.servlet.http.HttpServletRequest, org.apereo.portal.portlet.om.IPortletWindowId, org.apereo.portal.url.UrlType)
      */
     @Override
     public IPortalUrlBuilder getPortalUrlBuilderByPortletWindow(
@@ -147,7 +147,7 @@ public class PortalUrlProviderImpl implements IPortalUrlProvider {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalUrlBuilderByPortletFName(javax.servlet.http.HttpServletRequest, java.lang.String, org.apereo.portal.url.UrlType)
+     * @see org.apereo.portal.url.IPortalUrlProvider#getPortalUrlBuilderByPortletFName(jakarta.servlet.http.HttpServletRequest, java.lang.String, org.apereo.portal.url.UrlType)
      */
     @Override
     public IPortalUrlBuilder getPortalUrlBuilderByPortletFName(

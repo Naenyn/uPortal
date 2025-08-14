@@ -16,17 +16,17 @@ package org.apereo.portal.events.aggr.dao.jpa;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Transient;
 import org.apereo.portal.events.aggr.TimeDimension;
 import org.apereo.portal.events.aggr.login.LoginAggregationImpl;
 import org.hibernate.annotations.Cache;
@@ -63,7 +63,7 @@ public final class TimeDimensionImpl implements TimeDimension, Serializable {
 
     @NaturalId
     @Column(name = "TD_TIME", nullable = false)
-    @Type(type = "localTime")
+    // @Type annotation removed - Hibernate 6 has built-in support for LocalTime
     private final LocalTime time;
 
     @Index(name = "IDX_UP_TD_HOUR")

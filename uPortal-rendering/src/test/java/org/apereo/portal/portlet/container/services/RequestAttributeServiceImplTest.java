@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.pluto.container.PortletWindow;
-import org.apache.pluto.container.om.portlet.impl.PortletAppType;
-import org.apache.pluto.container.om.portlet.impl.UserAttributeType;
+import org.apache.pluto.container.om.portlet.PortletApplicationDefinition;
+import org.apache.pluto.container.om.portlet.UserAttribute;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.om.IPortletDefinitionId;
 import org.apereo.portal.portlet.om.IPortletEntity;
@@ -81,12 +81,16 @@ public class RequestAttributeServiceImplTest {
         when(portletWindowRegistry.convertPortletWindow(httpServletRequest, plutoPortletWindow))
                 .thenReturn(portletWindow);
 
-        List<UserAttributeType> userAttributesList = new ArrayList<UserAttributeType>();
-        UserAttributeType userAttribute = new UserAttributeType();
-        userAttribute.setName("attribute1");
+        // Create a mock PortletApplicationDefinition that returns the expected user attributes
+        PortletApplicationDefinition portletApplicationDefinition = mock(PortletApplicationDefinition.class);
+        
+        // Create a mock UserAttribute
+        UserAttribute userAttribute = mock(UserAttribute.class);
+        when(userAttribute.getName()).thenReturn("attribute1");
+        
+        List<UserAttribute> userAttributesList = new ArrayList<UserAttribute>();
         userAttributesList.add(userAttribute);
-        PortletAppType portletApplicationDefinition = new PortletAppType();
-        portletApplicationDefinition.addUserAttribute("attribute1");
+        when(portletApplicationDefinition.getUserAttributes()).thenReturn(userAttributesList);
         IPortletDefinitionRegistry portletDefinitionRegistry =
                 mock(IPortletDefinitionRegistry.class);
         when(portletDefinitionRegistry.getParentPortletApplicationDescriptor(portletDefinitionId))

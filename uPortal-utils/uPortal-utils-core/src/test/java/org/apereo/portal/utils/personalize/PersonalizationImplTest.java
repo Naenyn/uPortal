@@ -16,7 +16,7 @@ package org.apereo.portal.utils.personalize;
 
 import java.util.Date;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import junit.framework.TestCase;
 import org.apereo.portal.security.IPerson;
 import org.springframework.mock.web.MockHttpSession;

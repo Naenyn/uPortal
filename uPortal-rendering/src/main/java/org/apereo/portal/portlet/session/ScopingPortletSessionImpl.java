@@ -15,7 +15,7 @@
 package org.apereo.portal.portlet.session;
 
 import javax.portlet.PortletContext;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pluto.container.PortletWindow;

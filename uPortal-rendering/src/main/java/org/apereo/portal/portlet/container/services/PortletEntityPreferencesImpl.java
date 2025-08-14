@@ -32,6 +32,7 @@ import org.apereo.portal.portlet.om.IPortletEntityId;
 import org.apereo.portal.portlet.om.IPortletPreference;
 import org.apereo.portal.portlet.registry.IPortletDefinitionRegistry;
 import org.apereo.portal.portlet.registry.IPortletEntityRegistry;
+import org.apereo.portal.portlet.container.ServletTypeMapper;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionOperations;
@@ -65,7 +66,10 @@ public class PortletEntityPreferencesImpl extends AbstractPortletPreferencesImpl
     protected IPortletEntity getInitializationContext() {
         final javax.servlet.http.HttpServletRequest containerRequest =
                 this.portletRequestContext.getContainerRequest();
-        return this.portletEntityRegistry.getPortletEntity(containerRequest, portletEntityId);
+        // Convert javax to jakarta for registry call
+        final jakarta.servlet.http.HttpServletRequest jakartaRequest = 
+                ServletTypeMapper.toJakarta(containerRequest);
+        return this.portletEntityRegistry.getPortletEntity(jakartaRequest, portletEntityId);
     }
 
     @Override
@@ -108,7 +112,8 @@ public class PortletEntityPreferencesImpl extends AbstractPortletPreferencesImpl
 
     @Override
     protected boolean storeInternal() {
-        final jakarta.servlet.http.HttpServletRequest containerRequest = portletRequestContext.getContainerRequest();
+        final javax.servlet.http.HttpServletRequest javaxContainerRequest = portletRequestContext.getContainerRequest();
+        final jakarta.servlet.http.HttpServletRequest containerRequest = ServletTypeMapper.toJakarta(javaxContainerRequest);
 
         final IPortletEntity portletEntity =
                 this.portletEntityRegistry.getPortletEntity(containerRequest, portletEntityId);

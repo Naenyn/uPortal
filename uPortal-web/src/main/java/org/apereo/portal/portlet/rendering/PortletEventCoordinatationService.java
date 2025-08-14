@@ -18,8 +18,8 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import java.util.*;
 import javax.portlet.Event;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import net.sf.ehcache.Ehcache;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletWindow;
@@ -142,18 +142,34 @@ public class PortletEventCoordinatationService implements IPortletEventCoordinat
         }
     }
 
-    @Override
+    // Interface method for EventCoordinationService (javax servlet types)
     public void processEvents(
             PortletContainer container,
             PortletWindow plutoPortletWindow,
-            HttpServletRequest request,
-            HttpServletResponse response,
+            javax.servlet.http.HttpServletRequest request,
+            javax.servlet.http.HttpServletResponse response,
             List<Event> events) {
-        final PortletEventQueue requestPortletEventQueue = this.getPortletEventQueue(request);
+        // Convert javax servlet types to jakarta for internal processing
+        jakarta.servlet.http.HttpServletRequest jakartaRequest = (jakarta.servlet.http.HttpServletRequest) request;
+        jakarta.servlet.http.HttpServletResponse jakartaResponse = (jakarta.servlet.http.HttpServletResponse) response;
+        processEvents(container, plutoPortletWindow, jakartaRequest, jakartaResponse, events);
+    }
+
+    // Internal implementation using jakarta servlet types
+    public void processEvents(
+            PortletContainer container,
+            PortletWindow plutoPortletWindow,
+            jakarta.servlet.http.HttpServletRequest request,
+            jakarta.servlet.http.HttpServletResponse response,
+            List<Event> events) {
+        // Convert jakarta servlet types for internal processing
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        final PortletEventQueue requestPortletEventQueue = this.getPortletEventQueue(httpRequest);
         this.logger.debug("Queued {} from {}", events, plutoPortletWindow);
 
         final IPortletWindow portletWindow =
-                this.portletWindowRegistry.convertPortletWindow(request, plutoPortletWindow);
+                this.portletWindowRegistry.convertPortletWindow(httpRequest, plutoPortletWindow);
         final IPortletWindowId portletWindowId = portletWindow.getPortletWindowId();
 
         // Add list transformer to convert Event to QueuedEvent
@@ -173,7 +189,6 @@ public class PortletEventCoordinatationService implements IPortletEventCoordinat
         requestPortletEventQueue.addEvents(queuedEvents);
     }
 
-    @Override
     public void resolvePortletEvents(
             HttpServletRequest request, PortletEventQueue portletEventQueue) {
         final Queue<QueuedEvent> events = portletEventQueue.getUnresolvedEvents();

@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.concurrent.Callable;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import net.sf.ehcache.Ehcache;
 import org.apereo.portal.IUserPreferencesManager;
 import org.apereo.portal.layout.IUserLayoutManager;

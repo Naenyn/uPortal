@@ -15,16 +15,16 @@
 package org.apereo.portal.events.handlers.db;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Lob;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Lob;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 import org.apereo.portal.events.PortalEvent;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
@@ -53,7 +53,7 @@ public class PersistentAnalyticsEvent implements Serializable {
 
     @Index(name = "IDX_UP_ANALYTICS_EVENTS_TIMESTAMP")
     @Column(name = "TIMESTAMP", nullable = false, updatable = false)
-    @Type(type = "dateTime")
+    // @Type annotation removed - Hibernate 6 has built-in support for DateTime
     @SuppressWarnings("unused")
     private final DateTime timestamp;
 
@@ -73,7 +73,7 @@ public class PersistentAnalyticsEvent implements Serializable {
     private final String userName;
 
     @Column(name = "EVENT_TYPE", length = 200, nullable = false, updatable = false)
-    @Type(type = "class")
+    // @Type annotation removed - Hibernate 6 has built-in support for Class
     private final Class<PortalEvent> eventType;
 
     @Column(name = "EVENT_DATA", nullable = false, updatable = false, length = 10000)

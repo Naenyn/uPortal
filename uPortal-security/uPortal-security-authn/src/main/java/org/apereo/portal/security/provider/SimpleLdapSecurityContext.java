@@ -14,14 +14,11 @@
  */
 package org.apereo.portal.security.provider;
 
-import javax.naming.AuthenticationException;
-import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
+import org.springframework.ldap.core.AttributesMapper;
+import org.springframework.ldap.core.LdapTemplate;
+import java.util.List;
 import org.apereo.portal.ldap.ILdapServer;
 import org.apereo.portal.ldap.LdapServices;
 import org.apereo.portal.security.PortalSecurityException;
@@ -82,102 +79,60 @@ public class SimpleLdapSecurityContext extends ChainingSecurityContext {
                 && !this.myPrincipal.UID.trim().equals("")
                 && this.myOpaqueCredentials.credentialstring != null
                 && !creds.trim().equals("")) {
-            DirContext conn = null;
-            NamingEnumeration results = null;
-            StringBuffer user = new StringBuffer("(");
-            String first_name = null;
-            String last_name = null;
-
-            user.append(ldapConn.getUidAttribute()).append("=");
-            user.append(this.myPrincipal.UID).append(")");
-            log.debug("SimpleLdapSecurityContext: Looking for {}", user.toString());
+            
+            String userFilter = "(" + ldapConn.getUidAttribute() + "=" + escapeLdapFilter(this.myPrincipal.UID) + ")";
+            log.debug("SimpleLdapSecurityContext: Looking for {}", userFilter);
 
             try {
-                conn = ldapConn.getConnection();
-
-                // set up search controls
-                SearchControls searchCtls = new SearchControls();
-                searchCtls.setReturningAttributes(attributes);
-                searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-
-                // do lookup
-                if (conn != null) {
-                    try {
-                        results = conn.search(ldapConn.getBaseDN(), user.toString(), searchCtls);
-                        if (results != null) {
-                            if (!results.hasMore()) {
-                                log.error(
-                                        "SimpleLdapSecurityContext: user not found: {}",
-                                        this.myPrincipal.UID);
-                            }
-                            while (results != null && results.hasMore()) {
-                                SearchResult entry = (SearchResult) results.next();
-                                StringBuffer dnBuffer = new StringBuffer();
-                                dnBuffer.append(entry.getName()).append(", ");
-                                dnBuffer.append(ldapConn.getBaseDN());
-                                Attributes attrs = entry.getAttributes();
-                                first_name = getAttributeValue(attrs, ATTR_FIRSTNAME);
-                                last_name = getAttributeValue(attrs, ATTR_LASTNAME);
-                                // re-bind as user
-                                conn.removeFromEnvironment(javax.naming.Context.SECURITY_PRINCIPAL);
-                                conn.removeFromEnvironment(
-                                        javax.naming.Context.SECURITY_CREDENTIALS);
-                                conn.addToEnvironment(
-                                        javax.naming.Context.SECURITY_PRINCIPAL,
-                                        dnBuffer.toString());
-                                conn.addToEnvironment(
-                                        javax.naming.Context.SECURITY_CREDENTIALS,
-                                        this.myOpaqueCredentials.credentialstring);
-                                searchCtls = new SearchControls();
-                                searchCtls.setReturningAttributes(new String[0]);
-                                searchCtls.setSearchScope(SearchControls.OBJECT_SCOPE);
-
-                                String attrSearch = "(" + ldapConn.getUidAttribute() + "=*)";
-                                log.debug(
-                                        "SimpleLdapSecurityContext: Looking in {} for {}",
-                                        dnBuffer.toString(),
-                                        attrSearch);
-                                conn.search(dnBuffer.toString(), attrSearch, searchCtls);
-
-                                this.isauth = true;
-                                this.myPrincipal.FullName = first_name + " " + last_name;
-                                log.debug(
-                                        "SimpleLdapSecurityContext: User {} ({}) is authenticated",
-                                        this.myPrincipal.UID,
-                                        this.myPrincipal.FullName);
-
-                                // Since LDAP is case-insensitive with respect to uid, force
-                                // user name to lower case for use by the portal
-                                this.myPrincipal.UID = this.myPrincipal.UID.toLowerCase();
-                            } // while (results != null && results.hasMore())
-                        } else {
-                            log.error(
-                                    "SimpleLdapSecurityContext: No such user: {}",
-                                    this.myPrincipal.UID);
-                        }
-                    } catch (AuthenticationException ae) {
-                        log.info(
-                                "SimpleLdapSecurityContext: Password invalid for user: "
-                                        + this.myPrincipal.UID);
-                    } catch (Exception e) {
-                        log.error(
-                                "SimpleLdapSecurityContext: LDAP Error with user: "
-                                        + this.myPrincipal.UID
-                                        + "; ",
-                                e);
-                        throw new PortalSecurityException(
-                                "SimpleLdapSecurityContext: LDAP Error"
-                                        + e
-                                        + " with user: "
-                                        + this.myPrincipal.UID);
-                    } finally {
-                        ldapConn.releaseConnection(conn);
+                // Use existing LDAP context source from configuration
+                org.springframework.ldap.core.ContextSource contextSource = 
+                    ((org.apereo.portal.ldap.ContextSourceLdapServerImpl) ldapConn).getContextSource();
+                
+                LdapTemplate ldapTemplate = new LdapTemplate(contextSource);
+                
+                // Search for user and extract attributes
+                List<UserInfo> users = ldapTemplate.search(
+                    "", userFilter,
+                    (AttributesMapper<UserInfo>) attrs -> {
+                        UserInfo user = new UserInfo();
+                        user.firstName = getAttributeValue(attrs, ATTR_FIRSTNAME);
+                        user.lastName = getAttributeValue(attrs, ATTR_LASTNAME);
+                        user.dn = attrs.get("distinguishedName") != null ? 
+                            attrs.get("distinguishedName").get().toString() : null;
+                        return user;
                     }
+                );
+                
+                if (users.isEmpty()) {
+                    log.error("SimpleLdapSecurityContext: user not found: {}", this.myPrincipal.UID);
                 } else {
-                    log.error("LDAP Server Connection unavailable");
+                    UserInfo userInfo = users.get(0);
+                    
+                    // Authenticate by binding as the user using Spring LDAP
+                    try {
+                        String userDn = userInfo.dn != null ? userInfo.dn : 
+                            ldapConn.getUidAttribute() + "=" + this.myPrincipal.UID + "," + ldapConn.getBaseDN();
+                        
+                        // Test authentication by getting context with user credentials
+                        contextSource.getContext(userDn, new String(this.myOpaqueCredentials.credentialstring));
+                        
+                        this.isauth = true;
+                        this.myPrincipal.FullName = userInfo.firstName + " " + userInfo.lastName;
+                        log.debug("SimpleLdapSecurityContext: User {} ({}) is authenticated",
+                                this.myPrincipal.UID, this.myPrincipal.FullName);
+                        
+                        // Since LDAP is case-insensitive with respect to uid, force
+                        // user name to lower case for use by the portal
+                        this.myPrincipal.UID = this.myPrincipal.UID.toLowerCase();
+                        
+                    } catch (Exception ae) {
+                        log.info("SimpleLdapSecurityContext: Password invalid for user: " + this.myPrincipal.UID);
+                    }
                 }
-            } catch (final NamingException ne) {
-                log.error("Error getting connection to LDAP server.", ne);
+                
+            } catch (Exception e) {
+                log.error("SimpleLdapSecurityContext: LDAP Error with user: " + this.myPrincipal.UID + "; ", e);
+                throw new PortalSecurityException("SimpleLdapSecurityContext: LDAP Error" + e + " with user: " + this.myPrincipal.UID);
             }
         } else {
             // If the principal and/or credential are missing, the context authentication
@@ -200,18 +155,27 @@ public class SimpleLdapSecurityContext extends ChainingSecurityContext {
      * @param attribute LDAP attribute we are interested in
      * @return a single value of the attribute
      */
-    private String getAttributeValue(Attributes attrs, int attribute) throws NamingException {
-        NamingEnumeration values = null;
+    private String getAttributeValue(Attributes attrs, int attribute) {
         String aValue = "";
         if (!isAttribute(attribute)) return aValue;
-        Attribute attrib = attrs.get(attributes[attribute]);
-        if (attrib != null) {
-            for (values = attrib.getAll(); values.hasMoreElements(); ) {
-                aValue = (String) values.nextElement();
-                break; // take only the first attribute value
+        try {
+            javax.naming.directory.Attribute attrib = attrs.get(attributes[attribute]);
+            if (attrib != null && attrib.get() != null) {
+                aValue = attrib.get().toString();
             }
+        } catch (Exception e) {
+            log.debug("Error getting attribute value for {}: {}", attributes[attribute], e.getMessage());
         }
         return aValue;
+    }
+    
+    /**
+     * Helper class to hold user information from LDAP search
+     */
+    private static class UserInfo {
+        String firstName = "";
+        String lastName = "";
+        String dn;
     }
 
     /**
@@ -224,5 +188,17 @@ public class SimpleLdapSecurityContext extends ChainingSecurityContext {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Escape special LDAP characters to prevent injection attacks
+     */
+    private String escapeLdapFilter(String input) {
+        if (input == null) return null;
+        return input.replace("\\", "\\\\")
+                    .replace("*", "\\*")
+                    .replace("(", "\\(")
+                    .replace(")", "\\)")
+                    .replace("\0", "\\00");
     }
 }

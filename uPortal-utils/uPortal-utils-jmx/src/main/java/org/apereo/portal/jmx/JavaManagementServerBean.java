@@ -33,7 +33,7 @@ import javax.rmi.ssl.SslRMIServerSocketFactory;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Required;
+
 
 /**
  * A bean to make starting and stopping a JMX server easier. <br>
@@ -117,7 +117,6 @@ public class JavaManagementServerBean {
         return portOne;
     }
     /** First port in the JMX connection string */
-    @Required
     public void setPortOne(int portOne) {
         Validate.isTrue(portOne > 0, "portOne must be greater than 0");
         this.portOne = portOne;

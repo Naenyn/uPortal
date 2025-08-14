@@ -25,7 +25,7 @@ import org.apereo.portal.events.aggr.portlets.AggregatedPortletMapping;
 import org.apereo.portal.events.tincan.om.LocalizedString;
 import org.apereo.portal.events.tincan.om.LrsObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+
 
 /** Generic xApi converter for PortletExecutionEvents. */
 public class PortletExecutionEventConverter extends AbstractPortalEventToLrsStatementConverter {
@@ -34,7 +34,7 @@ public class PortletExecutionEventConverter extends AbstractPortalEventToLrsStat
     private List<String> filterFNames;
     private FNameFilterType fnameFilterType = FNameFilterType.Blacklist;
 
-    @Required
+    @Autowired
     public void setSupportedEventTypes(
             List<Class<? extends PortletExecutionEvent>> supportedEventTypes) {
         this.supportedEventTypes = supportedEventTypes;

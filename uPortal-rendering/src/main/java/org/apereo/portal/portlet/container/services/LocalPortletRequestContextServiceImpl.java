@@ -32,6 +32,7 @@ import org.apereo.portal.portlet.container.PortletRenderResponseContextImpl;
 import org.apereo.portal.portlet.container.PortletRequestContextImpl;
 import org.apereo.portal.portlet.container.PortletResourceRequestContextImpl;
 import org.apereo.portal.portlet.container.PortletResourceResponseContextImpl;
+import org.apereo.portal.portlet.container.ServletTypeMapper;
 import org.apereo.portal.portlet.container.properties.IRequestPropertiesManager;
 import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.portlet.registry.IPortletWindowRegistry;
@@ -238,6 +239,29 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
                 this.portalUrlProvider,
                 this.portletCookieService);
     }
+    
+    // Overloaded method with PortletRequestContext parameter for Pluto 3.x compatibility
+    @Override
+    public PortletRenderResponseContext getPortletRenderResponseContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window,
+            PortletRequestContext requestContext) {
+        // For Portlet 2.0 compatibility, ignore the additional requestContext parameter
+        // and create response context directly
+        final IPortletWindow portletWindow =
+                this.portletWindowRegistry.convertPortletWindow(
+                    ServletTypeMapper.toJakarta(containerRequest), window);
+        return new PortletRenderResponseContextImpl(
+                container,
+                portletWindow,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                this.requestPropertiesManager,
+                this.portalUrlProvider,
+                this.portletCookieService);
+    }
 
     /* (non-Javadoc)
      * @see org.apache.pluto.container.PortletRequestContextService#getPortletResourceRequestContext(org.apache.pluto.container.PortletContainer, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apache.pluto.container.PortletWindow)
@@ -284,12 +308,170 @@ public class LocalPortletRequestContextServiceImpl implements PortletRequestCont
                 this.portletCookieService);
     }
     
+    // Overloaded method with PortletRequestContext parameter for Pluto 3.x compatibility
+    @Override
+    public PortletResourceResponseContext getPortletResourceResponseContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window,
+            PortletRequestContext requestContext) {
+        // For Portlet 2.0 compatibility, ignore the additional requestContext parameter
+        // and create response context directly
+        final IPortletWindow portletWindow =
+                this.portletWindowRegistry.convertPortletWindow(
+                    ServletTypeMapper.toJakarta(containerRequest), window);
+        return new PortletResourceResponseContextImpl(
+                container,
+                portletWindow,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                this.requestPropertiesManager,
+                this.portalUrlProvider,
+                this.portletCookieService);
+    }
+    
+    // Overloaded method with PortletRequestContext parameter for Pluto 3.x compatibility
+    @Override
+    public PortletEventResponseContext getPortletEventResponseContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window,
+            PortletRequestContext requestContext) {
+        // For Portlet 2.0 compatibility, ignore the additional requestContext parameter
+        // and create response context directly
+        final IPortletWindow portletWindow =
+                this.portletWindowRegistry.convertPortletWindow(
+                    ServletTypeMapper.toJakarta(containerRequest), window);
+        final IPortalActionUrlBuilder portalActionUrlBuilder =
+                this.portalUrlProvider.getPortalActionUrlBuilder(
+                    ServletTypeMapper.toJakarta(containerRequest));
+        final IPortletUrlBuilder portletUrlBuilder =
+                portalActionUrlBuilder.getPortletUrlBuilder(portletWindow.getPortletWindowId());
+        return new PortletEventResponseContextImpl(
+                container,
+                portletWindow,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                requestPropertiesManager,
+                portletUrlBuilder,
+                this.portletContextService,
+                this.portletCookieService);
+    }
+    
+    // Overloaded method with javax servlet parameters for Pluto 3.x compatibility
+    @Override
+    public PortletRequestContext getPortletRenderRequestContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window) {
+        // Convert javax servlet types to jakarta and delegate to existing method
+        return getPortletRenderRequestContext(
+                container,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                window);
+    }
+    
+    // Header request context method for Pluto 3.x compatibility - Portlet 2.0 doesn't use headers
+    @Override
+    public PortletRequestContext getPortletHeaderRequestContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window) {
+        // For Portlet 2.0 compatibility, delegate to render request context
+        // Header requests are not used in Portlet 2.0
+        return getPortletRenderRequestContext(
+                container,
+                containerRequest,
+                containerResponse,
+                window);
+    }
+    
+    // Resource request context method with javax servlet parameters for Pluto 3.x compatibility
+    @Override
+    public PortletResourceRequestContext getPortletResourceRequestContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window) {
+        // Convert javax servlet types to jakarta and delegate to existing method
+        return getPortletResourceRequestContext(
+                container,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                window);
+    }
+    
+    // Event request context method with javax servlet parameters for Pluto 3.x compatibility
+    @Override
+    public PortletRequestContext getPortletEventRequestContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window) {
+        // Convert javax servlet types to jakarta and delegate to existing method
+        return getPortletEventRequestContext(
+                container,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                window);
+    }
+    
+    // Action request context method with javax servlet parameters for Pluto 3.x compatibility
+    @Override
+    public PortletRequestContext getPortletActionRequestContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window) {
+        // Convert javax servlet types to jakarta and delegate to existing method
+        return getPortletActionRequestContext(
+                container,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                window);
+    }
+    
+    // Overloaded method with PortletRequestContext parameter for Pluto 3.x compatibility
+    @Override
+    public PortletActionResponseContext getPortletActionResponseContext(
+            PortletContainer container,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
+            PortletWindow window,
+            PortletRequestContext requestContext) {
+        // For Portlet 2.0 compatibility, ignore the additional requestContext parameter
+        // and create response context directly
+        final IPortletWindow portletWindow =
+                this.portletWindowRegistry.convertPortletWindow(
+                    ServletTypeMapper.toJakarta(containerRequest), window);
+        final IPortalActionUrlBuilder portalActionUrlBuilder =
+                this.portalUrlProvider.getPortalActionUrlBuilder(
+                    ServletTypeMapper.toJakarta(containerRequest));
+        final IPortletUrlBuilder portletUrlBuilder =
+                portalActionUrlBuilder.getPortletUrlBuilder(portletWindow.getPortletWindowId());
+        return new PortletActionResponseContextImpl(
+                container,
+                portletWindow,
+                ServletTypeMapper.toJakarta(containerRequest),
+                ServletTypeMapper.toJakarta(containerResponse),
+                requestPropertiesManager,
+                portalActionUrlBuilder,
+                portletUrlBuilder,
+                this.portletContextService,
+                this.portletCookieService);
+    }
+    
     // Minimal stub for Pluto 3.x compatibility - maintains Portlet 2.0 behavior
     @Override
     public org.apache.pluto.container.PortletHeaderResponseContext getPortletHeaderResponseContext(
             PortletContainer container,
-            HttpServletRequest containerRequest,
-            HttpServletResponse containerResponse,
+            javax.servlet.http.HttpServletRequest containerRequest,
+            javax.servlet.http.HttpServletResponse containerResponse,
             PortletWindow window,
             PortletRequestContext requestContext) {
         // Return null for Portlet 2.0 compatibility - header responses not used

@@ -76,7 +76,7 @@ public class PortalApplicationContextLocator implements ServletContextListener {
     private static ServletContext servletContext;
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
+     * @see jakarta.servlet.ServletContextListener#contextInitialized(jakarta.servlet.ServletContextEvent)
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -84,7 +84,7 @@ public class PortalApplicationContextLocator implements ServletContextListener {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
+     * @see jakarta.servlet.ServletContextListener#contextDestroyed(jakarta.servlet.ServletContextEvent)
      */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {

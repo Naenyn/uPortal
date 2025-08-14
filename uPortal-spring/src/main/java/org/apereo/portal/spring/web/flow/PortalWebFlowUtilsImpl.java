@@ -15,7 +15,7 @@
 package org.apereo.portal.spring.web.flow;
 
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.EntityIdentifier;
 import org.apereo.portal.security.IAuthorizationPrincipal;
 import org.apereo.portal.security.IPerson;

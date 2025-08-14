@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.events.aggr;
 
-import javax.persistence.FlushModeType;
+import jakarta.persistence.FlushModeType;
 import org.apereo.portal.events.PortalEvent;
 import org.apereo.portal.events.aggr.session.EventSession;
 import org.apereo.portal.jpa.BaseAggrEventsJpaDao;

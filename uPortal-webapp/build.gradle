@@ -40,6 +40,7 @@ dependencies {
     api project(':uPortal-groups:uPortal-groups-local')
     api project(':uPortal-groups:uPortal-groups-smartldap')
     api project(':uPortal-index')
+    api project(':uPortal-io:uPortal-io-jaxb')
     api project(':uPortal-portlets')
     api project(':uPortal-security:uPortal-security-authn')
     api project(':uPortal-security:uPortal-security-xslt')

@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.rendering;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.layout.IStylesheetUserPreferencesService.PreferencesScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

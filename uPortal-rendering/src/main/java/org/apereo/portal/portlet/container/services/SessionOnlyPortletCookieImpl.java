@@ -161,18 +161,17 @@ class SessionOnlyPortletCookieImpl implements IPortletCookie, Serializable {
     }
     
     @Override
-    public javax.servlet.http.Cookie toCookie() {
-        // Convert to javax cookie for compatibility
-        javax.servlet.http.Cookie javaxCookie = new javax.servlet.http.Cookie(name, value);
+    public Cookie toCookie() {
+        Cookie jakartaCookie = new Cookie(name, value);
         if (domain != null) {
-            javaxCookie.setDomain(domain);
+            jakartaCookie.setDomain(domain);
         }
-        javaxCookie.setMaxAge(getMaxAge());
+        jakartaCookie.setMaxAge(getMaxAge());
         if (path != null) {
-            javaxCookie.setPath(path);
+            jakartaCookie.setPath(path);
         }
-        javaxCookie.setSecure(secure);
-        return javaxCookie;
+        jakartaCookie.setSecure(secure);
+        return jakartaCookie;
     }
     
 

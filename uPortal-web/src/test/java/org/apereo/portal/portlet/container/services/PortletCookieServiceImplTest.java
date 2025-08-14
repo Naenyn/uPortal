@@ -22,9 +22,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apereo.portal.portlet.dao.IPortletCookieDao;
 import org.apereo.portal.portlet.om.IPortalCookie;
 import org.apereo.portal.portlet.om.IPortletCookie;
@@ -111,8 +111,8 @@ public class PortletCookieServiceImplTest {
 
     /**
      * Control test invocation of {@link
-     * PortletCookieServiceImpl#updatePortalCookie(javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)}.
+     * PortletCookieServiceImpl#updatePortalCookie(jakarta.servlet.http.HttpServletRequest,
+     * jakarta.servlet.http.HttpServletResponse)}.
      */
     @Test
     public void testUpdatePortletCookieControl() {
@@ -145,7 +145,7 @@ public class PortletCookieServiceImplTest {
 
     /**
      * Test {@link
-     * PortletCookieServiceImpl#getOrCreatePortalCookie(javax.servlet.http.HttpServletRequest)}.
+     * PortletCookieServiceImpl#getOrCreatePortalCookie(jakarta.servlet.http.HttpServletRequest)}.
      * that results in creating a new PortalCookie.
      */
     @Test
@@ -171,7 +171,7 @@ public class PortletCookieServiceImplTest {
 
     /**
      * Test {@link
-     * PortletCookieServiceImpl#getOrCreatePortalCookie(javax.servlet.http.HttpServletRequest)}.
+     * PortletCookieServiceImpl#getOrCreatePortalCookie(jakarta.servlet.http.HttpServletRequest)}.
      * that results in returning an existing portalcookie from the request cookies
      */
     @Test
@@ -199,7 +199,7 @@ public class PortletCookieServiceImplTest {
 
     /**
      * Test {@link
-     * PortletCookieServiceImpl#getOrCreatePortalCookie(javax.servlet.http.HttpServletRequest)}.
+     * PortletCookieServiceImpl#getOrCreatePortalCookie(jakarta.servlet.http.HttpServletRequest)}.
      * that results in returning an existing portalcookie from the id stored in the session.
      */
     @Test

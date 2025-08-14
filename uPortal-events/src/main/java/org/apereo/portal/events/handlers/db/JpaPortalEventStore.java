@@ -20,16 +20,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.List;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.ParameterExpression;
+import jakarta.persistence.criteria.Root;
 import org.apereo.portal.concurrency.FunctionWithoutResult;
 import org.apereo.portal.events.PortalEvent;
 import org.apereo.portal.jpa.BaseRawEventsJpaDao;
-import org.hibernate.FlushMode;
+
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
@@ -249,8 +249,8 @@ public class JpaPortalEventStore extends BaseRawEventsJpaDao implements IPortalE
             int maxEvents,
             Function<PortalEvent, Boolean> handler) {
         final Session session = this.getEntityManager().unwrap(Session.class);
-        session.setFlushMode(FlushMode.COMMIT);
-        final org.hibernate.Query query = session.createQuery(this.selectUnaggregatedQuery);
+        session.setHibernateFlushMode(org.hibernate.FlushMode.COMMIT);
+        final org.hibernate.query.Query query = session.createQuery(this.selectUnaggregatedQuery);
         query.setParameter(this.startTimeParameter.getName(), startTime);
         query.setParameter(this.endTimeParameter.getName(), endTime);
         if (maxEvents > 0) {
@@ -261,7 +261,7 @@ public class JpaPortalEventStore extends BaseRawEventsJpaDao implements IPortalE
         for (final ScrollableResults results = query.scroll(ScrollMode.FORWARD_ONLY);
                 results.next(); ) {
             final PersistentPortalEvent persistentPortalEvent =
-                    (PersistentPortalEvent) results.get(0);
+                    (PersistentPortalEvent) results.get();
             final PortalEvent portalEvent;
             try {
                 portalEvent =
@@ -330,7 +330,7 @@ public class JpaPortalEventStore extends BaseRawEventsJpaDao implements IPortalE
             int maxEvents,
             FunctionWithoutResult<PortalEvent> handler) {
         final Session session = this.getEntityManager().unwrap(Session.class);
-        final org.hibernate.Query query = session.createQuery(this.selectQuery);
+        final org.hibernate.query.Query query = session.createQuery(this.selectQuery);
         query.setParameter(this.startTimeParameter.getName(), startTime);
         query.setParameter(this.endTimeParameter.getName(), endTime);
         if (maxEvents > 0) {
@@ -340,7 +340,7 @@ public class JpaPortalEventStore extends BaseRawEventsJpaDao implements IPortalE
         for (final ScrollableResults results = query.scroll(ScrollMode.FORWARD_ONLY);
                 results.next(); ) {
             final PersistentPortalEvent persistentPortalEvent =
-                    (PersistentPortalEvent) results.get(0);
+                    (PersistentPortalEvent) results.get();
             final PortalEvent portalEvent =
                     this.toPortalEvent(
                             persistentPortalEvent.getEventData(),

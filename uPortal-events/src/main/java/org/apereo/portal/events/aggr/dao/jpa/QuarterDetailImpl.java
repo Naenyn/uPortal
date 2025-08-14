@@ -15,14 +15,14 @@
 package org.apereo.portal.events.aggr.dao.jpa;
 
 import java.io.Serializable;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.events.aggr.EventDateTimeUtils;
 import org.apereo.portal.events.aggr.QuarterDetail;
@@ -61,12 +61,12 @@ public class QuarterDetailImpl implements QuarterDetail, Serializable {
 
     @NaturalId
     @Column(name = "QUARTER_START", nullable = false)
-    @Type(type = "monthDay")
+    // @Type annotation removed - Hibernate 6 has built-in support for MonthDay
     private final MonthDay start;
 
     @NaturalId
     @Column(name = "QUARTER_END", nullable = false)
-    @Type(type = "monthDay")
+    // @Type annotation removed - Hibernate 6 has built-in support for MonthDay
     private final MonthDay end;
 
     @NaturalId

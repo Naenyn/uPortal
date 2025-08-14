@@ -26,6 +26,9 @@ import org.apereo.portal.utils.SafeFilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalPortletType;
+
 public class PortletTypeImporterExporter extends AbstractJaxbDataHandler<ExternalPortletType> {
 
     private PortletTypePortalDataType typePortalDataType;

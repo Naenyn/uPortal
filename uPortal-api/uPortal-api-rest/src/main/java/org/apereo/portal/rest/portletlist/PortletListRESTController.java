@@ -4,8 +4,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apereo.portal.dao.portletlist.IPortletList;
 import org.apereo.portal.dao.portletlist.jpa.PortletList;

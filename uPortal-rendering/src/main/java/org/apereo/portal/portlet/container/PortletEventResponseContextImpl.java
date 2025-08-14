@@ -16,6 +16,7 @@ package org.apereo.portal.portlet.container;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletEventResponseContext;
 import org.apache.pluto.container.driver.PortletContextService;
@@ -61,9 +62,9 @@ public class PortletEventResponseContextImpl extends PortletStateAwareResponseCo
     }
     
     @Override
-    public Object getHeaderData() {
-        // Return null for Portlet 2.0 compatibility - maintains existing behavior
-        return null;
+    public HeaderData getHeaderData() {
+        // Use translation helper for Portlet 2.0 compatibility
+        return (HeaderData) ServletTypeMapper.toJavaxHeaderData(null);
     }
     
 

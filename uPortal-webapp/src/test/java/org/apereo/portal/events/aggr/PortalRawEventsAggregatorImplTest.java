@@ -21,7 +21,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.google.common.base.Function;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.apereo.portal.IPortalInfoProvider;
 import org.apereo.portal.concurrency.locking.IClusterLockService;
 import org.apereo.portal.events.PortalEvent;

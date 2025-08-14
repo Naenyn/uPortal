@@ -12,35 +12,26 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apereo.portal.search;
+package org.apereo.portal.portlet.container.stubs;
 
 /**
- * Represents a parameter for a portlet URL in search functionality
+ * Stub implementation of Portlet 3.0 PortletAsyncManager interface for compatibility.
+ * This class provides minimal functionality to satisfy interface contracts
+ * while maintaining Portlet 2.0 behavior.
  */
-public class PortletUrlParameter {
-    private String name;
-    private String value;
-
-    public PortletUrlParameter() {}
-
-    public PortletUrlParameter(String name, String value) {
-        this.name = name;
-        this.value = value;
+public class PortletAsyncManager {
+    
+    /**
+     * Private constructor - instances should only be created through factory methods
+     */
+    private PortletAsyncManager() {
+        // Empty stub for compatibility
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    
+    /**
+     * Factory method to create a null-equivalent PortletAsyncManager stub
+     */
+    public static PortletAsyncManager createNull() {
+        return null; // Return null for Portlet 2.0 compatibility - async not supported
     }
 }

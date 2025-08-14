@@ -15,7 +15,7 @@
 package org.apereo.portal.spring.security.evaluator;
 
 import java.io.Serializable;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.layout.dlm.remoting.IGroupListHelper;
 import org.apereo.portal.layout.dlm.remoting.JsonEntityBean;
 import org.apereo.portal.portlets.groupselector.EntityEnum;

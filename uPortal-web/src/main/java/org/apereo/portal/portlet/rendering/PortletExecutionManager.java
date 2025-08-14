@@ -29,9 +29,9 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.portlet.Event;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pluto.container.om.portlet.ContainerRuntimeOption;
 import org.apache.pluto.container.om.portlet.PortletDefinition;
@@ -62,7 +62,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.WebUtils;
 
 /**
@@ -71,8 +71,8 @@ import org.springframework.web.util.WebUtils;
  */
 @ManagedResource("uPortal:section=Framework,name=PortletExecutionManager")
 @Service("portletExecutionManager")
-public class PortletExecutionManager extends HandlerInterceptorAdapter
-        implements IPortletExecutionManager,
+public class PortletExecutionManager implements HandlerInterceptor,
+                IPortletExecutionManager,
                 IPortletExecutionInterceptor,
                 PortletExecutionManagerMXBean {
 
@@ -358,7 +358,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#doPortletAction(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#doPortletAction(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public void doPortletAction(
@@ -527,7 +527,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
      *
      * @see
      *     IPortletExecutionManager#startPortletHeaderRender(org.apereo.portal.portlet.om.IPortletWindowId,
-     *     javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     *     jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public void startPortletHeaderRender(
@@ -552,23 +552,35 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
             IPortletWindowId portletWindowId, HttpServletRequest request) {
         IPortletWindow portletWindow =
                 this.portletWindowRegistry.getPortletWindow(request, portletWindowId);
-        PortletDefinition portletDefinition =
-                portletWindow.getPlutoPortletWindow().getPortletDefinition();
-        ContainerRuntimeOption renderHeaderOption =
-                portletDefinition.getContainerRuntimeOption(PORTLET_RENDER_HEADERS_OPTION);
+        // For Pluto 3.0 compatibility, get portlet definition from IPortletWindow
+        IPortletDefinition portletDefinition = portletWindow.getPortletEntity().getPortletDefinition();
+        // Create a simple container runtime option lookup
+        ContainerRuntimeOption renderHeaderOption = null;
+        IPortletDefinitionParameter renderHeaderParam = portletDefinition.getParameter(PORTLET_RENDER_HEADERS_OPTION);
+        if (renderHeaderParam != null && Boolean.parseBoolean(renderHeaderParam.getValue())) {
+            renderHeaderOption = new ContainerRuntimeOption() {
+                private java.util.List<String> values = new java.util.ArrayList<>(java.util.Arrays.asList("true"));
+                @Override
+                public String getName() { return PORTLET_RENDER_HEADERS_OPTION; }
+                @Override
+                public java.util.List<String> getValues() { return values; }
+                @Override
+                public void addValue(String value) { values.add(value); }
+            };
+        }
         boolean result = false;
         if (renderHeaderOption != null) {
             result = renderHeaderOption.getValues().contains(Boolean.TRUE.toString());
         }
         logger.debug(
                 "Portlet {} need render header worker: {}",
-                portletDefinition.getPortletName(),
+                portletDefinition.getName(),
                 result);
         return result;
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#startPortletRender(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#startPortletRender(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public void startPortletRender(
@@ -579,7 +591,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#serveResource(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#serveResource(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public void doPortletServeResource(
@@ -619,7 +631,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#isPortletHeaderRenderRequested(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#isPortletHeaderRenderRequested(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public boolean isPortletRenderHeaderRequested(
@@ -634,7 +646,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#isPortletRenderRequested(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#isPortletRenderRequested(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public boolean isPortletRenderRequested(
@@ -649,7 +661,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#getPortletHeadOutput(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#getPortletHeadOutput(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public String getPortletHeadOutput(
@@ -674,7 +686,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#getPortletOutput(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#getPortletOutput(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public String getPortletOutput(
@@ -708,7 +720,7 @@ public class PortletExecutionManager extends HandlerInterceptorAdapter
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#getPortletTitle(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletExecutionManager#getPortletTitle(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public String getPortletTitle(

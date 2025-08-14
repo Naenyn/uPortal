@@ -15,9 +15,9 @@
 package org.apereo.portal.utils.web;
 
 import java.io.IOException;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

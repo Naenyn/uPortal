@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Locale;
 import javax.annotation.Resource;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.apereo.portal.persondir.ILocalAccountPerson;
 import org.slf4j.Logger;

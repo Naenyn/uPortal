@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.IUserPreferencesManager;
 import org.apereo.portal.IUserProfile;
 import org.apereo.portal.layout.profile.SessionAttributeProfileMapperImpl;

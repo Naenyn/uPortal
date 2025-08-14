@@ -2,8 +2,8 @@ package org.apereo.portal.dao.portletlist.jpa;
 
 import com.google.common.base.Function;
 import java.util.*;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apereo.portal.dao.portletlist.IPortletList;
 import org.apereo.portal.dao.portletlist.IPortletListDao;

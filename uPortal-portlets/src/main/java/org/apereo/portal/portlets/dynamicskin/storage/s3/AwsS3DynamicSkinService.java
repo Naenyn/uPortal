@@ -78,8 +78,8 @@ public class AwsS3DynamicSkinService extends AbstractDynamicSkinService {
             final DynamicSkinCssFileNamer namer,
             @Qualifier("org.apereo.portal.skinManager.failureCache") final Cache failureCache) {
         super(uniqueTokenGenerator, namer, failureCache);
-        Assert.notNull(client);
-        Assert.notNull(config);
+        Assert.notNull(client, "AmazonS3 client cannot be null");
+        Assert.notNull(config, "DynamicSkinAwsS3BucketConfig cannot be null");
         this.amazonS3Client = client;
         this.awsS3BucketConfig = config;
         log.info("DynamicSkinAwsS3BucketConfig provided: {}", config);

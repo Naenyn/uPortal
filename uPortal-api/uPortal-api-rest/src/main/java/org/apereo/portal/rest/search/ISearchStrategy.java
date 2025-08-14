@@ -15,7 +15,7 @@
 package org.apereo.portal.rest.search;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Spring-managed beans that implement this interface provide search results to the {@link

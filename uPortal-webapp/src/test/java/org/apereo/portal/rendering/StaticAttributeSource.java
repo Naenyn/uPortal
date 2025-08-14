@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.events.Attribute;
@@ -37,7 +37,7 @@ public class StaticAttributeSource implements AttributeSource {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.AttributeSource#getAdditionalAttributes(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.xml.stream.events.StartElement)
+     * @see org.apereo.portal.rendering.AttributeSource#getAdditionalAttributes(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, javax.xml.stream.events.StartElement)
      */
     @Override
     public Iterator<Attribute> getAdditionalAttributes(
@@ -65,7 +65,7 @@ public class StaticAttributeSource implements AttributeSource {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.AttributeSource#getCacheKey(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.AttributeSource#getCacheKey(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {

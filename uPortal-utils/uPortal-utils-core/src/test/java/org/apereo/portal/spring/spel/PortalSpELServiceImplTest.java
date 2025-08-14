@@ -17,7 +17,7 @@ package org.apereo.portal.spring.spel;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.security.IPerson;
 import org.apereo.portal.url.IPortalRequestUtils;
 import org.apereo.portal.user.IUserInstance;

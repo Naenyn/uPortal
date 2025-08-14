@@ -47,7 +47,7 @@ public class TransactionManagerCachingTransactionInterceptor extends Transaction
     @Override
     protected PlatformTransactionManager determineTransactionManager(TransactionAttribute txAttr) {
         if (txAttr == null) {
-            return super.determineTransactionManager(txAttr);
+            return (PlatformTransactionManager) super.determineTransactionManager(txAttr);
         }
 
         final String qualifier = txAttr.getQualifier();
@@ -55,13 +55,13 @@ public class TransactionManagerCachingTransactionInterceptor extends Transaction
             PlatformTransactionManager platformTransactionManager =
                     platformTransactionManagerCache.get(qualifier);
             if (platformTransactionManager == null) {
-                platformTransactionManager = super.determineTransactionManager(txAttr);
+                platformTransactionManager = (PlatformTransactionManager) super.determineTransactionManager(txAttr);
                 platformTransactionManagerCache.put(qualifier, platformTransactionManager);
             }
 
             return platformTransactionManager;
         }
 
-        return super.determineTransactionManager(txAttr);
+        return (PlatformTransactionManager) super.determineTransactionManager(txAttr);
     }
 }

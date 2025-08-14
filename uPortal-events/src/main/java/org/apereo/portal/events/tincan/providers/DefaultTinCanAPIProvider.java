@@ -30,13 +30,13 @@ import org.apereo.portal.events.tincan.om.LrsStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus.Series;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -189,7 +189,7 @@ public class DefaultTinCanAPIProvider implements ITinCanAPIProvider {
      *
      * @param id the provider id.
      */
-    @Required
+    @Autowired
     public void setId(String id) {
         this.id = id;
     }
@@ -261,7 +261,7 @@ public class DefaultTinCanAPIProvider implements ITinCanAPIProvider {
             ResponseEntity<Object> response =
                     sendRequest(
                             STATES_REST_ENDPOINT, HttpMethod.POST, getParams, body, Object.class);
-            if (response.getStatusCode().series() != Series.SUCCESSFUL) {
+            if (!response.getStatusCode().is2xxSuccessful()) {
                 logger.error(
                         "LRS provider for URL "
                                 + LRSUrl
@@ -305,7 +305,7 @@ public class DefaultTinCanAPIProvider implements ITinCanAPIProvider {
         ResponseEntity<Object> response =
                 sendRequest(
                         STATEMENTS_REST_ENDPOINT, HttpMethod.POST, null, statement, Object.class);
-        if (response.getStatusCode().series() == Series.SUCCESSFUL) {
+        if (response.getStatusCode().is2xxSuccessful()) {
             logger.trace("LRS provider successfully sent to {}, statement: {}", LRSUrl, statement);
         } else {
             logger.error("LRS provider failed to send to {}, statement: {}", LRSUrl, statement);

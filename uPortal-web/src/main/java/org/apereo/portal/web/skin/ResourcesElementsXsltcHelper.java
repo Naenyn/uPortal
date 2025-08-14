@@ -16,12 +16,13 @@ package org.apereo.portal.web.skin;
 
 import java.util.Collections;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apereo.portal.rendering.xslt.TransformerConfigurationSourceAdapter;
 import org.apereo.portal.utils.cache.CacheKey;
+import org.apereo.portal.portlet.container.ServletTypeMapper;
 import org.jasig.resourceserver.aggr.om.Resources;
 import org.jasig.resourceserver.utils.aggr.ResourcesElementsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,15 @@ public class ResourcesElementsXsltcHelper extends TransformerConfigurationSource
     }
 
     public String getResourcesParameter(HttpServletRequest request, String skinXml, String name) {
-        return this.resourcesElementsProvider.getResourcesParameter(request, skinXml, name);
+        // Convert jakarta to javax for external library compatibility
+        javax.servlet.http.HttpServletRequest javaxRequest = ServletTypeMapper.toJavax(request);
+        return this.resourcesElementsProvider.getResourcesParameter(javaxRequest, skinXml, name);
     }
 
     public NodeList getResourcesXmlFragment(HttpServletRequest request, String skinXml) {
-        return this.resourcesElementsProvider.getResourcesXmlFragment(request, skinXml);
+        // Convert jakarta to javax for external library compatibility
+        javax.servlet.http.HttpServletRequest javaxRequest = ServletTypeMapper.toJavax(request);
+        return this.resourcesElementsProvider.getResourcesXmlFragment(javaxRequest, skinXml);
     }
 
     @Override
@@ -67,8 +72,10 @@ public class ResourcesElementsXsltcHelper extends TransformerConfigurationSource
 
     @Override
     public CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {
+        // Convert jakarta to javax for external library compatibility
+        javax.servlet.http.HttpServletRequest javaxRequest = ServletTypeMapper.toJavax(request);
         return CacheKey.build(
                 ResourcesElementsXsltcHelper.class.getName(),
-                this.resourcesElementsProvider.getIncludedType(request));
+                this.resourcesElementsProvider.getIncludedType(javaxRequest));
     }
 }

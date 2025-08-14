@@ -15,6 +15,9 @@
 package org.apereo.portal.io.xml.eventaggr;
 
 import org.apereo.portal.utils.ComparableExtractingComparator;
+
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalQuarterDetail;
 import org.joda.time.MonthDay;
 
 /** Compare ExternalQuarterDetail based on start MonthDay */

@@ -15,15 +15,15 @@
 package org.apereo.portal.permission.dao.jpa;
 
 import java.io.Serializable;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Version;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apereo.portal.permission.IPermissionActivity;
@@ -62,7 +62,7 @@ class PermissionActivityImpl implements IPermissionActivity, Serializable {
     private final long entityVersion;
 
     @Column(name = "ACTIVITY_FNAME", length = 128, nullable = false, unique = true)
-    @Type(type = "fname")
+    @Type(org.apereo.portal.dao.usertype.FunctionalNameType.class)
     private String fname;
 
     @Column(name = "ACTIVITY_NAME", length = 128, nullable = false, unique = true)

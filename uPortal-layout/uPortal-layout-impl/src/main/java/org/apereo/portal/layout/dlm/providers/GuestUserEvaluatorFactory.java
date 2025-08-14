@@ -14,9 +14,9 @@
  */
 package org.apereo.portal.layout.dlm.providers;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apereo.portal.layout.dlm.Evaluator;

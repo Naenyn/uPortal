@@ -30,7 +30,7 @@ public final class LoggingEventHandler extends FilteringApplicationListener<Appl
 
     /** @param logCategory A custom log category to use */
     public void setLogCategory(String logCategory) {
-        Assert.notNull(logCategory);
+        Assert.notNull(logCategory, "logCategory cannot be null");
         this.eventLogger = LoggerFactory.getLogger(logCategory);
     }
 

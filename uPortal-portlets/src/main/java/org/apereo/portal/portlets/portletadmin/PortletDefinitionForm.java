@@ -50,7 +50,7 @@ import org.apereo.portal.portlets.BooleanAttribute;
 import org.apereo.portal.portlets.BooleanAttributeFactory;
 import org.apereo.portal.portlets.StringListAttribute;
 import org.apereo.portal.portlets.StringListAttributeFactory;
-import org.apereo.portal.xml.PortletDescriptor;
+import org.apereo.portal.portletpublishing.xml.PortletDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

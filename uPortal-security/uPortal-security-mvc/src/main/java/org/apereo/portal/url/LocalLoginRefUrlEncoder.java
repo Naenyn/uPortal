@@ -16,7 +16,7 @@ package org.apereo.portal.url;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.security.mvc.LoginController;
 
 /**

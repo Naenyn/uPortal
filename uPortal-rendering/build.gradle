@@ -5,6 +5,10 @@ dependencies {
     api project(':uPortal-marketplace')
     api project(':uPortal-security:uPortal-security-core')
     api project(':uPortal-url')
+    
+    // Jakarta XML Binding for JAXBTypeMapper
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
     implementation "org.apache.httpcomponents:httpcore:${httpcomponentsVersion}"
     implementation "org.apache.commons:commons-pool2:${commonsPoolVersion}"

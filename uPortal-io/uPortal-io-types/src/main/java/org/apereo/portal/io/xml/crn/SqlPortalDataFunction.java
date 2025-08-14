@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 import org.apereo.portal.io.xml.IPortalData;
 import org.apereo.portal.io.xml.IPortalDataType;
 import org.apereo.portal.io.xml.SimpleStringPortalData;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -39,7 +38,6 @@ public class SqlPortalDataFunction
     private String descColumn;
 
     /** @param query Query to run */
-    @Required
     public void setQuery(String query) {
         this.query = query;
     }
@@ -62,7 +60,6 @@ public class SqlPortalDataFunction
         this.descColumn = descColumn;
     }
 
-    @Required
     public void setDataSource(DataSource dataSource) {
         final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.afterPropertiesSet();

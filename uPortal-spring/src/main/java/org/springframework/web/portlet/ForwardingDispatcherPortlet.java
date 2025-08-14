@@ -18,7 +18,8 @@ import java.util.Map;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.ViewRendererServlet;
+// ViewRendererServlet removed in Spring 6 - using constants directly
+// import org.springframework.web.servlet.ViewRendererServlet;
 
 public class ForwardingDispatcherPortlet extends DispatcherPortlet {
     /** URL that points to the ViewRendererServlet */
@@ -35,12 +36,12 @@ public class ForwardingDispatcherPortlet extends DispatcherPortlet {
             throws Exception {
         // Expose Portlet ApplicationContext to view objects.
         request.setAttribute(
-                ViewRendererServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE,
+                "org.springframework.web.servlet.ViewRendererServlet.CONTEXT",
                 getPortletApplicationContext());
 
         // These attributes are required by the ViewRendererServlet.
-        request.setAttribute(ViewRendererServlet.VIEW_ATTRIBUTE, view);
-        request.setAttribute(ViewRendererServlet.MODEL_ATTRIBUTE, model);
+        request.setAttribute("org.springframework.web.servlet.ViewRendererServlet.VIEW", view);
+        request.setAttribute("org.springframework.web.servlet.ViewRendererServlet.MODEL", model);
 
         // Forward to the view in the resource response.
         if (PortletRequest.RESOURCE_PHASE.equals(

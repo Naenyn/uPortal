@@ -16,7 +16,7 @@ package org.apereo.portal.portlet.rendering;
 
 import java.util.Locale;
 import javax.portlet.CacheControl;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.utils.web.PortletMimeHttpServletResponseWrapper;
 
@@ -57,7 +57,6 @@ public class PortletResourceHttpServletResponseWrapper
         this.portletResourceOutputHandler.setStatus(status);
     }
 
-    @Override
     public void setStatus(int sc, String sm) {
         this.portletResourceOutputHandler.setStatus(sc);
     }

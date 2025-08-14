@@ -17,6 +17,9 @@ package org.apereo.portal.io.xml.eventaggr;
 import java.util.Calendar;
 import org.apereo.portal.utils.ComparableExtractingComparator;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalTermDetail;
+
 /** Compare ExternalTermDetail based on start date */
 public class ExternalTermDetailComparator
         extends ComparableExtractingComparator<ExternalTermDetail, Calendar> {

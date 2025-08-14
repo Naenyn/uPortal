@@ -10,16 +10,18 @@ dependencies {
     // JAXB dependencies for Java 17
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
     implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
-    
-    // For JAXB generation and compilation of generated classes
-    jaxb 'com.sun.xml.bind:jaxb-xjc:2.3.9'
-    jaxb 'com.sun.xml.bind:jaxb-impl:2.3.9'
-    jaxb "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
-    jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics:1.11.1'
-    
-    // Needed for compiling generated classes that use javax.xml.bind annotations
-    implementation "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    // Needed for generated adapter classes that use javax.xml.bind.DatatypeConverter
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.9'
+    
+    // For JAXB generation using Jakarta EE compatible XJC
+    jaxb 'org.glassfish.jaxb:jaxb-xjc:4.0.3'
+    jaxb 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
+    jaxb 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    jaxb 'org.jvnet.jaxb2_commons:jaxb2-basics:1.11.1'
+    // Compatibility classes needed for XJC generation
+    jaxb 'javax.xml.bind:jaxb-api:2.3.1'
+    jaxb 'com.sun.xml.bind:jaxb-impl:2.3.9'
 }
 
 /*

@@ -62,6 +62,16 @@ import org.apereo.portal.utils.SafeFilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalPortletDefinition;
+import org.apereo.portal.portletpublishing.xml.ExternalPermissionMemberList;
+import org.apereo.portal.portletpublishing.xml.ExternalPermissions;
+import org.apereo.portal.portletpublishing.xml.Lifecycle;
+import org.apereo.portal.portletpublishing.xml.LifecycleEntry;
+import org.apereo.portal.portletpublishing.xml.ExternalPortletParameter;
+import org.apereo.portal.portletpublishing.xml.ExternalPortletPreference;
+import org.apereo.portal.portletpublishing.xml.PortletDescriptor;
+
 public class PortletDefinitionImporterExporter
         extends AbstractJaxbDataHandler<ExternalPortletDefinition>
         implements IPortletPublishingService {
@@ -390,8 +400,8 @@ public class PortletDefinitionImporterExporter
         }
         rep.setLifecycle(lifecycle);
 
-        final org.apereo.portal.xml.PortletDescriptor portletDescriptor =
-                new org.apereo.portal.xml.PortletDescriptor();
+        final PortletDescriptor portletDescriptor =
+                new PortletDescriptor();
         final IPortletDescriptorKey portletDescriptorKey = def.getPortletDescriptorKey();
         if (portletDescriptorKey.isFrameworkPortlet()) {
             portletDescriptor.setIsFramework(true);

@@ -480,22 +480,20 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                 person, profile, layoutDoc, themeStylesheetId, "theme");
 
         // (2) Remove locale info...
-        final Iterator<org.dom4j.Attribute> locale =
-                (Iterator<org.dom4j.Attribute>) layoutDoc.selectNodes("//@locale").iterator();
-        while (locale.hasNext()) {
-            final org.dom4j.Attribute loc = locale.next();
+        final List<org.dom4j.Node> localeNodes = layoutDoc.selectNodes("//@locale");
+        for (org.dom4j.Node node : localeNodes) {
+            final org.dom4j.Attribute loc = (org.dom4j.Attribute) node;
             loc.getParent().remove(loc);
         }
 
+
         // (3) Scrub unnecessary channel information...
-        for (final Iterator<org.dom4j.Element> orphanedChannels =
-                        (Iterator<org.dom4j.Element>)
-                                layoutDoc.selectNodes("//channel[@fname = '']").iterator();
-                orphanedChannels.hasNext(); ) {
+        final List<org.dom4j.Node> orphanedChannelNodes = layoutDoc.selectNodes("//channel[@fname = '']");
+        for (org.dom4j.Node node : orphanedChannelNodes) {
             // These elements represent UP_LAYOUT_STRUCT rows where the
             // CHAN_ID field was not recognized by ChannelRegistryStore;
             // best thing to do is remove the elements...
-            final org.dom4j.Element ch = orphanedChannels.next();
+            final org.dom4j.Element ch = (org.dom4j.Element) node;
             ch.getParent().remove(ch);
         }
         final List<String> channelAttributeWhitelist =
@@ -510,10 +508,9 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                             "dlm:moveAllowed",
                             "dlm:deleteAllowed"
                         });
-        final Iterator<org.dom4j.Element> channels =
-                (Iterator<org.dom4j.Element>) layoutDoc.selectNodes("//channel").iterator();
-        while (channels.hasNext()) {
-            final org.dom4j.Element oldCh = channels.next();
+        final List<org.dom4j.Node> channelNodes = layoutDoc.selectNodes("//channel");
+        for (org.dom4j.Node node : channelNodes) {
+            final org.dom4j.Element oldCh = (org.dom4j.Element) node;
             final org.dom4j.Element parent = oldCh.getParent();
             final org.dom4j.Element newCh = this.fac.createElement("channel");
             for (final String aName : channelAttributeWhitelist) {
@@ -528,11 +525,9 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
         }
 
         // (4) Convert internal DLM noderefs to external form (pathrefs)...
-        for (final Iterator<org.dom4j.Attribute> origins =
-                        (Iterator<org.dom4j.Attribute>)
-                                layoutDoc.selectNodes("//@dlm:origin").iterator();
-                origins.hasNext(); ) {
-            final org.dom4j.Attribute org = origins.next();
+        final List<org.dom4j.Node> originNodes = layoutDoc.selectNodes("//@dlm:origin");
+        for (org.dom4j.Node node : originNodes) {
+            final org.dom4j.Attribute org = (org.dom4j.Attribute) node;
             final Pathref dlmPathref =
                     this.nodeReferenceFactory.getPathrefFromNoderef(
                             (String) person.getAttribute(IPerson.USERNAME),
@@ -551,11 +546,9 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                 }
             }
         }
-        for (final Iterator<org.dom4j.Attribute> it =
-                        (Iterator<org.dom4j.Attribute>)
-                                layoutDoc.selectNodes("//@dlm:target").iterator();
-                it.hasNext(); ) {
-            final org.dom4j.Attribute target = it.next();
+        final List<org.dom4j.Node> targetNodes = layoutDoc.selectNodes("//@dlm:target");
+        for (org.dom4j.Node node : targetNodes) {
+            final org.dom4j.Attribute target = (org.dom4j.Attribute) node;
             final Pathref dlmPathref =
                     this.nodeReferenceFactory.getPathrefFromNoderef(
                             (String) person.getAttribute(IPerson.USERNAME),
@@ -574,11 +567,9 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                 }
             }
         }
-        for (final Iterator<org.dom4j.Attribute> names =
-                        (Iterator<org.dom4j.Attribute>)
-                                layoutDoc.selectNodes("//dlm:*/@name").iterator();
-                names.hasNext(); ) {
-            final org.dom4j.Attribute n = names.next();
+        final List<org.dom4j.Node> nameNodes = layoutDoc.selectNodes("//dlm:*/@name");
+        for (org.dom4j.Node node : nameNodes) {
+            final org.dom4j.Attribute n = (org.dom4j.Attribute) node;
             if (n.getValue() == null || n.getValue().trim().length() == 0) {
                 // Outer <dlm:positionSet> elements don't seem to use the name
                 // attribute, though their childern do.  Just skip these so we
@@ -618,20 +609,16 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
              */
 
             // (5) Remove dlm:plfID...
-            for (final Iterator<org.dom4j.Attribute> plfid =
-                            (Iterator<org.dom4j.Attribute>)
-                                    layoutDoc.selectNodes("//@dlm:plfID").iterator();
-                    plfid.hasNext(); ) {
-                final org.dom4j.Attribute plf = plfid.next();
+            final List<org.dom4j.Node> plfidNodes = layoutDoc.selectNodes("//@dlm:plfID");
+            for (org.dom4j.Node node : plfidNodes) {
+                final org.dom4j.Attribute plf = (org.dom4j.Attribute) node;
                 plf.getParent().remove(plf);
             }
 
             // (6) Remove database Ids...
-            for (final Iterator<org.dom4j.Attribute> ids =
-                            (Iterator<org.dom4j.Attribute>)
-                                    layoutDoc.selectNodes("//@ID").iterator();
-                    ids.hasNext(); ) {
-                final org.dom4j.Attribute a = ids.next();
+            final List<org.dom4j.Node> idNodes = layoutDoc.selectNodes("//@ID");
+            for (org.dom4j.Node node : idNodes) {
+                final org.dom4j.Attribute a = (org.dom4j.Attribute) node;
                 a.getParent().remove(a);
             }
         }
@@ -791,22 +778,18 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
 
         // (6) Add database Ids & (5) Add dlm:plfID ...
         int nextId = 1;
-        for (final Iterator<org.dom4j.Element> it =
-                        (Iterator<org.dom4j.Element>)
-                                layout.selectNodes("folder | dlm:* | channel").iterator();
-                it.hasNext(); ) {
-            nextId = this.addIdAttributesIfNecessary(it.next(), nextId);
+        final List<org.dom4j.Node> layoutNodes = layout.selectNodes("folder | dlm:* | channel");
+        for (org.dom4j.Node node : layoutNodes) {
+            nextId = this.addIdAttributesIfNecessary((org.dom4j.Element) node, nextId);
         }
         // Now update UP_USER...
         this.jdbcOperations.update(
                 "UPDATE up_user SET next_struct_id = ? WHERE user_id = ?", nextId, person.getID());
 
         // (4) Convert external DLM pathrefs to internal form (noderefs)...
-        for (final Iterator<org.dom4j.Attribute> itr =
-                        (Iterator<org.dom4j.Attribute>)
-                                layout.selectNodes("//@dlm:origin").iterator();
-                itr.hasNext(); ) {
-            final org.dom4j.Attribute a = itr.next();
+        final List<org.dom4j.Node> originNodes = layout.selectNodes("//@dlm:origin");
+        for (org.dom4j.Node node : originNodes) {
+            final org.dom4j.Attribute a = (org.dom4j.Attribute) node;
             final Noderef dlmNoderef =
                     nodeReferenceFactory.getNoderefFromPathref(
                             ownerUsername, a.getValue(), null, true, layout);
@@ -820,22 +803,18 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                 a.setValue(BAD_PATHREF_MESSAGE);
             }
         }
-        for (final Iterator<org.dom4j.Attribute> itr =
-                        (Iterator<org.dom4j.Attribute>)
-                                layout.selectNodes("//@dlm:target").iterator();
-                itr.hasNext(); ) {
-            final org.dom4j.Attribute a = itr.next();
+        final List<org.dom4j.Node> targetNodes = layout.selectNodes("//@dlm:target");
+        for (org.dom4j.Node node : targetNodes) {
+            final org.dom4j.Attribute a = (org.dom4j.Attribute) node;
             final Noderef dlmNoderef =
                     nodeReferenceFactory.getNoderefFromPathref(
                             ownerUsername, a.getValue(), null, true, layout);
             // Put in the correct value, or at least insure the value is between 1 and 35 characters
             a.setValue(dlmNoderef != null ? dlmNoderef.toString() : BAD_PATHREF_MESSAGE);
         }
-        for (final Iterator<org.dom4j.Attribute> names =
-                        (Iterator<org.dom4j.Attribute>)
-                                layout.selectNodes("//dlm:*/@name").iterator();
-                names.hasNext(); ) {
-            final org.dom4j.Attribute a = names.next();
+        final List<org.dom4j.Node> nameNodes = layout.selectNodes("//dlm:*/@name");
+        for (org.dom4j.Node node : nameNodes) {
+            final org.dom4j.Attribute a = (org.dom4j.Attribute) node;
             final String value = a.getValue().trim();
             if (!VALID_PATHREF_PATTERN.matcher(value).matches()) {
                 /* Don't send it to getDlmNoderef if we know in advance it's not
@@ -864,10 +843,9 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
         }
 
         // (3) Restore chanID attributes on <channel> elements...
-        for (final Iterator<org.dom4j.Element> it =
-                        (Iterator<org.dom4j.Element>) layout.selectNodes("//channel").iterator();
-                it.hasNext(); ) {
-            final org.dom4j.Element c = it.next();
+        final List<org.dom4j.Node> channelNodes = layout.selectNodes("//channel");
+        for (org.dom4j.Node node : channelNodes) {
+            final org.dom4j.Element c = (org.dom4j.Element) node;
             final String fname = c.valueOf("@fname");
             final IPortletDefinition cd =
                     this.portletDefinitionRegistry.getPortletDefinitionByFname(fname);
@@ -907,12 +885,10 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                     person, profile, layout, themeStylesheetId, "theme");
 
             // From this point forward we need the user's PLF set as DLM expects it...
-            for (final Iterator<org.dom4j.Text> it =
-                            (Iterator<org.dom4j.Text>)
-                                    layout.selectNodes("descendant::text()").iterator();
-                    it.hasNext(); ) {
+            final List<org.dom4j.Node> textNodes = layout.selectNodes("descendant::text()");
+            for (org.dom4j.Node node : textNodes) {
                 // How many years have we used Java & XML, and this still isn't easy?
-                final org.dom4j.Text txt = it.next();
+                final org.dom4j.Text txt = (org.dom4j.Text) node;
                 if (txt.getText().trim().length() == 0) {
                     txt.getParent().remove(txt);
                 }
@@ -948,8 +924,9 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                     new LinkedHashSet<>(
                             this.portletEntityDao.getPortletEntitiesForUser(ownerUserId));
 
-            final List<org.dom4j.Element> entries = preferencesElement.selectNodes("entry");
-            for (final org.dom4j.Element entry : entries) {
+            final List<org.dom4j.Node> entryNodes = preferencesElement.selectNodes("entry");
+            for (org.dom4j.Node node : entryNodes) {
+                final org.dom4j.Element entry = (org.dom4j.Element) node;
                 final String dlmPathRef = entry.attributeValue("entity");
                 final String fname = entry.attributeValue("channel");
                 final String prefName = entry.attributeValue("name");
@@ -966,9 +943,10 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
                     final List<IPortletPreference> portletPreferences =
                             portletEntity.getPortletPreferences();
 
-                    final List<org.dom4j.Element> valueElements = entry.selectNodes("value");
-                    final List<String> values = new ArrayList<>(valueElements.size());
-                    for (final org.dom4j.Element valueElement : valueElements) {
+                    final List<org.dom4j.Node> valueNodes = entry.selectNodes("value");
+                    final List<String> values = new ArrayList<>(valueNodes.size());
+                    for (org.dom4j.Node valueNode : valueNodes) {
+                        final org.dom4j.Element valueElement = (org.dom4j.Element) valueNode;
                         values.add(valueElement.getText());
                     }
 
@@ -1030,8 +1008,12 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
 
         final IStylesheetDescriptor stylesheetDescriptor =
                 this.stylesheetDescriptorDao.getStylesheetDescriptor(structureStylesheetId);
-        final List<org.dom4j.Element> structureAttributes =
+        final List<org.dom4j.Node> structureAttributeNodes =
                 layout.selectNodes("//" + nodeType + "-attribute");
+        final List<org.dom4j.Element> structureAttributes = new ArrayList<>();
+        for (org.dom4j.Node node : structureAttributeNodes) {
+            structureAttributes.add((org.dom4j.Element) node);
+        }
 
         IStylesheetUserPreferences ssup =
                 this.stylesheetUserPreferencesDao.getStylesheetUserPreferences(
@@ -1157,11 +1139,9 @@ public class RDBMDistributedLayoutStore extends RDBMUserLayoutStore {
         }
 
         // Now check children...
-        for (final Iterator<org.dom4j.Element> itr =
-                        (Iterator<org.dom4j.Element>)
-                                e.selectNodes("folder | channel | dlm:*").iterator();
-                itr.hasNext(); ) {
-            final org.dom4j.Element child = itr.next();
+        final List<org.dom4j.Node> childNodes = e.selectNodes("folder | channel | dlm:*");
+        for (org.dom4j.Node node : childNodes) {
+            final org.dom4j.Element child = (org.dom4j.Element) node;
             idAfterThisOne = this.addIdAttributesIfNecessary(child, idAfterThisOne);
         }
 

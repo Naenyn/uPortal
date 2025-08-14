@@ -19,9 +19,9 @@ import java.io.PrintWriter;
 import java.util.concurrent.Callable;
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.portlet.rendering.LazyPrintWriter;
 import org.apereo.portal.portlet.rendering.LazyServletOutputStream;
@@ -38,7 +38,7 @@ import org.apereo.portal.portlet.rendering.PortletOutputHandler;
  * CacheControl#useCachedContent()} is true
  *
  * <p>This is needed as servlet spec says that after a {@link
- * RequestDispatcher#forward(javax.servlet.ServletRequest, javax.servlet.ServletResponse)} the
+ * RequestDispatcher#forward(jakarta.servlet.ServletRequest, jakarta.servlet.ServletResponse)} the
  * {@link PrintWriter}/{@link ServletOutputStream} must be closed. This is a problem for resource
  * responses that want to use cached content as after the forward is complete the portal needs to
  * replay the cached content.

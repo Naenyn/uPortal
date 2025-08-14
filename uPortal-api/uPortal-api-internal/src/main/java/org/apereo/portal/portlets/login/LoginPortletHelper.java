@@ -19,7 +19,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.IUserProfile;
 import org.apereo.portal.layout.profile.SessionAttributeProfileMapperImpl;
@@ -27,7 +27,6 @@ import org.apereo.portal.url.IPortalRequestUtils;
 import org.apereo.portal.user.IUserInstance;
 import org.apereo.portal.user.IUserInstanceManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
 /** Helper methods for the login portlet webflow. */
@@ -53,7 +52,6 @@ public class LoginPortletHelper {
 
     private Map<String, String> mappings = Collections.<String, String>emptyMap();
 
-    @Required
     @Resource(name = "profileKeyMappings")
     public void setProfileMappings(Map<String, String> mappings) {
         Validate.notNull(mappings);

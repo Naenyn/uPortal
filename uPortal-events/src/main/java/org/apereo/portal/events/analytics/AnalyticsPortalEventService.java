@@ -17,7 +17,7 @@ package org.apereo.portal.events.analytics;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apereo.portal.concurrency.FunctionWithoutResult;
 import org.apereo.portal.events.IPortalAnalyticsEventFactory;

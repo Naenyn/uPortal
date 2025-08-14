@@ -15,8 +15,8 @@
 package org.apereo.portal.rendering;
 
 import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import org.apereo.portal.rendering.xslt.TransformerSource;
@@ -40,7 +40,7 @@ public class StaticTransformerSource implements TransformerSource {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerSource#getTransformer(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerSource#getTransformer(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public Transformer getTransformer(HttpServletRequest request, HttpServletResponse response) {
@@ -54,7 +54,7 @@ public class StaticTransformerSource implements TransformerSource {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.xslt.TransformerSource#getCacheKey(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.xslt.TransformerSource#getCacheKey(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {

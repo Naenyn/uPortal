@@ -15,7 +15,7 @@
 package org.apereo.portal.io.xml;
 
 import com.google.common.base.Function;
-import org.apereo.portal.io.xml.eventaggr.ExternalEventAggregationConfiguration;
+import org.apereo.portal.portletpublishing.xml.ExternalEventAggregationConfiguration;
 import org.apereo.portal.test.BaseAggrEventsJpaDaoTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,11 +28,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(
         locations = "classpath:/org/apereo/portal/io/xml/aggrImportExportTestContext.xml")
 public class AggrIdentityImportExportTest extends BaseAggrEventsJpaDaoTest {
-    @javax.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
+    @jakarta.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
     private IDataImporter<ExternalEventAggregationConfiguration>
             eventAggregationConfigurationImporter;
 
-    @javax.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
+    @jakarta.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
     private IDataExporter<ExternalEventAggregationConfiguration>
             eventAggregationConfigurationExporter;
 

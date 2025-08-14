@@ -12,13 +12,26 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apereo.portal.search;
+package org.apereo.portal.portlet.container.stubs;
 
 /**
- * Enumeration of portlet URL types for search functionality
+ * Stub implementation of Portlet 3.0 HeaderData interface for compatibility.
+ * This class provides minimal functionality to satisfy interface contracts
+ * while maintaining Portlet 2.0 behavior.
  */
-public enum PortletUrlType {
-    RENDER,
-    ACTION,
-    RESOURCE
+public class HeaderData {
+    
+    /**
+     * Private constructor - instances should only be created through factory methods
+     */
+    private HeaderData() {
+        // Empty stub for compatibility
+    }
+    
+    /**
+     * Factory method to create a null-equivalent HeaderData stub
+     */
+    public static HeaderData createNull() {
+        return null; // Return null for Portlet 2.0 compatibility
+    }
 }

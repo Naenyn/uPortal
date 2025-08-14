@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import javax.portlet.CacheControl;
 import javax.portlet.PortletException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import junit.framework.Assert;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletContainerException;

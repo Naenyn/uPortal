@@ -15,15 +15,15 @@
 package org.apereo.portal.events.aggr.portlets;
 
 import java.io.Serializable;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Immutable;
@@ -59,7 +59,7 @@ public final class AggregatedPortletMappingImpl implements AggregatedPortletMapp
 
     @NaturalId
     @Column(name = "PORTLET_FNAME", length = 255, nullable = false)
-    @Type(type = "fname")
+    @Type(org.apereo.portal.dao.usertype.FunctionalNameType.class)
     private final String fname;
 
     @Transient private int hashCode = 0;

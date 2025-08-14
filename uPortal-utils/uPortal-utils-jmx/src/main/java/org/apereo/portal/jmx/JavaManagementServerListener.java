@@ -14,9 +14,9 @@
  */
 package org.apereo.portal.jmx;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -74,7 +74,7 @@ public class JavaManagementServerListener implements ServletContextListener {
 
     /**
      * @see
-     *     javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
+     *     jakarta.servlet.ServletContextListener#contextInitialized(jakarta.servlet.ServletContextEvent)
      */
     @Override
     public void contextInitialized(ServletContextEvent event) {
@@ -127,7 +127,7 @@ public class JavaManagementServerListener implements ServletContextListener {
     }
 
     /**
-     * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
+     * @see jakarta.servlet.ServletContextListener#contextDestroyed(jakarta.servlet.ServletContextEvent)
      */
     @Override
     public void contextDestroyed(ServletContextEvent event) {

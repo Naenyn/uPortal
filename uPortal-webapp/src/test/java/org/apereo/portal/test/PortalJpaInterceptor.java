@@ -1,7 +1,7 @@
 package org.apereo.portal.test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.dao.support.DataAccessUtils;
@@ -118,7 +118,7 @@ public class PortalJpaInterceptor extends EntityManagerFactoryAccessor
      *
      * @param em the current JPA PersistenceManage
      * @param existingTransaction if executing within an existing transaction
-     * @throws javax.persistence.PersistenceException in case of JPA flushing errors
+     * @throws jakarta.persistence.PersistenceException in case of JPA flushing errors
      */
     protected void flushIfNecessary(EntityManager em, boolean existingTransaction)
             throws PersistenceException {

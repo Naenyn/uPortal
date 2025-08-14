@@ -14,8 +14,8 @@
  */
 package org.apereo.portal.layout.dlm.providers;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Entity;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Entity;
 import org.apereo.portal.layout.dlm.Evaluator;
 import org.apereo.portal.layout.dlm.EvaluatorFactory;
 import org.apereo.portal.layout.dlm.FragmentDefinition;

@@ -18,13 +18,13 @@ import com.google.common.base.Function;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.ParameterExpression;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.jpa.BasePortalJpaDao;
@@ -36,7 +36,7 @@ import org.apereo.portal.portlet.om.IPortletDefinitionId;
 import org.apereo.portal.portlet.om.IPortletEntity;
 import org.apereo.portal.portlet.om.IPortletEntityId;
 import org.apereo.portal.spring.tx.DialectAwareTransactional;
-import org.hibernate.dialect.PostgreSQL81Dialect;
+import org.hibernate.dialect.PostgreSQLDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -155,7 +155,7 @@ public class JpaPortletEntityDao extends BasePortalJpaDao implements IPortletEnt
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public IPortletEntity getPortletEntity(IPortletEntityId portletEntityId) {
@@ -182,7 +182,7 @@ public class JpaPortletEntityDao extends BasePortalJpaDao implements IPortletEnt
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public IPortletEntity getPortletEntity(String layoutNodeId, int userId) {
@@ -202,7 +202,7 @@ public class JpaPortletEntityDao extends BasePortalJpaDao implements IPortletEnt
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public Set<IPortletEntity> getPortletEntities(IPortletDefinitionId portletDefinitionId) {
@@ -221,7 +221,7 @@ public class JpaPortletEntityDao extends BasePortalJpaDao implements IPortletEnt
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public Set<IPortletEntity> getPortletEntitiesForUser(int userId) {

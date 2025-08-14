@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.events;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.security.IPerson;
 
 /** Publishes events related to layouts */

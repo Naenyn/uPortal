@@ -15,7 +15,7 @@
 package org.apereo.portal.utils.web;
 
 import java.io.IOException;
-import javax.servlet.ServletOutputStream;
+import jakarta.servlet.ServletOutputStream;
 import org.apereo.portal.portlet.container.cache.CacheControlImpl;
 import org.junit.Assert;
 import org.junit.Before;

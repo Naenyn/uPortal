@@ -15,7 +15,7 @@
 package org.apereo.portal.portlet.delegation;
 
 import java.util.concurrent.ConcurrentMap;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.api.portlet.DelegationRequest;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 import org.apereo.portal.url.IPortalRequestUtils;
@@ -56,7 +56,7 @@ public class PortletDelegationManagerImpl implements IPortletDelegationManager {
 
     protected ConcurrentMap<IPortletWindowId, DelegationRequest> getDelegationRequestMap(
             HttpServletRequest request) {
-        request = this.portalRequestUtils.getOriginalPortletOrPortalRequest(request);
+        request = this.portalRequestUtils.getOriginalPortalRequest(request);
         final ConcurrentMap<IPortletWindowId, DelegationRequest> delegationRequestMap =
                 PortalWebUtils.getMapRequestAttribute(request, DELEGATION_REQUEST_MAP_ATTR);
         return delegationRequestMap;

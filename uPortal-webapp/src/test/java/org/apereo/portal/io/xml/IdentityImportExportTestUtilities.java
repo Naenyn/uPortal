@@ -28,7 +28,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.transform.stax.StAXSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.io.IOUtils;
-import org.apereo.portal.io.xml.ssd.ExternalStylesheetDescriptor;
+import org.apereo.portal.portletpublishing.xml.ExternalStylesheetDescriptor;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.springframework.core.io.Resource;

@@ -6,6 +6,9 @@ dependencies {
     implementation project(':uPortal-rendering')
     implementation project(':uPortal-security:uPortal-security-core')
     implementation project(':uPortal-spring')
+    
+    // DOM4J for XML processing
+    implementation "org.dom4j:dom4j:${dom4jVersion}"
 
     testImplementation "${servletApiDependency}"
 

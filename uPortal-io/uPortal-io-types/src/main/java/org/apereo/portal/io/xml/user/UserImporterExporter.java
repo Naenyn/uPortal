@@ -41,6 +41,11 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.UserType;
+import org.apereo.portal.portletpublishing.xml.ExternalUser;
+import org.apereo.portal.portletpublishing.xml.Attribute;
+
 /** */
 public class UserImporterExporter extends AbstractJaxbDataHandler<UserType> {
 

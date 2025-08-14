@@ -16,8 +16,8 @@ package org.apereo.portal.rendering;
 
 import java.util.Map;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.events.StartElement;
@@ -68,7 +68,7 @@ public class WindowStateSettingsStAXComponent extends StAXPipelineComponentWrapp
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.PipelineComponent#getCacheKey(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.PipelineComponent#getCacheKey(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public CacheKey getCacheKey(HttpServletRequest request, HttpServletResponse response) {
@@ -77,7 +77,7 @@ public class WindowStateSettingsStAXComponent extends StAXPipelineComponentWrapp
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.rendering.PipelineComponent#getEventReader(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.rendering.PipelineComponent#getEventReader(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public PipelineEventReader<XMLEventReader, XMLEvent> getEventReader(

@@ -23,7 +23,7 @@ import net.oauth.OAuthConsumer;
 import net.oauth.OAuthException;
 import net.oauth.OAuthMessage;
 import net.oauth.OAuthServiceProvider;
-import org.springframework.beans.factory.annotation.Required;
+
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -37,7 +37,6 @@ public class ZeroLeggedOAuthInterceptor implements ClientHttpRequestInterceptor 
     private PropertyResolver propertyResolver;
     private RealmOAuthConsumer consumer;
 
-    @Required
     public void setId(String id) {
         this.id = id;
     }
@@ -59,8 +58,8 @@ public class ZeroLeggedOAuthInterceptor implements ClientHttpRequestInterceptor 
     @Override
     public ClientHttpResponse intercept(
             HttpRequest req, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-        Assert.notNull(propertyResolver);
-        Assert.notNull(id);
+        Assert.notNull(propertyResolver, "propertyResolver cannot be null");
+        Assert.notNull(id, "id cannot be null");
 
         try {
             String authString = getOAuthAuthString(req);

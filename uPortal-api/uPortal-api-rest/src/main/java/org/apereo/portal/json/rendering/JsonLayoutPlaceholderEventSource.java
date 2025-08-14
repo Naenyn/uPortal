@@ -16,7 +16,7 @@ package org.apereo.portal.json.rendering;
 
 import java.util.Collection;
 import java.util.regex.MatchResult;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.stream.events.StartElement;
 import org.apereo.portal.character.stream.BasePlaceholderEventSource;
 import org.apereo.portal.character.stream.events.CharacterEvent;

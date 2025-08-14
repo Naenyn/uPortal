@@ -16,6 +16,9 @@ package org.apereo.portal.io.xml.eventaggr;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalAggregatedGroupMapping;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apereo.portal.utils.ComparableExtractingComparator;
 

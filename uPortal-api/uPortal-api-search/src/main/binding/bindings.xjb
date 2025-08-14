@@ -18,6 +18,12 @@
         <jaxb:schemaBindings>
             <jaxb:package name="org.apereo.portal.search" />
         </jaxb:schemaBindings>
+        
+        <jaxb:bindings node="//xs:element[@name='SearchResults']">
+            <jaxb:bindings node=".//xs:element[@name='SearchResult']">
+                <jaxb:property name="searchResult"/>
+            </jaxb:bindings>
+        </jaxb:bindings>
     </jaxb:bindings>
 
 </jaxb:bindings>

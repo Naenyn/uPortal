@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.TagSupport;
 import org.apereo.portal.portlet.PortletUtils;
 
 /** Simple wrapper tag for setting up the basis of URLs for portlet delegation */

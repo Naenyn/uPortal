@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Set;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.mock.portlet.om.MockPortletWindowId;
 import org.apereo.portal.rendering.AnalyticsIncorporationComponent;
 import org.apereo.portal.security.SystemPerson;

@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.url.IPortalRequestUtils;
 import org.apereo.portal.utils.web.PortalWebUtils;
 import org.springframework.beans.factory.annotation.Autowired;

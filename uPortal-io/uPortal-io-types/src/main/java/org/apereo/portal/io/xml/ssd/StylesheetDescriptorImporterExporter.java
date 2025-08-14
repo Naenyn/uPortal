@@ -39,6 +39,14 @@ import org.apereo.portal.utils.SafeFilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalStylesheetDescriptor;
+import org.apereo.portal.portletpublishing.xml.ExternalStylesheetData;
+import org.apereo.portal.portletpublishing.xml.ExternalStylesheetDataScope;
+import org.apereo.portal.portletpublishing.xml.ExternalOutputPropertyDescriptor;
+import org.apereo.portal.portletpublishing.xml.ExternalStylesheetParameterDescriptor;
+import org.apereo.portal.portletpublishing.xml.ExternalLayoutAttributeDescriptor;
+
 /** */
 public class StylesheetDescriptorImporterExporter
         extends AbstractJaxbDataHandler<ExternalStylesheetDescriptor> {

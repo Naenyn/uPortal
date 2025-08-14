@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Resource;
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 import javax.sql.DataSource;
 import net.sf.ehcache.Cache;
 import org.apereo.portal.persondir.ILocalAccountDao;

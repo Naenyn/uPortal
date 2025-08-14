@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -41,7 +41,7 @@ public class RemoteUserSettingFilter implements Filter {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+     * @see jakarta.servlet.Filter#doFilter(jakarta.servlet.ServletRequest, jakarta.servlet.ServletResponse, jakarta.servlet.FilterChain)
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -53,7 +53,7 @@ public class RemoteUserSettingFilter implements Filter {
             request =
                     new HttpServletRequestWrapper((HttpServletRequest) request) {
                         /* (non-Javadoc)
-                         * @see javax.servlet.http.HttpServletRequestWrapper#getRemoteUser()
+                         * @see jakarta.servlet.http.HttpServletRequestWrapper#getRemoteUser()
                          */
                         @Override
                         public String getRemoteUser() {
@@ -61,7 +61,7 @@ public class RemoteUserSettingFilter implements Filter {
                         }
 
                         /* (non-Javadoc)
-                         * @see javax.servlet.http.HttpServletRequestWrapper#getHeader(java.lang.String)
+                         * @see jakarta.servlet.http.HttpServletRequestWrapper#getHeader(java.lang.String)
                          */
                         @Override
                         public String getHeader(String name) {
@@ -72,7 +72,7 @@ public class RemoteUserSettingFilter implements Filter {
                         }
 
                         /* (non-Javadoc)
-                         * @see javax.servlet.http.HttpServletRequestWrapper#getHeaders(java.lang.String)
+                         * @see jakarta.servlet.http.HttpServletRequestWrapper#getHeaders(java.lang.String)
                          */
                         @Override
                         public Enumeration<String> getHeaders(String name) {
@@ -84,7 +84,7 @@ public class RemoteUserSettingFilter implements Filter {
                         }
 
                         /* (non-Javadoc)
-                         * @see javax.servlet.http.HttpServletRequestWrapper#getHeaderNames()
+                         * @see jakarta.servlet.http.HttpServletRequestWrapper#getHeaderNames()
                          */
                         @Override
                         public Enumeration<String> getHeaderNames() {
@@ -99,7 +99,7 @@ public class RemoteUserSettingFilter implements Filter {
                         }
 
                         /* (non-Javadoc)
-                         * @see javax.servlet.http.HttpServletRequestWrapper#getIntHeader(java.lang.String)
+                         * @see jakarta.servlet.http.HttpServletRequestWrapper#getIntHeader(java.lang.String)
                          */
                         @Override
                         public int getIntHeader(String name) {

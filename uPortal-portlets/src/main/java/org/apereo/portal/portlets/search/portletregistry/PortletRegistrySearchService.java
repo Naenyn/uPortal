@@ -20,7 +20,7 @@ package org.apereo.portal.portlets.search.portletregistry;
 
 import java.util.List;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.registry.IPortletDefinitionRegistry;
 import org.apereo.portal.portlets.search.IPortalSearchService;

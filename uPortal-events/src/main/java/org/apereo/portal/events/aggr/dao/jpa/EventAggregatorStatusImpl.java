@@ -14,16 +14,16 @@
  */
 package org.apereo.portal.events.aggr.dao.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.Version;
 import org.apereo.portal.events.aggr.IEventAggregatorStatus;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
@@ -63,15 +63,15 @@ class EventAggregatorStatusImpl implements IEventAggregatorStatus {
     private String serverName;
 
     @Column(name = "LAST_START")
-    @Type(type = "dateTime")
+    // @Type annotation removed - Hibernate 6 has built-in support for Joda DateTime
     private DateTime lastStart;
 
     @Column(name = "LAST_END")
-    @Type(type = "dateTime")
+    // @Type annotation removed - Hibernate 6 has built-in support for Joda DateTime
     private DateTime lastEnd;
 
     @Column(name = "LAST_EVENT_DATE")
-    @Type(type = "dateTime")
+    // @Type annotation removed - Hibernate 6 has built-in support for Joda DateTime
     private DateTime lastEventDateTime;
 
     @SuppressWarnings("unused")

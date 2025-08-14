@@ -16,9 +16,9 @@ package org.apereo.portal.json.rendering;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.character.stream.CharacterEventReader;
 import org.apereo.portal.character.stream.events.CharacterDataEvent;
 import org.apereo.portal.character.stream.events.CharacterEvent;

@@ -22,8 +22,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.pluto.tags.Constants;
 import org.apereo.portal.api.portlet.DelegationRequest;
 import org.apereo.portal.api.portlet.DelegationResponse;
@@ -68,7 +68,7 @@ public class PortletDelegationView implements View {
     }
 
     /* (non-Javadoc)
-     * @see org.springframework.web.servlet.View#render(java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.springframework.web.servlet.View#render(java.util.Map, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public void render(

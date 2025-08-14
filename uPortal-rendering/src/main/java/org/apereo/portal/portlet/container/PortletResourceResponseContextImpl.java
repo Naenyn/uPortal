@@ -23,6 +23,7 @@ import org.apache.commons.lang.LocaleUtils;
 import org.apache.http.HeaderElement;
 import org.apache.http.entity.ContentType;
 import org.apache.http.message.BasicHeaderValueParser;
+import org.apache.pluto.container.HeaderData;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResourceResponseContext;
 import org.apereo.portal.portlet.container.properties.IRequestPropertiesManager;
@@ -159,8 +160,26 @@ public class PortletResourceResponseContextImpl extends PortletMimeResponseConte
     }
     
     @Override
-    public Object getHeaderData() {
-        // Return null for Portlet 2.0 compatibility - maintains existing behavior
-        return null;
+    public HeaderData getHeaderData() {
+        // Use translation helper for Portlet 2.0 compatibility
+        return (HeaderData) ServletTypeMapper.toJavaxHeaderData(null);
+    }
+    
+    @Override
+    public void setContentLengthLong(long len) {
+        // Convert long to int for Portlet 2.0 compatibility
+        this.setContentLength((int) len);
+    }
+    
+    @Override
+    public int getStatus() {
+        // Return 200 OK for Portlet 2.0 compatibility - status tracking not implemented
+        return 200;
+    }
+    
+    @Override
+    public void setStatus(int status) {
+        // Delegate to existing portlet resource output handler
+        this.portletResourceOutputHandler.setStatus(status);
     }
 }

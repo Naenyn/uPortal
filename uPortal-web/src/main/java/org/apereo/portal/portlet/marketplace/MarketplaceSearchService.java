@@ -16,7 +16,7 @@ package org.apereo.portal.portlet.marketplace;
 
 import java.util.List;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.portlet.PortletUtils;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.om.IPortletWindow;
@@ -128,7 +128,8 @@ public class MarketplaceSearchService implements IPortalSearchService {
                     final IPortletUrlBuilder portletUrlBuilder =
                             portalUrlBuilder.getPortletUrlBuilder(portletWindowId);
                     portletUrlBuilder.setWindowState(PortletUtils.getWindowState("maximized"));
-                    result.setExternalUrl(portalUrlBuilder.getUrlString());
+                    // Note: externalUrl not available in current generated API
+                    // result.setExternalUrl(portalUrlBuilder.getUrlString());
 
                     PortletUrl url = new PortletUrl();
                     url.setType(PortletUrlType.RENDER);
@@ -142,7 +143,8 @@ public class MarketplaceSearchService implements IPortalSearchService {
                     fNameParam.setName("fName");
                     fNameParam.getValue().add(portlet.getFName());
                     url.getParam().add(fNameParam);
-                    result.setPortletUrl(url);
+                    // Note: portletUrl not available in current generated API
+                    // result.setPortletUrl(url);
                     // Add the result to list to return
                     results.getSearchResult().add(result);
                 }

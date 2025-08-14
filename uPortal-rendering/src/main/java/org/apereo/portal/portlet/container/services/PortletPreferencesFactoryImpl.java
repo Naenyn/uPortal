@@ -26,6 +26,7 @@ import org.apereo.portal.portlet.om.IPortletWindow;
 import org.apereo.portal.portlet.registry.IPortletDefinitionRegistry;
 import org.apereo.portal.portlet.registry.IPortletEntityRegistry;
 import org.apereo.portal.portlet.registry.IPortletWindowRegistry;
+import org.apereo.portal.portlet.container.ServletTypeMapper;
 import org.apereo.portal.portlet.rendering.IPortletRenderer;
 import org.apereo.portal.security.IPerson;
 import org.apereo.portal.security.IPersonManager;
@@ -82,7 +83,8 @@ public class PortletPreferencesFactoryImpl implements PortletPreferencesFactory 
     @Override
     public PortletPreferences createPortletPreferences(
             final PortletRequestContext requestContext, boolean render) {
-        final jakarta.servlet.http.HttpServletRequest containerRequest = requestContext.getContainerRequest();
+        final javax.servlet.http.HttpServletRequest javaxContainerRequest = requestContext.getContainerRequest();
+        final jakarta.servlet.http.HttpServletRequest containerRequest = ServletTypeMapper.toJakarta(javaxContainerRequest);
         final PortletWindow plutoPortletWindow = requestContext.getPortletWindow();
         final IPortletWindow portletWindow =
                 portletWindowRegistry.convertPortletWindow(containerRequest, plutoPortletWindow);

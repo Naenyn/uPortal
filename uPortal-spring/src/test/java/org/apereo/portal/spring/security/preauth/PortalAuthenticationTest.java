@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import org.apereo.portal.security.IPerson;
 import org.apereo.portal.security.ISecurityContext;
 import org.junit.Before;

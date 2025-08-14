@@ -16,7 +16,7 @@ package org.apereo.portal.portlet.dao.trans;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apereo.portal.IUserPreferencesManager;

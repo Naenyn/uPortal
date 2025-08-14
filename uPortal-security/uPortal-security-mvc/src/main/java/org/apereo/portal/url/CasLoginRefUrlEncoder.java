@@ -16,10 +16,10 @@ package org.apereo.portal.url;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.security.mvc.LoginController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+
 
 /**
  * Encode the originally requested URL for use as a RefUrl parameter for the CAS login use case.
@@ -33,7 +33,6 @@ public class CasLoginRefUrlEncoder implements LoginRefUrlEncoder {
 
     private UrlAuthCustomizerRegistry urlCustomizer;
 
-    @Required
     public void setCasLoginUrl(String casLoginUrl) {
         this.casLoginUrl = casLoginUrl;
     }

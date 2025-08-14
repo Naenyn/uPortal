@@ -17,8 +17,8 @@ package org.apereo.portal.portlet.rendering.worker;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import javax.portlet.Event;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.om.IPortletEntity;
 import org.apereo.portal.portlet.om.IPortletWindow;
@@ -121,7 +121,7 @@ public class PortletWorkerFactoryImpl implements IPortletWorkerFactory {
     }
 
     /* (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.worker.IPortletWorkerFactory#createRenderHeaderWorker(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.apereo.portal.portlet.om.IPortletWindowId)
+     * @see org.apereo.portal.portlet.rendering.worker.IPortletWorkerFactory#createRenderHeaderWorker(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.apereo.portal.portlet.om.IPortletWindowId)
      */
     @Override
     public IPortletRenderExecutionWorker createRenderHeaderWorker(

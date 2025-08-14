@@ -21,8 +21,9 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apereo.portal.portlet.container.ServletTypeMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.pluto.container.PortletContainer;
@@ -139,7 +140,10 @@ public class PortletRendererImpl implements IPortletRenderer {
         final long start = System.nanoTime();
         try {
             this.portletContainer.doAction(
-                    portletWindow.getPlutoPortletWindow(), httpServletRequest, httpServletResponse);
+                    portletWindow.getPlutoPortletWindow(), 
+                    ServletTypeMapper.toJavax(httpServletRequest), 
+                    ServletTypeMapper.toJavax(httpServletResponse),
+                    false); // Pluto 3.0 requires boolean parameter
         } catch (PortletException pe) {
             throw new PortletDispatchException(
                     "The portlet window '"
@@ -177,7 +181,7 @@ public class PortletRendererImpl implements IPortletRenderer {
      * invoke the corresponding request handling methods of the portlet like processAction,or processEvent.
      *
      * (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletRenderer#doEvent(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.portlet.Event)
+     * @see org.apereo.portal.portlet.rendering.IPortletRenderer#doEvent(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, javax.portlet.Event)
      */
     @Override
     public long doEvent(
@@ -203,8 +207,8 @@ public class PortletRendererImpl implements IPortletRenderer {
         try {
             this.portletContainer.doEvent(
                     portletWindow.getPlutoPortletWindow(),
-                    httpServletRequest,
-                    httpServletResponse,
+                    ServletTypeMapper.toJavax(httpServletRequest),
+                    ServletTypeMapper.toJavax(httpServletResponse),
                     event);
         } catch (PortletException pe) {
             throw new PortletDispatchException(
@@ -454,7 +458,10 @@ public class PortletRendererImpl implements IPortletRenderer {
         try {
             httpServletRequest.setAttribute(PortletRequest.RENDER_PART, renderPart.getRenderPart());
             this.portletContainer.doRender(
-                    portletWindow.getPlutoPortletWindow(), httpServletRequest, httpServletResponse);
+                    portletWindow.getPlutoPortletWindow(), 
+                    ServletTypeMapper.toJavax(httpServletRequest), 
+                    ServletTypeMapper.toJavax(httpServletResponse),
+                    renderPart.getRenderPart()); // Pluto 3.0 requires String parameter
         } catch (PortletException pe) {
             throw new PortletDispatchException(
                     "The portlet window '"
@@ -682,7 +689,9 @@ public class PortletRendererImpl implements IPortletRenderer {
         final long start = System.nanoTime();
         try {
             this.portletContainer.doServeResource(
-                    portletWindow.getPlutoPortletWindow(), httpServletRequest, httpServletResponse);
+                    portletWindow.getPlutoPortletWindow(), 
+                    ServletTypeMapper.toJavax(httpServletRequest), 
+                    ServletTypeMapper.toJavax(httpServletResponse));
         } catch (PortletException pe) {
             throw new PortletDispatchException(
                     "The portlet window '"
@@ -857,7 +866,7 @@ public class PortletRendererImpl implements IPortletRenderer {
 
     /*
      * (non-Javadoc)
-     * @see org.apereo.portal.portlet.rendering.IPortletRenderer#doReset(org.apereo.portal.portlet.om.IPortletWindowId, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.apereo.portal.portlet.rendering.IPortletRenderer#doReset(org.apereo.portal.portlet.om.IPortletWindowId, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public void doReset(
@@ -903,8 +912,8 @@ public class PortletRendererImpl implements IPortletRenderer {
             try {
                 this.portletContainer.doAdmin(
                         portletWindow.getPlutoPortletWindow(),
-                        httpServletRequest,
-                        httpServletResponse);
+                        ServletTypeMapper.toJavax(httpServletRequest),
+                        ServletTypeMapper.toJavax(httpServletResponse));
             } catch (PortletException pe) {
                 throw new PortletDispatchException(
                         "The portlet window '"

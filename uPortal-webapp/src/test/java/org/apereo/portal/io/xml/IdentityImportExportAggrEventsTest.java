@@ -16,7 +16,7 @@ package org.apereo.portal.io.xml;
 
 import com.google.common.base.Function;
 import org.apereo.portal.events.aggr.groups.AggregatedGroupLookupDao;
-import org.apereo.portal.io.xml.eventaggr.ExternalEventAggregationConfiguration;
+import org.apereo.portal.portletpublishing.xml.ExternalEventAggregationConfiguration;
 import org.apereo.portal.spring.MockitoFactoryBean;
 import org.apereo.portal.test.BaseAggrEventsJpaDaoTest;
 import org.apereo.portal.test.TimeZoneTestUtils;
@@ -46,11 +46,11 @@ public class IdentityImportExportAggrEventsTest extends BaseAggrEventsJpaDaoTest
         TIME_ZONE_TEST_UTILS.afterTest();
     }
 
-    @javax.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
+    @jakarta.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
     private IDataImporter<ExternalEventAggregationConfiguration>
             eventAggregationConfigurationImporter;
 
-    @javax.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
+    @jakarta.annotation.Resource(name = "eventAggregationConfigurationImporterExporter")
     private IDataExporter<ExternalEventAggregationConfiguration>
             eventAggregationConfigurationExporter;
 

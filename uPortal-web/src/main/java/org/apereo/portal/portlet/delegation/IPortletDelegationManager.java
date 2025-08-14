@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.portlet.delegation;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.api.portlet.DelegationRequest;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 

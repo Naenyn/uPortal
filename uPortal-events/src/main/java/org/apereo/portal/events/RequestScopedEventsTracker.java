@@ -16,7 +16,7 @@ package org.apereo.portal.events;
 
 import java.util.Set;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Tracks events that have been fired during this request and provides a thread-safe read-only set

@@ -16,6 +16,9 @@ package org.apereo.portal.io.xml.user;
 
 import org.apereo.portal.utils.ComparableExtractingComparator;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.Attribute;
+
 /** Compare AttributeComparator instances */
 public class AttributeComparator extends ComparableExtractingComparator<Attribute, String> {
     public static final AttributeComparator INSTANCE = new AttributeComparator();

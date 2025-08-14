@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.IUserPreferencesManager;
 import org.apereo.portal.IUserProfile;
 import org.apereo.portal.PortalException;

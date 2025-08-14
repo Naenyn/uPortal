@@ -15,9 +15,9 @@
 package org.apereo.portal.rest.layout;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apereo.portal.layout.IStylesheetUserPreferencesService;
 import org.apereo.portal.portlet.registry.IPortletWindowRegistry;
 import org.apereo.portal.rendering.IPortalRenderingPipeline;

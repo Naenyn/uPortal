@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.Map;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.EntityIdentifier;
 import org.apereo.portal.groups.IEntityGroup;
 import org.apereo.portal.groups.IGroupMember;

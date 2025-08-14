@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.portlet.MimeResponse;
-import javax.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.JspWriter;
 import org.apereo.portal.portlet.rendering.PortletOutputHandler;
 
 /** Output handler that delegates to a {@link JspWriter} */

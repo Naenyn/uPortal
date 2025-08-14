@@ -99,7 +99,13 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
     }
     
     @Override
-    public Object getPortletAsyncContext() {
+    public org.apache.pluto.container.PortletAsyncManager getPortletAsyncContext() {
+        // Return null for Portlet 2.0 compatibility - async not supported
+        return null;
+    }
+    
+    @Override
+    public javax.servlet.AsyncContext startAsync() {
         // Return null for Portlet 2.0 compatibility - async not supported
         return null;
     }
@@ -110,5 +116,57 @@ public class PortletResourceRequestContextImpl extends PortletRequestContextImpl
         return null;
     }
     
-
+    @Override
+    public javax.servlet.http.HttpSession getSession() {
+        // Return null for Portlet 2.0 compatibility - session access not supported in resource requests
+        return null;
+    }
+    
+    @Override
+    public javax.servlet.AsyncContext getAsyncContext() {
+        // Return null for Portlet 2.0 compatibility - async not supported
+        return null;
+    }
+    
+    @Override
+    public boolean isAsyncSupported() {
+        // Return false for Portlet 2.0 compatibility - async not supported
+        return false;
+    }
+    
+    @Override
+    public boolean isAsyncStarted() {
+        // Return false for Portlet 2.0 compatibility - async not supported
+        return false;
+    }
+    
+    @Override
+    public javax.servlet.AsyncContext startAsync(javax.portlet.ResourceRequest resourceRequest, javax.portlet.ResourceResponse resourceResponse, boolean isWrap) {
+        // Return null for Portlet 2.0 compatibility - async not supported
+        return null;
+    }
+    
+    @Override
+    public javax.servlet.AsyncContext startAsync(javax.portlet.ResourceRequest resourceRequest) {
+        // Return null for Portlet 2.0 compatibility - async not supported
+        return null;
+    }
+    
+    @Override
+    public void setResponse(javax.portlet.ResourceResponse resourceResponse) {
+        // No-op for Portlet 2.0 compatibility - response handling managed internally
+    }
+    
+    @Override
+    public javax.portlet.ResourceResponse getResponse() {
+        // Return null for Portlet 2.0 compatibility - response access not supported
+        return null;
+    }
+    
+    @Override
+    public javax.portlet.ResourceParameters getResourceParameters() {
+        // Return null for Portlet 2.0 compatibility - resource parameters not tracked separately
+        return null;
+    }
+    
 }

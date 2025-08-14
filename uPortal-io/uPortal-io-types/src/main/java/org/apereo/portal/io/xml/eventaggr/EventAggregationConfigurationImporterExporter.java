@@ -45,6 +45,15 @@ import org.joda.time.MonthDay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalEventAggregationConfiguration;
+import org.apereo.portal.portletpublishing.xml.ExternalQuarterDetail;
+import org.apereo.portal.portletpublishing.xml.ExternalAggregatedGroupMapping;
+import org.apereo.portal.portletpublishing.xml.ExternalAggregationInterval;
+import org.apereo.portal.portletpublishing.xml.ExternalAggregatedIntervalConfig;
+import org.apereo.portal.portletpublishing.xml.ExternalAggregatedGroupConfig;
+import org.apereo.portal.portletpublishing.xml.ExternalTermDetail;
+
 public class EventAggregationConfigurationImporterExporter
         extends AbstractJaxbDataHandler<ExternalEventAggregationConfiguration> {
 

@@ -32,7 +32,6 @@ import org.dom4j.io.DocumentSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.XmlMappingException;
 
@@ -50,12 +49,10 @@ public abstract class AbstractDom4jExporter
         this.xmlUtilities = xmlUtilities;
     }
 
-    @Required
     public void setPortalDataType(IPortalDataType portalDataType) {
         this.portalDataType = portalDataType;
     }
 
-    @Required
     public void setPortalDataRetriever(
             Function<IPortalDataType, Iterable<? extends IPortalData>> portalDataRetriever) {
         this.portalDataRetriever = portalDataRetriever;

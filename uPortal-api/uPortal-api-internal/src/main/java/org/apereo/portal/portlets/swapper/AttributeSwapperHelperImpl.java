@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,7 +40,6 @@ import org.apereo.services.persondir.IPersonAttributeDao;
 import org.apereo.services.persondir.IPersonAttributes;
 import org.apereo.services.persondir.support.MultivaluedPersonAttributeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.webflow.context.ExternalContext;
 
 /** */
@@ -58,7 +57,7 @@ public class AttributeSwapperHelperImpl implements IAttributeSwapperHelper {
         return portalRootPersonAttributeDao;
     }
     /** The {@link PortalRootPersonAttributeDao} instance to use to override attributes */
-    @Required
+    @Autowired
     public void setPersonAttributeDao(PortalRootPersonAttributeDao personAttributeDao) {
         this.portalRootPersonAttributeDao = personAttributeDao;
     }

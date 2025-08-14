@@ -18,7 +18,7 @@ import java.util.List;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.RenderRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.IUserPreferencesManager;
 import org.apereo.portal.UserPreferencesManager;
 import org.apereo.portal.layout.IUserLayout;

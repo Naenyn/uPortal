@@ -17,7 +17,7 @@ package org.apereo.portal.tenants;
 import java.util.Collections;
 import java.util.Set;
 import javax.mail.internet.InternetAddress;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.IUserIdentityStore;
 import org.apereo.portal.persondir.ILocalAccountDao;
 import org.apereo.portal.persondir.ILocalAccountPerson;

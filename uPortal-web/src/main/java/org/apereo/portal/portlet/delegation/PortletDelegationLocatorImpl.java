@@ -15,7 +15,7 @@
 package org.apereo.portal.portlet.delegation;
 
 import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apereo.portal.api.portlet.PortletDelegationDispatcher;
 import org.apereo.portal.api.portlet.PortletDelegationLocator;
 import org.apereo.portal.portlet.om.IPortletDefinition;

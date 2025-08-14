@@ -30,7 +30,7 @@ import org.apereo.portal.utils.SerializableObject;
 public class RequestAttributeMutexListener implements ServletRequestListener {
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletRequestListener#requestInitialized(javax.servlet.ServletRequestEvent)
+     * @see jakarta.servlet.ServletRequestListener#requestInitialized(jakarta.servlet.ServletRequestEvent)
      */
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
@@ -39,7 +39,7 @@ public class RequestAttributeMutexListener implements ServletRequestListener {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletRequestListener#requestDestroyed(javax.servlet.ServletRequestEvent)
+     * @see jakarta.servlet.ServletRequestListener#requestDestroyed(jakarta.servlet.ServletRequestEvent)
      */
     @Override
     public void requestDestroyed(ServletRequestEvent sre) {

@@ -8,11 +8,11 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apereo.portal.dao.portletlist.IPortletList;
 import org.apereo.portal.rest.utils.InputValidator;
 import org.apereo.portal.security.IPerson;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.StringUtils;
 
 @Getter
@@ -28,7 +32,7 @@ import org.springframework.util.StringUtils;
 @EqualsAndHashCode
 @Slf4j
 @Entity
-@Table(
+@jakarta.persistence.Table(
         name = "UP_PORTLET_LIST",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"OWNER_USERNAME", "NAME"})})
 @Cacheable
@@ -77,7 +81,7 @@ public class PortletList implements IPortletList {
             orphanRemoval = true)
     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Fetch(FetchMode.SELECT) // FM JOIN does BAD things to collections that support duplicates
-    @OrderBy("LIST_ORDER ASC")
+    @jakarta.persistence.OrderBy("listOrder ASC")
     private List<PortletListItem> items;
 
     public void clearAndSetItems(List<PortletListItem> items) {

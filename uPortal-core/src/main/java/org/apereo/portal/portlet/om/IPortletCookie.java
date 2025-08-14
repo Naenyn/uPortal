@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.portlet.om;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 import org.joda.time.DateTime;
 
 /**

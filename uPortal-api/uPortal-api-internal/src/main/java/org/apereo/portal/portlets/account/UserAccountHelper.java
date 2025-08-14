@@ -27,7 +27,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -449,7 +449,7 @@ public class UserAccountHelper {
                             path);
 
             notification.sendNotification(url, account, locale);
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             log.error(e);
         }
     }

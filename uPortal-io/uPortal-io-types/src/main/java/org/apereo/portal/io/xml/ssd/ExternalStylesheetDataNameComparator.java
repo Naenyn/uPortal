@@ -16,6 +16,9 @@ package org.apereo.portal.io.xml.ssd;
 
 import org.apereo.portal.utils.ComparableExtractingComparator;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalStylesheetData;
+
 /** Compare ExternalStylesheetData by name */
 public class ExternalStylesheetDataNameComparator
         extends ComparableExtractingComparator<ExternalStylesheetData, String> {

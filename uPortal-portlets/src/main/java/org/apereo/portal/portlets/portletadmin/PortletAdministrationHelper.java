@@ -39,9 +39,10 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBElement;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.xml.bind.JAXBElement;
+import org.apereo.portal.portlet.container.JAXBTypeMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -105,7 +106,7 @@ import org.apereo.portal.url.IPortletUrlBuilder;
 import org.apereo.portal.url.UrlType;
 import org.apereo.portal.utils.ComparableExtractingComparator;
 import org.apereo.portal.utils.Tuple;
-import org.apereo.portal.xml.PortletDescriptor;
+import org.apereo.portal.portletpublishing.xml.PortletDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -860,7 +861,7 @@ public final class PortletAdministrationHelper implements ServletContextAware {
                         protected String getComparable(PortletDefinition o) {
                             final List<? extends DisplayName> displayNames = o.getDisplayNames();
                             if (displayNames != null && displayNames.size() > 0) {
-                                return displayNames.get(0).getDisplayName();
+                                return displayNames.get(0).getText();
                             }
 
                             return o.getPortletName();

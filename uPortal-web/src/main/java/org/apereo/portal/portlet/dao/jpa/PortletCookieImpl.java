@@ -15,20 +15,20 @@
 package org.apereo.portal.portlet.dao.jpa;
 
 import java.util.concurrent.TimeUnit;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
-import javax.servlet.http.Cookie;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.TableGenerator;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Version;
+import jakarta.servlet.http.Cookie;
 import org.apereo.portal.portlet.om.IPortalCookie;
 import org.apereo.portal.portlet.om.IPortletCookie;
 import org.hibernate.annotations.Cache;
@@ -90,7 +90,6 @@ class PortletCookieImpl implements IPortletCookie {
     private String domain;
 
     @Column(name = "EXPIRES", nullable = false, updatable = true)
-    @Type(type = "dateTime")
     private DateTime expires;
 
     @Column(name = "COOKIE_PATH", length = 1000, nullable = true, updatable = true)
@@ -124,7 +123,7 @@ class PortletCookieImpl implements IPortletCookie {
 
     /*
      * (non-Javadoc)
-     * @see org.apereo.portal.portlet.om.IPortletCookie#updateFromCookie(javax.servlet.http.Cookie)
+     * @see org.apereo.portal.portlet.om.IPortletCookie#updateFromCookie(jakarta.servlet.http.Cookie)
      */
     @Override
     public void updateFromCookie(Cookie cookie) {

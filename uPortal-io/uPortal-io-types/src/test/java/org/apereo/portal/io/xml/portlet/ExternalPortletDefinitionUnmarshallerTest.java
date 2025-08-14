@@ -15,6 +15,8 @@ import org.apereo.portal.portlet.om.PortletLifecycleState;
 import org.apereo.portal.security.IPerson;
 import org.apereo.portal.security.provider.BrokenSecurityContext;
 import org.apereo.portal.security.provider.PersonImpl;
+import org.apereo.portal.portletpublishing.xml.Lifecycle;
+import org.apereo.portal.portletpublishing.xml.LifecycleEntry;
 import org.junit.Test;
 
 public class ExternalPortletDefinitionUnmarshallerTest {

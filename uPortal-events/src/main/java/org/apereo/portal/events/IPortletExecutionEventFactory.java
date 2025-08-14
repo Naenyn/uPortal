@@ -14,7 +14,7 @@
  */
 package org.apereo.portal.events;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.namespace.QName;
 import org.apereo.portal.portlet.om.IPortletWindowId;
 import org.apereo.portal.portlet.rendering.worker.IPortletExecutionWorker;

@@ -16,6 +16,9 @@ package org.apereo.portal.io.xml.portlet;
 
 import org.apereo.portal.utils.ComparableExtractingComparator;
 
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalPortletParameter;
+
 public final class ExternalPortletParameterNameComparator
         extends ComparableExtractingComparator<ExternalPortletParameter, String> {
     public static final ExternalPortletParameterNameComparator INSTANCE =

@@ -34,6 +34,8 @@ import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.portlet.mvc.AbstractController;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * This portlet executes a (configurable) SQL query against a (configurable) DataSource accessed via
@@ -54,7 +56,7 @@ import org.springframework.web.portlet.mvc.AbstractController;
  *
  * This portlet is useful for exposing results of a simple DB query as a single page for users.
  */
-public class SqlQueryPortletController extends AbstractController {
+public class SqlQueryPortletController extends AbstractController implements ApplicationContextAware {
     /**
      * The name of the cache to use for sql results. Defaults to DEFAULT_CACHE_NAME. User should set
      * to empty string to disable query results caching. See portlet.xml.
@@ -82,10 +84,16 @@ public class SqlQueryPortletController extends AbstractController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private IPortletSpELService portletSpELService;
+    private ApplicationContext applicationContext;
 
     @Autowired
     public void setPortletSpELService(IPortletSpELService portletSpELService) {
         this.portletSpELService = portletSpELService;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     public String getPrefCacheName() {
@@ -93,7 +101,7 @@ public class SqlQueryPortletController extends AbstractController {
     }
 
     @Override
-    public ModelAndView handleRenderRequest(RenderRequest request, RenderResponse response)
+    protected ModelAndView handleRenderRequestInternal(RenderRequest request, RenderResponse response)
             throws Exception {
 
         // find the configured SQL statement
@@ -126,7 +134,7 @@ public class SqlQueryPortletController extends AbstractController {
 
         if (results == null) {
             // generate a JDBC template for the requested data source
-            DataSource ds = (DataSource) getApplicationContext().getBean(dsName);
+            DataSource ds = (DataSource) this.applicationContext.getBean(dsName);
             JdbcTemplate template = new JdbcTemplate(ds);
 
             // Execute the SQL query and build a results object.  This result will consist of one

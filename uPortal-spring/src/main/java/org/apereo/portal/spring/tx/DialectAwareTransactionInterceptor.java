@@ -149,7 +149,9 @@ public class DialectAwareTransactionInterceptor
     public void setConfiguration(
             String persistenceUnit, HibernateConfiguration hibernateConfiguration) {
         final SessionFactoryImplementor sessionFactory = hibernateConfiguration.getSessionFactory();
-        this.dialects.put(persistenceUnit, sessionFactory.getDialect().getClass());
+        // In Hibernate 6, getDialect() was removed from SessionFactoryImplementor
+        // Use the JdbcServices to get the dialect
+        this.dialects.put(persistenceUnit, sessionFactory.getJdbcServices().getDialect().getClass());
     }
 
     @Override

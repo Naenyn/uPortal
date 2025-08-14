@@ -15,17 +15,18 @@
 package org.apereo.portal.web.skin;
 
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jasig.resourceserver.aggr.om.Included;
 import org.jasig.resourceserver.utils.aggr.ResourcesElementsProvider;
+import org.apereo.portal.portlet.container.ServletTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /** Pays attention to the state of skin aggregation and only applies the filter if it is disabled */
@@ -56,13 +57,15 @@ public class AggregationAwareFilterBean implements Filter {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+     * @see jakarta.servlet.Filter#doFilter(jakarta.servlet.ServletRequest, jakarta.servlet.ServletResponse, jakarta.servlet.FilterChain)
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        if (this.elementsProvider.getIncludedType((HttpServletRequest) request)
-                == Included.AGGREGATED) {
+        // Convert jakarta to javax for external library compatibility
+        if (this.elementsProvider.getIncludedType(
+                ServletTypeMapper.toJavax((HttpServletRequest) request)
+            ) == Included.AGGREGATED) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Aggregation enabled, delegating to filter: " + this.filter);
             }

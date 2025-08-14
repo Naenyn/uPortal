@@ -20,9 +20,9 @@ import static org.mockito.Mockito.when;
 import com.google.common.base.Function;
 import javax.sql.DataSource;
 import org.apereo.portal.ICounterStore;
-import org.apereo.portal.io.xml.permission.ExternalPermissionOwner;
-import org.apereo.portal.io.xml.ssd.ExternalStylesheetDescriptor;
-import org.apereo.portal.io.xml.user.UserType;
+import org.apereo.portal.portletpublishing.xml.ExternalPermissionOwner;
+import org.apereo.portal.portletpublishing.xml.ExternalStylesheetDescriptor;
+import org.apereo.portal.portletpublishing.xml.UserType;
 import org.apereo.portal.test.BasePortalJpaDaoTest;
 import org.apereo.portal.test.TimeZoneTestUtils;
 import org.apereo.portal.utils.Tuple;
@@ -60,28 +60,28 @@ public class IdentityImportExportTest extends BasePortalJpaDaoTest {
 
     @Autowired private DataSource dataSource;
 
-    @javax.annotation.Resource(name = "stylesheetDescriptorImporterExporter")
+    @jakarta.annotation.Resource(name = "stylesheetDescriptorImporterExporter")
     private IDataImporter<ExternalStylesheetDescriptor> stylesheetDescriptorImporter;
 
-    @javax.annotation.Resource(name = "stylesheetDescriptorImporterExporter")
+    @jakarta.annotation.Resource(name = "stylesheetDescriptorImporterExporter")
     private IDataExporter<ExternalStylesheetDescriptor> stylesheetDescriptorExporter;
 
-    @javax.annotation.Resource(name = "userImporterExporter")
+    @jakarta.annotation.Resource(name = "userImporterExporter")
     private IDataImporter<UserType> userImporter;
 
-    @javax.annotation.Resource(name = "userImporterExporter")
+    @jakarta.annotation.Resource(name = "userImporterExporter")
     private IDataExporter<UserType> userExporter;
 
-    @javax.annotation.Resource(name = "permissionOwnerImporterExporter")
+    @jakarta.annotation.Resource(name = "permissionOwnerImporterExporter")
     private IDataImporter<ExternalPermissionOwner> permissionOwnerImporter;
 
-    @javax.annotation.Resource(name = "permissionOwnerImporterExporter")
+    @jakarta.annotation.Resource(name = "permissionOwnerImporterExporter")
     private IDataExporter<ExternalPermissionOwner> permissionOwnerExporter;
 
-    @javax.annotation.Resource(name = "fragmentDefinitionImporter")
+    @jakarta.annotation.Resource(name = "fragmentDefinitionImporter")
     private IDataImporter<Tuple<String, Element>> fragmentDefinitionImporter;
 
-    @javax.annotation.Resource(name = "fragmentDefinitionExporter")
+    @jakarta.annotation.Resource(name = "fragmentDefinitionExporter")
     private IDataExporter<Tuple<String, org.dom4j.Element>> fragmentDefinitionExporter;
 
     @Autowired private ICounterStore counterStore;

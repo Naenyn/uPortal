@@ -18,12 +18,12 @@ import com.google.common.base.Function;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.ParameterExpression;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang.Validate;
 import org.apereo.portal.jpa.BasePortalJpaDao;
 import org.apereo.portal.jpa.OpenEntityManager;
@@ -31,7 +31,7 @@ import org.apereo.portal.portlet.dao.IPortletDefinitionDao;
 import org.apereo.portal.portlet.om.IPortletDefinition;
 import org.apereo.portal.portlet.om.IPortletDefinitionId;
 import org.apereo.portal.spring.tx.DialectAwareTransactional;
-import org.hibernate.dialect.PostgreSQL81Dialect;
+import org.hibernate.dialect.PostgreSQLDialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.support.DataAccessUtils;
@@ -141,7 +141,7 @@ public class JpaPortletDefinitionDao extends BasePortalJpaDao implements IPortle
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public IPortletDefinition getPortletDefinition(IPortletDefinitionId portletDefinitionId) {
@@ -154,7 +154,7 @@ public class JpaPortletDefinitionDao extends BasePortalJpaDao implements IPortle
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public IPortletDefinition getPortletDefinition(String portletDefinitionIdString) {
@@ -174,7 +174,7 @@ public class JpaPortletDefinitionDao extends BasePortalJpaDao implements IPortle
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public IPortletDefinition getPortletDefinitionByFname(String fname) {
@@ -185,7 +185,7 @@ public class JpaPortletDefinitionDao extends BasePortalJpaDao implements IPortle
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public IPortletDefinition getPortletDefinitionByName(String name) {
@@ -198,7 +198,7 @@ public class JpaPortletDefinitionDao extends BasePortalJpaDao implements IPortle
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public List<IPortletDefinition> searchForPortlets(String term, boolean allowPartial) {
@@ -235,7 +235,7 @@ public class JpaPortletDefinitionDao extends BasePortalJpaDao implements IPortle
     }
 
     @Override
-    @DialectAwareTransactional(value = PostgreSQL81Dialect.class, exclude = false)
+    @DialectAwareTransactional(value = PostgreSQLDialect.class, exclude = false)
     @PortalTransactionalReadOnly
     @OpenEntityManager(unitName = PERSISTENCE_UNIT_NAME)
     public List<IPortletDefinition> getPortletDefinitions() {

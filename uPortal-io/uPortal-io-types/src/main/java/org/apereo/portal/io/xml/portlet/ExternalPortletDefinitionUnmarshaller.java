@@ -42,12 +42,19 @@ import org.apereo.portal.portlet.registry.IPortletCategoryRegistry;
 import org.apereo.portal.portlet.registry.IPortletTypeRegistry;
 import org.apereo.portal.security.IPerson;
 import org.apereo.portal.security.PersonFactory;
-import org.apereo.portal.xml.PortletDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+// JAXB generated classes
+import org.apereo.portal.portletpublishing.xml.ExternalPortletDefinition;
+import org.apereo.portal.portletpublishing.xml.ExternalPortletParameter;
+import org.apereo.portal.portletpublishing.xml.ExternalPortletPreference;
+import org.apereo.portal.portletpublishing.xml.Lifecycle;
+import org.apereo.portal.portletpublishing.xml.LifecycleEntry;
+import org.apereo.portal.portletpublishing.xml.PortletDescriptor;
 
 /**
  * Responsible for taking an {@link ExternalPortletDefinition} and producing an {@link

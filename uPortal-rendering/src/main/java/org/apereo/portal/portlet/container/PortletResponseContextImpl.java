@@ -23,6 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.pluto.container.PortletContainer;
 import org.apache.pluto.container.PortletResponseContext;
 import org.apache.pluto.container.ResourceURLProvider;
+import org.apache.pluto.container.HeaderData;
 import org.apereo.portal.portlet.container.properties.IRequestPropertiesManager;
 import org.apereo.portal.portlet.container.services.IPortletCookieService;
 import org.apereo.portal.portlet.om.IPortletWindow;
@@ -185,15 +186,60 @@ public class PortletResponseContextImpl extends AbstractPortletContextImpl
     }
     
     @Override
-    public Object getHeaderData() {
-        // Return null for Portlet 2.0 compatibility - maintains existing behavior
+    public org.apache.pluto.container.HeaderData getHeaderData() {
+        // Return null for Portlet 2.0 compatibility - HeaderData not used
         return null;
+    }
+    
+    @Override
+    public String getLifecycle() {
+        // Return null for Portlet 2.0 compatibility - lifecycle not used
+        return null;
+    }
+    
+    @Override
+    public void setLifecycle(String lifecycle) {
+        // No-op for Portlet 2.0 compatibility - lifecycle not used
+    }
+    
+    @Override
+    public javax.servlet.http.HttpServletResponse getServletResponse() {
+        // Convert jakarta response to javax for interface compliance
+        return ServletTypeMapper.toJavax(this.servletResponse);
     }
     
     @Override
     public boolean isSetPropsAllowed() {
         // Return true for Portlet 2.0 compatibility - maintains existing behavior
         return true;
+    }
+    
+    @Override
+    public void setPropsAllowed(boolean propsAllowed) {
+        // No-op for Portlet 2.0 compatibility - maintains existing behavior
+    }
+    
+    @Override
+    public javax.servlet.http.HttpServletRequest getServletRequest() {
+        // Convert jakarta request to javax for interface compliance
+        return ServletTypeMapper.toJavax(this.servletRequest);
+    }
+    
+    @Override
+    public javax.servlet.http.HttpServletResponse getContainerResponse() {
+        // Convert jakarta response to javax for interface compliance
+        return ServletTypeMapper.toJavax(this.servletResponse);
+    }
+    
+    @Override
+    public javax.servlet.http.HttpServletRequest getContainerRequest() {
+        // Convert jakarta request to javax for interface compliance
+        return ServletTypeMapper.toJavax(this.servletRequest);
+    }
+    
+    @Override
+    public void init(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) {
+        // No-op for Portlet 2.0 compatibility - initialization handled in constructor
     }
     
 }

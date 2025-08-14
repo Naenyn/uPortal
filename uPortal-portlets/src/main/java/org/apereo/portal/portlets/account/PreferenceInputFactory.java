@@ -15,8 +15,9 @@
 package org.apereo.portal.portlets.account;
 
 import java.util.List;
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
+import org.apereo.portal.portlet.container.JAXBTypeMapper;
 import org.apereo.portal.portletpublishing.xml.MultiChoiceDisplay;
 import org.apereo.portal.portletpublishing.xml.MultiChoicePreferenceInput;
 import org.apereo.portal.portletpublishing.xml.MultiTextPreferenceInput;
@@ -66,7 +67,7 @@ public class PreferenceInputFactory {
         pref.setName(name);
         pref.setLabel(label);
         pref.setPreferenceInput(
-                new JAXBElement<SingleTextPreferenceInput>(
+                JAXBTypeMapper.createJakarta(
                         new QName("single-text-parameter-input"),
                         SingleTextPreferenceInput.class,
                         input));
@@ -99,7 +100,7 @@ public class PreferenceInputFactory {
         pref.setName(name);
         pref.setLabel(label);
         pref.setPreferenceInput(
-                new JAXBElement<SingleChoicePreferenceInput>(
+                JAXBTypeMapper.createJakarta(
                         new QName("single-choice-parameter-input"),
                         SingleChoicePreferenceInput.class,
                         input));
@@ -126,7 +127,7 @@ public class PreferenceInputFactory {
         pref.setName(name);
         pref.setLabel(label);
         pref.setPreferenceInput(
-                new JAXBElement<MultiTextPreferenceInput>(
+                JAXBTypeMapper.createJakarta(
                         new QName("multi-text-parameter-input"),
                         MultiTextPreferenceInput.class,
                         input));
@@ -159,7 +160,7 @@ public class PreferenceInputFactory {
         pref.setName(name);
         pref.setLabel(label);
         pref.setPreferenceInput(
-                new JAXBElement<MultiChoicePreferenceInput>(
+                JAXBTypeMapper.createJakarta(
                         new QName("multi-choice-parameter-input"),
                         MultiChoicePreferenceInput.class,
                         input));

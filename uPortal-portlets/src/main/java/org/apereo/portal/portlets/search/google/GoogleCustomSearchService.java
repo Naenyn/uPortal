@@ -104,7 +104,7 @@ public class GoogleCustomSearchService implements IPortalSearchService {
         parameters.put(CUSTOM_SEARCH_PARAM, customSearchId);
         parameters.put(QUERY_PARAM, query.getSearchTerms());
         parameters.put(USER_IP_PARAM, request.getProperty("REMOTE_ADDR"));
-        parameters.put(START_PARAM, query.getStartIndex() != null ? query.getStartIndex() : 1);
+        parameters.put(START_PARAM, query.getStartIndex().intValue() > 0 ? query.getStartIndex() : 1);
 
         logger.debug("search parameters: {}", parameters);
 

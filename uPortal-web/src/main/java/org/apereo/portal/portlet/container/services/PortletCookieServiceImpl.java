@@ -21,11 +21,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apereo.portal.concurrency.FunctionWithoutResult;
 import org.apereo.portal.concurrency.locking.ClusterMutex;
 import org.apereo.portal.concurrency.locking.IClusterLockService;
@@ -155,8 +155,8 @@ public class PortletCookieServiceImpl implements IPortletCookieService, ServletC
      * (non-Javadoc)
      *
      * @see
-     *     org.apereo.portal.portlet.container.services.IPortletCookieService#updatePortalCookie(javax.servlet.http.HttpServletRequest,
-     *     javax.servlet.http.HttpServletResponse)
+     *     org.apereo.portal.portlet.container.services.IPortletCookieService#updatePortalCookie(jakarta.servlet.http.HttpServletRequest,
+     *     jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     public void updatePortalCookie(HttpServletRequest request, HttpServletResponse response) {

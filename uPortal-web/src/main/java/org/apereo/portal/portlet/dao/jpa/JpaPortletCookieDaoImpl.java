@@ -20,14 +20,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
-import javax.servlet.http.Cookie;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.ParameterExpression;
+import jakarta.persistence.criteria.Root;
+import jakarta.servlet.http.Cookie;
 import org.apache.commons.codec.binary.Base64;
 import org.apereo.portal.jpa.BasePortalJpaDao;
 import org.apereo.portal.jpa.OpenEntityManager;
@@ -217,7 +217,7 @@ public class JpaPortletCookieDaoImpl extends BasePortalJpaDao implements IPortle
 
     /*
      * (non-Javadoc)
-     * @see org.apereo.portal.portlet.dao.IPortletCookieDao#updatePortletCookie(org.apereo.portal.portlet.om.IPortalCookie, javax.servlet.http.Cookie)
+     * @see org.apereo.portal.portlet.dao.IPortletCookieDao#updatePortletCookie(org.apereo.portal.portlet.om.IPortalCookie, jakarta.servlet.http.Cookie)
      */
     @Override
     @PortalTransactional

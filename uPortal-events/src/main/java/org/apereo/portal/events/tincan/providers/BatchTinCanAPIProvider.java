@@ -20,7 +20,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import org.apereo.portal.events.tincan.om.LrsStatement;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus.Series;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -71,7 +71,7 @@ public class BatchTinCanAPIProvider extends DefaultTinCanAPIProvider {
             ResponseEntity<Object> response =
                     sendRequest(
                             STATEMENTS_REST_ENDPOINT, HttpMethod.POST, null, list, Object.class);
-            if (response.getStatusCode().series() == Series.SUCCESSFUL) {
+            if (response.getStatusCode().is2xxSuccessful()) {
                 logger.trace(
                         "LRS provider successfully sent to {}, statement list: {}",
                         getLRSUrl(),

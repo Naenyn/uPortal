@@ -27,6 +27,7 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.math.BigInteger;
 import org.junit.Test;
 
 /**
@@ -40,14 +41,14 @@ public class JaxbBindingTest {
         SearchRequest request = new SearchRequest();
         request.setQueryId("test-query");
         request.setSearchTerms("test search");
-        request.setCount(10);
-        request.setStartIndex(1);
+        request.setCount(BigInteger.valueOf(10));
+        request.setStartIndex(BigInteger.valueOf(1));
         
         // Verify
         assertNotNull(request);
         assertEquals("test-query", request.getQueryId());
         assertEquals("test search", request.getSearchTerms());
-        assertEquals(10, request.getCount());
-        assertEquals(1, request.getStartIndex());
+        assertEquals(BigInteger.valueOf(10), request.getCount());
+        assertEquals(BigInteger.valueOf(1), request.getStartIndex());
     }
 }

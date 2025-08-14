@@ -6,97 +6,34 @@ dependencies {
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
     implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
     
-    // For compilation and XJC task
+    // For XJC task - Jakarta compatible versions
     annotationProcessor 'org.glassfish.jaxb:jaxb-xjc:4.0.3'
-    annotationProcessor 'com.sun.xml.bind:jaxb-impl:4.0.3'
-    annotationProcessor 'org.jvnet.jaxb2_commons:jaxb2-basics:1.11.1'
-    annotationProcessor 'org.jvnet.jaxb2_commons:jaxb2-basics-annotate:1.1.0'
+    annotationProcessor 'org.glassfish.jaxb:jaxb-runtime:4.0.3'
+    annotationProcessor 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
 }
 
-// Define a task to generate Java classes from XSD
-task generateJaxb {
+// Define a task to generate Java classes from XSD using JAXB
+task generateJaxb(type: JavaExec) {
     def outputDir = file(generatedSourcesDir)
+    def xsdDir = file('src/main/resources/xsd')
+    def bindingDir = file('src/main/binding')
     
-    doLast {
-        // Create output directory
-        file("${outputDir}/org/apereo/portal/search").mkdirs()
-        
-        // Create dummy classes
-        file("${outputDir}/org/apereo/portal/search/SearchRequest.java").text = """
-            package org.apereo.portal.search;
-            
-            import java.io.Serializable;
-            
-            public class SearchRequest implements Serializable {
-                private String queryId;
-                private String searchTerms;
-                private int count;
-                private int startIndex;
-                
-                public String getQueryId() { return queryId; }
-                public void setQueryId(String queryId) { this.queryId = queryId; }
-                
-                public String getSearchTerms() { return searchTerms; }
-                public void setSearchTerms(String searchTerms) { this.searchTerms = searchTerms; }
-                
-                public int getCount() { return count; }
-                public void setCount(int count) { this.count = count; }
-                
-                public int getStartIndex() { return startIndex; }
-                public void setStartIndex(int startIndex) { this.startIndex = startIndex; }
-            }
-        """
-        
-        file("${outputDir}/org/apereo/portal/search/SearchResults.java").text = """
-            package org.apereo.portal.search;
-            
-            import java.io.Serializable;
-            import java.util.ArrayList;
-            import java.util.List;
-            
-            public class SearchResults implements Serializable {
-                private String queryId;
-                private String windowId;
-                private List<SearchResult> searchResults = new ArrayList<>();
-                
-                public String getQueryId() { return queryId; }
-                public void setQueryId(String queryId) { this.queryId = queryId; }
-                
-                public String getWindowId() { return windowId; }
-                public void setWindowId(String windowId) { this.windowId = windowId; }
-                
-                public List<SearchResult> getSearchResults() { return searchResults; }
-                public void setSearchResults(List<SearchResult> searchResults) { this.searchResults = searchResults; }
-            }
-        """
-        
-        file("${outputDir}/org/apereo/portal/search/SearchResult.java").text = """
-            package org.apereo.portal.search;
-            
-            import java.io.Serializable;
-            import java.util.ArrayList;
-            import java.util.List;
-            
-            public class SearchResult implements Serializable {
-                private String title;
-                private String summary;
-                private List<String> types = new ArrayList<>();
-                private int rank;
-                
-                public String getTitle() { return title; }
-                public void setTitle(String title) { this.title = title; }
-                
-                public String getSummary() { return summary; }
-                public void setSummary(String summary) { this.summary = summary; }
-                
-                public List<String> getTypes() { return types; }
-                public void setTypes(List<String> types) { this.types = types; }
-                
-                public int getRank() { return rank; }
-                public void setRank(int rank) { this.rank = rank; }
-            }
-        """
+    inputs.dir xsdDir
+    inputs.dir bindingDir
+    outputs.dir outputDir
+    
+    doFirst {
+        outputDir.deleteDir()
+        outputDir.mkdirs()
     }
+    
+    classpath = configurations.annotationProcessor
+    mainClass = 'com.sun.tools.xjc.XJCFacade'
+    args = [
+        '-d', outputDir,
+        '-b', file('src/main/binding/bindings.xjb'),
+        file('src/main/resources/xsd/portal-search-4.0.xsd')
+    ]
 }
 
 /*

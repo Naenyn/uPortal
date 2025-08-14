@@ -4,6 +4,10 @@ dependencies {
     api project(':uPortal-io:uPortal-io-types')
     api project(':uPortal-tenants')
     api project(':uPortal-web')
+    
+    // Jakarta XML Binding for JAXB compatibility
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
     implementation "com.amazonaws:aws-java-sdk-s3:${awsVersion}"
     implementation "jakarta.mail:jakarta.mail-api:${jakartaMailVersion}"

@@ -20,8 +20,8 @@ import com.ibm.icu.util.ULocale;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /** Renders a google {@link DataTable} to a CSV */
 public class GoogleCsvDataTableView extends AbstractGoogleDataTableView {

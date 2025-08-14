@@ -1,7 +1,7 @@
 package org.apereo.portal.dao.portletlist.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @Slf4j
 @Entity
-@Table(
+@jakarta.persistence.Table(
         // This is ONLY to be used as part of a portlet list, so not specifying a PK
         name = "UP_PORTLET_LIST_ITEM",
         uniqueConstraints = {

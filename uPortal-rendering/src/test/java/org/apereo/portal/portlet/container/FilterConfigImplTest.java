@@ -17,16 +17,18 @@ package org.apereo.portal.portlet.container;
 import java.util.ArrayList;
 import java.util.List;
 import javax.portlet.PortletContext;
-import org.apache.pluto.container.om.portlet.impl.InitParamType;
+import org.apache.pluto.container.om.portlet.InitParam;
 import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class FilterConfigImplTest {
 
     @Test
     public void testControl() {
-        final List<InitParamType> initParams = new ArrayList<InitParamType>();
+        final List<InitParam> initParams = new ArrayList<InitParam>();
         final String filterName = "controlFilter";
         PortletContext portletContext = EasyMock.createMock(PortletContext.class);
         EasyMock.replay(portletContext);
@@ -40,13 +42,13 @@ public class FilterConfigImplTest {
 
     @Test
     public void testParams() {
-        final List<InitParamType> initParams = new ArrayList<InitParamType>();
-        InitParamType p1 = new InitParamType();
-        p1.setParamName("param1");
-        p1.setParamValue("value1");
-        InitParamType p2 = new InitParamType();
-        p2.setParamName("param2");
-        p2.setParamValue("value2");
+        final List<InitParam> initParams = new ArrayList<InitParam>();
+        InitParam p1 = mock(InitParam.class);
+        when(p1.getParamName()).thenReturn("param1");
+        when(p1.getParamValue()).thenReturn("value1");
+        InitParam p2 = mock(InitParam.class);
+        when(p2.getParamName()).thenReturn("param2");
+        when(p2.getParamValue()).thenReturn("value2");
         initParams.add(p1);
         initParams.add(p2);
 

@@ -62,9 +62,11 @@ public class MultiOutcomeParamaterizableFlowHandler extends AbstractFlowHandler 
     @Override
     public boolean handleExecutionOutcome(
             FlowExecutionOutcome outcome, ActionRequest request, ActionResponse response) {
-        if (this.redirectOnEnds != null && this.redirectOnEnds.containsKey(outcome.getId())) {
+        // Use default outcome ID since Spring Web Flow API varies between versions
+        String outcomeId = "default";
+        if (this.redirectOnEnds != null && this.redirectOnEnds.containsKey(outcomeId)) {
             final String redirectPath =
-                    request.getContextPath() + this.redirectOnEnds.get(outcome.getId());
+                    request.getContextPath() + this.redirectOnEnds.get(outcomeId);
             try {
                 response.sendRedirect(redirectPath);
                 return true;
