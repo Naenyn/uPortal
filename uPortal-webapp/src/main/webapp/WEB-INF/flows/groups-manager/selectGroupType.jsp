@@ -47,15 +47,15 @@
     <!-- Portlet Content -->
     <div class="fl-widget-content content portlet-content">
     
-    	<div class="panel-list icon-large group-types">
-        	<div class="panel type-categories">
-            	<div class="titlebar">
-                	<h2 class="title">
+    	<div class="card-list icon-large group-types">
+        	<div class="card type-categories">
+            	<div class="card-header titlebar">
+                	<h2 class="card-title title">
                     	<a href="${ portletUrl }"class="btn btn-primary"><i class="fa fa-puzzle-piece"></i> <spring:message code="portlet.categories"/></a>
                     </h2>
                     <h3 class="subtitle"><spring:message code="portlet.categories.description"/></h3>
                 </div>
-                <div class="content">
+                <div class="card-body content">
                 	<span class="link-list">
                     	<c:forEach items="${ groups.categories }">
                         	<a href="${ groupUrl }">${ fn:escapeXml(group.name )}</a>${ fn:escapeXml(status.last ? "" : ", " )}
@@ -63,14 +63,14 @@
                     </span>
                 </div>
             </div>
-            <div class="panel type-people">
-            	<div class="titlebar">
-                	<h2 class="title">
+            <div class="card type-people">
+            	<div class="card-header titlebar">
+                	<h2 class="card-title title">
                     	<a href="${ peopleUrl }"class="btn btn-primary"><i class="fa fa-users"></i> <spring:message code="person.groups"/></a>
                     </h2>
                     <h3 class="subtitle"><spring:message code="person.groups.description"/></h3>
                 </div>
-                <div class="content">
+                <div class="card-body content">
                 	<span class="link-list">
                     	<c:forEach items="${ groups.people }">
                         	<a href="${ groupUrl }">${ fn:escapeXml(group.name )}</a>${ fn:escapeXml(status.last ? "" : ", " )}

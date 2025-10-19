@@ -62,14 +62,14 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
         <!-- Portlet Messages -->
         <spring:hasBindErrors name="portlet">
-            <div class="col-md-6 col-md-offset-2">
+            <div class="col-md-6 offset-md-2">
                 <div class="portlet-msg-error portlet-msg error alert alert-danger" role="alert">
                     <form:errors path="*" element="div" />
                 </div> <!-- end: portlet-msg -->
             </div>
         </spring:hasBindErrors>
 
-        <form action="${queryUrl}" method="POST" class="form-horizontal" role="form">
+        <form action="${queryUrl}" method="POST" class="" role="form">
 
             <!-- Title -->
             <div class="titlebar">
@@ -77,7 +77,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
             </div>
             <!-- Application Dropdown -->
             <div class="form-group">
-                <div class=" col-md-3"><label> <spring:message code="application.information"/>
+                <div class="col-md-3"><label> <spring:message code="application.information"/>
                     <select name="application" class="form-control">
                         <c:forEach items="${contexts}" var="context">
                             <option value="${fn:escapeXml(context.name)}">${fn:escapeXml(context.name)}</option>

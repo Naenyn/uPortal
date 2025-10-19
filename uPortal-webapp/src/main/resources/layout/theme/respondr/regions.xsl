@@ -210,7 +210,7 @@
                                     <xsl:call-template name="regions.portlet.decorator" />
                                 </xsl:for-each>
                         </div>
-                        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#customizeOptions"><xsl:value-of select="upMsg:getMessage('customize', $USER_LANG)"/> <i class="fa"></i></button>
+                        <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#customizeOptions"><xsl:value-of select="upMsg:getMessage('customize', $USER_LANG)"/> <i class="fa"></i></button>
                     </div>
                 </div>
             </xsl:if>
@@ -404,7 +404,7 @@
                         <p id="direct-url-display" tabindex="0"></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><xsl:value-of select="upMsg:getMessage('close', $USER_LANG)"/></button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><xsl:value-of select="upMsg:getMessage('close', $USER_LANG)"/></button>
                     </div>
                 </div>
             </div>

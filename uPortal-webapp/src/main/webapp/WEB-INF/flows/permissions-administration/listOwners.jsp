@@ -100,18 +100,18 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
         <span class="permission-lookup-error-container" style="font-size: 13px; color: #dd7615;"></span>
     </div>
 
-  	<!-- Panel list -->
-    <div class="fl-col-flex2 panel-list icon-large">
+  	<!-- Card list -->
+    <div class="fl-col-flex2 card-list icon-large">
 
         <!-- 2 column layout -->
         <div class="fl-col fl-force-left">
             <c:set var="numOwners" value="${ fn:length(owners) }" />
             <c:set var="split" value="${ numOwners / 2 }" />
             <c:forEach items="${ owners }" var="owner" varStatus="ownerStatus">
-            	<!-- Panel -->
-                <div class="permission-owner ${ fn:escapeXml(owner.fname )} panel">
-                	<div class="titlebar">
-                        <h2 class="title">
+            	<!-- Card -->
+                <div class="permission-owner ${ fn:escapeXml(owner.fname )} card">
+                	<div class="card-header titlebar">
+                        <h2 class="card-title title">
                             <portlet:renderURL var="ownerUrl">
                                 <portlet:param name="execution" value="${flowExecutionKey}" />
                                 <portlet:param name="_eventId" value="listActivities"/>
@@ -121,7 +121,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                         </h2>
                         <h3 class="subtitle">${ fn:escapeXml(owner.description )}</h3>
                     </div>
-                    <div class="content">
+                    <div class="card-body content">
                         <span class="link-list">
                             <c:forEach items="${ owner.activities }" var="activity" varStatus="status">
                                 <portlet:renderURL var="activityUrl">
@@ -134,7 +134,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </c:forEach>
                         </span>
                     </div>
-                </div> <!-- end: panel -->
+                </div> <!-- end: card -->
                 <c:if test="${ split <= ownerStatus.index+1 and ownerStatus.index+1 < split+1 }">
                     </div>
                     <!-- Second column -->
@@ -145,7 +145,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
             </div>
 
-        </div> <!-- end: panel list -->
+        </div> <!-- end: card list -->
 
   </div> <!-- end: portlet-content -->
 

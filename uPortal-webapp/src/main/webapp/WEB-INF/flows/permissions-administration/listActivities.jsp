@@ -44,7 +44,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
   <!-- Portlet Titlebar -->
 	<div role="sectionhead" class="fl-widget-titlebar titlebar portlet-titlebar">
 	  	<div class="breadcrumb">
-	    	<span class="breadcrumb-1"><a href="${ backUrl }"><spring:message code="categories"/></a></span>
+	    	<span class="breadcrumb-item breadcrumb-1"><a href="${ backUrl }"><spring:message code="categories"/></a></span>
 	        <span class="separator">&gt; </span>
 	    </div>
 	    <h2 class="title" role="heading"><spring:message code="permissions.in"/> <span class="name">${ fn:escapeXml(owner.name )}</span></h2>

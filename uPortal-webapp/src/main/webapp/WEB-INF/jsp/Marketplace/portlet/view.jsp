@@ -215,12 +215,12 @@
     padding-top: 1em;
 }
 
-#${n}marketplace .marketplaceSection .panel {
+#${n}marketplace .marketplaceSection .card {
     padding: 0;
     border: none;
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box {
+#${n}marketplace .marketplaceSection .card .portlet-box {
     height: 112px;
     max-height: 112px;
     margin: 0;
@@ -235,22 +235,22 @@
     overflow: hidden;
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box:hover {
+#${n}marketplace .marketplaceSection .card .portlet-box:hover {
     background-color: #eee;
     cursor: pointer;
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box a {
+#${n}marketplace .marketplaceSection .card .portlet-box a {
     width: 100%;
     display: block;
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box a:hover {
+#${n}marketplace .marketplaceSection .card .portlet-box a:hover {
     text-decoration: none;
     color: #000000;
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box .portlet-icon {
+#${n}marketplace .marketplaceSection .card .portlet-box .portlet-icon {
     width: 92px;
     height: 92px;
     max-height: 92px;
@@ -261,26 +261,26 @@
     text-align: center;
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box .portlet-icon img {
+#${n}marketplace .marketplaceSection .card .portlet-box .portlet-icon img {
     width: 72px;
     height: 72px;
     margin-top: 7px;
 
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box .portlet-details {
+#${n}marketplace .marketplaceSection .card .portlet-box .portlet-details {
     text-align: left;
     color: #000;
     margin-right: 0;
 }
 
-#${n}marketplace .marketplaceSection .panel .portlet-box .portlet-details h5 {
+#${n}marketplace .marketplaceSection .card .portlet-box .portlet-details h5 {
     font-size: 16px;
     margin: 0 0 3px 0;
 }
 
 
-#${n}marketplace .marketplaceSection .panel .portlet-box .portlet-details p {
+#${n}marketplace .marketplaceSection .card .portlet-box .portlet-details p {
     font-size: 11px;
     margin: 0;
 }
@@ -307,7 +307,7 @@
                     <portlet:param name="fName" value="${featuredPortlet.fname}"/>
                 </portlet:renderURL>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="panel panel-default">
+                    <div class="card">
                         <div class="row portlet-box">
                             <a href="${entryURL}">
                                 <div class="portlet-icon">
@@ -348,12 +348,12 @@
         </div>
         <div class="col-sm-8">
             <div class="sort_buttons_group">
-                <button type="button" id="${n}alphabetical-sort-button" class="btn btn-default">
+                <button type="button" id="${n}alphabetical-sort-button" class="btn btn-secondary">
                     <spring:message code="marketplace.azIndex" />
                 </button>
                 <!-- Offer Browse By: Category (but only if there are categories in the list) -->
                 <c:if test="${not empty categoryList}">
-                    <button type="button" id="${n}category-sort-button" class="btn btn-default">
+                    <button type="button" id="${n}category-sort-button" class="btn btn-secondary">
                         <spring:message code="marketplace.categories" />
                     </button>
                 </c:if>
@@ -363,7 +363,7 @@
             <div class="input-group">
                 <input type="search" class="form-control" id="${n}portletTable_filter" placeholder="<spring:message code="marketplace.searchPortlets"/>" aria-label="<spring:message code="marketplace.searchPortlets"/>">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" id="${n}clear_filter_button" aria-controls="${n}portletTable_filter">
+                    <button class="btn btn-secondary" id="${n}clear_filter_button" aria-controls="${n}portletTable_filter">
                         <spring:message code="marketplace.clear" />
                     </button>
                 </span>
@@ -373,15 +373,15 @@
 </div>
 
 
-<div id="${n}categoryListContainer" class="marketplace_center_text panel panel-default" style="display:none">
-    <div class="panel-body">
+<div id="${n}categoryListContainer" class="marketplace_center_text card" style="display:none">
+    <div class="card-body">
         <c:set var="categoryCount" value="0" />
         <c:forEach var="category" items="${categoryList}">
             <c:if test="${categoryCount mod 4 == 0}">
                 <div class="row">
-                    <div class="col-xs-0 col-md-2"></div>
+                    <div class="col-0 col-md-2"></div>
             </c:if>
-            <div class="col-xs-6 col-sm-3 col-md-2">
+            <div class="col-6 col-sm-3 col-md-2">
                 <a class="${n}marketplace_category_link">
                     ${category.name}
                 </a>
@@ -485,9 +485,9 @@
                        applyEllipsis(nRow,0,75);
                       },
                 "sDom": '<rt'+
-                    '<"row ${n}bottom" <"col-xs-6 col-sm-8 col-md-3" i>'+
-                    '<"col-xs-6 col-md-push-6 col-sm-4 col-md-3"l>'+
-                    '<"col-xs-12 col-md-pull-3 col-md-6"p>>',
+                    '<"row ${n}bottom" <"col-6 col-sm-8 col-md-3" i>'+
+                    '<"col-6 col-sm-4 col-md-3 order-md-2"l>'+
+                    '<"col-12 col-md-6 order-md-1"p>>',
                 "bStateSave": false,
                 "bAutoWidth":false
             });

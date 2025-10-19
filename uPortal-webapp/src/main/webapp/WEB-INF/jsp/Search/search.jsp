@@ -45,7 +45,7 @@
                 <form id="${n}searchForm" action="${ formUrl }" class="form-inline" style="margin-bottom:10px;" method="POST">
                     <div class="form-group">
                         <input id="${n}searchInput" type="search" class="searchInput form-control" name="query" value="${ fn:escapeXml(query )}" aria-label="<spring:message code="search"/>" maxlength="200"/>
-                        <input id="${n}searchButton" type="submit" class="btn btn-default" value="<spring:message code="search.submit"/>"/>
+                        <input id="${n}searchButton" type="submit" class="btn btn-secondary" value="<spring:message code="search.submit"/>"/>
                     </div>
                 </form>
 
@@ -80,16 +80,16 @@
                                     <div class="search-results">
                                         <c:forEach items="${ results[defaultTabKey] }" var="result">
                                             <div class="search-result">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h3 class="panel-title"><a class="result_link" href="${result.second}"><span class="result_title"><i class="fa fa-arrow-circle-right"></i> ${ result.first.title }</span></a></h3>
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title"><a class="result_link" href="${result.second}"><span class="result_title"><i class="fa fa-arrow-circle-right"></i> ${ result.first.title }</span></a></h3>
                                                     </div>
-                                                    <div class="panel-body">
+                                                    <div class="card-body">
                                                         <p class="result_excerpt">${ result.first.summary }</p>
                                                     </div>
                                                     <%-- Start of display marketplace specific information --%>
                                                     <c:if test="${up:contains(result.first.type, 'marketplace')}">
-                                                        <div class="panel-footer">
+                                                        <div class="card-footer">
                                                             <p><a class="marketplace_entry_link" href="${pURL:getStringFromPortletUrl(result.first.portletUrl, pageContext.request)}">About this app</a>
                                                         </div>
                                                     </c:if>
@@ -106,11 +106,11 @@
                                         <div class="search-results">
                                             <c:forEach items="${ results[tabKey] }" var="result">
                                                 <div class="search-result">
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading">
-                                                            <h3 class="panel-title"><a class="result_link" href="${result.second}"><span class="result_title"><i class="fa fa-external-link"></i> ${ result.first.title }</span></a></h3>
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title"><a class="result_link" href="${result.second}"><span class="result_title"><i class="fa fa-external-link"></i> ${ result.first.title }</span></a></h3>
                                                         </div>
-                                                        <div class="panel-body">
+                                                        <div class="card-body">
                                                             <p class="result_excerpt">${ result.first.summary }</p>
                                                         </div>
                                                     </div>

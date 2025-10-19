@@ -29,8 +29,8 @@
             <portlet:actionURL var="userResetUrl">
                 <portlet:param name="failedPortletWindowId" value="${ portletWindowId.stringId}"/>
             </portlet:actionURL>
-            <span class="breadcrumb-1"><a href="${ adminRetryUrl }"><spring:message code="errorportlet.retry"/></a></span>
-            <span class="breadcrumb-2"><a data-href="${ userResetUrl }" href="javascript:void(0)"><spring:message code="errorportlet.reset"/> (User Facing)</a></span>
+            <span class="breadcrumb-item breadcrumb-1"><a href="${ adminRetryUrl }"><spring:message code="errorportlet.retry"/></a></span>
+            <span class="breadcrumb-item breadcrumb-2"><a data-href="${ userResetUrl }" href="javascript:void(0)"><spring:message code="errorportlet.reset"/> (User Facing)</a></span>
         </div> <!-- end breadcrumbs -->
     </div> <!-- end section head -->
 

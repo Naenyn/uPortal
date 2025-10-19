@@ -89,7 +89,7 @@
                                 <div class="col-md-6">
                                     <h4 class="title">
                                         <span id="${n}currentEntityName"></span>
-                                        <button id="${n}currentSelectBtn" type="button" class="btn btn-success btn-xs">Add to Selection <i class="fa fa-plus-circle"></i></button>
+                                        <button id="${n}currentSelectBtn" type="button" class="btn btn-success btn-sm">Add to Selection <i class="fa fa-plus-circle"></i></button>
                                     </h4>
                                 </div>
                                 <div id="${n}portletSearch" class="portlet-search">
@@ -116,31 +116,31 @@
                                         <c:when test="${type == 'group'}">
                                             <div class="group col-md-12">
                                                 <h6 class="title"><spring:message code="groups"/></h6>
-                                                <table class="table table-condensed table-striped member-list"></table>
+                                                <table class="table table-sm table-striped member-list"></table>
                                                 <p class="no-members" style="display:none"><spring:message code="no.member.subgroups"/></p>
                                                 <div id="${n}adHocCreate" class="col-md-4">
-                                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#adhocGroupModal">Add Custom Group <i class="fa fa-plus-circle"></i></button>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#adhocGroupModal">Add Custom Group <i class="fa fa-plus-circle"></i></button>
                                                 </div>
                                             </div>
                                         </c:when>
                                         <c:when test="${type == 'person'}">
                                             <div class="person col-md-12">
                                                 <h6 class="title"><spring:message code="people"/></h6>
-                                                <table class="table table-condensed table-striped member-list"></table>
+                                                <table class="table table-sm table-striped member-list"></table>
                                                 <p class="no-members" style="display:none"><spring:message code="no.direct.member.people"/></p>
                                             </div>
                                         </c:when>
                                         <c:when test="${type == 'category'}">
                                             <div class="category col-md-12">
                                                 <h6 class="title"><spring:message code="categories"/></h6>
-                                                <table class="table table-condensed table-striped member-list"></table>
+                                                <table class="table table-sm table-striped member-list"></table>
                                                 <p class="no-members" style="display:none"><spring:message code="no.member.subcategories"/></p>
                                             </div>
                                         </c:when>
                                         <c:when test="${type == 'portlet'}">
                                             <div class="portlet col-md-12">
                                                 <h6 class="title"><spring:message code="portlets"/></h6>
-                                                <table class="table table-condensed table-striped member-list"></table>
+                                                <table class="table table-sm table-striped member-list"></table>
                                                 <p class="no-members" style="display:none"><spring:message code="no.direct.member.portlets"/></p>
                                             </div>
                                         </c:when>
@@ -200,27 +200,27 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Create/Edit Custom Group</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div> <!-- end .modal-header div -->
                     <div class="modal-body">
-                        <form class="form-horizontal">
+                        <form class="">
                             <div class="form-group">
-                                <label for="groupName" class="col-sm-4 control-label">Group Name</label>
+                                <label for="groupName" class="col-sm-4 col-form-label">Group Name</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="groupName" placeholder="<spring:message code="group.name.validation.placeholder"/>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="groupDesc" class="col-sm-4 control-label">Group Description</label>
+                                <label for="groupDesc" class="col-sm-4 col-form-label">Group Description</label>
                                 <div class="col-sm-8">
                                     <textarea class="form-control" id="groupDesc" rows="3" placeholder="Group Description" readonly="readonly"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
+                                    <div class="card">
+                                        <div class="card-body">
                                             <h5>Group must <strong>INCLUDE</strong></h5>
                                             <!-- Data Include Node Tree -->
                                             <div id="${n}dataIncludes" class="demo"></div>
@@ -231,8 +231,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
+                                    <div class="card">
+                                        <div class="card-body">
                                             <h5>Group must <strong>EXCLUDE</strong></h5>
                                             <!-- Data Exclude Node Tree -->
                                             <div id="${n}dataExcludes" class="demo"></div>
@@ -246,7 +246,7 @@
                         </form>
                     </div> <!-- end .modal-content div -->
                     <div class="modal-footer">
-                        <button id="${n}cancelAdHocButton" type="button" class="btn btn-default" data-dismiss="modal">Close <i class="fa fa-times"></i></button>
+                        <button id="${n}cancelAdHocButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close <i class="fa fa-times"></i></button>
                         <button id="${n}saveAdHocButton" type="button" class="btn btn-primary" data-dismiss="modal">Save changes <i class="fa fa-save"></i></button>
                     </div> <!-- end .modal-footer div -->
                 </div> <!-- end .modal-content div -->
@@ -317,10 +317,10 @@
             var nameRegex = /^[\w ]{5,500}$/;
             if (nameRegex.test($(this).val())) {
                 $("#${n}saveAdHocButton").removeAttr('disabled');
-                $(this).parent().removeClass("has-error");
+                $(this).parent().removeClass("is-invalid");
             } else {
                 $("#${n}saveAdHocButton").attr('disabled', 'disabled');
-                $(this).parent().addClass("has-error");
+                $(this).parent().addClass("is-invalid");
             }
         });
 
@@ -381,7 +381,7 @@
         var resetAdHocDialog = function () {
             console.log("resetting ad hoc dialog");
             $("#groupName").val("");
-            $("#groupName").parent().removeClass("has-error");
+            $("#groupName").parent().removeClass("is-invalid");
             $("#${n}saveAdHocButton").attr('disabled', 'disabled');
 
             $(":jstree").each(function () {

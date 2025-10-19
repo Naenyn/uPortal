@@ -45,8 +45,13 @@
     <js included="aggregated" resource="true">/ResourceServingWebapp/rs/jqueryui/1.10.3/i18n/jquery-ui-i18n.min.js</js>
     -->
 
-    <js included="plain">/ResourceServingWebapp/rs/bootstrap/3.3.5/js/bootstrap.js</js>
-    <js included="aggregated">/ResourceServingWebapp/rs/bootstrap/3.3.5/js/bootstrap.min.js</js>
+    <!-- Bootstrap 4 CSS -->
+    <css included="plain">https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.css</css>
+    <css included="aggregated">https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css</css>
+    
+    <!-- Bootstrap 4 JS -->
+    <js included="plain">https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.js</js>
+    <js included="aggregated">https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js</js>
 
     <js included="plain">/ResourceServingWebapp/rs/bootstrap-plugins/accessibility/1.0.2/js/bootstrap-accessibility.js</js>
     <js included="aggregated">/ResourceServingWebapp/rs/bootstrap-plugins/accessibility/1.0.2/js/bootstrap-accessibility.min.js</js>
@@ -79,11 +84,11 @@
     <js included="plain" resource="true">/rs/jquery-plugins/rating/1.0/bootstrap-rating-input.js</js>
     <js included="aggregated" resource="true">/rs/jquery-plugins/rating/1.0/bootstrap-rating-input.min.js</js>
 
-    <!-- Data Table Bootstrap Includes -->
-    <js included="plain" resource="true">/rs/datatables/1.9.4/plugins/integration/bootstrap/3/dataTables.bootstrap.js</js>
-    <js included="aggregated" resource="true">/rs/datatables/1.9.4/plugins/integration/bootstrap/3/dataTables.bootstrap.js</js>
-    <css included="plain" resource="true">/rs/datatables/1.9.4/plugins/integration/bootstrap/3/dataTables.bootstrap.css</css>
-    <css included="aggregated" resource="true">/rs/datatables/1.9.4/plugins/integration/bootstrap/3/dataTables.bootstrap.css</css>
+    <!-- DataTables Bootstrap 4 from CDN -->
+    <js included="plain">https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.js</js>
+    <js included="aggregated">https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js</js>
+    <css included="plain">https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.css</css>
+    <css included="aggregated">https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css</css>
 
     <!-- Data Table ColumnFilterWidgets Includes -->
     <js included="plain" resource="true">/rs/datatables/1.9.4/extras/column-filter-widgets/js/ColumnFilterWidgets.js</js>

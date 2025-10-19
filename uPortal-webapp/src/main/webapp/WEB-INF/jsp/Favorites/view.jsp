@@ -30,24 +30,19 @@
     <style>#fav-portlet-${n} .favorites-list { max-height: ${maxHeightPixels}px; overflow-y: auto; }</style>
 </c:if>
 
-<nav class="navbar navbar-default" id="${n}">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="${n}">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#fav-portlet-${n}">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><spring:message code="favorites"/></a>
-    </div>
+    <a class="navbar-brand" href="#"><spring:message code="favorites"/></a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#fav-portlet-${n}" aria-controls="fav-portlet-${n}" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="fav-portlet-${n}">
         <ul class="list-group favorites-list">
             <c:forEach var="collection" items="${collections}">
                 <li class="list-group-item">
-                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                    <i class="fa fa-chevron-right float-right" aria-hidden="true"></i>
                     <a href="${renderRequest.contextPath}/f/${collection.id}/render.uP">
                         <span class="favorites-icon">
                             <i class="fa fa-sitemap" aria-hidden="true"></i>
@@ -59,7 +54,7 @@
 
             <c:forEach var="favorite" items="${favorites}">
                 <li class="list-group-item">
-                    <a class="up-favorite-remove pull-right" data-portlet-id="${favorite.channelPublishId}" title="<spring:message code="remove.from.my.favorites" />" href="javascript:void(0);">
+                    <a class="up-favorite-remove float-right" data-portlet-id="${favorite.channelPublishId}" title="<spring:message code="remove.from.my.favorites" />" href="javascript:void(0);">
                         <i class="fa fa-star" aria-hidden="true"></i>
                     </a>
                     <c:set var="favoriteAnchorContentTarget">
@@ -78,7 +73,7 @@
                         <span class="favorites-icon">
                             <c:choose>
                                 <c:when test="${not empty favorite.parameterMap['iconUrl']}">
-                                    <img src="${favorite.parameterMap['iconUrl']}" class="img-responsive" alt="Icon for ${favorite.name}" aria-hidden="true" />
+                                    <img src="${favorite.parameterMap['iconUrl']}" class="img-fluid" alt="Icon for ${favorite.name}" aria-hidden="true" />
                                 </c:when>
                                 <c:otherwise>
                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
@@ -93,7 +88,7 @@
 
         <%-- Display link to Marketplace if available, suppress otherwise --%>
         <c:if test="${not empty marketplaceUrl}">
-            <span class="pull-right">
+            <span class="float-right">
                 <a href="${marketplaceUrl}">
                 <spring:message code="favorites.invitation.to.marketplace.short" text="Visit Marketplace"/>
                 </a>

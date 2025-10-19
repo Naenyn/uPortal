@@ -54,7 +54,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
 <div class="fl-widget portlet ptl-mgr" id="${n}">
 
-<form:form modelAttribute="portlet" action="${queryUrl}" method="POST" role="form" class="form-horizontal portlet-config">
+<form:form modelAttribute="portlet" action="${queryUrl}" method="POST" role="form" class="portlet-config">
     <!-- Portlet -->
     <div class="view-basicinfo" role="section">
 
@@ -87,7 +87,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             <h3 class="title" role="heading"><spring:message code="summary.information"/></h3>
                         </div>
                         <div class="form-group">
-                            <span class="col-sm-4 control-label">
+                            <span class="col-sm-4 col-form-label">
                                 <label for="portletTitle"><spring:message code="portlet.title"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
                         title="<spring:message code='portlet.title.tooltip'/>" data-toggle="tooltip"
@@ -98,7 +98,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </div>
                         </div>
                         <div class="form-group">
-                            <span class="col-sm-4 control-label">
+                            <span class="col-sm-4 col-form-label">
                                 <label for="portletName"><spring:message code="portlet.name"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
                             title="<spring:message code='portlet.name.tooltip'/>" data-toggle="tooltip"
@@ -116,7 +116,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </div>
                         </div>
                         <div class="form-group">
-                            <span class="col-sm-4 control-label">
+                            <span class="col-sm-4 col-form-label">
                                 <label for="portletFname"><spring:message code="portlet.functional.name"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
                                 title="<spring:message code='portlet.functional.name.tooltip'/>" data-toggle="tooltip"
@@ -127,7 +127,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </div>
                         </div>
                         <div class="form-group">
-                            <span class="col-sm-4 control-label">
+                            <span class="col-sm-4 col-form-label">
                                 <label for="portletDescription"><spring:message code="portlet.description"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
                                 title="<spring:message code='portlet.description.tooltip'/>" data-toggle="tooltip"
@@ -144,29 +144,29 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             <h3 class="title" role="heading"><spring:message code="controls"/></h3>
                         </div>
                         <div class="form-group">
-                            <label for="portletControls" class="col-sm-3 control-label"><spring:message
+                            <label for="portletControls" class="col-sm-3 col-form-label"><spring:message
                         code="portlet.controls"/></label>
 
                             <div class="col-sm-9">
-                                <div class="checkbox">
+                                <div class="form-check">
                                     <label for="hasHelp">
                                         <form:checkbox path="hasHelp"/>
                                         <spring:message code="hasHelp"/>
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="form-check">
                                     <label for="editable">
                                         <form:checkbox path="editable"/>
                                         <spring:message code="editable"/>
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="form-check">
                                     <label for="configurable">
                                         <form:checkbox path="configurable"/>
                                         <spring:message code="configurable"/>
                                     </label>
                                 </div>
-                                <div class="checkbox">
+                                <div class="form-check">
                                     <label for="hasAbout">
                                         <form:checkbox path="hasAbout"/>
                                         <spring:message code="hasAbout"/>
@@ -189,27 +189,27 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
             <c:if test="${supportsConfig}">
                 <div class="portlet-msg-info portlet-msg info" role="alert">
                     <p class="text-info">
-                        <span class="label label-info"><spring:message code="note"/></span>
+                        <span class="badge badge-info"><spring:message code="note"/></span>
                         <spring:message code="this.portlet.supports.rich.config.message"/>
                     </p>
                 </div>
             </c:if>
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-info">
-                    <div class="panel-heading" role="tab" id="portletConfigAccordionHeading">
-                        <h4 class="panel-title">
+            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="portletConfigAccordionHeading">
+                        <h4 class="card-title">
                             <i class="fa fa-chevron-up"></i> <a data-toggle="collapse" data-parent="#accordion" href="#portletConfigAccordion" aria-expanded="true" aria-controls="portletConfigAccordion">Advanced Options</a>
                         </h4>
                     </div>
-                    <div id="portletConfigAccordion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="portletConfigAccordionHeading">
-                        <div class="panel-body">
+                    <div id="portletConfigAccordion" class="collapse" role="tabpanel" aria-labelledby="portletConfigAccordionHeading">
+                        <div class="card-body">
                             <div class="portlet-section" role="region">
                                 <div class="titlebar">
                                     <h3 class="title" role="heading"><spring:message code="portlet.options" text="Portlet Options"/></h3>
                                 </div>
                                 <div class="portlet-section" role="region">
                                     <div class="form-group">
-                                        <span class="col-sm-2 control-label">
+                                        <span class="col-sm-2 col-form-label">
                                             <label for="portletTimeout">
                                                 <spring:message code="portlet.timeout"/>
                                             </label>
@@ -249,7 +249,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                 <c:forEach items="${ portletDescriptor.portletPreferences.portletPreferences }" var="pref">
                                                     <tr class="${ up:containsKey(portlet.portletPreferences, pref.name) ? 'override-preference' : '' }">
                                                         <td class="preference-name">
-                                                            <div class="control-label">
+                                                            <div class="col-form-label">
                                                                 ${ fn:escapeXml(pref.name) }
                                                             </div>
                                                         </td>
@@ -281,7 +281,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                         <!-- Portlet Display Settings -->
                                         <c:if test="${ fn:length(step.parameters) > 0 }">
                                             <div class="portlet-table">
-                                                <table class=" table table-hover" summary="<spring:message code='this.table.lists.portlet.parameters'/>">
+                                                <table class="table table-hover" summary="<spring:message code='this.table.lists.portlet.parameters'/>">
                                                     <thead>
                                                         <tr>
                                                             <th width="30%"><spring:message code="parameter"/></th>
@@ -298,7 +298,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                                 <c:otherwise>
                                                                     <tr>
                                                                         <td class="text-right">
-                                                                            <div class="control-label">
+                                                                            <div class="col-form-label">
                                                                                 <label for="step-parameter-${ status.index }">
                                                                                     <spring:message code="${parameter.label}"/>
                                                                                 </label>
@@ -346,7 +346,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                                     <c:otherwise>
                                                                         <tr>
                                                                             <td class="preference-name">
-                                                                                <div class="control-label">
+                                                                                <div class="col-form-label">
                                                                                     <label for="preference-input-${ status.index }">
                                                                                         <spring:message code="${ preference.label }" text="${ preference.label }"/>
                                                                                     </label>
@@ -391,7 +391,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                                 <c:set var="overrideParamPath" value="portletPreferenceReadOnly['${ name }'].value"/>
                                                                 <tr>
                                                                     <td class="preference-name">
-                                                                        <div class="control-label">
+                                                                        <div class="col-form-label">
                                                                             ${ fn:escapeXml(name) }
                                                                         </div>
                                                                     </td>
@@ -399,14 +399,14 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                                         <c:forEach items="${ portlet.portletPreferences[name].value }" var="val">
                                                                             <div>
                                                                                 <input class="form-control parameter-editor-value" name="portletPreferences['${fn:escapeXml(name)}'].value" value="${ fn:escapeXml(val) }"/>
-                                                                                <a class="delete-parameter-value-link btn btn-xs btn-default" href="javascript:void(0)">
+                                                                                <a class="delete-parameter-value-link btn btn-sm btn-secondary" href="javascript:void(0)">
                                                                                     <spring:message code="remove" text="Remove"/>
                                                                                     <i class="fa fa-minus-circle"></i>
                                                                                 </a>
                                                                             </div>
                                                                         </c:forEach>
                                                                         <input type="hidden" class="form-control" name="portletPreferences['${fn:escapeXml(name)}'].value" value=""/>
-                                                                        <a class="add-parameter-value-link btn btn-xs btn-info" href="javascript:void(0)" paramName="${fn:escapeXml(name)}">
+                                                                        <a class="add-parameter-value-link btn btn-sm btn-info" href="javascript:void(0)" paramName="${fn:escapeXml(name)}">
                                                                             <spring:message code="add.value" text="Add value"/>
                                                                             <i class="fa fa-plus-circle"></i>
                                                                         </a>
@@ -428,9 +428,9 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                     </div> <!-- end: content -->
                                 </div> <!-- end: portlet-section -->
                             </c:forEach> <!-- end: (step loop) -->
-                        </div>  <!-- end: panel-body -->
-                    </div> <!-- end: panel-collapse -->
-                </div> <!-- end: panel -->
+                        </div>  <!-- end: card-body -->
+                    </div> <!-- end: collapse -->
+                </div> <!-- end: card -->
             </div> <!-- end: accordion -->
         </div> <!-- end: portlet-content -->
     </div> <!-- end: portlet -->
@@ -451,13 +451,13 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                     <!-- Portlet principals -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label h4"><spring:message code="principals"/></label>
+                            <label class="col-sm-3 col-form-label h4"><spring:message code="principals"/></label>
                             <div class="col-sm-9">
                                 <button type="submit" class="button btn btn-primary" name="_eventId_choosePrincipal"><spring:message code="edit.principals"/>&nbsp;&nbsp;<i class="fa fa-users"></i></button>
                                 <c:if test="${empty portlet.principals}">
                                     <p class="text-warning">You should specify a principal or no one will be able to view the portlet</p>
                                 </c:if>
-                                    <table class="table table-condensed permissions-options-table">
+                                    <table class="table table-sm permissions-options-table">
                                         <thead>
                                             <tr>
                                                 <td class="col-sm-3"></td>
@@ -513,7 +513,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                     <!-- Portlet categories -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label h4"><spring:message code="categories"/></label>
+                            <label class="col-sm-3 col-form-label h4"><spring:message code="categories"/></label>
                             <div class="col-sm-9">
                                 <button type="submit" class="button btn btn-primary" name="_eventId_chooseCategory"><spring:message code="edit.categories"/>&nbsp;&nbsp;<i class="fa fa-folder-open"></i></button>
                                 <%-- If there are no categories selected and there are no lifecycle states, the
@@ -1028,8 +1028,8 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
             $("div.preference-options-section").each(function () {
                 up.ParameterEditor(this, {
                     displayClasses: {
-                        addValueLinkExtraClass: 'btn btn-xs btn-info',
-                        deleteValueLinkExtraClass: 'btn btn-xs btn-default',
+                        addValueLinkExtraClass: 'btn btn-sm btn-info',
+                        deleteValueLinkExtraClass: 'btn btn-sm btn-secondary',
                         deleteItemLinkExtraClass: 'btn btn-warning',
                         inputElementExtraClass: "form-control parameter-editor-value"
                     },
@@ -1145,7 +1145,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
         function toggleChevron(e) {
             $(e.target)
-            .prev('.panel-heading')
+            .prev('.card-header')
             .find("i.fa")
             .toggleClass('fa-chevron-down fa-chevron-up');
             }

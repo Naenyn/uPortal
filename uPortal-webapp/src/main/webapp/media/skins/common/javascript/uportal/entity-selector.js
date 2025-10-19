@@ -463,7 +463,7 @@ var up = up || {};
 
             // Create buttons, div and td.
             selButton = document.createElement('button');
-            selButton.className = 'btn btn-select btn-success btn-xs';
+            selButton.className = 'btn btn-select btn-success btn-sm';
             selButton.setAttribute('key', getKey(object));
             selButton.append(document.createTextNode('Add to Selection '));
             selIcon = document.createElement('i');
@@ -476,8 +476,8 @@ var up = up || {};
             tdButtons = document.createElement('td');
             tdButtons.append(divButtons);
             /*
-                 <button type="button" class="btn btn-info btn-xs">Edit Group <i class="fa fa-pencil"></i></button>
-                 <button type="button" class="btn btn-danger btn-xs">Delete Group <i class="fa fa-trash-o"></i></button>
+                 <button type="button" class="btn btn-info btn-sm">Edit Group <i class="fa fa-pencil"></i></button>
+                 <button type="button" class="btn btn-danger btn-sm">Delete Group <i class="fa fa-trash-o"></i></button>
              */
 
             // Create row and add to table.

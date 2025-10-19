@@ -42,18 +42,18 @@
     <!-- Portlet Content -->
     <div class="fl-widget-content content portlet-content">
     
-        <div class="panel-list icon-large">
-            <div class="panel">
-                <div class="titlebar">
-                    <h2 class="title">
+        <div class="card-list icon-large">
+            <div class="card">
+                <div class="card-body titlebar">
+                    <h2 class="card-title title">
                         <a href="${ createUserUrl }" class="btn btn-primary"><i class="fa fa-plus"></i> <spring:message code="create.new.user"/></a>
                     </h2>
                     <h3 class="subtitle"><spring:message code="create.new.user.description"/></h3>
                 </div>
             </div>
-            <div class="panel">
-                <div class="titlebar">
-                    <h2 class="title">
+            <div class="card">
+                <div class="card-body titlebar">
+                    <h2 class="card-title title">
                         <a href="${ findUserUrl }" class="btn btn-primary"><i class="fa fa-search"></i> <spring:message code="find.user"/></a>
                     </h2>
                     <h3 class="subtitle"><spring:message code="find.user.description"/></h3>

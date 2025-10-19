@@ -49,7 +49,7 @@
       <div class="content">
         <p class="note" role="note"><spring:message code="select.cache.to.view.stats.and.clear.content"/></p>
 
-        <table class="portlet-table table-hover cache-table table table-condensed table-striped">
+        <table class="portlet-table table-hover cache-table table table-sm table-striped">
             <thead>
                 <tr>
                     <th><spring:message code="name"/></th>

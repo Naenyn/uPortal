@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="btn">
-                    <a class="button btn btn-default" href="<portlet:renderURL><portlet:param name="action" value="delete"/></portlet:renderURL>">
+                    <a class="button btn btn-secondary" href="<portlet:renderURL><portlet:param name="action" value="delete"/></portlet:renderURL>">
                         <spring:message code="delete"/>
                         <i class="fa fa-trash-o"></i>
                     </a>
@@ -78,7 +78,7 @@
                     <!-- Scrollable view -->
                     <div class="flc-scroller fl-scroller">
                         <div class="fl-scroller-inner">
-                            <table cellspacing="0" class="flc-uploader-queue fl-uploader-queue table table-condensed table-striped" summary="Queue of files to upload." role="presentation">
+                            <table cellspacing="0" class="flc-uploader-queue fl-uploader-queue table table-sm table-striped" summary="Queue of files to upload." role="presentation">
                                 <thead>
                                 <tr>
                                     <th scope="col" class="fl-uploader-file-name"><spring:message code="file.name"/></th>
@@ -94,14 +94,14 @@
                                         <th class="flc-uploader-file-name fl-uploader-file-name" scope="row">File Name Placeholder</th>
                                         <td class="flc-uploader-file-size fl-uploader-file-size">0 KB</td>
                                         <td class="fl-uploader-file-actions">
-                                            <button type="button" class="flc-uploader-file-action fl-uploader-file-action btn btn-default" tabindex="-1">
+                                            <button type="button" class="flc-uploader-file-action fl-uploader-file-action btn btn-secondary" tabindex="-1">
                                                 <span class="fl-uploader-button-text"><spring:message code="remove.from.queue"/></span> <i class="fa fa-close"></i>
                                             </button>
                                         </td>
                                     </tr>
 
                                     <!-- Template for the file error info rows -->
-                                    <tr class="flc-uploader-file-error-tmplt fl-uploader-file-error fl-uploader-hidden-templates bg-danger">
+                                    <tr class="flc-uploader-file-error-tmplt fl-uploader-file-error fl-uploader-hidden-templates table-danger">
                                         <td colspan="3" class="flc-uploader-file-error"></td>
                                     </tr>
                                 </tbody>
@@ -151,7 +151,7 @@
                                     <p class="flc-uploader-errorPanel-section-files">file_1, file_2, file_3, file_4, file_5 </p>
                                 </div>
 
-                                <button type="button" class="flc-uploader-errorPanel-section-toggleDetails fl-uploader-errorPanel-section-toggleDetails btn btn-default">Hide this list <i class="fa fa-eye-slash"></i></button>
+                                <button type="button" class="flc-uploader-errorPanel-section-toggleDetails fl-uploader-errorPanel-section-toggleDetails btn btn-secondary">Hide this list <i class="fa fa-eye-slash"></i></button>
                                 <button type="button" class="flc-uploader-errorPanel-section-removeButton fl-uploader-errorPanel-section-removeButton btn btn-warning">
                                     <span class="flc-uploader-erroredButton-text fl-uploader-hidden">Remove error <i class="fa fa-remove"></i></span>
                                 </button>

@@ -64,7 +64,7 @@
   <%-- Display short link to Marketplace if available, suppress otherwise --%>
   <%-- Included even though redundant with link above, for consistency with UI when user has favorites. --%>
   <c:if test="${not empty marketplaceUrl}">
-    <span class="pull-right">
+    <span class="float-right">
       <a href="${marketplaceUrl}">
         <spring:message code="favorites.invitation.to.marketplace.short" text="Visit Marketplace"/>
       </a>

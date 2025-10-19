@@ -96,7 +96,7 @@
           </fieldset>
           <br />
 
-          <input class="btn btn-default" type="submit" value="<spring:message code="submit" />" />
+          <input class="btn btn-secondary" type="submit" value="<spring:message code="submit" />" />
           <br />
         </div>
         <input type="hidden" name="id" class="uptrans-pfrm-id" />
@@ -128,7 +128,7 @@
             </legend>
             <textarea id="${ns}TranslationValue" name="value" class="uptrans-mfrm-value form-control"></textarea>
           </fieldset>
-          <input class="btn btn-default" type="submit" value="<spring:message code="submit" />" />
+          <input class="btn btn-secondary" type="submit" value="<spring:message code="submit" />" />
         </div>
         <input type="hidden" name="locale" class="uptrans-mfrm-loc" />
         <input type="hidden" name="entity" value="message" />
@@ -142,10 +142,10 @@
 
   <div class="uptrans-entities-wrapper">
     <div id="${ns}entities" class="uptrans-entities">
-      <button class="btn btn-default" id="${ns}entityList" class="uptrans-entity"></button>
+      <button class="btn btn-secondary" id="${ns}entityList" class="uptrans-entity"></button>
     </div>
     <div class="ui-helper-clearfix">
-      <button id="${ns}addMessage" class="btn btn-default" style="display:none;">
+      <button id="${ns}addMessage" class="btn btn-secondary" style="display:none;">
         <spring:message code="add.message" />
       </button>
     </div>

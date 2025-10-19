@@ -30,7 +30,7 @@
             <portlet:actionURL var="userResetUrl">
                 <portlet:param name="failedPortletWindowId" value="${ portletWindowId.stringId}"/>
             </portlet:actionURL>
-            <span class="breadcrumb-1"><a data-href="${ userResetUrl }" href="javascript:void(0)"><spring:message code="errorportlet.reset"/></a></span>
+            <span class="breadcrumb-item breadcrumb-1"><a data-href="${ userResetUrl }" href="javascript:void(0)"><spring:message code="errorportlet.reset"/></a></span>
         </div> <!-- end breadcrumbs -->
 
     </div> <!-- end sectionhead -->

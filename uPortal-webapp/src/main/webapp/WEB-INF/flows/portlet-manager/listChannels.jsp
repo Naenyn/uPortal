@@ -123,9 +123,9 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
     <h2 class="title" role="heading"><spring:message code="portlet.registry"/></h2>
     <div class="fl-col-flex2 toolbar" role="toolbar">
       <div class="fl-col">
-        <ul class="btn-group">
-          <li class="btn"><a class="btn btn-primary button" href="${ newPortletUrl }" title="<spring:message code="register.new.portlet"/>"><span><spring:message code="register.new.portlet"/></span>&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></a></li>
-        </ul>
+        <div class="btn-group" role="group">
+          <a class="btn btn-primary" href="${ newPortletUrl }" title="<spring:message code="register.new.portlet"/>"><span><spring:message code="register.new.portlet"/></span>&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></a>
+        </div>
       </div>
       <div class="fl-col fl-text-align-right datatable-search-view">
         <form class="portlet-search-form form-inline" style="display:inline">
@@ -182,11 +182,11 @@ up.jQuery(function() {
     // Url generating helper functions
     var getEditURL = function(portletId) {
         var url = '${editPortletUrl}'.replace("PORTLETID", portletId);
-        return '<a href="' + url + '"><spring:message code="edit" htmlEscape="false" javaScriptEscape="true"/> <span class="pull-right"><i class="fa fa-edit"></i></span></a>';
+        return '<a href="' + url + '"><spring:message code="edit" htmlEscape="false" javaScriptEscape="true"/> <span class="float-right"><i class="fa fa-edit"></i></span></a>';
     };
     var getDeleteURL = function(portletId) {
         var url = '${removePortletUrl}'.replace("PORTLETID", portletId);
-        return '<a href="' + url + '"><spring:message code="delete" htmlEscape="false" javaScriptEscape="true"/> <span class="pull-right"><i class="fa fa-trash-o"></i></span></a>';
+        return '<a href="' + url + '"><spring:message code="delete" htmlEscape="false" javaScriptEscape="true"/> <span class="float-right"><i class="fa fa-trash-o"></i></span></a>';
     };
 
     // Created as its own

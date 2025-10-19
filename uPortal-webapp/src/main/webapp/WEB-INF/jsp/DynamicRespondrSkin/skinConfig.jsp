@@ -44,15 +44,15 @@
 
             <div class="portlet-section-body">
 
-                <form id="${n}dynSkinForm" role="form" class="form-horizontal" action="${ saveUrl }" method="POST">
+                <form id="${n}dynSkinForm" role="form" class="" action="${ saveUrl }" method="POST">
 
                     <div class="form-group">
-                        <label for="{n}PREFdynamicSkinEnabled" class="col-sm-4 control-label"><spring:message code="respondr.dynamic.skin.enabled"/></label>
+                        <label for="{n}PREFdynamicSkinEnabled" class="col-sm-4 col-form-label"><spring:message code="respondr.dynamic.skin.enabled"/></label>
                         <input type="checkbox" class="dynamicSelection" id="{n}PREFdynamicSkinEnabled" name="PREFdynamicSkinEnabled"
                                value="true" ${empty PREFdynamicSkinEnabled ? '' : 'checked'}/>
                     </div>
                     <div class="form-group">
-                        <label for="{n}PREFdynamicSkinName" class="col-sm-4 control-label"><spring:message code="respondr.dynamic.skin.skinName"/></label>
+                        <label for="{n}PREFdynamicSkinName" class="col-sm-4 col-form-label"><spring:message code="respondr.dynamic.skin.skinName"/></label>
                         <select id="{n}PREFdynamicSkinName" name="PREFdynamicSkinName">
                             <option value="${PREFdynamicSkinName}" selected>${PREFdynamicSkinName}</option>
                             <c:forEach items="${skinNames}" var="skinName">
@@ -67,37 +67,37 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="{n}PREFcolor1" class="col-sm-8 control-label"><spring:message code="respondr.dynamic.skin.color1"/></label>
+                                    <label for="{n}PREFcolor1" class="col-sm-8 col-form-label"><spring:message code="respondr.dynamic.skin.color1"/></label>
                                     <input type="color" class="colorPicker dynamicItem" id="{n}PREFcolor1" name="PREFcolor1" value="${PREFcolor1}"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="{n}PREFcolor2" class="col-sm-8 control-label"><spring:message code="respondr.dynamic.skin.color2"/></label>
+                                    <label for="{n}PREFcolor2" class="col-sm-8 col-form-label"><spring:message code="respondr.dynamic.skin.color2"/></label>
                                     <input type="color" class="colorPicker dynamicItem" id="{n}PREFcolor2" name="PREFcolor2" value="${PREFcolor2}"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="{n}PREFcolor3" class="col-sm-8 control-label"><spring:message code="respondr.dynamic.skin.color3"/></label>
+                                    <label for="{n}PREFcolor3" class="col-sm-8 col-form-label"><spring:message code="respondr.dynamic.skin.color3"/></label>
                                     <input type="color" class="colorPicker dynamicItem" id="{n}PREFcolor3" name="PREFcolor3" value="${PREFcolor3}"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="{n}PREFcolor4" class="col-sm-8 control-label"><spring:message code="respondr.dynamic.skin.color4"/></label>
+                                    <label for="{n}PREFcolor4" class="col-sm-8 col-form-label"><spring:message code="respondr.dynamic.skin.color4"/></label>
                                     <input type="color" class="colorPicker dynamicItem" id="{n}PREFcolor4" name="PREFcolor4" value="${PREFcolor4}"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="{n}PREFcolor5" class="col-sm-8 control-label"><spring:message code="respondr.dynamic.skin.color5"/></label>
+                                    <label for="{n}PREFcolor5" class="col-sm-8 col-form-label"><spring:message code="respondr.dynamic.skin.color5"/></label>
                                     <input type="color" class="colorPicker dynamicItem" id="{n}PREFcolor5" name="PREFcolor5" value="${PREFcolor5}"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="{n}PREFcolor6" class="col-sm-8 control-label"><spring:message code="respondr.dynamic.skin.color6"/></label>
+                                    <label for="{n}PREFcolor6" class="col-sm-8 col-form-label"><spring:message code="respondr.dynamic.skin.color6"/></label>
                                     <input type="color" class="colorPicker dynamicItem" id="{n}PREFcolor6" name="PREFcolor6" value="${PREFcolor6}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="buttons">
-                        <button type="submit" class="saveButton btn btn-default"><spring:message code="save"/></button>
-                        <button type="button" class="cancelButton btn btn-default"><spring:message code="cancel"/></button>
+                        <button type="submit" class="saveButton btn btn-secondary"><spring:message code="save"/></button>
+                        <button type="button" class="cancelButton btn btn-secondary"><spring:message code="cancel"/></button>
                     </div>
                 </form>
                 <div class="loadingMessage hidden"><i class="fa fa-spinner fa-spin"></i></div>

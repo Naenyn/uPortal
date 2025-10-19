@@ -80,8 +80,8 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
     </div> <!-- end: portlet-section -->
 
     <div class="buttons">
-      <a href="${removeUrl}" class="button btn btn-default" name="_eventId_remove" id="${n}deletePermissionButton"><spring:message code="remove"/></a>
-      <a href="${cancelUrl}" class="button btn btn-default"><spring:message code="cancel"/></a>
+      <a href="${removeUrl}" class="button btn btn-secondary" name="_eventId_remove" id="${n}deletePermissionButton"><spring:message code="remove"/></a>
+      <a href="${cancelUrl}" class="button btn btn-secondary"><spring:message code="cancel"/></a>
     </div>
 
 

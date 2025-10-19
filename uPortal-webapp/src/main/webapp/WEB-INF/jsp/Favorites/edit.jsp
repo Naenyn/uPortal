@@ -62,12 +62,12 @@
         </portlet:actionURL>
         <li class="list-group-item ${collection.moveAllowed ? '' : 'sort-disabled'}" sourceID="${collection.id}">
           <c:if test="${collection.moveAllowed}">
-            <span class="glyphicon glyphicon-sort pull-left" style='padding-right: 1em; cursor: move;'></span>
+            <span class="glyphicon glyphicon-sort float-left" style='padding-right: 1em; cursor: move;'></span>
           </c:if>
           <c:choose>
             <c:when test="${collection.deleteAllowed}">
               <a class="up-remove-favorite" data-href="${unFavoriteCollectionUrl}" href="javascript:void(0)">
-                <span class="glyphicon glyphicon-trash pull-right" aria-label="Remove favorite collection"></span>
+                <span class="glyphicon glyphicon-trash float-right" aria-label="Remove favorite collection"></span>
               </a>
               <a href="${renderRequest.contextPath}/f/${collection.id}/render.uP">
                 ${collection.name}
@@ -77,7 +77,7 @@
               <div data-toggle="tooltip" title="<spring:message
                   code="favorites.lack.permission.to.unfavorite.collection"
                   text="You lack permission to unfavorite this collection."/>">
-                <span class="glyphicon glyphicon-lock pull-right"></span>${collection.name}
+                <span class="glyphicon glyphicon-lock float-right"></span>${collection.name}
               </div>
               <c:set var="lockedItemListed" value="true" />
             </c:otherwise>
@@ -96,12 +96,12 @@
             <%-- That sort glyph may be shown when only one item and so nothing to re-order against is
                  deliberate, meant to communicate to the user that if he or she had more items they would then
                  be re-order-able, and meant to provide UI consistency in the one and more-than-one items cases. --%>
-            <span class="glyphicon glyphicon-sort pull-left" style='padding-right: 1em; cursor: move;'></span>
+            <span class="glyphicon glyphicon-sort float-left" style='padding-right: 1em; cursor: move;'></span>
           </c:if>
           <c:choose>
             <c:when test="${favorite.deleteAllowed}">
               <a class="up-remove-favorite" data-href="${unFavoritePortletUrl}" href="javascript:void(0)">
-                <span class="glyphicon glyphicon-trash pull-right" aria-label="Remove favorite"></span>
+                <span class="glyphicon glyphicon-trash float-right" aria-label="Remove favorite"></span>
               </a>
               <a href="${renderRequest.contextPath}/p/${favorite.functionalName}/render.uP">
                 ${favorite.name}
@@ -111,7 +111,7 @@
               <div data-toggle="tooltip" title="<spring:message
                   code="favorites.lack.permission.to.unfavorite.portlet"
                   text="You lack permission to unfavorite this portlet."/>" >
-                <span class="glyphicon glyphicon-lock pull-right"></span>${favorite.name}
+                <span class="glyphicon glyphicon-lock float-right"></span>${favorite.name}
               </div>
               <c:set var="lockedItemListed" value="true" />
             </c:otherwise>
@@ -121,7 +121,7 @@
     </ul>
 
     <c:if test="${lockedItemListed}">
-      <span class="help-block"><spring:message
+      <span class="form-text"><spring:message
               code="favorites.lock.icon.legend"
               text="Favorites with the lock icon cannot be unfavorited."/>
       </span>
@@ -137,7 +137,7 @@
 
   <%-- Display short link to Marketplace if available, suppress otherwise --%>
   <c:if test="${not empty marketplaceUrl}">
-    <span class="pull-right">
+    <span class="float-right">
       <a href="${marketplaceUrl}">
         <spring:message code="favorites.invitation.to.marketplace.short" text="Visit Marketplace"/>
       </a>

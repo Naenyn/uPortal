@@ -123,7 +123,7 @@
                         <spring:message var="searchButtonText" code="search" />
                         <input class="button btn btn-primary" type="submit" value="${searchButtonText}" />
 
-                        <a class="button btn btn-default" href="${ cancelUrl }">
+                        <a class="button btn btn-secondary" href="${ cancelUrl }">
                             <spring:message code="cancel" />
                         </a>
                     </div>
