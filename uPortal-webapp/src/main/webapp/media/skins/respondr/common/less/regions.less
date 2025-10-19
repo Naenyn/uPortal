@@ -266,6 +266,16 @@
       margin-left: 0;
       padding: 6px 15px 0;
       font-size: 12px;
+      
+      /* Bootstrap 3 btn-default styling */
+      background-color: #fff;
+      border-color: #ccc;
+      color: #333;
+      
+      &:hover {
+        background-color: #e6e6e6;
+        border-color: #adadad;
+      }
 
       button:focus {
         outline: none;
@@ -289,7 +299,7 @@
       content: "\f0d7";
     }
 
-    #customizeOptions.in + button i::after {
+    #customizeOptions.show + button i::after {
       content: "\f0d8";
     }
   }
