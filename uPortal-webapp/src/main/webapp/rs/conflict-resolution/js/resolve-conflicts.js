@@ -18,6 +18,10 @@
  */
 'use strict';
 
-// Namespace conflict with fluid and bootstrap, leveraging fluid function as default
-var bootstrapTooltip = $.fn.tooltip.noConflict(); // return $.fn.tooltip to previously assigned value
-$.fn.bootstrapTooltip = bootstrapTooltip; // give $().bootstrapTooltip the Bootstrap functionality
+// Bootstrap 5 compatibility: noConflict() method was removed
+// Fluid and Bootstrap tooltip conflict resolution
+// Store Bootstrap tooltip if it exists, then let Fluid override
+if ($.fn.tooltip && $.fn.tooltip.Constructor) {
+    $.fn.bootstrapTooltip = $.fn.tooltip;
+}
+// Fluid will override $.fn.tooltip when it loads

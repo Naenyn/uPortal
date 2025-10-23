@@ -41,7 +41,7 @@
         <!-- Default card contents -->
         <div class="card-header clearfix">
             <spring:message code="tenant.manager" />
-            <div class="btn-group float-right">
+            <div class="btn-group float-end">
                 <a href="${showAddTenantUrl}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> <spring:message code="tenant.manager.add" /></a>
             </div>
         </div>
@@ -73,7 +73,7 @@
                                     <td><a href="${detailsUrl}" title="<spring:message code="tenant.manager.edit" /> ${tenant.name}"><c:out value="${tenant.name}" /></a></td>
                                     <td><c:out value="${tenant.fname}" /></td>
                                     <td><a href="mailto:${tenant.attributesMap['adminContactEmail']}" title="<spring:message code="tenant.manager.email.address.link" />">${tenant.attributesMap['adminContactUsername']}</a></td>
-                                    <td class="text-right"><a class="btn btn-sm btn-danger up-tenant-remove" data-href="${removeUrl}" data-confirm="<spring:message code="tenant.manager.remove.tenant.confirm" arguments="${tenant.name}" />" title="<spring:message code="tenant.manager.remove.tenant" />" href="javascript:void(0)"><span class="glyphicon glyphicon-trash"></span> <spring:message code="tenant.manager.remove" /></a></td>
+                                    <td class="text-end"><a class="btn btn-sm btn-danger up-tenant-remove" data-href="${removeUrl}" data-confirm="<spring:message code="tenant.manager.remove.tenant.confirm" arguments="${tenant.name}" />" title="<spring:message code="tenant.manager.remove.tenant" />" href="javascript:void(0)"><span class="glyphicon glyphicon-trash"></span> <spring:message code="tenant.manager.remove" /></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

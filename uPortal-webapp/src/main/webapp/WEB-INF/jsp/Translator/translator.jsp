@@ -56,7 +56,7 @@
         <div class="portlet-form">
           <fieldset>
             <legend>
-              <label for="${ns}TranslationTitle">
+              <label for="${ns}TranslationTitle" class="form-label">
                 <spring:message code="title" />
               </label>
             </legend>
@@ -70,7 +70,7 @@
 
           <fieldset>
             <legend>
-              <label for="${ns}TranslationName">
+              <label for="${ns}TranslationName" class="form-label">
                 <spring:message code="name" />
               </label>
             </legend>
@@ -84,7 +84,7 @@
 
           <fieldset>
             <legend>
-              <label for="${ns}TranslationDescription">
+              <label for="${ns}TranslationDescription" class="form-label">
                 <spring:message code="description" />
               </label>
             </legend>
@@ -114,7 +114,7 @@
         <div class="portlet-form">
           <fieldset class="uptrans-mfrm-code-fieldset">
             <legend>
-              <label for="${ns}TranslationCode">
+              <label for="${ns}TranslationCode" class="form-label">
                 <spring:message code="code" />
               </label>
             </legend>
@@ -122,7 +122,7 @@
           </fieldset>
           <fieldset>
             <legend>
-              <label for="${ns}TranslationValue">
+              <label for="${ns}TranslationValue" class="form-label">
                 <spring:message code="value" />
               </label>
             </legend>

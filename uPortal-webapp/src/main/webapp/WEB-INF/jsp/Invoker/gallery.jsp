@@ -50,7 +50,7 @@
                             <div class="categories-wrapper active">
                                <div class="portlet-search-view">
                                     <form class="portlet-search-form">
-                                        <label for="portletSearch"><spring:message code="search.stuff.add"/></label>
+                                        <label for="portletSearch" class="form-label"><spring:message code="search.stuff.add"/></label>
                                         <input id="portletSearch" name="portletSearch" class="portlet-search-input" type="text" value="<spring:message code="search"/>" />
                                         <input type="submit" value="<spring:message code="search"/>" class="portlet-search-submit"/>
                                     </form>

@@ -73,7 +73,7 @@
         </div>
 
         <div class="portlet-form">
-            <form id="${n}form" class="form-inline" method="POST">
+            <form id="${n}form" class="d-flex align-items-center gap-2" method="POST">
                 <label class="portlet-form-label" for="entityType">
                     <spring:message code="type"/>:
                 </label>

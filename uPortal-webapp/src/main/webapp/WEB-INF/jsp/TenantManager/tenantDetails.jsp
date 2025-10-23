@@ -55,7 +55,7 @@
                     <c:otherwise></c:otherwise>
                 </c:choose>
             </c:set>
-            <div class="form-group ${errorCssClass}">
+            <div class="row mb-3 ${errorCssClass}">
                 <label for="${attribute.key}" class="col-sm-2 col-form-label"><spring:message code="${attribute.value}" /></label>
                 <div class="col-sm-10">
                     <c:set var="previousValue">
@@ -70,7 +70,7 @@
             </div>
         </c:forEach>
 
-        <div class="btn-group float-right">
+        <div class="btn-group float-end">
             <c:forEach items="${operationsListenerAvailableActions}" var="listenerAction">
                 <portlet:actionURL var="listenerActionUrl">
                     <portlet:param name="action" value="doListenerAction"/>

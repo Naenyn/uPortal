@@ -61,7 +61,7 @@
                 </c:if>
                 <a class="btn btn-secondary" href="${ resetLayoutUrl }"><spring:message code="reset.user.layout" text="Reset User Layout" /></a>
                 <c:if test="${ canImpersonate }">
-                	<a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuImpersonate" data-toggle="dropdown">
+                	<a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuImpersonate" data-bs-toggle="dropdown">
                     <spring:message code="impersonate" text="Impersonate"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right up-impersonation-menu" role="menu" aria-labelledby="dropdownMenuImpersonate">

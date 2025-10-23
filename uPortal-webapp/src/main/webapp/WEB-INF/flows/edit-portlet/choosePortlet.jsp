@@ -37,7 +37,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | docs/SKINNING_UPORTAL.md
 -->
 <style>
-    .form-group {
+    .row {
         margin-top: 10px;
     }
     .buttons {
@@ -76,8 +76,8 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                 <h3 class="title" role="heading"><spring:message code="summary.information"/></h3>
             </div>
             <!-- Application Dropdown -->
-            <div class="form-group">
-                <div class="col-md-3"><label> <spring:message code="application.information"/>
+            <div class="row mb-3">
+                <div class="col-md-3"><label class="form-label"> <spring:message code="application.information"/>
                     <select name="application" class="form-control">
                         <c:forEach items="${contexts}" var="context">
                             <option value="${fn:escapeXml(context.name)}">${fn:escapeXml(context.name)}</option>
@@ -87,8 +87,8 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                 </div>
             </div>
             <!-- Portlet Dropdown -->
-            <div class="form-group">
-                <div class="col-md-3"><label><spring:message code="portlet.information"/>
+            <div class="row mb-3">
+                <div class="col-md-3"><label class="form-label"><spring:message code="portlet.information"/>
                     <select name="portlet" class="form-control col-md-4"> 
                         <c:forEach items="${contexts[0].portlets}" var="portlet">
                             <option value="${fn:escapeXml(portlet.portletName)}
@@ -100,7 +100,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                 </div>
             </div>
             <!-- Buttons -->
-            <div class="form-group">
+            <div class="row mb-3">
                 <div class="buttons">
                     <c:choose>
                         <c:when test="${ completed }">

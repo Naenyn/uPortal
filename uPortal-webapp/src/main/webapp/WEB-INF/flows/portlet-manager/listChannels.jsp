@@ -111,7 +111,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 <div id="${n}portletBrowser" class="fl-widget portlet ptl-mgr view-home" role="section">
   <c:if test="${not empty statusMsgCode}">
     <div class="alert alert-success alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
       <spring:message code="${statusMsgCode}" arguments="${portlet.name}" htmlEscape="true"/>
       <c:if test="${not empty layoutURL}">
         <spring:message code="add.portlet.to.layout" arguments="${layoutURL}" htmlEscape="false"/>
@@ -128,8 +128,8 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
         </div>
       </div>
       <div class="fl-col fl-text-align-right datatable-search-view">
-        <form class="portlet-search-form form-inline" style="display:inline">
-          <label for="${n}search">
+        <form class="portlet-search-form d-flex align-items-center gap-2" style="display:inline">
+          <label for="${n}search" class="form-label">
             <spring:message code="search"/>
           </label>
           <input id="${n}search" type="search" class="portlet-search-input form-control"/>
@@ -182,11 +182,11 @@ up.jQuery(function() {
     // Url generating helper functions
     var getEditURL = function(portletId) {
         var url = '${editPortletUrl}'.replace("PORTLETID", portletId);
-        return '<a href="' + url + '"><spring:message code="edit" htmlEscape="false" javaScriptEscape="true"/> <span class="float-right"><i class="fa fa-edit"></i></span></a>';
+        return '<a href="' + url + '"><spring:message code="edit" htmlEscape="false" javaScriptEscape="true"/> <span class="float-end"><i class="fa fa-edit"></i></span></a>';
     };
     var getDeleteURL = function(portletId) {
         var url = '${removePortletUrl}'.replace("PORTLETID", portletId);
-        return '<a href="' + url + '"><spring:message code="delete" htmlEscape="false" javaScriptEscape="true"/> <span class="float-right"><i class="fa fa-trash-o"></i></span></a>';
+        return '<a href="' + url + '"><spring:message code="delete" htmlEscape="false" javaScriptEscape="true"/> <span class="float-end"><i class="fa fa-trash-o"></i></span></a>';
     };
 
     // Created as its own

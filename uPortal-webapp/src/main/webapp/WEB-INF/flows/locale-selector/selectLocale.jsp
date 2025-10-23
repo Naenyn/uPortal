@@ -40,7 +40,7 @@
                           <li style="list-style:none;padding:0.2em 0 0.2em 0">
                               <input type="radio" name="locale" id="${ fn:escapeXml(locale.code) }" value="${ fn:escapeXml(locale.code) }" ${ locale.code == currentLocale ? "checked" : '' }/>
                               <img src="/ResourceServingWebapp/rs/famfamfam/flags/${ fn:escapeXml(fn:toLowerCase(locale.locale.country) )}.png"/>
-                              <label for="${ fn:escapeXml(locale.code) }">
+                              <label for="${ fn:escapeXml(locale.code) }" class="form-check-label">
                                   ${ fn:escapeXml(locale.displayLanguage) }
                               </label>
                           </li>

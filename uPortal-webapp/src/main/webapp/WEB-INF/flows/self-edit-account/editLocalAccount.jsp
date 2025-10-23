@@ -59,7 +59,7 @@
                             <c:forEach items="${ editAttributes }" var="attribute">
                                 <tr>
                                     <td class="attribute-name">
-                                        <label for="${ n }${ attribute.name }">
+                                        <label for="${ n }${ attribute.name }" class="form-label">
                                             <strong>
                                                 <spring:message code="${ attribute.label }"/>
                                             </strong>
@@ -104,7 +104,7 @@
                             <!--  Password and confirm password -->
                             <tr>
                                 <td class="attribute-name">
-                                  <label for="${n}password">
+                                  <label for="${n}password" class="form-label">
                                       <strong>
                                           <spring:message code="password"/>
                                       </strong>
@@ -116,7 +116,7 @@
                             </tr>
                             <tr>
                                 <td class="attribute-name">
-                                    <label for="${n}confirmPassword">
+                                    <label for="${n}confirmPassword" class="form-label">
                                         <strong>
                                             <spring:message code="confirm.password"/>
                                         </strong>

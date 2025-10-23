@@ -42,11 +42,9 @@
 
             <div class="portlet-section-body">
 
-                <form id="${n}searchForm" action="${ formUrl }" class="form-inline" style="margin-bottom:10px;" method="POST">
-                    <div class="form-group">
-                        <input id="${n}searchInput" type="search" class="searchInput form-control" name="query" value="${ fn:escapeXml(query )}" aria-label="<spring:message code="search"/>" maxlength="200"/>
-                        <input id="${n}searchButton" type="submit" class="btn btn-secondary" value="<spring:message code="search.submit"/>"/>
-                    </div>
+                <form id="${n}searchForm" action="${ formUrl }" class="d-flex align-items-center gap-2" style="margin-bottom:10px;" method="POST">
+                    <input id="${n}searchInput" type="search" class="searchInput form-control" name="query" value="${ fn:escapeXml(query )}" aria-label="<spring:message code="search"/>" maxlength="200"/>
+                    <input id="${n}searchButton" type="submit" class="btn btn-secondary" value="<spring:message code="search.submit"/>"/>
                 </form>
 
                 <c:if test="${hitMaxQueries}">

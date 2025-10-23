@@ -81,8 +81,8 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                   <td align="center">
                     <form:radiobutton id="${chanTypeEntry.key.id}" path="typeId" value="${chanTypeEntry.key.id}" cssClass="portlet-form-input-field"/>
                   </td>
-                  <td><label for="${chanTypeEntry.key.id}"><c:out value="${chanTypeEntry.key.name}" /></label></td>
-                  <td><label for="${chanTypeEntry.key.id}"><c:out value="${chanTypeEntry.key.description}" /></label></td>
+                  <td><label for="${chanTypeEntry.key.id}" class="form-label"><c:out value="${chanTypeEntry.key.name}" /></label></td>
+                  <td><label for="${chanTypeEntry.key.id}" class="form-label"><c:out value="${chanTypeEntry.key.description}" /></label></td>
                 </tr>
             </c:forEach>
           </tbody>

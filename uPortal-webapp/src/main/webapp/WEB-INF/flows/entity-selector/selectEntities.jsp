@@ -50,31 +50,31 @@
     <!--content-->
     <!-- If Adhoc group is created successfully -->
     <div id="${n}alertSuccess" class="alert alert-success alert-dismissible" role="alert" style="display:none;">
-        <button type="button" class="close" onclick="$(this).parent().hide();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close" onclick="$(this).parent().hide();" aria-label="Close"></button>
         <p><i class="fa fa-check-circle">Adhoc group created successfully!</i></p>
     </div>
 
     <!-- Else if there is problem with the parent -->
     <div id="${n}alertInvalidParent" class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
-        <button type="button" class="close" onclick="$(this).parent().hide();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close" onclick="$(this).parent().hide();" aria-label="Close"></button>
         <p><i class="fa fa-exclamation-circle">There is a problem with the parent group.</i></p>
     </div>
 
     <!-- Else if there is an existing group -->
     <div id="${n}alertGroupExists" class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
-        <button type="button" class="close" onclick="$(this).parent().hide();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close" onclick="$(this).parent().hide();" aria-label="Close"></button>
         <p><i class="fa fa-exclamation-circle">There is a group that already exists with that name.</i></p>
     </div>
 
     <!-- Else if user is unauthorized -->
     <div id="${n}alertUnauthorized" class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
-        <button type="button" class="close" onclick="$(this).parent().hide();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close" onclick="$(this).parent().hide();" aria-label="Close"></button>
         <p><i class="fa fa-exclamation-circle">You are unauthorized to to complete this process.</i></p>
     </div>
 
     <!-- Else if unknown error -->
     <div id="${n}alertUnknown" class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
-        <button type="button" class="close" onclick="$(this).parent().hide();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close" onclick="$(this).parent().hide();" aria-label="Close"></button>
         <p><i class="fa fa-exclamation-circle">Unknown error. Contact your administrator.</i></p>
     </div>
 
@@ -93,7 +93,7 @@
                                     </h4>
                                 </div>
                                 <div id="${n}portletSearch" class="portlet-search">
-                                    <form id="${n}searchForm" class="form-inline" role="form">
+                                    <form id="${n}searchForm" class="d-flex align-items-center gap-2" role="form">
                                         <input type="search" class="form-control" name="searchterm" placeholder="<spring:message code="enter.name"/>" aria-label="<spring:message code="enter.name"/>"/>
                                         <input type="submit" class="button btn" value="<spring:message code="go"/>" />
                                     </form>
@@ -119,7 +119,7 @@
                                                 <table class="table table-sm table-striped member-list"></table>
                                                 <p class="no-members" style="display:none"><spring:message code="no.member.subgroups"/></p>
                                                 <div id="${n}adHocCreate" class="col-md-4">
-                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#adhocGroupModal">Add Custom Group <i class="fa fa-plus-circle"></i></button>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#adhocGroupModal">Add Custom Group <i class="fa fa-plus-circle"></i></button>
                                                 </div>
                                             </div>
                                         </c:when>
@@ -201,17 +201,17 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">Create/Edit Custom Group</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div> <!-- end .modal-header div -->
                     <div class="modal-body">
                         <form class="">
-                            <div class="form-group">
+                            <div class="row mb-3">
                                 <label for="groupName" class="col-sm-4 col-form-label">Group Name</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="groupName" placeholder="<spring:message code="group.name.validation.placeholder"/>">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="row mb-3">
                                 <label for="groupDesc" class="col-sm-4 col-form-label">Group Description</label>
                                 <div class="col-sm-8">
                                     <textarea class="form-control" id="groupDesc" rows="3" placeholder="Group Description" readonly="readonly"></textarea>
@@ -246,8 +246,8 @@
                         </form>
                     </div> <!-- end .modal-content div -->
                     <div class="modal-footer">
-                        <button id="${n}cancelAdHocButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close <i class="fa fa-times"></i></button>
-                        <button id="${n}saveAdHocButton" type="button" class="btn btn-primary" data-dismiss="modal">Save changes <i class="fa fa-save"></i></button>
+                        <button id="${n}cancelAdHocButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close <i class="fa fa-times"></i></button>
+                        <button id="${n}saveAdHocButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes <i class="fa fa-save"></i></button>
                     </div> <!-- end .modal-footer div -->
                 </div> <!-- end .modal-content div -->
             </div> <!-- end .modal-dialog div -->

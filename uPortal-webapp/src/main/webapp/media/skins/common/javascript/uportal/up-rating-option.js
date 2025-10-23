@@ -54,7 +54,7 @@ var up = up || {};
         ].join('');
 
         var closeButton = [
-            ' <button type="button" class="btn btn-secondary" data-dismiss="modal">',
+            ' <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">',
             $(this).data('close.button.label'),
             '</button>',
         ].join('');

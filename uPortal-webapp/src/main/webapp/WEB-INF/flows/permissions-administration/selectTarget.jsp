@@ -73,7 +73,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
     <!-- Portlet Section -->
     <div class="portlet-form">
         <form id="${n}targetForm" action="${ formUrl }" method="POST">
-            <label for="${n}targetSuggest"><spring:message code="select.target.instruction"/>:</label>
+            <label for="${n}targetSuggest" class="form-label"><spring:message code="select.target.instruction"/>:</label>
             <div id="${n}targetSuggest" class="target-input">
                 <input class="up-autocomplete-searchterm" type="text" name="targetDisplayName" value="<spring:message code="target"/>" autocomplete="off"/>
                 <input type="hidden" name="target"/>

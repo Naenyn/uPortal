@@ -145,6 +145,7 @@ task aggregateRespondrSkins {
                 .setResourcesXml(resourcesXmlFile)
                 .setOutputBaseDirectory(fullOutputDirectory)
                 .addAdditionalSourceDirectory(fullOutputDirectory)
+                .addAdditionalSourceDirectory(new File(projectDir, 'src/main/webapp/media/skins/common'))
                 .setSharedJavaScriptDirectory(sharedJavaScriptDirectory);
         aggr.aggregate(aggregationRequest);
 
@@ -161,5 +162,14 @@ war {
     with {
         from "${buildDir}/generated-sources/skin/main/webapp"
         into '/'
+    }
+}
+
+// Add WAR publishing
+publishing {
+    publications {
+        war(MavenPublication) {
+            from components.web
+        }
     }
 }

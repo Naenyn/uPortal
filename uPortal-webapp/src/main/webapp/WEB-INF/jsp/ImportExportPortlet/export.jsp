@@ -45,8 +45,8 @@
         </aside>
 
         <div class="portlet-form">
-            <form id="${n}form" method="POST" class="form-inline" action="javascript:;">
-                <div class="form-group">
+            <form id="${n}form" method="POST" class="d-flex align-items-center gap-3" action="javascript:;">
+                <div>
                     <label class="portlet-form-label" for="${n}entityType"><spring:message code="type"/>:</label>
                     <select id="${n}entityType" class="form-control" name="entityType">
                         <option>[<spring:message code="select.type"/>]</option>
@@ -55,11 +55,11 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="form-group">
+                <div>
                     <label class="portlet-form-label" for="${n}sysid"><spring:message code="id"/>:</label>
                     <input type="text" id="${n}sysid" class="form-control" name="sysid"/>
                 </div>
-                <div class="form-group">
+                <div>
                     <div class="buttons">
                         <a id="${n}exportLink" class="button btn btn-primary" target="_blank" rel="noopener noreferrer" href=""><spring:message code="export"/> <i class="fa fa-download"></i></a>
                     </div>

@@ -51,14 +51,14 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
   <div class="fl-widget-content portlet-content row">
 
     <div class="permission-lookup">
-        <form id="${n}permissionLookupForm" class="form-inline" action="${permissionLookupUrl}" method="POST">
-            <div id="${n}principalSuggest" class="principal-input form-group">
-                <label for="${n}principalSuggest">
+        <form id="${n}permissionLookupForm" class="d-flex flex-wrap align-items-center gap-3" action="${permissionLookupUrl}" method="POST">
+            <div id="${n}principalSuggest" class="principal-input">
+                <label for="${n}principalSuggest" class="form-label">
                   <spring:message code="permission.suggest.principal"/>
                 </label>
                 <input class="up-autocomplete-searchterm form-control" type="text" name="principalDisplayName" value="<spring:message code="permission.suggest.principal.value"/>" aria-labelledby="<spring:message code="permission.suggest.principal.label"/>" autocomplete="off"/>
                 <input class="form-control" type="hidden" name="principal"/>
-                <label for="${n}permissionSuggest">
+                <label for="${n}permissionSuggest" class="form-label">
                   <spring:message code="permission.suggest.permission"/>
                 </label>
                 <div class="up-autocomplete-dropdown">
@@ -76,7 +76,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                     <div class="up-autocomplete-close"><a href="#"><spring:message code="close"/></a></div>
                 </div>
             </div>
-            <div id="${n}permissionSuggest" class="activity-input form-group">
+            <div id="${n}permissionSuggest" class="activity-input">
                 <input class="up-autocomplete-searchterm form-control" type="text" name="activityDisplayName" value="<spring:message code="permission.suggest.permission.value"/>" aria-labelledby="<spring:message code="permission.suggest.permission.label"/>" autocomplete="off"/>
                 <input type="hidden" name="activity"/>
                 <span class="punctuation">?</span>

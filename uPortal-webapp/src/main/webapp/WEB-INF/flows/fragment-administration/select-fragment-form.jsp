@@ -36,7 +36,7 @@
             <portlet:param name="execution" value="${flowExecutionKey}" />
             <portlet:param name="_eventId" value="selectFragment"/>
         </portlet:actionURL>
-        <form method="POST" name="fragmentAdminForm" class="form form-inline" action="${formUrl}">
+        <form method="POST" name="fragmentAdminForm" class="form d-flex align-items-center gap-2" action="${formUrl}">
             <select id="fragmentOwner" class="form-control" name="impersonateUser" title="<spring:message code="choose.fragment.to.edit"/>">
             	<option value="NONE"> -- <spring:message code="fragments"/> -- </option>
                 <c:forEach items="${fragments}" var="item">

@@ -45,7 +45,7 @@
         <form action="${ formUrl }" method="POST">
 
             <p>
-                <label for="${n}userName"><spring:message code="username"/></label>
+                <label for="${n}userName" class="form-label"><spring:message code="username"/></label>
                 <input id="${n}userName" name="username" value="${ username }"/>
             </p>
         

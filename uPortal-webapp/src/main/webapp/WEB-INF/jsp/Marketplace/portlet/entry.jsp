@@ -274,7 +274,7 @@
 
 <script type="text/template" id="${n}options-menu">
     <li role="menuitem">
-        <a class="dropdown-item" href="#" title='<spring:message code="link.to" text="Link to ..." />' data-toggle="modal" data-target="#${n}copy-modal" id="${n}linkto">
+        <a class="dropdown-item" href="#" title='<spring:message code="link.to" text="Link to ..." />' data-bs-toggle="modal" data-bs-target="#${n}copy-modal" id="${n}linkto">
             <spring:message code="link.to" text="Link to ..."/>
         </a>
     </li>
@@ -341,16 +341,16 @@
                         {% if (screenShots.length > 1) { %}
                             <ol class="carousel-indicators marketplace_carousel_indicators">
                                 {% _(screenShots).each(function(screen, idx) { %}
-                                    <li data-target="#${n}marketplace_screenshots_and_videos" data-slide-to="{%= idx %}"></li>
+                                    <li data-bs-target="#${n}marketplace_screenshots_and_videos" data-bs-slide-to="{%= idx %}"></li>
                                 {% }); %}
                             </ol>
                             <a class="carousel-control-prev carousel-marketplace-control" href="#${n}marketplace_screenshots_and_videos" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
+                                <span class="visually-hidden">Previous</span>
                             </a>
                             <a class="carousel-control-next carousel-marketplace-control" href="#${n}marketplace_screenshots_and_videos" role="button" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
+                                <span class="visually-hidden">Next</span>
                             </a>
                         {% } %}
                     </div>
@@ -373,7 +373,7 @@
                        class="btn btn-secondary marketplace_dropdown_button" role="button">
                         <spring:message code="go" text="Go"/>
                     </a>
-                    <button type="button" class="btn btn-secondary dropdown-toggle marketplace_dropdown_button" data-toggle="dropdown">
+                    <button type="button" class="btn btn-secondary dropdown-toggle marketplace_dropdown_button" data-bs-toggle="dropdown">
                         <spring:message code="options" text="Options"/>
                     </button>
                     <ul class="dropdown-menu marketplace_dropdown_menu" role="menu" style="right: 0; left: auto;">
@@ -564,13 +564,13 @@
                             </label>
                         </fieldset>
                         <c:if test="${enableReviews}">
-                        <div class="form-group">
-                            <label for="${n}marketplace_user_review_input" id="review-label"><spring:message code="rating.leave.review"/></label>
+                        <div class="row mb-3">
+                            <label for="${n}marketplace_user_review_input" id="review-label" class="form-label"><spring:message code="rating.leave.review"/></label>
                             <textarea id="${n}marketplace_user_review_input" aria-labelledby="review-label" name="review" class="form-control col-12 col-med-6" rows="3"></textarea>
                             <div id="${n}input_chars_remaining"></div>
                         </div>
                         </c:if>
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <button id="${n}marketplace_user_rating_submit_button" type="submit" class="btn btn-secondary">
                                 <spring:message code="submit" text="Submit"/>
                             </button>
@@ -687,11 +687,11 @@
                         <spring:message code="link.to.this" text="Link to This"/>
                     </strong>
                 </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form class="" role="form">
-                <div class="form-group">
+                <div class="row mb-3">
                     <label for="inputDeep" class="col-sm-2 col-form-label"><spring:message code="link" text="Link"/></label>
                     <div class="col-sm-10">
                         <input tabindex="0" type="text" class="form-control" id="inputDeep"
@@ -699,7 +699,7 @@
                     </div>
                 </div>
                 <c:if test="${not empty shortURL }">
-                    <div class="form-group">
+                    <div class="row mb-3">
                         <label for="smallLink" class="col-sm-2 col-form-label"><spring:message code="shortLink" text="Short Link"/></label>
                         <div class="col-sm-10">
                             <input tabindex="0" type="text" class="form-control" id="smallLink" value="${shortURL}"></input>
@@ -709,7 +709,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button tabindex="0" role="button" type="button" class="btn btn-secondary" data-dismiss="modal"><spring:message code="close" text="Close"/></button>
+                <button tabindex="0" role="button" type="button" class="btn btn-secondary" data-bs-dismiss="modal"><spring:message code="close" text="Close"/></button>
             </div>
         </div>
     </div>

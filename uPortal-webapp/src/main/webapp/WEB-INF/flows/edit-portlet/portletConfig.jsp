@@ -86,52 +86,52 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                         <div class="titlebar">
                             <h3 class="title" role="heading"><spring:message code="summary.information"/></h3>
                         </div>
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <span class="col-sm-4 col-form-label">
-                                <label for="portletTitle"><spring:message code="portlet.title"/></label>
+                                <label for="portletTitle" class="form-label"><spring:message code="portlet.title"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
-                        title="<spring:message code='portlet.title.tooltip'/>" data-toggle="tooltip"
-                        data-placement="top"></span>
+                        title="<spring:message code='portlet.title.tooltip'/>" data-bs-toggle="tooltip"
+                        data-bs-placement="top"></span>
                             </span>
                             <div class="col-sm-8">
                                 <form:input path="title" type="text" class="form-control" id="portletTitle" autocomplete="off" autocorrect="off"/>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <span class="col-sm-4 col-form-label">
-                                <label for="portletName"><spring:message code="portlet.name"/></label>
+                                <label for="portletName" class="form-label"><spring:message code="portlet.name"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
-                            title="<spring:message code='portlet.name.tooltip'/>" data-toggle="tooltip"
-                            data-placement="top"></span>
+                            title="<spring:message code='portlet.name.tooltip'/>" data-bs-toggle="tooltip"
+                            data-bs-placement="top"></span>
                             </span>
                             <div class="col-sm-8">
                                 <form:input path="name" type="text" class="form-control" id="portletName" autcomplete="off" autocorrect="off"/>
                             </div>
                         </div>
-                        <div class="form-group name-title-mismatch-warn" style="display: none">
+                        <div class="row mb-3 name-title-mismatch-warn" style="display: none">
                             <div class="col-sm-12">
                                 <div class="alert alert-info">
                                     <spring:message code="portlet.name.title.mismatch"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <span class="col-sm-4 col-form-label">
-                                <label for="portletFname"><spring:message code="portlet.functional.name"/></label>
+                                <label for="portletFname" class="form-label"><spring:message code="portlet.functional.name"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
-                                title="<spring:message code='portlet.functional.name.tooltip'/>" data-toggle="tooltip"
-                                data-placement="top"></span>
+                                title="<spring:message code='portlet.functional.name.tooltip'/>" data-bs-toggle="tooltip"
+                                data-bs-placement="top"></span>
                             </span>
                             <div class="col-sm-8">
                                 <form:input path="fname" type="text" class="form-control" id="portletFname" autcomplete="off" autocorrect="off"/>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <span class="col-sm-4 col-form-label">
-                                <label for="portletDescription"><spring:message code="portlet.description"/></label>
+                                <label for="portletDescription" class="form-label"><spring:message code="portlet.description"/></label>
                                 <span class="glyphicon glyphicon-info-sign"
-                                title="<spring:message code='portlet.description.tooltip'/>" data-toggle="tooltip"
-                                data-placement="top"></span>
+                                title="<spring:message code='portlet.description.tooltip'/>" data-bs-toggle="tooltip"
+                                data-bs-placement="top"></span>
                             </span>
                             <div class="col-sm-8">
                                 <form:input path="description" type="text" class="form-control" id="portletDescription" autcomplete="off" autocorrect="off"/>
@@ -143,31 +143,31 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                         <div class="titlebar">
                             <h3 class="title" role="heading"><spring:message code="controls"/></h3>
                         </div>
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <label for="portletControls" class="col-sm-3 col-form-label"><spring:message
                         code="portlet.controls"/></label>
 
                             <div class="col-sm-9">
                                 <div class="form-check">
-                                    <label for="hasHelp">
+                                    <label for="hasHelp" class="form-check-label">
                                         <form:checkbox path="hasHelp"/>
                                         <spring:message code="hasHelp"/>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <label for="editable">
+                                    <label for="editable" class="form-check-label">
                                         <form:checkbox path="editable"/>
                                         <spring:message code="editable"/>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <label for="configurable">
+                                    <label for="configurable" class="form-check-label">
                                         <form:checkbox path="configurable"/>
                                         <spring:message code="configurable"/>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <label for="hasAbout">
+                                    <label for="hasAbout" class="form-check-label">
                                         <form:checkbox path="hasAbout"/>
                                         <spring:message code="hasAbout"/>
                                     </label>
@@ -189,7 +189,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
             <c:if test="${supportsConfig}">
                 <div class="portlet-msg-info portlet-msg info" role="alert">
                     <p class="text-info">
-                        <span class="badge badge-info"><spring:message code="note"/></span>
+                        <span class="badge bg-info"><spring:message code="note"/></span>
                         <spring:message code="this.portlet.supports.rich.config.message"/>
                     </p>
                 </div>
@@ -198,7 +198,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                 <div class="card">
                     <div class="card-header" role="tab" id="portletConfigAccordionHeading">
                         <h4 class="card-title">
-                            <i class="fa fa-chevron-up"></i> <a data-toggle="collapse" data-parent="#accordion" href="#portletConfigAccordion" aria-expanded="true" aria-controls="portletConfigAccordion">Advanced Options</a>
+                            <i class="fa fa-chevron-up"></i> <a data-bs-toggle="collapse" data-bs-parent="#accordion" href="#portletConfigAccordion" aria-expanded="true" aria-controls="portletConfigAccordion">Advanced Options</a>
                         </h4>
                     </div>
                     <div id="portletConfigAccordion" class="collapse" role="tabpanel" aria-labelledby="portletConfigAccordionHeading">
@@ -208,16 +208,16 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                     <h3 class="title" role="heading"><spring:message code="portlet.options" text="Portlet Options"/></h3>
                                 </div>
                                 <div class="portlet-section" role="region">
-                                    <div class="form-group">
+                                    <div class="row mb-3">
                                         <span class="col-sm-2 col-form-label">
-                                            <label for="portletTimeout">
+                                            <label for="portletTimeout" class="form-label">
                                                 <spring:message code="portlet.timeout"/>
                                             </label>
                                             <span
                                                 aria-label="<spring:message code='portlet.timeout.tooltip'/>"
                                                 class="glyphicon glyphicon-info-sign"
-                                                data-placement="top"
-                                                data-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                data-bs-toggle="tooltip"
                                                 title="<spring:message code='portlet.timeout.tooltip'/>">
                                             </span>
                                         </span>
@@ -297,16 +297,16 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <tr>
-                                                                        <td class="text-right">
+                                                                        <td class="text-end">
                                                                             <div class="col-form-label">
-                                                                                <label for="step-parameter-${ status.index }">
+                                                                                <label for="step-parameter-${ status.index }" class="form-label">
                                                                                     <spring:message code="${parameter.label}"/>
                                                                                 </label>
                                                                                 <c:if test="${not empty parameter.description}">
                                                                                     <span class="glyphicon glyphicon-info-sign"
                                                                                           title="${fn:escapeXml(parameter.description)}"
-                                                                                          data-toggle="tooltip"
-                                                                                          data-placement="top">
+                                                                                          data-bs-toggle="tooltip"
+                                                                                          data-bs-placement="top">
                                                                                     </span>
                                                                                 </c:if>
                                                                             </div>
@@ -347,14 +347,14 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                                         <tr>
                                                                             <td class="preference-name">
                                                                                 <div class="col-form-label">
-                                                                                    <label for="preference-input-${ status.index }">
+                                                                                    <label for="preference-input-${ status.index }" class="form-label">
                                                                                         <spring:message code="${ preference.label }" text="${ preference.label }"/>
                                                                                     </label>
                                                                                     <c:if test="${not empty preference.description}">
                                                                                         <span class="glyphicon glyphicon-info-sign"
                                                                                               title="${fn:escapeXml(preference.description)}"
-                                                                                              data-toggle="tooltip"
-                                                                                              data-placement="top">
+                                                                                              data-bs-toggle="tooltip"
+                                                                                              data-bs-placement="top">
                                                                                         </span>
                                                                                     </c:if>
                                                                                 </div>
@@ -450,7 +450,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
                     <!-- Portlet principals -->
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label h4"><spring:message code="principals"/></label>
                             <div class="col-sm-9">
                                 <button type="submit" class="button btn btn-primary" name="_eventId_choosePrincipal"><spring:message code="edit.principals"/>&nbsp;&nbsp;<i class="fa fa-users"></i></button>
@@ -463,21 +463,21 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                                 <td class="col-sm-3"></td>
                                                 <td class="col-sm-3 text-nowrap">
                                                     <spring:message code="edit.browse"/>
-                                                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="<spring:message code='edit.browse.tooltip'/>">
-                                                        <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="sr-only"><spring:message code='edit.browse.tooltip'/></span>
+                                                    <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="<spring:message code='edit.browse.tooltip'/>">
+                                                        <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="visually-hidden"><spring:message code='edit.browse.tooltip'/></span>
                                                     </a>
                                                 </td>
                                                 <td class="col-sm-3 text-nowrap">
                                                     <spring:message code="edit.subscribe"/>
-                                                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="<spring:message code='edit.subscribe.tooltip'/>">
-                                                        <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="sr-only"><spring:message code='edit.subscribe.tooltip'/></span>
+                                                    <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="<spring:message code='edit.subscribe.tooltip'/>">
+                                                        <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="visually-hidden"><spring:message code='edit.subscribe.tooltip'/></span>
                                                      </a>
                                                 </td>
                                                 <td class="col-sm-3 text-nowrap">
                                                     <c:if test="${supportsConfig}">
                                                         <spring:message code="edit.configure"/>
-                                                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="<spring:message code='edit.configure.tooltip'/>">
-                                                            <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="sr-only"><spring:message code='edit.configure.tooltip'/></span>
+                                                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="<spring:message code='edit.configure.tooltip'/>">
+                                                            <i class="fa fa-info-circle" aria-hidden="true"></i> <span class="visually-hidden"><spring:message code='edit.configure.tooltip'/></span>
                                                         </a>
                                                     </c:if>
                                                 </td>
@@ -512,7 +512,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
                     <!-- Portlet categories -->
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <label class="col-sm-3 col-form-label h4"><spring:message code="categories"/></label>
                             <div class="col-sm-9">
                                 <button type="submit" class="button btn btn-primary" name="_eventId_chooseCategory"><spring:message code="edit.categories"/>&nbsp;&nbsp;<i class="fa fa-folder-open"></i></button>
@@ -579,7 +579,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                                             cssClass="portlet-form-input-field lifecycle-state"/>
                                     </td>
                                     <td>
-                                        <label for="lifecycle-${lifecycleState}">
+                                        <label for="lifecycle-${lifecycleState}" class="form-label">
                                             <spring:message code="lifecycle.name.${ lifecycleState }"/>
                                         </label>
                                     </td>
@@ -613,7 +613,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                         <tbody>
                         <tr>
                             <td class="fl-text-align-right">
-                                <label for="autoPublishDate">
+                                <label for="autoPublishDate" class="form-label">
                                     <spring:message code="auto.publish.date.time"/>
                                 </label>
                             </td>
@@ -665,7 +665,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                         <tbody>
                             <tr>
                                 <td class="fl-text-align-right">
-                                    <label for="autoExpireDate">
+                                    <label for="autoExpireDate" class="form-label">
                                         <spring:message code="auto.expire.date.time"/></td>
                                     </label>
                                 <td>
@@ -717,7 +717,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                         <tbody>
                             <tr>
                                 <td class="fl-text-align-right">
-                                    <label for="customMaintenanceMessage">
+                                    <label for="customMaintenanceMessage" class="form-label">
                                         <spring:message code="custom.message"/></td>
                                     </label>
                                 <td>
@@ -726,7 +726,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="stopImmediately">Stop Immediately</label>
+                                    <label for="stopImmediately" class="form-check-label">Stop Immediately</label>
                                 </td>
                                 <td>
                                     <form:checkbox path="stopImmediately" id="stopImmediately"/>
@@ -734,7 +734,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="stopDate">Stop Date</label>
+                                    <label for="stopDate" class="form-label">Stop Date</label>
                                 </td>
                                 <td>
                                     <form:input title="mm/dd/yyyy" type="text" path="stopDate" id="stopDate" cssClass="cal-datepicker"/>
@@ -742,7 +742,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="stopTime">Stop Time</label>
+                                    <label for="stopTime" class="form-label">Stop Time</label>
                                 </td>
                                 <td>
                                     <form:input type="time" path="stopTime" id="stopTime"/>
@@ -750,7 +750,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="restartManually">Restart Manually</label>
+                                    <label for="restartManually" class="form-check-label">Restart Manually</label>
                                 </td>
                                 <td>
                                     <form:checkbox path="restartManually" id="restartManually"/>
@@ -758,7 +758,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="restartDate">Restart Date</label>
+                                    <label for="restartDate" class="form-label">Restart Date</label>
                                 </td>
                                 <td>
                                     <form:input title="mm/dd/yyyy" type="text" path="restartDate" id="restartDate" cssClass="cal-datepicker"/>
@@ -766,7 +766,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="restartTime">Restart Time</label>
+                                    <label for="restartTime" class="form-label">Restart Time</label>
                                 </td>
                                 <td>
                                     <form:input type="time" path="restartTime" id="restartTime"/>
@@ -1082,7 +1082,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
             });
             updateOptionalInputs();
 
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
         });
 
         // maintenance scheduler rendering

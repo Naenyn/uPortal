@@ -99,7 +99,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
   <!-- Portlet Toolbar -->
   <div class="portlet-toolbar" role="toolbar">
-    <label for="${n}days">
+    <label for="${n}days" class="form-label">
       <spring:message code="previous"/>
     </label>
     <select id="${n}days" name="days">

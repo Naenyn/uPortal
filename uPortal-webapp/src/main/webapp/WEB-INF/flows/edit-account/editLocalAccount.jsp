@@ -67,7 +67,7 @@
                             <c:if test="${ accountForm.id < 0 }">
                                 <tr>
                                     <td class="attribute-name">
-                                        <label for="${n}userUsername">
+                                        <label for="${n}userUsername" class="form-label">
                                             <spring:message code="username" />
                                         </label>
                                     </td>
@@ -79,7 +79,7 @@
                             <!--  Password and confirm password -->
                             <tr>
                                 <td class="attribute-name">
-                                    <label for="${n}userPassword">
+                                    <label for="${n}userPassword" class="form-label">
                                         <spring:message code="password"/>
                                     </label>
                                 </td>
@@ -89,7 +89,7 @@
                             </tr>
                             <tr>
                                 <td class="attribute-name">
-                                    <label for="${n}userConfirmPassword">
+                                    <label for="${n}userConfirmPassword" class="form-label">
                                         <spring:message code="confirm.password"/>
                                     </label>
                                 </td>
@@ -118,7 +118,7 @@
                                 <tr>
                                     <td class="attribute-name">
                                         <strong>
-                                            <label for="${ n }${ attribute.name }">
+                                            <label for="${ n }${ attribute.name }" class="form-label">
                                                 <spring:message code="${ attribute.label }"/>
                                             </label>
                                         </strong>
@@ -159,7 +159,7 @@
                                     <td class="attribute-name">
                                         <c:set var="attrName" value="${ attribute.key }"/>
                                         <strong>
-                                            <label for="${ n }${ attrName }">
+                                            <label for="${ n }${ attrName }" class="form-label">
                                                 <spring:message code="attribute.displayName.${attrName}" text="${attrName}"/>
                                             </label>
                                         </strong>

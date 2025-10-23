@@ -80,7 +80,7 @@
                                     </c:if>
                                 </td>
                                 <td>
-                                    <label for="attributesToCopy['${fn:escapeXml(swappableAttribute)}'].value1">${fn:escapeXml(targetUserDetails.attributes[swappableAttribute][0])}</label>
+                                    <label for="attributesToCopy['${fn:escapeXml(swappableAttribute)}'].value1" class="form-label">${fn:escapeXml(targetUserDetails.attributes[swappableAttribute][0])}</label>
                                 </td>
                             </c:if>
                         </tr>

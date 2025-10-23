@@ -54,11 +54,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="label"><label for="name"><spring:message code="name"/>:</label></td>
+                            <td class="label"><label for="name" class="form-label"><spring:message code="name"/>:</label></td>
                             <td><form:input path="name"/></td>
                         </tr>
                         <tr>
-                            <td class="label"><label for="description"><spring:message code="description"/>:</label></td>
+                            <td class="label"><label for="description" class="form-label"><spring:message code="description"/>:</label></td>
                             <td><form:input path="description"/></td>
                         </tr>
                     </tbody>
