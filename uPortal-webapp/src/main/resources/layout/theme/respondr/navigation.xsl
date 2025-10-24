@@ -281,7 +281,7 @@
         <span title="{$NAV_INLINE_EDIT_TITLE}" class="portal-navigation-label {$NAV_INLINE_EDIT_TEXT}">
           <xsl:value-of select="upElemTitle:getTitle(@ID, $USER_LANG, @name)"/>
         </span>
-        <i class="fa fa-chevron-right visible-xs"></i>
+        <i class="fa fa-chevron-right d-block d-sm-none"></i>
       </a> <!-- Navigation item link. -->
       <xsl:if test="$AUTHENTICATED='true' and not($PORTAL_VIEW='focused')">
         <xsl:if test="not(@dlm:moveAllowed='false') or $IS_FRAGMENT_ADMIN_MODE='true'">
