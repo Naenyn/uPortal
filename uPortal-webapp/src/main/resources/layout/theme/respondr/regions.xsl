@@ -143,14 +143,14 @@
     <xsl:template name="region.header-left">
         <xsl:choose>
             <xsl:when test="//region[@name='header-left']/channel">
-                <div id="region-header-left" class="col-sm-6 col-md-8 text-left">
+                <div id="region-header-left" class="col-sm-6 col-md-8 text-start">
                     <xsl:for-each select="//region[@name='header-left']/channel">
                         <xsl:call-template name="regions.portlet.decorator" />
                     </xsl:for-each>
                 </div>
             </xsl:when>
             <xsl:otherwise>
-                <div id="empty-region-header-left" class="col-sm-6 col-md-8 text-left"></div>
+                <div id="empty-region-header-left" class="col-sm-6 col-md-8 text-start"></div>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -164,14 +164,14 @@
     <xsl:template name="region.header-right">
         <xsl:choose>
             <xsl:when test="//region[@name='header-right']/channel">
-                <div id="region-header-right" class="col-sm-6 col-md-4 text-right">
+                <div id="region-header-right" class="col-sm-6 col-md-4 text-end">
                     <xsl:for-each select="//region[@name='header-right']/channel">
                         <xsl:call-template name="regions.portlet.decorator" />
                     </xsl:for-each>
                 </div>
             </xsl:when>
             <xsl:otherwise>
-                <div id="empty-region-header-right" class="col-sm-6 col-md-4 text-right"></div>
+                <div id="empty-region-header-right" class="col-sm-6 col-md-4 text-end"></div>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -383,7 +383,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <h4 class="modal-title">Configuration</h4>
                     </div>
                     <div class="modal-body">
@@ -397,7 +397,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><xsl:value-of select="upMsg:getMessage('close', $USER_LANG)"/></span></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"><xsl:attribute name="aria-label"><xsl:value-of select="upMsg:getMessage('close', $USER_LANG)"/></xsl:attribute></button>
                         <h4 class="modal-title"><xsl:value-of select="upMsg:getMessage('direct.url', $USER_LANG)"/></h4>
                     </div>
                     <div class="modal-body">

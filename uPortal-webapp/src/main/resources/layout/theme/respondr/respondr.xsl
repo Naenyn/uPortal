@@ -582,7 +582,7 @@
                       <xsl:when test="$unlockedTab">
                         <xsl:for-each select="/layout/navigation/tab[@dlm:hasColumnAddChildAllowed='true']">
                             <input name="targetTab" id="targetTab{@ID}" value="{@ID}" type="radio" />
-                            <label for="targetTab{@ID}" class="portlet-form-field-label">
+                            <label for="targetTab{@ID}" class="portlet-form-field-label form-label">
                                 <xsl:value-of select="@name" />
                             </label>
                             <br />
@@ -663,7 +663,7 @@
                 <header class="portal-header" role="banner">
                     <div id="up-sticky-nav" class="container-fluid">
                         <div class="portal-global row">
-                            <a href="javascript:void(0);" tabindex="0" class="menu-toggle pull-left" aria-label="{upMsg:getMessage('menu', $USER_LANG)}" role="button" title="{upMsg:getMessage('menu', $USER_LANG)}" data-toggle="offcanvas" aria-expanded="false" aria-haspopup="true" aria-controls="sidebar">
+                            <a href="javascript:void(0);" tabindex="0" class="menu-toggle float-start" aria-label="{upMsg:getMessage('menu', $USER_LANG)}" role="button" title="{upMsg:getMessage('menu', $USER_LANG)}" data-bs-toggle="offcanvas" aria-expanded="false" aria-haspopup="true" aria-controls="sidebar">
                                 <div class="hamburger hamburger-arrow">
                                    <div class="hamburger-box">
                                      <div class="hamburger-inner"></div>
@@ -811,7 +811,7 @@
                             <div class="container-fluid">
                                 <div class="portal-user">
                                     <div class="navbar-header">
-                                        <a href="javascript:window.location = document.referrer || '{$CONTEXT_PATH}';" title="{upMsg:getMessage('return.to.dashboard.view', $USER_LANG)}" class="up-portlet-control hide-content pull-left fa fa-home portal-return-to-dashboard"></a>
+                                        <a href="javascript:window.location = document.referrer || '{$CONTEXT_PATH}';" title="{upMsg:getMessage('return.to.dashboard.view', $USER_LANG)}" class="up-portlet-control hide-content float-start fa fa-home portal-return-to-dashboard"></a>
                                     </div>
                                     <div class="navbar-collapse collapse">
                                         <xsl:choose>
