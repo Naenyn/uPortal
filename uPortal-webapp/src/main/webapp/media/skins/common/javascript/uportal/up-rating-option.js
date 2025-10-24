@@ -82,7 +82,9 @@ var up = up || {};
             '</div>',
         ].join('');
         $(this).append(modalDialog);
-        $(this).modal('hide');
+        // Bootstrap 5 compatibility: use Modal class instead of jQuery plugin
+        var modal = bootstrap.Modal.getInstance(this[0]) || new bootstrap.Modal(this[0]);
+        modal.hide();
         $(this)
             .find('.ratingModalSaveButton')
             .click(function () {
@@ -94,7 +96,9 @@ var up = up || {};
                     type: 'POST',
                     success: function () {
                         // hide the modal first to prevent flicker on updating the instructions in the modal
-                        $(that).modal('hide');
+                        // Bootstrap 5 compatibility: use Modal class
+                        var modal = bootstrap.Modal.getInstance(that[0]);
+                        if (modal) modal.hide();
                         up.notify(
                             $(that).data('rating.save.successful'),
                             'TopCenter',
@@ -111,7 +115,9 @@ var up = up || {};
                     },
                     error: function () {
                         // Dismiss the modal even on error.
-                        $(that).modal('hide');
+                        // Bootstrap 5 compatibility: use Modal class
+                        var modal = bootstrap.Modal.getInstance(that[0]);
+                        if (modal) modal.hide();
                         up.notify(
                             $(that).data('rating.save.unsuccessful'),
                             'TopCenter',

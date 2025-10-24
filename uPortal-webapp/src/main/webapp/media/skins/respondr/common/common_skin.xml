@@ -36,8 +36,8 @@
     <js included="plain">https://cdn.jsdelivr.net/npm/jquery-migrate@3.4.1/dist/jquery-migrate.js</js>
     <js included="aggregated">https://cdn.jsdelivr.net/npm/jquery-migrate@3.4.1/dist/jquery-migrate.min.js</js>
 
-    <js included="plain" resource="true">/rs/jqueryui/1.10.3/jquery-ui-1.10.3.js</js>
-    <js included="aggregated" resource="true">/rs/jqueryui/1.10.3/jquery-ui-1.10.3.min.js</js>
+    <js included="plain">https://cdn.jsdelivr.net/npm/jquery-ui@1.14.1/dist/jquery-ui.js</js>
+    <js included="aggregated">https://cdn.jsdelivr.net/npm/jquery-ui@1.14.1/dist/jquery-ui.min.js</js>
 
     <!-- Uncomment for internationalization.  Removed for minor efficiency especially for mobile networks. -->
     <!--
