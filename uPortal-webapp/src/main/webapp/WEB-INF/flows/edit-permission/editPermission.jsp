@@ -176,7 +176,7 @@ up.jQuery(function() {
             );
     };
 
-    $(document).ready(renderPermissionMap);
+    $(renderPermissionMap);
 
 
 });

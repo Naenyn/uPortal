@@ -236,7 +236,7 @@
             $("div.toolbar-filter").html('<B><spring:message code="filters" htmlEscape="false" javaScriptEscape="true"/></B>:');
         };
 
-        $(document).ready(function(){
+        $(function(){
             $("#${n}searchForm").submit(function() {
                 var queryData = { searchTerms: [] };
                 var searchTerm = $("#${n}queryValue").val();

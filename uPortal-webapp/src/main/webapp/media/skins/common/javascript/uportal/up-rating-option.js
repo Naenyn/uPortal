@@ -41,7 +41,7 @@ var up = up || {};
         ].join('');
 
         // Instructions defaults to no text; text injected by JavaScript on ratings load and save.
-        var instructions = ['<div class="form-text ratingModalInstruct"/>'];
+        var instructions = ['<div class="form-text ratingModalInstruct"></div>'];
         var starRating = [
             '<input type="number" data-max="5" data-min="1" value="0" data-readonly="false" ' +
                 'data-empty-value="0" class="ratingModalInput"/>',

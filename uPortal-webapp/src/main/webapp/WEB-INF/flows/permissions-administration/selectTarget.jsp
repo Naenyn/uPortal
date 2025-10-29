@@ -137,7 +137,7 @@ up.jQuery(function() {
             }
         );
 
-    $(document).ready(function(){
+    $(function(){
 
 
         $("#${n}targetForm").submit(submitForm);

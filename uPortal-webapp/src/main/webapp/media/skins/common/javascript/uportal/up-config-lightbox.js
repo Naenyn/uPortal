@@ -84,7 +84,7 @@ up.lightboxConfig =
          * @param content the portlet content as a string.
          */
         processAjaxResponse = function (config, content) {
-            var temporaryHtml = $('<div/>').html(content);
+            var temporaryHtml = $('<div></div>').html(content);
 
             // rewrite action URL on all forms...
             $(temporaryHtml)

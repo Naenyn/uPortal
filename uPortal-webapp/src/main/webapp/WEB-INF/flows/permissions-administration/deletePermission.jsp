@@ -93,7 +93,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 up.jQuery(function() {
     var $ = up.jQuery;
 
-    $(document).ready(function(){
+    $(function(){
         $('#${n}deletePermissionButton').click(function(e){
             e.preventDefault();
             $.ajax({

@@ -127,7 +127,7 @@ up.jQuery(function() {
     var $ = up.jQuery;
     var fluid = up.fluid;
 
-    $(document).ready(function() { 
+    $(function() { 
 
         var showSearchForm = function() {
             $("#${n}search .search-form").show();
@@ -139,10 +139,10 @@ up.jQuery(function() {
         var showResults = function() {
             $("#${n}search .person-search-results-summary").show();
             $("#${n}search .person-search-result-detail").hide();
-            $("#${n}search .search-back-link").unbind("click").click(showSearchForm);
+            $("#${n}search .search-back-link").off("click").click(showSearchForm);
         };
 
-        $("#${n}search .search-back-link").unbind("click").click(showSearchForm);
+        $("#${n}search .search-back-link").off("click").click(showSearchForm);
 
         <c:if test="${not empty query}">
             $("#${n}search .person-result-link").each(function (idx, link) {
@@ -153,7 +153,7 @@ up.jQuery(function() {
                     $($("#${n}search .person-search-result-detail").get(idx)).show();
                     
                     $("#${n}search .search-back-div").show();
-                    $("#${n}search .search-back-link").unbind("click").click(showResults);
+                    $("#${n}search .search-back-link").off("click").click(showResults);
                     return false;
                 });
             });

@@ -378,7 +378,7 @@ var uportal = uportal || {};
         });
     };
 
-    $(document).ready(function () {
+    $(function () {
         var propertyConfig = findPropertyConfig();
 
         // No property config means nothing to do

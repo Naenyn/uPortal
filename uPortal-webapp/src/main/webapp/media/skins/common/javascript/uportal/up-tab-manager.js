@@ -175,7 +175,7 @@ var up = up || {};
             // only triggers its handler on the element to which
             // it is bound.
             text = that.locate('text');
-            text.bind('mouseenter', function () {
+            text.on('mouseenter', function () {
                 text.css('cursor', 'text');
                 text.focus();
             });
@@ -184,7 +184,7 @@ var up = up || {};
             // the tab name on mouseleave. The mouseleave event
             // only triggers its handler on the element to which
             // it is bound.
-            text.bind('mouseleave', function () {
+            text.on('mouseleave', function () {
                 text.css('cursor', 'pointer');
                 text.blur();
             });
@@ -209,7 +209,7 @@ var up = up || {};
     var removeTabHandler = function (that) {
         var remove;
         remove = that.locate('remove');
-        remove.bind('click', function () {
+        remove.on('click', function () {
             that.events.onTabRemove.fire(this);
         });
     }; // end: function.
@@ -225,7 +225,7 @@ var up = up || {};
         var tabGroup;
         add = that.locate('add');
         tabGroup = that.container.find(that.options.selectors.tabGroup).text();
-        add.bind('click', function () {
+        add.on('click', function () {
             that.events.onTabAdd.fire(
                 that.options.addTabLabel,
                 that.options.addTabWidths,

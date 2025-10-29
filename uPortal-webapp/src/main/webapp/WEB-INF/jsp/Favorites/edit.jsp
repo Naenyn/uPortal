@@ -148,7 +148,7 @@
 <script type="text/javascript">
 up.jQuery(function() {
     var $ = up.jQuery;
-    $(document).ready( function () {
+    $(function () {
         $('#${n}fav_edit .sortable-collections').sortable({
             deactivate: function(event, ui) {
                 up.moveStuff('Tab', ui.item[0], '${renderRequest.contextPath}');

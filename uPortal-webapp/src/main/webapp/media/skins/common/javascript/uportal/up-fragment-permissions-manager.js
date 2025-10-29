@@ -35,28 +35,28 @@ var up = up || {};
         if (element.hasClass(that.options.cssClassNames.movable)) {
             form.find('[name=movable]').attr('checked', 'checked');
         } else {
-            form.find('[name=movable]').removeAttr('checked');
+            form.find('[name=movable]').prop('checked', false);
         }
 
         // set the deletable permission
         if (element.hasClass(that.options.cssClassNames.deletable)) {
             form.find('[name=deletable]').attr('checked', 'checked');
         } else {
-            form.find('[name=deletable]').removeAttr('checked');
+            form.find('[name=deletable]').prop('checked', false);
         }
 
         // set the movable permission
         if (element.hasClass(that.options.cssClassNames.editable)) {
             form.find('[name=editable]').attr('checked', 'checked');
         } else {
-            form.find('[name=editable]').removeAttr('checked');
+            form.find('[name=editable]').prop('checked', false);
         }
 
         // set the movable permission
         if (element.hasClass(that.options.cssClassNames.addChildAllowed)) {
             form.find('[name=addChildAllowed]').attr('checked', 'checked');
         } else {
-            form.find('[name=addChildAllowed]').removeAttr('checked');
+            form.find('[name=addChildAllowed]').prop('checked', false);
         }
 
         var title = that.options.titleExtractor(element);
@@ -186,7 +186,7 @@ var up = up || {};
 
             // initialize the permission form submission actions
             that.locate('permissionsForm')
-                .unbind('submit')
+                .off('submit')
                 .submit(function () {
                     return updatePermissions(that, element);
                 });

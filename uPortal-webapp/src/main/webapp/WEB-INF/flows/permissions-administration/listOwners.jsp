@@ -155,7 +155,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 up.jQuery(function() {
     var $ = up.jQuery;
 
-    $(document).ready(function(){
+    $(function(){
 
         var submitForm = function(form){
             if (!principalSuggest.getValue() || !permissionSuggest.getValue()) {

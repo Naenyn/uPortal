@@ -149,7 +149,7 @@
                 })
                 // We don't capture error since there is no way the portal will return a different status code on an
                 // action url. If there is an error we'd get a web page with content that displayed an error message.
-                .success(function(data, textStatus, jqXHR) {
+                .done(function(data, textStatus, jqXHR) {
                     exitConfigMode();
                 });
             event.preventDefault();

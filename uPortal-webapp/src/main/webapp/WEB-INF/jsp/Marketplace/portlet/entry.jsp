@@ -721,7 +721,7 @@
 
 <script type="text/javascript">
 (function($, Backbone, _) {
-    $(document).ready( function () {
+    $(function () {
         // IMPORTANT: The tabs object is not a true model so it won't do
         // notifications on change.  If tabs needs to change, replace the
         // entire object, don't modify the one in this model.
@@ -792,7 +792,7 @@
                     dataType: 'json'
                 });
 
-                promise.success(function() {
+                promise.done(function() {
                     <spring:message code="success" text="Success" var="success"/>
                     <spring:message code="marketplace.add.portlet.success"
                             text="{0} Portlet has been added to tab {1}"
@@ -808,7 +808,7 @@
                     });
                 });
 
-                promise.error(function() {
+                promise.fail(function() {
                     <spring:message code="marketplace.add.portlet.error"
                             text="Portlet could not be added to tab {0}"
                             htmlEscape="false"
@@ -1030,7 +1030,7 @@
             e.innerHTML = input;
             return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
         };
-        if($("input[name=rating][type=radio]:checked").size() > 0) {
+        if($("input[name=rating][type=radio]:checked").length > 0) {
             updateRatingInstructions('<spring:message code="rating.instructions.rated"
             text='You have already rated "{0}"; adjust your rating if you wish.'
             arguments="${marketplaceEntry.title}"

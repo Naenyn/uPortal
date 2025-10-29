@@ -1009,7 +1009,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
             });
         });
 
-        $(document).ready(function () {
+        $(function () {
             $("div.parameter-options-section").each(function () {
                 up.ParameterEditor(this, {
                     parameterNamePrefix: $(this).attr("prefix"),
@@ -1058,7 +1058,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
     up.jQuery(function () {
         var $ = up.jQuery;
-        $(document).ready(function () {
+        $(function () {
             var updateOptionalInputs = function () {
                 var lifecycle = $('#${n}PortletLifecycle .lifecycle-state:checked').val();
                 $('#${n}PortletLifecycle #publishingDateSection').css('display', lifecycle == "APPROVED" ? "block" : "none");

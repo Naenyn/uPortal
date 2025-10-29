@@ -316,7 +316,7 @@
         $("#groupName").on('input', function () {
             var nameRegex = /^[\w ]{5,500}$/;
             if (nameRegex.test($(this).val())) {
-                $("#${n}saveAdHocButton").removeAttr('disabled');
+                $("#${n}saveAdHocButton").prop('disabled', false);
                 $(this).parent().removeClass("is-invalid");
             } else {
                 $("#${n}saveAdHocButton").attr('disabled', 'disabled');
@@ -363,7 +363,7 @@
                 var list = $("#${n}dataIncludesList");
                 list.empty();
                 $.each(data.selected, function (i, name) {
-                    var li = $("<li/>").text(data.instance.get_node(name).text).appendTo(list);
+                    var li = $("<li></li>").text(data.instance.get_node(name).text).appendTo(list);
                 });
                 setGroupDescription();
             });
@@ -372,7 +372,7 @@
                 var list = $("#${n}dataExcludesList");
                 list.empty();
                 $.each(data.selected, function (i, name) {
-                    var li = $("<li/>").text(data.instance.get_node(name).text).appendTo(list);
+                    var li = $("<li></li>").text(data.instance.get_node(name).text).appendTo(list);
                 });
                 setGroupDescription();
             });

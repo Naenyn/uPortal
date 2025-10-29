@@ -100,13 +100,13 @@ var up = up || {};
      * @param {string} key - key to find in selection Basket for match
      */
     var updateButtonState = function (button, selectionBasket, that, key) {
-        button.unbind('click');
-        if (selectionBasket.find("a[key='" + key + "']").size() > 0) {
+        button.off('click');
+        if (selectionBasket.find("a[key='" + key + "']").length > 0) {
             button
                 .text('Remove from Selection ')
                 .append("<i class='fa fa-minus-circle'></i>");
             button.removeClass('btn-success').addClass('btn-danger');
-            button.bind('click', function () {
+            button.on('click', function () {
                 deselectEntity(that, key);
             });
         } else {
@@ -114,7 +114,7 @@ var up = up || {};
                 .text('Add to Selection ')
                 .append("<i class='fa fa-plus-circle'></i>");
             button.removeClass('btn-danger').addClass('btn-success');
-            button.bind('click', function () {
+            button.on('click', function () {
                 selectEntity(that, key);
             });
         }
@@ -280,7 +280,7 @@ var up = up || {};
         updateSelectionStates(that);
 
         // Enable submit.
-        buttonPrimary.removeAttr('disabled');
+        buttonPrimary.prop('disabled', false);
     }; // end:function.
 
     /**
@@ -334,7 +334,7 @@ var up = up || {};
         // Breadcrumb click event.
         breadcrumbs
             .find('a')
-            .unbind('click')
+            .off('click')
             .click(function () {
                 removeBreadCrumb(that, $(this), browseFunction);
             }); // end:click.
@@ -494,7 +494,7 @@ var up = up || {};
         // Reset no-members.
         that.container.find('.no-members').each(function (index, object) {
             object = $(object);
-            if (object.parent().find('tr').size() > 0) {
+            if (object.parent().find('tr').length > 0) {
                 object.hide();
             } else {
                 object.show();
@@ -605,7 +605,7 @@ var up = up || {};
         list.html(listItem);
 
         // Assign default 'click' event.
-        list.find('a').bind('click', function () {
+        list.find('a').on('click', function () {
             var span = $(this).find('span');
             console.log(span.attr('key'));
             itemSelectionHandler(that, span.attr('key'));
@@ -660,13 +660,13 @@ var up = up || {};
         }); // end:listener.
 
         // Binds 'click' event to close button.
-        closeSearch.find('a').bind('click', function () {
+        closeSearch.find('a').on('click', function () {
             searchDropDown.hide();
         }); // end:listener.
 
         // Binds 'click' event listener to the document. Detects a 'click'
         // that occurs outside of the component.
-        $(document).bind('click', function (event) {
+        $(document).on('click', function (event) {
             if (
                 that.isEmptyArray(
                     $(event.target).parents('.' + that.options.styles.search)
@@ -791,7 +791,7 @@ var up = up || {};
                 }
             };
 
-            that.locate('saveAdHocButton').bind('click', function () {
+            that.locate('saveAdHocButton').on('click', function () {
                 var parentKey;
                 var parentName;
                 var includes;

@@ -448,7 +448,7 @@
     var $ = up.jQuery;
     (function($) {
         up.jQuery(function() {
-        $(document).ready(function() {
+        $(function() {
 
             var trim11 =function(str) {
                 str = str.replace(/^\s+/, '');

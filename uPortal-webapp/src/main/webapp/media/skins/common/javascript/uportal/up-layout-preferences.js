@@ -125,13 +125,13 @@ var uportal = uportal || {};
         var contentColumns = deletableColumns.filter(
             ':has(.up-portlet-wrapper)'
         );
-        if (contentColumns.size() > 0) {
+        if (contentColumns.length > 0) {
             var acceptorColumns = columns.filter(
                 '.canAddChildren,.up-fragment-admin'
             );
             // if there are no acceptor columns, mark any columns that
             // have content as undeletable
-            if (acceptorColumns.size() == 0) {
+            if (acceptorColumns.length == 0) {
                 deletableColumns = deletableColumns.filter(
                     ':not(:has(.up-portlet-wrapper))'
                 );
@@ -155,13 +155,13 @@ var uportal = uportal || {};
         var contentColumns = deletableColumns.filter(
             ':has(.up-portlet-wrapper)'
         );
-        if (contentColumns.size() > 0) {
+        if (contentColumns.length > 0) {
             var acceptorColumns = columns.filter(
                 '.canAddChildren,.up-fragment-admin'
             );
             // if there are no acceptor columns, mark any columns that
             // have content as undeletable
-            if (acceptorColumns.size() == 0) {
+            if (acceptorColumns.length == 0) {
                 deletableColumns = deletableColumns.filter(
                     ':not(:has(.up-portlet-wrapper))'
                 );
@@ -196,7 +196,7 @@ var uportal = uportal || {};
 
     var updateColumns = function (layout, that) {
         var newcolumns = layout.columns;
-        var columnCount = $('#portalPageBodyColumns [id^=column_]').size();
+        var columnCount = $('#portalPageBodyColumns [id^=column_]').length;
 
         var post = {
             action: 'changeColumns',
@@ -372,7 +372,7 @@ var uportal = uportal || {};
 
                                             // if the page has no content just add
                                             //  the new portlet to the tab
-                                            if (firstChannel.size() == 0) {
+                                            if (firstChannel.length == 0) {
                                                 options['elementID'] =
                                                     getActiveTabId();
                                             } else {
@@ -644,14 +644,14 @@ var uportal = uportal || {};
                             var method = 'insertBefore';
                             var target = null;
                             if (
-                                $(movedNode).nextAll('[id^=portlet_]').size() >
+                                $(movedNode).nextAll('[id^=portlet_]').length >
                                 0
                             ) {
                                 target = $(movedNode)
                                     .nextAll('[id^=portlet_]')
                                     .get(0);
                             } else if (
-                                $(movedNode).prevAll('[id^=portlet_]').size() >
+                                $(movedNode).prevAll('[id^=portlet_]').length >
                                 0
                             ) {
                                 target = $(movedNode)
@@ -804,7 +804,7 @@ var uportal = uportal || {};
 
             // re-wire the form to open the initialized dialog
             $(this)
-                .unbind('click')
+                .off('click')
                 .click(function () {
                     $('.focused-content-dialog').dialog('open');
                 });

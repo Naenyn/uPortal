@@ -126,7 +126,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 	        <c:forEach items="${contexts}" var="context">
 	            portlets['${context.name}'] = [<c:forEach items="${context.portlets}" var="portlet" varStatus="status">{name: '${portlet.portletName}', title: '${fn:length(portlet.displayNames) > 0 ? fn:replace(portlet.displayNames[0].displayName, "'", "\\'") : fn:replace(portlet.portletName, "'", "\\'")}'}${status.last ? '' : ','}</c:forEach>];
 		</c:forEach>
-	        $(document).ready(function(){
+	        $(function(){
 	            $("select[name=application]").change(function(){
 	                var select = $("select[name=portlet]").html("");
 	                var p = portlets[$(this).val()];

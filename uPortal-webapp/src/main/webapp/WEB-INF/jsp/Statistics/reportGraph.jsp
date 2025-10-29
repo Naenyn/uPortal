@@ -291,7 +291,7 @@ up.jQuery(function() {
          return false;
       } else {
          $("#${n}_formError").hide();
-         $("#${n}_reportForm input[type=submit]").removeAttr("disabled");
+         $("#${n}_reportForm input[type=submit]").prop("disabled", false);
          return true;
       }
    };

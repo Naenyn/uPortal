@@ -159,7 +159,7 @@
 <script type="text/javascript">
     up.jQuery(function() {
         var $ = up.jQuery;
-        $(document).ready(function(){
+        $(function(){
             up.ParameterEditor(
                 $("#${n}userAttributes"),
                 {

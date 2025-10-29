@@ -31,18 +31,16 @@ var up = up || {};
             data: null,
             dataType: 'json',
             async: true,
-            success: function (request) {
-                $('#up-notification').noty({
-                    text: request.response,
-                    type: 'success',
-                });
-            },
-            error: function (request) {
-                $('#up-notification').noty({
-                    text: request.responseJSON.response,
-                    type: 'error',
-                });
-            },
+        }).done(function (request) {
+            $('#up-notification').noty({
+                text: request.response,
+                type: 'success',
+            });
+        }).fail(function (request) {
+            $('#up-notification').noty({
+                text: request.responseJSON.response,
+                type: 'error',
+            });
         });
     };
 
@@ -58,18 +56,16 @@ var up = up || {};
             data: null,
             dataType: 'json',
             async: true,
-            success: function (request) {
-                $('#up-notification').noty({
-                    text: request.response,
-                    type: 'success',
-                });
-            },
-            error: function (request) {
-                $('#up-notification').noty({
-                    text: request.response,
-                    type: 'error',
-                });
-            },
+        }).done(function (request) {
+            $('#up-notification').noty({
+                text: request.response,
+                type: 'success',
+            });
+        }).fail(function (request) {
+            $('#up-notification').noty({
+                text: request.response,
+                type: 'error',
+            });
         });
     };
 
@@ -91,12 +87,10 @@ var up = up || {};
                 data: null,
                 dataType: 'json',
                 async: true,
-                success: function () {
-                    console.log('layout move successful.');
-                },
-                error: function () {
-                    console.error('Error persisting move ' + saveOrderURL);
-                },
+            }).done(function () {
+                console.log('layout move successful.');
+            }).fail(function () {
+                console.error('Error persisting move ' + saveOrderURL);
             });
         };
 
@@ -123,15 +117,13 @@ var up = up || {};
                 data: null,
                 dataType: 'json',
                 async: true,
-                success: function () {
-                    console.log('favorite group move successful.');
-                },
-                error: function () {
-                    console.error(
-                        'Error persisting favorite group reorder ' +
-                            saveOrderURL
-                    );
-                },
+            }).done(function () {
+                console.log('favorite group move successful.');
+            }).fail(function () {
+                console.error(
+                    'Error persisting favorite group reorder ' +
+                        saveOrderURL
+                );
             });
         };
         var sourceID = $(item).attr('sourceid');
