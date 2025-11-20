@@ -28,6 +28,8 @@
   <js>javascript/uportal/up-entity-registry.js</js>
   <js>javascript/uportal/up-portlet-browser.js</js>
   <js>javascript/uportal/up-layout-draggable-manager.js</js>
+  <js>javascript/uportal/modern-layout-draggable-manager.js</js>
+  <js>javascript/uportal/modern-portlet-browser.js</js>
   <js>javascript/uportal/modern-portal-gallery.js</js>
   <js>javascript/uportal/up-fragment-permissions-manager.js</js>
   <js>javascript/uportal/up-layout-selector.js</js>
