@@ -31,6 +31,8 @@
   <js>javascript/uportal/modern-layout-draggable-manager.js</js>
   <js>javascript/uportal/modern-portlet-browser.js</js>
   <js>javascript/uportal/modern-portal-gallery.js</js>
+  <js>javascript/uportal/modern-layout-preferences.js</js>
+  <js>javascript/uportal/modern-tab-manager.js</js>
   <js>javascript/uportal/up-fragment-permissions-manager.js</js>
   <js>javascript/uportal/up-layout-selector.js</js>
   <js>javascript/uportal/up-skin-selector.js</js>

@@ -233,7 +233,7 @@ var up = up || {};
         that.locate('pageDialog').dialog({
             width: 550,
             modal: true,
-            autoOpen: false,
+            autoOpen: false
         });
         that.menus.pagePermissionsManager = up.FragmentPermissionsMenu(
             that.locate('pageDialog'),
@@ -262,7 +262,7 @@ var up = up || {};
         that.locate('columnDialog').dialog({
             width: 550,
             modal: true,
-            autoOpen: false,
+            autoOpen: false
         });
         that.menus.columnPermissionsManager = up.FragmentPermissionsMenu(
             that.locate('columnDialog'),
@@ -291,7 +291,7 @@ var up = up || {};
         that.locate('portletDialog').dialog({
             width: 550,
             modal: true,
-            autoOpen: false,
+            autoOpen: false
         });
         that.menus.portletPermissionsManager = up.FragmentPermissionsMenu(
             that.locate('portletDialog'),
@@ -317,8 +317,19 @@ var up = up || {};
                     onUpdatePermissions: function (element, newPermissions) {
                         if (newPermissions.movable) {
                             element.removeClass('locked');
+                            // Remove lock icon if it exists
+                            element.find('.locked-icon').remove();
                         } else {
                             element.addClass('locked');
+                            // Add lock icon if it doesn't exist
+                            var controls = element.find('.portlet-controls');
+                            if (controls.length && !controls.find('.locked-icon').length) {
+                                var lockIcon = $('<div class="locked-icon" title="This portlet may not be moved">' +
+                                    '<i class="fa fa-lock" aria-hidden="true"></i>' +
+                                    '<span class="sr-only">This portlet may not be moved</span>' +
+                                    '</div>');
+                                controls.prepend(lockIcon);
+                            }
                         }
                         // TODO: Apply portlet permissions:
                         // includes refreshing reorderer and displaying/hiding delete
