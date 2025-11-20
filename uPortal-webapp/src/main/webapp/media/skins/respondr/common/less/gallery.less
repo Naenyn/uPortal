@@ -226,20 +226,20 @@
       // border-top: 5px solid @grayscale2;
       display: none;
       overflow: hidden;
-      height: 200px;
+      min-height: 200px;
       position: relative;
 
       .menu-wrapper {
         display: block;
         float: left;
-        height: 200px;
+        min-height: 200px;
         position: relative;
         width: 130px;
 
         /* The navigation menu of gallery views. */
         .menu {
           background: @galleryMenuBackground;
-          height: 190px;
+          min-height: 190px;
           margin: 0 auto 0 15px;
           padding: 10px 0 0;
           position: relative;
@@ -636,8 +636,7 @@
   border-top: 0;
   position: absolute;
   top: 6px;
-  left: 0;
-  margin-left: 25px;
+  left: 25px;
 }
 
 .up-gallery .handle a:hover {
