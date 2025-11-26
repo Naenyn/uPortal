@@ -259,55 +259,32 @@
     up.jQuery(function() {
         var $ = up.jQuery;
 
-        up.entityselection("#${n}chooseGroupsBody", {
-            entityRegistry: {
-                options: { entitiesUrl: '<c:url value="/api/entities"/>' }
-            },
-            entityTypes: [<c:forEach items="${selectTypes}" var="type" varStatus="status">'<spring:escapeBody htmlEscape="false" javaScriptEscape="true">${type}</spring:escapeBody>'${status.last ? '' : ','}</c:forEach>],
-            selected: [<c:forEach items="${groups}" var="group" varStatus="status">'<spring:escapeBody htmlEscape="false" javaScriptEscape="true">${group.entityType}:${group.id}</spring:escapeBody>'${ status.last ? '' : ',' }</c:forEach>],
-            initialFocusedEntity: '${rootEntity.entityType}:${rootEntity.id}',
-            enableAdHocGroups: ${not empty enableAdHocGroups ? enableAdHocGroups : false},
-            selectMultiple: ${selectionMode},
-            requireSelection: ${ not empty requireSelection ? requireSelection : true },
-            pagsApiUrl: "<c:url value='/api/v4-3/pags/'/>",
-            selectors: {
-                alerts: ".alert",
-                alertSuccess: "#${n}alertSuccess",
-                alertInvalidParent: "#${n}alertInvalidParent",
-                alertGroupExists: "#${n}alertGroupExists",
-                alertUnauthorized: "#${n}alertUnauthorized",
-                alertUnknown: "#${n}alertUnknown",
-                selectionBasket: "#${n}selectionBasket",
-                breadcrumbs: "#${n}entityBreadcrumbs",
-                currentEntityName: "#${n}currentEntityName",
-                entityBrowserContent: "#${n}entityBrowserContent",
-                closeSearch: "#${n}closeDropDown",
-                searchForm: "#${n}searchForm",
-                searchDropDown: "#${n}searchDropDown",
-                searchResults: "#${n}searchResults",
-                searchResultsNoMembers: "#${n}searchResultsNoMembers",
-                searchLoader: "#${n}searchLoader",
-                currentSelectBtn: "#${n}currentSelectBtn",
-                adHocCreate: "#${n}adHocCreate",
-                adHocGroupsModal: "#${n}chooseGroupsBody #adhocGroupModal",
-                dialogIncludesTree: '#${n}dataIncludes',
-                dataIncludesList: '#${n}dataIncludesList',
-                dialogExcludesTree: '#${n}dataExcludes',
-                dataExcludesList: '#${n}dataExcludesList',
-                saveAdHocButton: '#${n}saveAdHocButton',
-                buttonPrimary: "#${n}buttonPrimary"
-            },
-            messages: {
-                selectButtonMessage: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="select"/></spring:escapeBody>',
-                deselectButtonMessage: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="deselect"/></spring:escapeBody>',
-                removeCrumb: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="remove"/></spring:escapeBody>',
-                removeSelection: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="remove"/></spring:escapeBody>',
-                addSelection: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="select"/></spring:escapeBody>',
-                selected: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="selected"/></spring:escapeBody>',
-                nothingSelected: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="nothing.selected"/></spring:escapeBody>',
-                searchValue: '<spring:escapeBody htmlEscape="false" javaScriptEscape="true"><spring:message code="please.enter.name"/></spring:escapeBody>'
+        // Initialize modern EntitySelector (replaces old Fluid component)
+        if (typeof ModernEntitySelector !== 'undefined') {
+            const entityBrowser = document.querySelector('#${n}entityBrowserContent');
+            if (entityBrowser && !entityBrowser._modernEntitySelector) {
+                const options = {
+                    entityTypes: [<c:forEach items="${selectTypes}" var="type" varStatus="status">'<spring:escapeBody htmlEscape="false" javaScriptEscape="true">${type}</spring:escapeBody>'${status.last ? '' : ','}</c:forEach>],
+                    selected: [<c:forEach items="${groups}" var="group" varStatus="status">'<spring:escapeBody htmlEscape="false" javaScriptEscape="true">${group.entityType}:${group.id}</spring:escapeBody>'${ status.last ? '' : ',' }</c:forEach>],
+                    initialFocusedEntity: '${rootEntity.entityType}:${rootEntity.id}',
+                    selectMultiple: true,
+                    entitiesUrl: '<c:url value="/api/entities"/>',
+                    selectors: {
+                        selectionBasket: '#${n}selectionBasket',
+                        breadcrumbs: '#${n}entityBreadcrumbs',
+                        currentEntityName: '#${n}currentEntityName',
+                        entityBrowserContent: '#${n}entityBrowserContent',
+                        searchForm: '#${n}searchForm',
+                        searchDropDown: '#${n}searchDropDown',
+                        searchResults: '#${n}searchResults',
+                        searchResultsNoMembers: '#${n}searchResultsNoMembers',
+                        currentSelectBtn: '#${n}currentSelectBtn',
+                        buttonPrimary: '#${n}buttonPrimary'
+                    }
+                };
+                new ModernEntitySelector(entityBrowser, options);
             }
-        });
+        }
 
         /*
          * Ad Hoc Groups (jsTree)
