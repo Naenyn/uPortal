@@ -37,9 +37,9 @@
   <js>javascript/uportal/up-layout-selector.js</js>
   <js>javascript/uportal/up-skin-selector.js</js>
   <js>javascript/uportal/up-tab-manager.js</js>
-  <js>javascript/uportal/up-layout-persistence.js</js>
+  <js>javascript/uportal/modern-layout-preferences-persistence.js</js>
   <js>javascript/uportal/up-url-provider.js</js>
-  <js>javascript/uportal/up-layout-preferences.js</js>
+
   <js>javascript/uportal/up-autocomplete.js</js>
   <js>javascript/uportal/modern-autocomplete.js</js>
   <js>javascript/uportal/up-showHideToggle.js</js>

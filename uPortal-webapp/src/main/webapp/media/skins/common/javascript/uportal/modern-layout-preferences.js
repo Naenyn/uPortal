@@ -142,16 +142,16 @@ class LayoutPreferences {
                         sourceID: window.up.defaultNodeIdExtractor(movedNode)
                     };
                     
-                    let succeeded = false;
+                    // Handle the persistence result properly with async callbacks
                     this.persistence.update(options, (data) => {
-                        if (!data.error) {
-                            succeeded = true;
+                        // Success - operation completed successfully
+                    }).catch(error => {
+                        // Error - show error dialog and offer reload
+                        console.error('Move failed:', error);
+                        if (confirm(this.options.messages.movePortletError)) {
+                            location.reload();
                         }
                     });
-
-                    if (!succeeded && confirm(this.options.messages.movePortletError)) {
-                        location.reload();
-                    }
 
                     // Revert the Move Portlet menu item and hide the grab handle
                     const moveOptionsItem = movedNode.querySelector('.up-portlet-control.move');
