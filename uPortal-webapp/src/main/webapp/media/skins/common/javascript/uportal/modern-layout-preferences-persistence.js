@@ -28,13 +28,31 @@ class ModernLayoutPreferencesPersistence {
      */
     async update(data, success) {
         try {
+            console.log('Sending layout update request:', data);
+            console.log('URL:', this.options.saveLayoutUrl);
+            
+            // Handle array parameters properly for server
+            const formData = new URLSearchParams();
+            Object.keys(data).forEach(key => {
+                if (Array.isArray(data[key])) {
+                    // Convert arrays to multiple parameters with [] suffix
+                    data[key].forEach(value => {
+                        formData.append(key + '[]', value);
+                    });
+                } else {
+                    formData.append(key, data[key]);
+                }
+            });
+            
             const response = await fetch(this.options.saveLayoutUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: new URLSearchParams(data)
+                body: formData
             });
+            
+            console.log('Response status:', response.status, response.statusText);
             
             if (response.ok) {
                 let result = null;
@@ -62,7 +80,9 @@ class ModernLayoutPreferencesPersistence {
                 
                 return result;
             } else {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const errorText = await response.text();
+                console.error('Server error response:', errorText);
+                throw new Error(`HTTP ${response.status}: ${response.statusText}\n${errorText}`);
             }
         } catch (error) {
             console.error('Layout persistence error:', error);

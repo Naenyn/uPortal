@@ -56,6 +56,15 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
         </up:parent-url>
     </up:render-delegate>
 
+    <!-- Configuration Navigation Buttons -->
+    <div class="buttons config-mode-buttons">
+        <form action="${navigationUrl}" method="post">
+            <input type="hidden" name="execution" value="${flowExecutionKey}"/>
+            <input class="button btn btn-primary" type="submit" value="<spring:message code='save'/>" name="_eventId_update"/>
+            <input class="button btn btn-link" type="submit" value="<spring:message code='return.without.saving'/>" name="_eventId_cancel"/>
+        </form>
+    </div>
+
   </div> <!-- end: portlet-content -->
 
 </div> <!-- end: portlet -->

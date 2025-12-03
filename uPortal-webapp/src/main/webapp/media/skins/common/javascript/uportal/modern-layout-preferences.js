@@ -318,12 +318,8 @@ class UrlProvider {
 
 class TabManager {
     constructor(selector, options = {}) {
-        this.container = document.querySelector(selector);
-        this.options = options;
-        // Use existing Fluid implementation for now
-        if (window.up && window.up.TabManager) {
-            return window.up.TabManager(selector, options);
-        }
+        // Use ModernTabManager instead of old Fluid implementation
+        return new ModernTabManager(selector, options);
     }
 }
 

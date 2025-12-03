@@ -198,7 +198,9 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                 <div class="card">
                     <div class="card-header" role="tab" id="portletConfigAccordionHeading">
                         <h4 class="card-title">
-                            <i class="fa fa-chevron-up"></i> <a data-bs-toggle="collapse" data-bs-parent="#accordion" href="#portletConfigAccordion" aria-expanded="true" aria-controls="portletConfigAccordion">Advanced Options</a>
+                            <a data-bs-toggle="collapse" data-bs-parent="#accordion" href="#portletConfigAccordion" aria-expanded="false" aria-controls="portletConfigAccordion">
+                                <i class="fa fa-chevron-down"></i> Advanced Options
+                            </a>
                         </h4>
                     </div>
                     <div id="portletConfigAccordion" class="collapse" role="tabpanel" aria-labelledby="portletConfigAccordionHeading">
@@ -815,7 +817,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 </div>
 </div>
 
-<script src="media/skins/universality/common/javascript/uportal/up-parameter-editor.js" language="JavaScript" type="text/javascript"></script>
+
 <script type="text/javascript">
     (function ($, _, Backbone) {
         var titleSelector = '#portletTitle',
@@ -1010,40 +1012,22 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
         });
 
         $(function () {
+            // Initialize modern parameter editors
             $("div.parameter-options-section").each(function () {
-                up.ParameterEditor(this, {
-                    parameterNamePrefix: $(this).attr("prefix"),
+                new ModernParameterEditor(this, {
                     parameterBindName: 'parameters',
                     auxiliaryBindName: 'parameterOverrides',
                     useAuxiliaryCheckbox: true,
-                    dialog: $("#${n}addParameterDialog-" + $(this).attr("dialog")),
-                    multivalued: false,
-                    messages: {
-                        remove: '<spring:message code="remove" htmlEscape="false" javaScriptEscape="true"/>',
-                        removeParameter: '<spring:message code="setParameters.deleteButton" htmlEscape="false" javaScriptEscape="true"/>',
-                        addValue: '<spring:message code="add.value" htmlEscape="false" javaScriptEscape="true"/>'
-                    }
+                    multivalued: false
                 });
             });
             $("div.preference-options-section").each(function () {
-                up.ParameterEditor(this, {
-                    displayClasses: {
-                        addValueLinkExtraClass: 'btn btn-sm btn-info',
-                        deleteValueLinkExtraClass: 'btn btn-sm btn-secondary',
-                        deleteItemLinkExtraClass: 'btn btn-warning',
-                        inputElementExtraClass: "form-control parameter-editor-value"
-                    },
+                new ModernParameterEditor(this, {
                     parameterBindName: 'portletPreferences',
                     auxiliaryBindName: 'portletPreferenceReadOnly',
                     useAuxiliaryCheckbox: true,
-                    dialog: $("#${n}addParameterDialog"),
-                    form: $("#${n}addParameterForm"),
                     multivalued: true,
-                    messages: {
-                        remove: '<spring:message code="remove" htmlEscape="false" javaScriptEscape="true"/>',
-                        removeParameter: '<spring:message code="setParameters.deleteButton" htmlEscape="false" javaScriptEscape="true"/>',
-                        addValue: '<spring:message code="add.value" htmlEscape="false" javaScriptEscape="true"/>'
-                    }
+                    dialog: document.getElementById('${n}addParameterDialog')
                 });
             });
 
@@ -1143,13 +1127,8 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
         resetStopImmediately($(stopImmediatelyFieldName).is(':checked'));
         resetRestartManually($(restartManuallyFieldName).is(':checked'));
 
-        function toggleChevron(e) {
-            $(e.target)
-            .prev('.card-header')
-            .find("i.fa")
-            .toggleClass('fa-chevron-down fa-chevron-up');
-            }
-        $('#accordion').on('hidden.bs.collapse', toggleChevron);
-        $('#accordion').on('shown.bs.collapse', toggleChevron);
+        $('#accordion a[data-bs-toggle="collapse"]').click(function(e) {
+            $(this).find('i.fa').toggleClass('fa-chevron-down fa-chevron-up');
+        });
     });
 </script>

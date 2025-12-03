@@ -31,10 +31,10 @@
   <js>javascript/uportal/modern-layout-draggable-manager.js</js>
   <js>javascript/uportal/modern-portlet-browser.js</js>
   <js>javascript/uportal/modern-portal-gallery.js</js>
-  <js>javascript/uportal/modern-layout-preferences.js</js>
   <js>javascript/uportal/modern-tab-manager.js</js>
+  <js>javascript/uportal/modern-layout-preferences.js</js>
   <js>javascript/uportal/modern-fragment-permissions-manager.js</js>
-  <js>javascript/uportal/up-layout-selector.js</js>
+
   <js>javascript/uportal/up-skin-selector.js</js>
   <js>javascript/uportal/up-tab-manager.js</js>
   <js>javascript/uportal/modern-layout-preferences-persistence.js</js>
@@ -44,8 +44,8 @@
   <js>javascript/uportal/modern-autocomplete.js</js>
   <js>javascript/uportal/up-showHideToggle.js</js>
   <js>javascript/uportal/modern-entity-selector.js</js>
-  <js>javascript/uportal/up-parameter-editor.js</js>
-  <js>javascript/uportal/flyout-nav.js</js>
+  <js>javascript/uportal/modern-parameter-editor.js</js>
+  <js>javascript/uportal/modern-flyout-nav.js</js>
   <js>javascript/uportal/up-translator.js</js>
   <js>javascript/uportal/up-ga.js</js>
   <js>javascript/uportal/up-rating-option.js</js>

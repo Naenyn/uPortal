@@ -132,19 +132,23 @@ class ModernTabManager {
     }
 
     initializeAddHandler() {
-        const addElement = this.container.querySelector(this.options.selectors.add);
+        // Look for add button in the navigation list, not just within this container
+        const addElement = document.querySelector(this.options.selectors.add);
         if (addElement) {
             const tabGroupElement = this.container.querySelector(this.options.selectors.tabGroup);
             const tabGroup = tabGroupElement ? tabGroupElement.textContent.trim() : '';
             
             addElement.addEventListener('click', (e) => {
                 e.preventDefault();
+                console.log('Add tab clicked:', this.options.addTabLabel, this.options.addTabWidths, tabGroup);
                 this.events.onTabAdd(
                     this.options.addTabLabel,
                     this.options.addTabWidths,
                     tabGroup
                 );
             });
+        } else {
+            console.warn('Add tab button not found with selector:', this.options.selectors.add);
         }
     }
 
