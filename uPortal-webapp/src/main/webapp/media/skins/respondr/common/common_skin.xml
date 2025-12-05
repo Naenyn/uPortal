@@ -36,6 +36,16 @@
     <js included="plain">/resource-server/rs/jquery-migrate/jquery-migrate-3.5.0.js</js>
     <js included="aggregated">/resource-server/rs/jquery-migrate/jquery-migrate-3.5.0.min.js</js>
 
+    <!-- Bootstrap 5 CSS -->
+    <css included="plain" resource="true">/webjars/bootstrap/css/bootstrap.css</css>
+    <css included="aggregated" resource="true">/webjars/bootstrap/css/bootstrap.min.css</css>
+    <css resource="true">/webjars/bootstrap/css/bootstrap.min.css</css>
+    
+    <!-- Bootstrap 5 JS -->
+    <js included="plain" resource="true">/webjars/bootstrap/js/bootstrap.bundle.js</js>
+    <js included="aggregated" resource="true">/webjars/bootstrap/js/bootstrap.bundle.min.js</js>
+    <js resource="true">/webjars/bootstrap/js/bootstrap.bundle.min.js</js>
+
     <js included="plain">/resource-server/rs/jqueryui/1.14.1/jquery-ui.js</js>
     <js included="aggregated">/resource-server/rs/jqueryui/1.14.1/jquery-ui.min.js</js>
 
@@ -45,22 +55,7 @@
     <js included="aggregated" resource="true">/ResourceServingWebapp/rs/jqueryui/1.10.3/i18n/jquery-ui-i18n.min.js</js>
     -->
 
-    <!-- Bootstrap 5 CSS -->
-    <css included="plain">/resource-server/webjars/bootstrap/css/bootstrap.css</css>
-    <css included="aggregated">/resource-server/webjars/bootstrap/css/bootstrap.min.css</css>
-    
-    <!-- Bootstrap 5 JS -->
-    <js included="plain">/resource-server/webjars/bootstrap/js/bootstrap.bundle.js</js>
-    <js included="aggregated">/resource-server/webjars/bootstrap/js/bootstrap.bundle.min.js</js>
 
-    <!-- Fluid must come after Bootstrap.  Issue found with Respondr.  When you click on the 'Manage Portlets' link,
-     | fluid was calling that.container.tooltip("widget"); which should call jQueryUI's tooltip function, but
-     | bootstrap.js overwrote it and caused a Javascript error.  Loading bootstrap first will overwrite tooltip
-     | (and perhaps other functions), then loading fluid will overwrite bootstrap so fluid works.
-     | todo: if we will use bootstrap tooltip JavaScript, bootstrap does have support for a noconflict mode (see
-     | http://getbootstrap.com/javascript/#js-noconflict) and we can save the bootstrap functions to invoke them
-     | manually.
-     -->
     <js included="plain" resource="true">/rs/fluid/1.5.0/js/fluid-custom.js</js>
     <js included="aggregated" resource="true">/rs/fluid/1.5.0/js/fluid-custom.min.js</js>
 

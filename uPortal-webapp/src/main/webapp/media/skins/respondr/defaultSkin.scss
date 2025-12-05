@@ -17,41 +17,9 @@
  * under the License.
  */
 
-/* Search results portlet */
-.search-portlet {
-  .search-result {
-    h3,
-    a {
-      color: @portal-link-color !important;
-    }
+/**
+ * For information on how to skin uPortal
+ * @see docs/SKINNING_UPORTAL.md
+ */
 
-    .card-footer {
-      font-size: 11px;
-
-      p {
-        margin: 0;
-      }
-    }
-  }
-}
-
-/* Search button icon fix for Bootstrap 4 */
-#webSearchSubmit.btn-secondary .fa-search {
-  color: #000;
-}
-
-/* Bootstrap 5 input-group fix */
-#webSearchContainer .input-group {
-  display: flex;
-  
-  .form-control {
-    flex: 1;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  
-  .btn {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
+@import "common/scss/common";

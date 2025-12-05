@@ -27,9 +27,9 @@
         margin: 1em 0;
 
         .title {
-          background-color: @color4-light;
-          border-bottom: 2px solid @color4-lighter;
-          color: @grayscale9;
+          background-color: $color4-light;
+          border-bottom: 2px solid $color4-lighter;
+          color: $grayscale9;
           border-radius: 4px;
           font-weight: 400;
           margin: 0;
@@ -51,7 +51,7 @@
 
   .form-group {
     label {
-      color: @grayscale10;
+      color: $grayscale10;
     }
   }
 
@@ -80,14 +80,14 @@
   }
 
   .buttons {
-    border-top: 1px dotted @grayscale4;
-    border-bottom: 1px dotted @grayscale4;
+    border-top: 1px dotted $grayscale4;
+    border-bottom: 1px dotted $grayscale4;
     margin: 1em 0;
     padding: 1em 0;
   }
 
   .glyphicon-info-sign {
-    color: @color1;
+    color: $color1;
   }
 
   .parameter-editor-value {

@@ -1,0 +1,606 @@
+/**
+ * Licensed to Apereo under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work
+ * for additional information regarding copyright ownership.
+ * Apereo licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License.  You may obtain a
+ * copy of the License at the following location:
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/*
+------------------------------------
+  uPortal Gallery.
+------------------------------------
+ * The gallery is a sliding drawer that provides interfaces for customizing the protal.
+ */
+
+/* Gallery Variables */
+$galleryBackground: $grayscale10;
+$galleryBorder: 1px solid $grayscale4;
+$galleryHandleBackground: $black url("./common/images/gallery-bar.png") bottom left repeat-x;
+$galleryHandleBorder: 1px solid $grayscale7;
+$galleryHandleLinkBackround: $white scroll url("./common/images/gallery-handle.png") 0 0 repeat-x;
+$galleryHandleLink: $grayscale9;
+$galleryHandleRound: 3px;
+$galleryHandleShadow: 0 1px 2px $grayscale4;
+$galleryHandleIconClosed: url("./common/images/gallery-handle-arrow-down.png");
+$galleryHandleIconOpen: url("./common/images/gallery-handle-arrow-up.png") !important;
+$galleryBarBackground: transparent url("./common/images/gallery-bar.png") top left repeat-x;
+$galleryMenuBackground: $grayscale9;
+$galleryMenuItemBackground: $grayscale8;
+$galleryMenuItemLink: $white;
+$galleryMenuItemBackgroundHover: $color1-darker;
+$galleryMenuItemLinkHover: $white;
+$galleryMenuItemActiveBackground: $grayscale10;
+$galleryMenuItemActiveLink: $white;
+$galleryMenuItemActiveIcon: transparent url("./common/images/gallery-arrow-right.png") 90% 50% no-repeat;
+$galleryCloseButtonType: default;
+$galleryFilterBackground: $grayscale7;
+$galleryFilterBorder: 1px solid $grayscale8;
+$galleryFilterRound: 5px;
+$galleryFilterTitleRound: 5px;
+$galleryFilterTitleBackground: $grayscale10;
+$galleryFilterTitle: $color1;
+$galleryFilterTitleHover: $color1-lighter;
+$galleryFilterTitleActive: $white;
+$galleryFilterTitleActiveHover: $color1-lighter;
+$galleryFilterTitleActiveBgd: $grayscale9;
+$galleryFilterSubtitle: $grayscale2;
+$galleryFilterSubtitleLine: 1px dotted $grayscale9;
+$galleryFSearchInputBackground: $grayscale8;
+$galleryFSearchInputText: $white;
+$galleryFSearchInputPadding: 0.3em;
+$galleryFSearchInputHover: $grayscale7;
+$galleryFSearchInputFocusText: $black;
+$galleryFSearchInputFocusBackground: $white;
+$galleryCatLink: $grayscale3;
+$galleryCatLinkHover: $color1;
+$galleryCatActiveLink: $white;
+$galleryResultsBottomPadding: 5px;
+$galleryResultsText: $grayscale4;
+$galleryRIBackground: $grayscale8;
+$galleryRIBorder: 1px solid $grayscale5;
+$galleryRIRound: 5px;
+$galleryRIShadow: 1px 1px 2px #000;
+$galleryRIUtilityHeight: 16px;
+$galleryRIUtilityRound: 5px;
+$galleryRIGripper: $grayscale9 url("./common/images/gripper.png") 5px 0px no-repeat;
+$galleryRITitle: $white;
+$galleryRIDescription: $grayscale3;
+$galleryRIBackgroundHover: $grayscale9;
+$galleryRIBorderHover: 1px soild $color1;
+$galleryRIGradient1Hover: $grayscale10;
+$galleryRIGradient2Hover: #060606;
+$galleryRILink: #000;
+$galleryRILinkBackground: $grayscale8;
+$galleryRILinkGradient1: $grayscale4;
+$galleryRILinkGradient2: $grayscale9;
+$galleryRILinkRound: 5px;
+$galleryRILinkBackgroundHover: $color1-dark;
+$galleryRILinkGradient1Hover: $color1-light;
+$galleryRILinkGradient2Hover: $color1-dark;
+$galleryRISelectedBackground: $grayscale8;
+$galleryRISelectedBorderWidth: 3px;
+$galleryRISelectedBorderStyle: solid;
+$galleryRISelectedBorderColor: $color1;
+$galleryPagerText: $white;
+$galleryPagerButtonBackground: $grayscale7;
+$galleryPagerButtonBorder: 1px solid $grayscale5;
+$galleryPagerButtonGradient1: $grayscale8;
+$galleryPagerButtonGradient2: $grayscale10;
+$galleryPagerButtonRound: 5px;
+$galleryPagerBtnBackgroundHover: $grayscale5;
+$galleryPagerBtnGradient1Hover: $grayscale6;
+$galleryPagerBtnGradient2Hover: $grayscale10;
+$galleryPagerBtnBgdDisabled: $grayscale8 !important;
+$galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
+
+/* Gallery Mixins */
+@mixin gallery-handle-round($galleryHandleRound) {
+  @if $galleryHandleRound {
+    @include border-radiuses(0, 0, $galleryHandleRound, $galleryHandleRound);
+  }
+}
+
+@mixin gallery-handle-shadow($galleryHandleShadow) {
+  @if $galleryHandleShadow {
+    @include box-shadow($galleryHandleShadow);
+  }
+}
+
+@mixin gallery-filter-round($galleryFilterRound) {
+  @if $galleryFilterRound {
+    @include border-radius($galleryFilterRound);
+  }
+}
+
+@mixin gallery-filter-title-round($galleryFilterTitleRound) {
+  @if $galleryFilterTitleRound {
+    @include border-radiuses(5px, 0, 0, 5px);
+
+    span {
+      @include border-radiuses($galleryFilterTitleRound, $galleryFilterTitleRound, 0, 0);
+    }
+  }
+}
+
+@mixin gallery-ri-round($galleryRIRound) {
+  @if $galleryRIRound {
+    @include border-radius($galleryRIRound);
+  }
+}
+
+@mixin gallery-ri-shadow($galleryRIShadow) {
+  @if $galleryRIShadow {
+    @include box-shadow($galleryRIShadow);
+  }
+}
+
+@mixin gallery-ri-utility-round($galleryRIUtilityRound) {
+  @if $galleryRIUtilityRound {
+    @include border-radiuses($galleryRIUtilityRound, $galleryRIUtilityRound, 0, 0);
+  }
+}
+
+@mixin gallery-ri-link-gradient($galleryRILinkGradient1) {
+  @if $galleryRILinkGradient1 {
+    @include vertical-gradient($galleryRILinkGradient1, $galleryRILinkGradient2);
+  }
+}
+
+@mixin gallery-ri-link-round($galleryRILinkRound) {
+  @if $galleryRILinkRound {
+    @include border-radiuses(0, $galleryRILinkRound, 0, 0);
+  }
+}
+
+@mixin gallery-ri-link-gradient-hover($galleryRILinkGradient1Hover) {
+  @if $galleryRILinkGradient1Hover {
+    @include vertical-gradient($galleryRILinkGradient1Hover, $galleryRILinkGradient2Hover);
+  }
+}
+
+@mixin gallery-pager-button-gradient($galleryPagerButtonGradient1) {
+  @if $galleryPagerButtonGradient1 {
+    @include vertical-gradient($galleryPagerButtonGradient1, $galleryPagerButtonGradient2);
+  }
+}
+
+@mixin gallery-pager-button-round($galleryPagerButtonRound) {
+  @if $galleryPagerButtonRound {
+    @include border-radius($galleryPagerButtonRound);
+  }
+}
+
+@mixin gallery-pager-button-gradient-hover($galleryPagerBtnGradient1Hover) {
+  @if $galleryPagerBtnGradient1Hover {
+    @include vertical-gradient($galleryPagerBtnGradient1Hover, $galleryPagerBtnGradient2Hover);
+  }
+}
+
+/* Gallery Styles */
+.portal {
+  .up-gallery {
+    background: $galleryBackground;
+    border: $galleryBorder;
+
+    div {
+      margin: 0;
+      padding: 0;
+    }
+
+    .handle {
+      /* Clickable handle that opens the drawer. Once open, the handle can be clicked to close the drawer. */
+      background: $galleryHandleBackground;
+
+      a {
+        background: $galleryHandleLinkBackround;
+        color: $galleryHandleLink;
+        border: $galleryHandleBorder;
+        border-top: none;
+
+        span {
+          background-image: $galleryHandleIconClosed;
+          background-position: right center;
+          background-repeat: no-repeat;
+        }
+      }
+
+      .handle-arrow-up {
+        background-image: $galleryHandleIconOpen;
+      }
+    }
+
+    .gallery-inner {
+      display: none;
+      overflow: hidden;
+      min-height: 200px;
+      position: relative;
+
+      .menu-wrapper {
+        display: block;
+        float: left;
+        min-height: 200px;
+        position: relative;
+        width: 130px;
+
+        /* The navigation menu of gallery views. */
+        .menu {
+          background: $galleryMenuBackground;
+          min-height: 190px;
+          margin: 0 auto 0 15px;
+          padding: 10px 0 0;
+          position: relative;
+          width: 100px;
+
+          @include border();
+
+          li {
+            background: $galleryMenuItemBackground;
+            cursor: pointer;
+            height: 34px;
+            list-style: none;
+            margin: 0;
+            position: relative;
+
+            @include border($grayscale7);
+
+            a {
+              color: $galleryMenuItemLink;
+              text-decoration: none;
+
+              span {
+                bottom: 0;
+                display: block;
+                font-size: 12px;
+                font-weight: bold;
+                margin-right: -2px;
+                padding: 8px;
+              }
+            }
+
+            &:hover,
+            &:active {
+              background: $galleryMenuItemBackgroundHover;
+
+              a {
+                color: $galleryMenuItemLinkHover;
+              }
+            }
+          }
+
+          .active {
+            background: $galleryMenuItemActiveBackground;
+            margin-right: -1px;
+            border-right: none;
+
+            a {
+              color: $galleryMenuItemActiveLink;
+            }
+
+            span {
+              background: $galleryMenuItemActiveIcon;
+              position: relative;
+            }
+
+            &:hover {
+              background: $galleryMenuItemActiveBackground;
+            }
+          }
+
+          li.last {
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+          }
+        }
+      } /* end .menu-wrapper */
+
+      .content-filters-wrapper {
+        /* Search and category filters for the add portlet and use portlet views. */
+        background: $grayscale9;
+        border: $galleryFilterBorder;
+        float: left;
+
+        @include border-radius();
+
+        h3 {
+          /* Filter titles */
+          background: $galleryFilterTitleBackground;
+          color: $galleryFilterTitle;
+          margin: 0;
+          padding: 5px 0 0;
+          cursor: pointer;
+          font-size: 12px;
+
+          @include border-radiuses(5px, 0, 0, 5px);
+
+          span {
+            padding: 1px 10px;
+          }
+        }
+
+        h3:hover,
+        h3:focus {
+          color: $galleryFilterTitleHover;
+        }
+
+        .active {
+          h3 {
+            span {
+              background: $galleryFilterTitleActiveBgd;
+              color: $galleryFilterTitleActive;
+              @include border-radiuses(5px, 0, 0, 5px);
+            }
+          }
+        }
+
+        .active h3:hover,
+        .active h3:focus {
+          color: $galleryFilterTitleActiveHover;
+        }
+
+        h4 {
+          /* Filter subtitles */
+          color: $galleryFilterSubtitle;
+          border-bottom: $galleryFilterSubtitleLine;
+        }
+
+        .portlet-search-input {
+          /* Filter search */
+          background: $galleryFSearchInputBackground;
+          color: $galleryFSearchInputText;
+          padding: $galleryFSearchInputPadding;
+          @include border-radius();
+
+          &:hover {
+            background: $galleryFSearchInputHover;
+          }
+
+          &:focus {
+            color: $galleryFSearchInputFocusText;
+            background: $galleryFSearchInputFocusBackground;
+          }
+        }
+
+        .categories {
+          /* Filter categories */
+          a {
+            color: $galleryCatLink;
+          }
+
+          a:hover,
+          a:focus {
+            color: $galleryCatLinkHover;
+          }
+
+          .active a {
+            color: $galleryCatActiveLink;
+          }
+        }
+      } /* end .content-filters-wrapper */
+
+      .results-wrapper {
+        /* Results section of the gallery. Lists portlets, skins, or layout options. */
+        padding-bottom: $galleryResultsBottomPadding;
+        color: $galleryResultsText;
+
+        .layout-wrapper .ri-link,
+        .skins-wrapper .ri-link,
+        .portlet.result-item {
+          background: $grayscale10;
+
+          @include border($grayscale5);
+          @include border-radius();
+          @include box-shadow($galleryRIShadow);
+
+          &:hover,
+          &:focus,
+          &:active {
+            background: $galleryRIBackgroundHover;
+            border: $galleryRIBorderHover;
+
+            @include vertical-gradient($galleryRIGradient1Hover, $galleryRIGradient2Hover);
+          }
+        }
+
+        .layout-wrapper,
+        .skins-wrapper {
+          .ri-link {
+            @include border-radiuses(5px, 0, 0, 0);
+            @include vertical-gradient(darkgrey, $grayscale8);
+          }
+        }
+
+        .results-item.disabled {
+          border-color: #3a3a3a !important;
+
+          @include opacity(20);
+
+          &:hover,
+          &:focus,
+          a:hover,
+          a:focus {
+            background: none !important;
+            cursor: default !important;
+          }
+        }
+
+        .results-item.selected .ri-link {
+          background: $galleryRISelectedBackground;
+          border-width: $galleryRISelectedBorderWidth;
+          border-style: $galleryRISelectedBorderStyle;
+          border-color: $galleryRISelectedBorderColor;
+          margin-bottom: -($galleryRISelectedBorderWidth * 2);
+        }
+
+        .ri-wrapper {
+          .ri-utility {
+            height: $galleryRIUtilityHeight;
+            background: $grayscale9;
+
+            @include border-radiuses(5px, 0, 0, 5px);
+          }
+
+          .portlet-thumb-gripper {
+            background: $galleryRIGripper;
+            cursor: move;
+            display: block;
+
+            span {
+              display: block;
+              height: 16px;
+              overflow: hidden;
+              visibility: hidden;
+              width: 16px;
+            }
+          }
+
+          .ri-titlebar {
+            color: $galleryRITitle;
+          }
+
+          .ri-description {
+            color: $galleryRIDescription;
+          }
+        }
+
+        .portlet-wrapper {
+          .ri-link {
+            color: $galleryRILink;
+            display: none;
+
+            @include border-radiuses(5px, 0, 0, 0);
+            @include vertical-gradient(darkgrey, $grayscale8);
+          }
+        }
+
+        .portlet-wrapper:hover,
+        .portlet-wrapper:focus {
+          .ri-link {
+            background: $galleryRILinkBackgroundHover;
+            display: block;
+            @include vertical-gradient(#699bc4, #38678f);
+          }
+        }
+
+        .pager {
+          .pager-pagination {
+            color: $galleryPagerText;
+          }
+
+          .pager-button-up,
+          .pager-button-down {
+            background: $galleryPagerButtonBackground;
+            border: $galleryPagerButtonBorder;
+
+            @include vertical-gradient($galleryPagerButtonGradient1, $galleryPagerButtonGradient2);
+            @include border-radius();
+          }
+
+          .pager-button-up:hover,
+          .pager-button-up:focus,
+          .pager-button-down:hover,
+          .pager-button-down:focus {
+            background: $galleryPagerBtnBackgroundHover;
+
+            @include border(steelblue);
+            @include vertical-gradient(#4d4d4d, #0d0d0d);
+          }
+
+          .fl-pager-disabled {
+            background: $grayscale10 !important;
+            cursor: default !important;
+            border: 1px solid $grayscale9 !important;
+
+            a {
+              cursor: default !important;
+            }
+          }
+        } // end .pager
+      } // end .results-wrapper
+    } // end .gallery-inner
+
+    .content-wrapper {
+      margin: 0 0 0 127px;
+      padding: 8px 0;
+      display: block;
+      height: 174px;
+    }
+
+    .content-filters-wrapper {
+      display: block;
+      height: 174px;
+      padding: 0;
+      position: relative;
+      width: 200px;
+    }
+
+    .content-results-wrapper {
+      margin: 0 0 0 220px;
+      display: block;
+      height: 172px;
+      padding: 0;
+    }
+
+    .column-inner {
+      position: relative;
+    }
+
+    .results-wrapper {
+      overflow: hidden;
+      padding-right: 1px;
+    }
+  } // end .up-gallery
+} // end .portal
+
+/**
+ * Additional styles from LESS version
+ */
+
+/* Gallery Portlet List - CRITICAL LAYOUT RULES */
+.up-gallery .portlet-list li {
+  width: 32% !important;
+  height: 50%;
+}
+
+.up-gallery .portlet-list li .portlet-wrapper {
+  height: 80px;
+}
+
+.up-gallery .portlet-wrapper .ri-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  cursor: pointer;
+  padding: 1px 8px;
+  text-align: center;
+}
+
+.up-gallery .portlet-wrapper .ri-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.up-gallery .portlet-wrapper .ri-content {
+  padding: 5px;
+}
+
+.up-gallery .results-wrapper .results-list li {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  float: left;
+}

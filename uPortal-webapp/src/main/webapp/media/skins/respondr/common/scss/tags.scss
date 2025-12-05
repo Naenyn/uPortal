@@ -17,7 +17,7 @@
  * under the License.
  */
 html {
-  background-color: @body-background-color;
+  background-color: $body-background-color;
   overflow-x: hidden; /* prevent horizontal scrollbar on desktop */
   min-height: 100%; /* do not use height and width properties on both html and body elements -> bug on chrome and safari with scrollTop effect with overflow-x: hidden */
   min-width: 100%;
@@ -30,7 +30,7 @@ html {
     }
 
     @media screen {
-      @media (min-width: @screen-sm-min) {
+      @media (min-width: 576px) {
         .portal-navigation-gripper::after {
           content: "";
           position: absolute;
@@ -47,68 +47,39 @@ html {
   }
 
   body {
-    // background-color: @offcanvas-background-color; /* FF3.6+ */
-
     background: -webkit-gradient(
       left top,
       right top,
-      color-stop(0%, @offcanvas-background-color),
-      color-stop(260px, darken(@offcanvas-background-color, 10%)),
-      color-stop(270px, darken(@offcanvas-background-color, 50%)),
-      color-stop(271px, @offcanvas-background-color),
-      color-stop(100%, @offcanvas-background-color)
+      color-stop(0%, $offcanvas-background-color),
+      color-stop(260px, darken($offcanvas-background-color, 10%)),
+      color-stop(270px, darken($offcanvas-background-color, 50%)),
+      color-stop(271px, $offcanvas-background-color),
+      color-stop(100%, $offcanvas-background-color)
     ); /* Chrome, Safari4+ */
 
     background: linear-gradient(
       to left,
-      @offcanvas-background-color 0%,
-      darken(@offcanvas-background-color, 10%) 260px,
-      darken(@offcanvas-background-color, 50%) 270px,
-      @offcanvas-background-color 271px,
-      @offcanvas-background-color 100%
-    ); /* Chrome10+,Safari5.1+ */
-
-    background: linear-gradient(
-      to left,
-      @offcanvas-background-color 0%,
-      darken(@offcanvas-background-color, 10%) 260px,
-      darken(@offcanvas-background-color, 50%) 270px,
-      @offcanvas-background-color 271px,
-      @offcanvas-background-color 100%
-    ); /* Opera 11.10+ */
-
-    background: linear-gradient(
-      to left,
-      @offcanvas-background-color 0%,
-      darken(@offcanvas-background-color, 10%) 260px,
-      darken(@offcanvas-background-color, 50%) 270px,
-      @offcanvas-background-color 271px,
-      @offcanvas-background-color 100%
-    ); /* IE 10+ */
-
-    background: linear-gradient(
-      to right,
-      @offcanvas-background-color 0%,
-      darken(@offcanvas-background-color, 10%) 260px,
-      darken(@offcanvas-background-color, 50%) 270px,
-      @offcanvas-background-color 271px,
-      @offcanvas-background-color 100%
+      $offcanvas-background-color 0%,
+      darken($offcanvas-background-color, 10%) 260px,
+      darken($offcanvas-background-color, 50%) 270px,
+      $offcanvas-background-color 271px,
+      $offcanvas-background-color 100%
     ); /* W3C */
 
     overflow-x: hidden;
 
     #wrapper {
-      background-color: @body-background-color;
-      background-image: @body-background-image;
+      background-color: $body-background-color;
+      background-image: $body-background-image;
     }
   }
 }
 
 /* ie9 fix */
-@media (max-width: @screen-xs-max) {
+@media (max-width: 575px) {
   html.no-csstransforms3d {
     body {
-      background-color: @offcanvas-background-color;
+      background-color: $offcanvas-background-color;
 
       .row-offcanvas {
         /* When the sidebar is active */
@@ -130,7 +101,7 @@ html {
 }
 
 /* ie9, ie10, ie11 fix */
-@media (max-width: @screen-xs-max) {
+@media (max-width: 575px) {
   html.no-flexboxlegacy {
     .row-offcanvas {
       /* When the sidebar is active */
@@ -143,14 +114,14 @@ html {
   }
 }
 
-/* Link color - uses defaultSkin/less/variables.less, not common/bootstrap/variables.less */
+/* Link color - uses defaultSkin/scss/variables.scss, not common/bootstrap/variables.scss */
 a {
-  color: @portal-link-color;
+  color: $portal-link-color;
   text-decoration: none;
 
   &:hover,
   &:focus {
-    color: @portal-link-hover-color;
+    color: $portal-link-hover-color;
     text-decoration: underline;
   }
 }

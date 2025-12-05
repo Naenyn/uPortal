@@ -44,7 +44,7 @@ var up = up || {};
         var instructions = ['<div class="form-text ratingModalInstruct"></div>'];
         var starRating = [
             '<input type="number" data-max="5" data-min="1" value="0" data-readonly="false" ' +
-                'data-empty-value="0" class="ratingModalInput"/>',
+                'data-empty-value="0" class="rating ratingModalInput"/>',
         ];
         var modalBody = [
             '<div class="modal-body style="font-size:2em; white-space:nowrap;">',
@@ -82,29 +82,56 @@ var up = up || {};
             '</div>',
         ].join('');
         $(this).append(modalDialog);
+        // Delay to let auto-initialization run first
+        var that = this;
+        setTimeout(function() {
+            var ratingInput = $(that).find('input.rating[type=number]');
+            if (ratingInput.length > 0 && $(that).find('.rating-input').length === 0) {
+                ratingInput.rating();
+            }
+        }, 10);
+        
         // Bootstrap 5 compatibility: use Modal class instead of jQuery plugin
         var modal = bootstrap.Modal.getInstance(this[0]) || new bootstrap.Modal(this[0]);
         modal.hide();
+        
+        // Add hidden event listener to ensure backdrop cleanup
+        this[0].addEventListener('hidden.bs.modal', function() {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
+        });
+        
+        // Bind change event to rating input immediately (not in modal events)
+        setTimeout(function() {
+            $(that).find('.rating-input input').on('change', function () {
+                $(that).find('.ratingModalSaveButton').removeClass('disabled');
+            });
+        }, 50);
+        
         $(this)
             .find('.ratingModalSaveButton')
             .click(function () {
-                var portletRating = $(that).find('input').val();
+                var portletRating = $(that).find('.rating-input input').val();
                 var saveUrl = $(that).data('saveurl');
                 $.ajax({
                     url: saveUrl,
                     data: {rating: portletRating},
                     type: 'POST',
                     success: function () {
-                        // hide the modal first to prevent flicker on updating the instructions in the modal
-                        // Bootstrap 5 compatibility: use Modal class
                         var modal = bootstrap.Modal.getInstance(that[0]);
-                        if (modal) modal.hide();
+                        if (modal) {
+                            modal.hide();
+                            // Force backdrop removal
+                            setTimeout(function() {
+                                $('.modal-backdrop').remove();
+                                $('body').removeClass('modal-open');
+                            }, 300);
+                        }
                         up.notify(
                             $(that).data('rating.save.successful'),
                             'TopCenter',
                             'success'
                         );
-                        // delay adjusting instructions to afford time for the modal to have actually hidden first
                         setTimeout(function () {
                             $(that)
                                 .find('.ratingModalInstruct')
@@ -114,10 +141,15 @@ var up = up || {};
                         }, 1000);
                     },
                     error: function () {
-                        // Dismiss the modal even on error.
-                        // Bootstrap 5 compatibility: use Modal class
                         var modal = bootstrap.Modal.getInstance(that[0]);
-                        if (modal) modal.hide();
+                        if (modal) {
+                            modal.hide();
+                            // Force backdrop removal
+                            setTimeout(function() {
+                                $('.modal-backdrop').remove();
+                                $('body').removeClass('modal-open');
+                            }, 300);
+                        }
                         up.notify(
                             $(that).data('rating.save.unsuccessful'),
                             'TopCenter',
@@ -126,7 +158,9 @@ var up = up || {};
                     },
                 });
             });
-        $(this).on('show.bs.modal', function () {
+            
+        // Bootstrap 5 Modal instance events
+        this[0].addEventListener('show.bs.modal', function (e) {
             $(that).find('.ratingModalSaveButton').addClass('disabled');
             var getUrl = $(that).data('geturl');
             $.ajax({
@@ -136,9 +170,11 @@ var up = up || {};
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
+                    var ratingInput = $(that).find('.rating-input input');
+                    var firstStar = $(that).find('.rating-input [data-value]:first');
                     if (data.rating === null) {
-                        $(that).find('input').val(0);
-                        $(that).find('input').redraw(0);
+                        ratingInput.val(0);
+                        firstStar.redraw(0);
                         $(that)
                             .find('.ratingModalInstruct')
                             .text($(that).data('rating.instructions.unrated'));
@@ -146,8 +182,8 @@ var up = up || {};
                         $(that)
                             .find('.ratingModalSaveButton')
                             .removeClass('disabled');
-                        $(that).find('input').val(data.rating);
-                        $(that).find('input').redraw(data.rating);
+                        ratingInput.val(data.rating);
+                        firstStar.redraw(data.rating);
                         $(that)
                             .find('.ratingModalInstruct')
                             .text($(that).data('rating.instructions.rated'));
@@ -164,17 +200,10 @@ var up = up || {};
             $(that).find('.modal-dialog').css('transform', 'translate(0, 50%)');
             $(that)
                 .find('.modal-dialog')
-                .css('-ms-transform', 'translate(0, 50%)'); // IE 9
+                .css('-ms-transform', 'translate(0, 50%)');
             $(that)
                 .find('.modal-dialog')
-                .css('-webkit-transform', 'translate(0, 50%)'); // Safari and Chrome
-            $(that)
-                .find('input')
-                .change(function () {
-                    $(that)
-                        .find('.ratingModalSaveButton')
-                        .removeClass('disabled');
-                });
+                .css('-webkit-transform', 'translate(0, 50%)');
         });
     };
 })(jQuery);

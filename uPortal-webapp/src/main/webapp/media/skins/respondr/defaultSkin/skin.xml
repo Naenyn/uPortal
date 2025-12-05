@@ -28,11 +28,12 @@
   <css included="plain">/ResourceServingWebapp/rs/normalize/2.1.2/normalize-2.1.2.css</css>
   <css included="aggregated">/ResourceServingWebapp/rs/normalize/2.1.2/normalize-2.1.2.min.css</css>
 
+
+
   <css included="plain">/ResourceServingWebapp/rs/fontawesome/4.7.0/css/font-awesome.css</css>
   <css included="aggregated">/ResourceServingWebapp/rs/fontawesome/4.7.0/css/font-awesome.min.css</css>
 
-  <css included="plain" resource="true">/rs/bootstrap-plugins/accessibility/1.0.2/css/bootstrap-accessibility.css</css>
-  <css included="aggregated" resource="true">/rs/bootstrap-plugins/accessibility/1.0.2/css/bootstrap-accessibility.min.css</css>
+
 
   <!-- Default jQuery UI theme.  Point this to a custom jQuery UI theme if desired. -->
   <css included="plain">/resource-server/rs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css</css>

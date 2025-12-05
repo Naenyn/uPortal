@@ -18,8 +18,9 @@
  */
 
 /**
- * For information on how to skin uPortal
- * @see docs/SKINNING_UPORTAL.md
+ * View styles targeting a single specific view within uPortal
  */
 
-@import "common/common.less";
+@import "views/activity";
+@import "views/googleAnalytics"; 
+@import "views/sitemap";

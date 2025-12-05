@@ -22,28 +22,28 @@
    ========================================================================== */
 
 #region-footer-first {
-  background: @footer-background-color;
-  color: @footer-text-color;
+  background: $footer-background-color;
+  color: $footer-text-color;
   font-size: 90%;
   padding: 20px;
 
   a {
-    color: @footer-link-color;
+    color: $footer-link-color;
 
     &:hover,
     &:focus {
-      color: @footer-link-hover-color;
+      color: $footer-link-hover-color;
     }
   }
 
   h4 {
     a {
-      color: @footer-link-color;
+      color: $footer-link-color;
       margin: 0;
 
       &:hover,
       &:focus {
-        color: @footer-link-hover-color;
+        color: $footer-link-hover-color;
       }
     }
 
@@ -59,8 +59,8 @@
    ========================================================================== */
 
 #region-footer-second {
-  background: @footer-secondary-background-color;
-  color: @footer-text-color;
+  background: $footer-secondary-background-color;
+  color: $footer-text-color;
   font-size: 80%;
   padding: 5px 0;
 
@@ -69,11 +69,11 @@
   }
 
   .legal-footer a {
-    color: @footer-link-color;
+    color: $footer-link-color;
 
     &:hover,
     &:focus {
-      color: @footer-link-hover-color;
+      color: $footer-link-hover-color;
     }
   }
 }
@@ -83,10 +83,10 @@
    ========================================================================== */
 
 /*
- * Breakpoints: are defined in bootstrap/variables.less
+ * Breakpoints: are defined in bootstrap/variables.scss
  */
 
-@media only screen and (min-width: @screen-sm-min) {
+@media only screen and (min-width: 576px) {
   #region-footer-first,
   #region-footer-second {
     padding: 20px 0;

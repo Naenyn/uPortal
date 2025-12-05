@@ -28,7 +28,7 @@
     cursor: pointer;
     width: 15px;
     height: 15px;
-    background: url(${renderRequest.contextPath}/media/skins/icons/destroy.png)
+    background: url("../../../icons/destroy.png")
       no-repeat;
 
     &:hover {
