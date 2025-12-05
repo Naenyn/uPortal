@@ -62,26 +62,8 @@ class ModernTabManager {
         
         if (!editElement || !textElement) return;
 
-        // Create inline editor using existing Fluid implementation for now
-        if (window.up && window.up.fluid && window.up.fluid.inlineEdits) {
-            this.inlineEditor = window.up.fluid.inlineEdits(this.container, {
-                selectors: {
-                    text: this.options.selectors.text,
-                    edit: this.options.selectors.edit
-                },
-                listeners: {
-                    afterBeginEdit: () => {
-                        this.hideEditControls();
-                    },
-                    afterFinishEdit: (newValue, oldValue, editNode, viewNode) => {
-                        this.showEditControls();
-                        this.events.onTabEdit(newValue, oldValue, editNode, viewNode);
-                    }
-                },
-                submitOnEnter: this.options.submitOnEnter,
-                useTooltip: false
-            });
-        }
+        // Modern inline editing without Fluid dependency
+        this.setupModernInlineEdit(editElement, textElement);
 
         // Add hover effects for text editing
         textElement.addEventListener('mouseenter', () => {
@@ -181,31 +163,8 @@ class ModernTabManager {
     }
 
     setupReorderLayout() {
-        // Use existing Fluid reorderLayout for now
-        if (window.up && window.up.fluid && window.up.fluid.reorderLayout) {
-            this.reorderLayout = window.up.fluid.reorderLayout(this.container, {
-                selectors: {
-                    columns: this.options.selectors.columns,
-                    modules: this.options.selectors.modules,
-                    lockedModules: this.options.selectors.lockedModules,
-                    grabHandle: this.options.tabContext === 'header' ? this.options.selectors.grabHandle : ''
-                },
-                styles: {
-                    defaultStyle: `fl-reorderer-${this.options.tabContext}-movable-default`,
-                    selected: `fl-reorderer-${this.options.tabContext}-movable-selected`,
-                    dragging: `fl-reorderer-${this.options.tabContext}-movable-dragging`,
-                    mouseDrag: `fl-reorderer-${this.options.tabContext}-movable-dragging`,
-                    hover: `fl-reorderer-${this.options.tabContext}-movable-hover`,
-                    dropMarker: `fl-reorderer-${this.options.tabContext}-dropMarker`,
-                    avatar: `fl-reorderer-${this.options.tabContext}-avatar`
-                },
-                listeners: {
-                    afterMove: (item) => {
-                        this.handleTabMove(item);
-                    }
-                }
-            });
-        }
+        // Modern drag and drop without Fluid dependency
+        this.setupModernDragDrop();
     }
 
     handleTabMove(item) {
@@ -268,11 +227,98 @@ class ModernTabManager {
         return selectorPath ? this.container.querySelector(selectorPath) : null;
     }
 
+    setupModernInlineEdit(editElement, textElement) {
+        let isEditing = false;
+        
+        textElement.addEventListener('click', () => {
+            if (isEditing) return;
+            
+            isEditing = true;
+            this.hideEditControls();
+            
+            const originalText = textElement.textContent;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = originalText;
+            input.className = textElement.className;
+            
+            const finishEdit = () => {
+                const newValue = input.value.trim();
+                textElement.textContent = newValue || originalText;
+                textElement.style.display = '';
+                input.remove();
+                isEditing = false;
+                this.showEditControls();
+                
+                if (newValue && newValue !== originalText) {
+                    this.events.onTabEdit(newValue, originalText, editElement, textElement);
+                }
+            };
+            
+            input.addEventListener('blur', finishEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    finishEdit();
+                } else if (e.key === 'Escape') {
+                    input.value = originalText;
+                    finishEdit();
+                }
+            });
+            
+            textElement.style.display = 'none';
+            textElement.parentNode.insertBefore(input, textElement);
+            input.focus();
+            input.select();
+        });
+    }
+
+    setupModernDragDrop() {
+        const modules = this.container.querySelectorAll(this.options.selectors.modules);
+        
+        modules.forEach(module => {
+            if (module.classList.contains('locked')) return;
+            
+            module.draggable = true;
+            
+            module.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', module.id);
+                module.classList.add('dragging');
+            });
+            
+            module.addEventListener('dragend', () => {
+                module.classList.remove('dragging');
+            });
+            
+            module.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+            
+            module.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const draggedId = e.dataTransfer.getData('text/plain');
+                const draggedModule = document.getElementById(draggedId);
+                
+                if (draggedModule && draggedModule !== module) {
+                    const parent = module.parentNode;
+                    const rect = module.getBoundingClientRect();
+                    const midpoint = rect.left + rect.width / 2;
+                    
+                    if (e.clientX < midpoint) {
+                        parent.insertBefore(draggedModule, module);
+                    } else {
+                        parent.insertBefore(draggedModule, module.nextSibling);
+                    }
+                    
+                    this.handleTabMove(draggedModule);
+                }
+            });
+        });
+    }
+
     refresh() {
-        // Refresh the reorder layout if it exists
-        if (this.reorderLayout && this.reorderLayout.refresh) {
-            this.reorderLayout.refresh();
-        }
+        // Modern refresh without Fluid dependency
+        this.manageLockedTabs();
     }
 }
 

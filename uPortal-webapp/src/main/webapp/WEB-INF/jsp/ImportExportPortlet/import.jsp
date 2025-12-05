@@ -181,22 +181,8 @@
 
 <script type="text/javascript">
     up.jQuery(document).ready(function () {
-        var myUpload = up.fluid.uploader(".flc-uploader", {
-            strategy: {
-                type: "fluid.uploader.progressiveStrategy",
-                options: {
-                    // Special options for the Flash version of Uploader.
-                    flashSettings: {
-                        // This option points to the location of the SWFUpload Flash object that ships with Fluid Infusion.
-                        flashURL: "/ResourceServingWebapp/rs/fluid/1.3/lib/swfupload.swf",
-
-                        // This option points to the location of the Browse Files button used with Flash 10 clients.
-                        flashButtonImageURL: "infusion/components/uploader/images/browse.png"
-                    }
-                }
-            },
+        var myUpload = up.uploader(".flc-uploader", {
             queueSettings: {
-                // Set the uploadURL to the URL for posting files to your server.
                 uploadURL: "<c:url value="/api/import"/>",
                 fileQueueLimit: 1
             }

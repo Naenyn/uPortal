@@ -19,16 +19,22 @@
 'use strict';
 var up = up || {};
 
-(function ($, fluid) {
+(function ($) {
     /**
-     * Instantiate a PortletRegistry component
+     * Modern EntityRegistry - no Fluid dependencies
      *
      * @param {Object} container Container the element containing the fragment browser
      * @param {Object} options configuration options for the components
      */
     up.EntityRegistry = function (container, options) {
         // construct the new component
-        var that = fluid.initView('up.EntityRegistry', container, options);
+        var that = {
+            container: container,
+            options: {
+                entitiesUrl: '/uPortal/api/entities',
+                ...options
+            }
+        };
 
         that.state = that.state || {};
         that.state.entityCache = [];
@@ -98,8 +104,4 @@ var up = up || {};
         return that;
     };
 
-    // defaults
-    fluid.defaults('up.EntityRegistry', {
-        entitiesUrl: '/uPortal/api/entities',
-    });
-})(jQuery, fluid);
+})(jQuery);

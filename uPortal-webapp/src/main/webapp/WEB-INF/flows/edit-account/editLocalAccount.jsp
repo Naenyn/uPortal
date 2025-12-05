@@ -243,12 +243,12 @@
     up.jQuery(function() {
         var $ = up.jQuery;
         $(function(){
-            up.ParameterEditor(
-                    $("#${n}standardAttributes"),
+            new ModernParameterEditor(
+                    $("#${n}standardAttributes")[0],
                     {
                         parameterBindName: 'attributes',
                         multivalued: true,
-                        dialog: $("#${n}parameterForm"),
+                        dialog: $("#${n}parameterForm")[0],
                         displayClasses: {
                             deleteItemLink: "delete-attribute-link",
                             deleteValueLink: "delete-attribute-value-link",
@@ -261,12 +261,12 @@
                         }
                     }
                 );
-            up.ParameterEditor(
-                    $("#${n}customAttributes"),
+            new ModernParameterEditor(
+                    $("#${n}customAttributes")[0],
                     {
                         parameterBindName: 'attributes',
                         multivalued: true,
-                        dialog: $("#${n}parameterForm"),
+                        dialog: $("#${n}parameterForm")[0],
                         displayClasses: {
                             deleteItemLink: "delete-attribute-link",
                             deleteValueLink: "delete-attribute-value-link",

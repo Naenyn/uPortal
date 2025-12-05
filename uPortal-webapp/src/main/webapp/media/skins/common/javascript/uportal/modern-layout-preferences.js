@@ -308,11 +308,7 @@ class LayoutPreferencesPersistence {
 
 class UrlProvider {
     constructor(container, options = {}) {
-        this.options = options;
-        // Use existing Fluid implementation for now
-        if (window.up && window.up.UrlProvider) {
-            return window.up.UrlProvider(container, options);
-        }
+        return new ModernUrlProvider(container, options);
     }
 }
 
@@ -325,20 +321,7 @@ class TabManager {
 
 class PortletReorderer {
     constructor(selector, options = {}) {
-        this.container = document.querySelector(selector);
-        this.options = options;
-        // Use existing Fluid implementation for now
-        if (window.up && window.up.fluid && window.up.fluid.reorderLayout) {
-            return window.up.fluid.reorderLayout(selector, {
-                selectors: options.selectors,
-                listeners: {
-                    afterMove: options.onAfterMove
-                },
-                styles: {
-                    mouseDrag: 'fl-reorderer-movable-dragging-mouse'
-                }
-            });
-        }
+        return new ModernLayoutDraggableManager(selector, options);
     }
 }
 

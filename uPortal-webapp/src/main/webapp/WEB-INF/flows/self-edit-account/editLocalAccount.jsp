@@ -160,12 +160,12 @@
     up.jQuery(function() {
         var $ = up.jQuery;
         $(function(){
-            up.ParameterEditor(
-                $("#${n}userAttributes"),
+            new ModernParameterEditor(
+                $("#${n}userAttributes")[0],
                 {
                     parameterBindName: 'attributes',
                     multivalued: true,
-                    dialog: $("#${n}parameterForm"),
+                    dialog: $("#${n}parameterForm")[0],
                     displayClasses: {
                         deleteItemLink: "delete-attribute-link",
                         deleteValueLink: "delete-attribute-value-link",

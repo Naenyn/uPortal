@@ -18,20 +18,43 @@
  */
 var up = up || {};
 
-(function ($, fluid) {
+(function ($) {
     /**
-     * Instantiate a LayoutPersistence component
+     * Modern LayoutPersistence - no Fluid dependencies
      *
      * @param {Object} component Container the element containing the fragment browser
      * @param {Object} options configuration options for the components
      */
     up.LayoutPreferencesPersistence = function (container, options) {
         // construct the new component
-        var that = fluid.initView(
-            'up.LayoutPreferencesPersistence',
-            container,
-            options
-        );
+        var that = {
+            container: container,
+            options: {
+                saveLayoutUrl: null,
+                messages: {
+                    error: 'Error persisting layout change'
+                },
+                ...options
+            },
+            events: {
+                onSuccess: [],
+                onError: []
+            }
+        };
+        
+        // Event system
+        that.fire = function(event, ...args) {
+            if (that.events[event]) {
+                that.events[event].forEach(callback => callback(...args));
+            }
+        };
+        
+        // Add default error handler
+        that.events.onError.push(function(that, request, text, error) {
+            if (console) console.log(request, text, error);
+            const errorEl = that.container ? that.container.querySelector('.layout-persistence-error-message') : null;
+            if (errorEl) errorEl.textContent = that.options.messages.error;
+        });
 
         that.update = function (data, success) {
             $.ajax({
@@ -42,7 +65,7 @@ var up = up || {};
                 async: false,
                 success: success,
                 error: function (request, text, error) {
-                    that.events.onError.fire(that, request, text, error);
+                    that.fire('onError', that, request, text, error);
                 },
             });
         };
@@ -50,25 +73,4 @@ var up = up || {};
         return that;
     };
 
-    // defaults
-    fluid.defaults('up.LayoutPreferencesPersistence', {
-        saveLayoutUrl: null,
-        selectors: {
-            errorMessage: '.layout-persistence-error-message',
-        },
-        messages: {
-            error: 'Error persisting layout change',
-        },
-        events: {
-            onSuccess: null,
-            onError: null,
-        },
-        listeners: {
-            onSuccess: null,
-            onError: function (that, request, text, error) {
-                if (console) console.log(request, text, error);
-                that.locate('errorMessage').text(that.options.messages.error);
-            },
-        },
-    });
-})(jQuery, fluid);
+})(jQuery);
