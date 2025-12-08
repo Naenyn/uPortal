@@ -269,9 +269,7 @@
   <script type="text/javascript">
     var up = up || {};
     up.jQuery = jQuery.noConflict(true);
-    up.fluid = fluid;
-    fluid = null;
-    fluid_1_5 = null;
+
     up._ = _.noConflict();
     up._.templateSettings = {
       interpolate : /{{=(.+?)}}/g,

@@ -117,8 +117,7 @@
     <js included="plain" resource="true">/webjars/webcomponents__webcomponentsjs/webcomponents-bundle.js</js>
     <js included="aggregated" resource="true">/webjars/webcomponents__webcomponentsjs/webcomponents-bundle.js</js>
 
-    <js included="plain" resource="true">/rs/conflict-resolution/js/resolve-conflicts.js</js>
-    <js included="aggregated" resource="true">/rs/conflict-resolution/js/resolve-conflicts.min.js</js>
+
 
     <js included="aggregated" resource="true">/scripts/portal-analytics.js</js>
 

@@ -35,17 +35,17 @@
 <c:set var="n"><portlet:namespace/></c:set>
 
 <!-- Portlet -->
-<div class="fl-widget portlet grp-mgr view-selectgroup" role="section">
+<div class="card portlet grp-mgr view-selectgroup" role="section">
     
     <!-- Portlet Titlebar -->
-    <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
+    <div class="card-header titlebar portlet-titlebar" role="sectionhead">
         <h2 class="title" role="heading">
             <spring:message code="groups.by.type" />
         </h2>
     </div> <!-- end: portlet-titlebar -->
     
     <!-- Portlet Content -->
-    <div class="fl-widget-content content portlet-content">
+    <div class="card-body content portlet-content">
     
     	<div class="card-list icon-large group-types">
         	<div class="card type-categories">

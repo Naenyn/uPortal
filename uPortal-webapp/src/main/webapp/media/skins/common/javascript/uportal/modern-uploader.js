@@ -52,7 +52,7 @@ class ModernUploader {
         this.container.appendChild(this.fileInput);
 
         // Setup browse button
-        const browseBtn = this.container.querySelector('.flc-uploader-button-browse');
+        const browseBtn = this.container.querySelector('.uploader-button-browse');
         if (browseBtn) {
             browseBtn.innerHTML = '<button type="button" class="btn btn-primary">Browse Files</button>';
             browseBtn.addEventListener('click', () => this.fileInput.click());
@@ -62,15 +62,15 @@ class ModernUploader {
     }
 
     setupQueue() {
-        this.queueTable = this.container.querySelector('.flc-uploader-queue tbody');
-        this.template = this.container.querySelector('.flc-uploader-file-tmplt');
-        this.errorTemplate = this.container.querySelector('.flc-uploader-file-error-tmplt');
-        this.totalProgress = this.container.querySelector('.flc-uploader-total-progress-text p');
+        this.queueTable = this.container.querySelector('.uploader-queue tbody');
+        this.template = this.container.querySelector('.uploader-file-template');
+        this.errorTemplate = this.container.querySelector('.uploader-file-error-template');
+        this.totalProgress = this.container.querySelector('.uploader-total-progress-text p');
     }
 
     setupButtons() {
-        this.uploadBtn = this.container.querySelector('.flc-uploader-button-upload');
-        this.pauseBtn = this.container.querySelector('.flc-uploader-button-pause');
+        this.uploadBtn = this.container.querySelector('.uploader-button-upload');
+        this.pauseBtn = this.container.querySelector('.uploader-button-pause');
 
         if (this.uploadBtn) {
             this.uploadBtn.addEventListener('click', (e) => {
@@ -111,12 +111,12 @@ class ModernUploader {
 
     renderFileRow(fileObj) {
         const row = this.template.cloneNode(true);
-        row.classList.remove('flc-uploader-file-tmplt', 'fl-uploader-hidden-templates');
+        row.classList.remove('uploader-file-template', 'd-none');
         row.setAttribute('data-file-id', fileObj.id);
 
-        const nameCell = row.querySelector('.flc-uploader-file-name');
-        const sizeCell = row.querySelector('.flc-uploader-file-size');
-        const actionBtn = row.querySelector('.flc-uploader-file-action');
+        const nameCell = row.querySelector('.uploader-file-name');
+        const sizeCell = row.querySelector('.uploader-file-size');
+        const actionBtn = row.querySelector('.uploader-file-action');
 
         if (nameCell) nameCell.textContent = fileObj.name;
         if (sizeCell) sizeCell.textContent = this.formatFileSize(fileObj.size);
@@ -137,7 +137,7 @@ class ModernUploader {
 
     clearQueue() {
         this.files = [];
-        const rows = this.queueTable.querySelectorAll('tr:not(.flc-uploader-file-tmplt):not(.flc-uploader-file-error-tmplt)');
+        const rows = this.queueTable.querySelectorAll('tr:not(.uploader-file-template):not(.uploader-file-error-template)');
         rows.forEach(row => row.remove());
         this.updateUI();
     }
@@ -146,7 +146,7 @@ class ModernUploader {
         if (this.files.length === 0) return;
 
         this.uploadBtn.disabled = true;
-        this.pauseBtn.classList.remove('fl-uploader-hidden');
+        this.pauseBtn.classList.remove('d-none');
 
         for (const fileObj of this.files) {
             if (fileObj.status === 'queued') {
@@ -155,7 +155,7 @@ class ModernUploader {
         }
 
         this.uploadBtn.disabled = false;
-        this.pauseBtn.classList.add('fl-uploader-hidden');
+        this.pauseBtn.classList.add('d-none');
     }
 
     async uploadFile(fileObj) {
@@ -185,9 +185,9 @@ class ModernUploader {
 
     showError(fileObj, message) {
         const errorRow = this.errorTemplate.cloneNode(true);
-        errorRow.classList.remove('flc-uploader-file-error-tmplt', 'fl-uploader-hidden-templates');
+        errorRow.classList.remove('uploader-file-error-template', 'd-none');
         
-        const errorCell = errorRow.querySelector('.flc-uploader-file-error');
+        const errorCell = errorRow.querySelector('.uploader-file-error');
         if (errorCell) {
             errorCell.textContent = `Error uploading ${fileObj.name}: ${message}`;
         }
@@ -206,7 +206,7 @@ class ModernUploader {
 
         if (this.uploadBtn) {
             this.uploadBtn.disabled = this.files.length === 0;
-            this.uploadBtn.classList.toggle('fl-uploader-dim', this.files.length === 0);
+            this.uploadBtn.classList.toggle('opacity-50', this.files.length === 0);
         }
     }
 

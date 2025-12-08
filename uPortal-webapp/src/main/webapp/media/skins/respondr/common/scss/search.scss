@@ -35,23 +35,31 @@
   }
 }
 
-/* Search button icon fix for Bootstrap 4 */
-#webSearchSubmit.btn-secondary .fa-search {
-  color: #000;
-}
-
-/* Bootstrap 5 input-group fix */
-#webSearchContainer .input-group {
-  display: flex;
+/* Search styling to match release */
+#webSearchContainer {
+  .input-group {
+    height: 34px;
+  }
   
-  .form-control {
-    flex: 1;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  .input-group .form-control {
+    font-size: 14px;
+    padding: 6px 12px;
+    height: 34px;
+    border-color: #ccc;
+    box-sizing: border-box !important;
+    line-height: 1.42857143;
   }
   
   .btn {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    background-color: #fff !important;
+    border-color: #ccc !important;
+    color: #333 !important;
+    font-size: 14px;
+    padding: 6px 12px;
+    height: 34px;
+    
+    .fa-search {
+      color: #333 !important;
+    }
   }
 }

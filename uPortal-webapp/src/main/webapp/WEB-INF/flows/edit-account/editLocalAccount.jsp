@@ -26,10 +26,10 @@
 <c:set var="n"><portlet:namespace/></c:set>
 
 <!-- Portlet -->
-<div class="fl-widget portlet user-mgr view-reviewuser" role="section">
+<div class="card portlet user-mgr view-reviewuser" role="section">
 
     <!-- Portlet Titlebar -->
-    <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
+    <div class="card-header titlebar portlet-titlebar" role="sectionhead">
         <h2 class="title" role="heading">
             <c:choose>
                 <c:when test="${ accountForm.id < 0 }">
@@ -48,7 +48,7 @@
     </div> <!-- end: portlet-titlebar -->
 
     <!-- Portlet Body -->
-    <div class="fl-widget-content content portlet-content">
+    <div class="card-body content portlet-content">
 
         <form:form modelAttribute="accountForm" action="${formUrl}" method="POST">
 

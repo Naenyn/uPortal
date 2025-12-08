@@ -85,12 +85,34 @@
   /* TODO:  Convert the div.portal-global to be the div.region-eyebrow
        (in the XSL) and move these styles to regions.less */
   padding: 6px 2px 2px;
+  margin: 0 -15px;
   @include gradient($portal-global-background-color, $portal-global-background-gradient);
 
   border-bottom: 1px solid $portal-global-border-color;
   @include drop-shadow();
 
   text-align: right;
+  display: block; // Override Bootstrap flex display
+  
+  // Header login buttons should appear as simple links, not Bootstrap buttons
+  #webLoginContainer {
+    #portalCASLogin .btn {
+      background: transparent !important;
+      border: 1px solid transparent !important;
+      color: $header-link-color;
+      padding: 6px 12px;
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+      border-radius: 4px;
+      
+      &:hover {
+        background: transparent !important;
+        color: $header-link-color;
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .portal-editing {
@@ -119,7 +141,7 @@ h1.portal-logo a:hover {
 }
 
 #webSearchContainer {
-  margin: 12px 0 8px;
+  margin: 48px 0 8px;
 }
 
 #webSearchSubmit {

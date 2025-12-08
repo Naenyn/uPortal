@@ -32,7 +32,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | the user interface of this portlet
 | including HTML, CSS, JavaScript, accessibilty,
 | naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System)
+| (like jQuery and Bootstrap)
 | and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
@@ -47,10 +47,10 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 </style>
     
 <!-- Portlet -->
-<div class="fl-widget portlet ptl-mgr view-chooseportlet bootstrap-styles container-fluid" role="section">
+<div class="card portlet ptl-mgr view-chooseportlet bootstrap-styles container-fluid" role="section">
     <div class="row">
         <!-- Portlet Titlebar -->
-        <div class="fl-widget-titlebar titlebar portlet-titlebar col-md-12" role="sectionhead">
+        <div class="card-header titlebar portlet-titlebar col-md-12" role="sectionhead">
             <h2 class="title" role="heading">
                 <spring:message code="register.new.portlet"/>
             </h2>
@@ -58,7 +58,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
     </div>
 
     <!-- Portlet Content -->
-    <div class="fl-widget-content content portlet-content row">
+    <div class="card-body content portlet-content row">
 
         <!-- Portlet Messages -->
         <spring:hasBindErrors name="portlet">

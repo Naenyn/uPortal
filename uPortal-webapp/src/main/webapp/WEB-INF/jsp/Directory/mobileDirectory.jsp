@@ -125,7 +125,6 @@
 <script type="text/javascript">
 up.jQuery(function() {
     var $ = up.jQuery;
-    var fluid = up.fluid;
 
     $(function() { 
 

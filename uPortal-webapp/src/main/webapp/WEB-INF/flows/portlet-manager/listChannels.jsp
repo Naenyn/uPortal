@@ -49,7 +49,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | the user interface of this portlet
 | including HTML, CSS, JavaScript, accessibilty,
 | naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System)
+| (like jQuery and Bootstrap)
 | and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
@@ -108,7 +108,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 </style>
 
 <!-- Portlet -->
-<div id="${n}portletBrowser" class="fl-widget portlet ptl-mgr view-home" role="section">
+<div id="${n}portletBrowser" class="card portlet ptl-mgr view-home" role="section">
   <c:if test="${not empty statusMsgCode}">
     <div class="alert alert-success alert-dismissable">
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
@@ -119,7 +119,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
     </div>
   </c:if>
   <!-- Portlet Titlebar -->
-  <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
+  <div class="card-header titlebar portlet-titlebar" role="sectionhead">
     <h2 class="title" role="heading"><spring:message code="portlet.registry"/></h2>
     <div class="fl-col-flex2 toolbar" role="toolbar">
       <div class="fl-col">
@@ -127,7 +127,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
           <a class="btn btn-primary" href="${ newPortletUrl }" title="<spring:message code="register.new.portlet"/>"><span><spring:message code="register.new.portlet"/></span>&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></a>
         </div>
       </div>
-      <div class="fl-col fl-text-align-right datatable-search-view">
+      <div class="fl-col text-end datatable-search-view">
         <form class="portlet-search-form d-flex align-items-center gap-2" style="display:inline">
           <label for="${n}search" class="form-label">
             <spring:message code="search"/>
@@ -140,7 +140,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
   </div>
 
   <!-- Portlet Content -->
-  <div class="fl-widget-content content portlet-content">
+  <div class="card-body content portlet-content">
       <div>
         <table id="${n}portletsList" class="portlet-table table table-bordered table-striped table-hover" style="width:100%;">
           <thead>

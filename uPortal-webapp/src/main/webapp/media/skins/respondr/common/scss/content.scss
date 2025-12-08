@@ -174,21 +174,41 @@ section h4 {
     right: 0;
     margin: 0;
 
-    .portlet-options-menu > a {
-      color: $portlet-options-link-color;
-      font-weight: normal;
-      padding: 9px;
-      padding-right: 15px;
-
-      .caret {
-        border-top-color: $portlet-options-link-color;
-      }
-
-      &:hover {
-        color: $portlet-options-link-hover-color;
+    .portlet-options-menu {
+      font-size: 14px;
+      
+      > a {
+        color: $portlet-options-link-color;
+        font-weight: normal;
+        padding: 9px;
+        padding-right: 15px;
+        font-size: 14px;
+        text-decoration: none;
 
         .caret {
-          border-top-color: $portlet-options-link-hover-color;
+          border-top-color: $portlet-options-link-color;
+        }
+
+        &:hover {
+          color: $portlet-options-link-hover-color;
+          text-decoration: none;
+
+          .caret {
+            border-top-color: $portlet-options-link-hover-color;
+          }
+        }
+      }
+      
+      .dropdown-menu {
+        font-size: 14px;
+        
+        li {
+          padding: 3px 20px;
+        }
+        
+        a {
+          font-size: 14px;
+          padding: 3px 0;
         }
       }
     }
@@ -204,6 +224,10 @@ section h4 {
       top: 3px;
       font-size: 18px;
       margin-left: 3px;
+      
+      &.hidden {
+        display: none;
+      }
     }
   }
 }

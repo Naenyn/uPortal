@@ -30,17 +30,17 @@
 <c:set var="n"><portlet:namespace/></c:set>
 
 <!-- Portlet -->
-<div class="fl-widget portlet user-mgr view-selectuseraction" role="section">
+<div class="card portlet user-mgr view-selectuseraction" role="section">
     
     <!-- Portlet Titlebar -->
-    <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
+    <div class="card-header titlebar portlet-titlebar" role="sectionhead">
         <h2 class="title" role="heading">
             <spring:message code="manage.users" />
         </h2>
     </div> <!-- end: portlet-titlebar -->
     
     <!-- Portlet Content -->
-    <div class="fl-widget-content content portlet-content">
+    <div class="card-body content portlet-content">
     
         <div class="card-list icon-large">
             <div class="card">

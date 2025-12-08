@@ -32,23 +32,23 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | the user interface of this portlet
 | including HTML, CSS, JavaScript, accessibilty,
 | naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System)
+| (like jQuery and Bootstrap)
 | and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
     
 <!-- Portlet -->
-<div class="fl-widget portlet ptl-mgr view-choosetype" role="section">
+<div class="card portlet ptl-mgr view-choosetype" role="section">
 
 	<!-- Portlet Titlebar -->
-  <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
+  <div class="card-header titlebar portlet-titlebar" role="sectionhead">
   	<h2 class="title" role="heading">
         <spring:message code="${ completed ? 'edit.portlet' : 'register.new.portlet' }"/>
     </h2>
   </div> <!-- end: portlet-titlebar -->
   
 	<!-- Portlet Content -->
-  <div class="fl-widget-content content portlet-content">
+  <div class="card-body content portlet-content">
      
     <form:form modelAttribute="portlet" action="${queryUrl}" method="POST">
 	

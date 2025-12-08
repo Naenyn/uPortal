@@ -21,10 +21,10 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
 <!-- Portlet -->
-<section class="fl-widget portlet imp-exp view-export">
+<section class="card portlet imp-exp view-export">
 
     <!-- Portlet Titlebar -->
-    <header class="fl-widget-titlebar titlebar portlet-titlebar">
+    <header class="card-header titlebar portlet-titlebar">
         <h2 class="title">
             <spring:message code="export.portlet.entities"/>
         </h2>
@@ -37,7 +37,7 @@
     </header>
 
     <!-- Portlet Content -->
-    <div class="fl-widget-content content portlet-content">
+    <div class="card-body content portlet-content">
 
         <!-- Note -->
         <aside class="portlet-note">

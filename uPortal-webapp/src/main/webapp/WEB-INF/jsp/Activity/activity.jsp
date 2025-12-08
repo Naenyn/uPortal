@@ -25,15 +25,15 @@
 PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | For the standards and guidelines that govern
 | the user interface of this portlet
-| including HTML, CSS, JavaScript, accessibilty,
+| including HTML, CSS, JavaScript, accessibility,
 | naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System)
+| (like jQuery and Bootstrap)
 | and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
 
 <!-- Portlet -->
-<div class="fl-widget portlet portal-activity" role="section">
+<div class="card portlet portal-activity" role="section">
     <form id="${n}form">
 
         <!-- Portlet Body -->

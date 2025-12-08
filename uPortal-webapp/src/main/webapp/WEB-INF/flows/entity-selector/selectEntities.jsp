@@ -34,16 +34,16 @@
 | PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | For the standards and guidelines that govern the user interface of this portlet
 | including HTML, CSS, JavaScript, accessibility, naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System) and more, refer to:
+| (like jQuery and Bootstrap) and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
 
 <!--
 | Portlet.
 ================================================-->
-<div class="fl-widget portlet grp-mgr view-selectgroups" role="section">
+<div class="card portlet grp-mgr view-selectgroups" role="section">
     <!--titlebar-->
-    <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
+    <div class="card-header titlebar portlet-titlebar" role="sectionhead">
         <h2 class="title" role="heading"><spring:message code="${pageTitleCode}" text="${pageTitleText}"/></h2>
         <h3 class="subtitle"><spring:message code="${pageSubtitleCode}" arguments="${pageSubtitleArgument}" text="${pageSubtitleText}"/></h3>
     </div>
@@ -78,10 +78,10 @@
         <p><i class="fa fa-exclamation-circle">Unknown error. Contact your administrator.</i></p>
     </div>
 
-    <div id="${n}chooseGroupsBody" class="fl-widget-content content portlet-content container-fluid">
+    <div id="${n}chooseGroupsBody" class="card-body content portlet-content container-fluid">
         <div class="${selectionMode ? 'view-multi-select' : 'view-single-select'}">
-            <div class="columns-2 row-fluid row">
-                <div class="fl-container-flex60 span8 col-md-8">
+            <div class="columns-2 row">
+                <div class="d-flex60 span8 col-md-8">
                     <!-- entity -->
                     <div id="${n}entityBrowserContent" class="entity-browser row">
                         <div class="content row">
@@ -150,7 +150,7 @@
                         </div>
                     </div><!--end: content row -->
                 </div>
-                <div class="fl-container-flex40 span4 col-md-4">
+                <div class="d-flex40 span4 col-md-4">
                     <!--selection-->
                     <div class="portlet-selection">
                         <!--titlebar-->

@@ -399,7 +399,7 @@
    | These two templates render the focused portlet content.
   -->
   <xsl:template match="focused">
-    <div class="fluid-row">
+    <div class="row">
         <div class="col-md-12">
             <div id="portalPageBodyColumns">
                 <div class="portal-page-column column-1">

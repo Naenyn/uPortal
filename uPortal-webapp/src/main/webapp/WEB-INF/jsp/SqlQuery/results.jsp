@@ -75,10 +75,10 @@
 </style>
 
 <!-- Portlet -->
-<div class="fl-widget portlet" role="section">
+<div class="card portlet" role="section">
   
   <!-- Portlet Body -->
-  <div id="${n}resultBrowser" class="fl-widget-content portlet-body">
+  <div id="${n}resultBrowser" class="card-body portlet-body">
   
         <table id="${n}sqlResults" style="width:100%;">
             <thead>

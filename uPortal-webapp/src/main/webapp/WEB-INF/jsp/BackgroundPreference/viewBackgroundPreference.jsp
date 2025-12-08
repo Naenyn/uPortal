@@ -126,7 +126,7 @@
 </style>
 
 <div id="${n}background-edit-control">
-    <div class="background-edit-button fl-container-flex">
+    <div class="background-edit-button d-flex">
         <div class="edit-button-image"></div>
         <span class="edit-text">Change Background Image</span>
     </div>

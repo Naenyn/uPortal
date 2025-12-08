@@ -23,6 +23,7 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 
+
   <js>javascript/uportal/modern-util.js</js>
   <js>javascript/uportal/modern-portlet-registry.js</js>
   <js>javascript/uportal/modern-url-provider.js</js>
@@ -42,6 +43,9 @@
   <js>javascript/uportal/modern-parameter-editor.js</js>
   <js>javascript/uportal/modern-flyout-nav.js</js>
   <js>javascript/uportal/modern-translator.js</js>
+  <css>css/modern-uploader.css</css>
+  <css>css/modern-pager.css</css>
+  
   <js>javascript/uportal/up-ga.js</js>
   <js>javascript/uportal/up-rating-option.js</js>
   <js>javascript/uportal/up-favorite.js</js>

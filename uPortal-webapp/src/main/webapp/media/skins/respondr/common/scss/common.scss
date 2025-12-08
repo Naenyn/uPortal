@@ -27,6 +27,15 @@
  */
 @import "bootstrap";
 
+/* Reset root font-size to match Bootstrap 3 behavior */
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 14px;
+}
+
 /* ==========================================================================
    Variables
    ========================================================================== */

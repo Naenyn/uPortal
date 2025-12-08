@@ -83,17 +83,17 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | the user interface of this portlet
 | including HTML, CSS, JavaScript, accessibilty,
 | naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System)
+| (like jQuery and Bootstrap)
 | and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
 
 <!-- Portlet -->
-<div id="${n}portletBrowser" class="fl-widget portlet" role="section">
+<div id="${n}portletBrowser" class="card portlet" role="section">
 <form id="${n}form">
 
   <!-- Portlet Title -->
-  <div class="fl-widget-titlebar portlet-title" role="sectionhead">
+  <div class="card-header portlet-title" role="sectionhead">
     <h2 role="heading"><spring:message code="most.frequently.added"/></h2>
   </div> <!-- end: portlet-title -->
 
@@ -112,10 +112,10 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
   </div> <!-- end: portlet-toolbar -->
 
     <!-- Portlet Body -->
-  <div class="fl-widget-content portlet-body">
+  <div class="card-body portlet-body">
 
     <!-- Portlet Section -->
-    <div id="${n}popularPortlets" class="portlet-section fl-pager" role="region">
+    <div id="${n}popularPortlets" class="portlet-section pagination" role="region">
 
       <div class="portlet-section-body">
         <table id="${n}portletsTable" style="width:100%;">

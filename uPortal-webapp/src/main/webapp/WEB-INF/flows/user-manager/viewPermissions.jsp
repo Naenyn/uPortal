@@ -96,16 +96,16 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | the user interface of this portlet
 | including HTML, CSS, JavaScript, accessibilty,
 | naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System)
+| (like jQuery and Bootstrap)
 | and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
 
 <!-- Portlet -->
-<div class="fl-widget portlet prm-mgr" role="section">
+<div class="card portlet prm-mgr" role="section">
 
     <!-- Portlet Titlebar -->
-    <div class="fl-widget-titlebar portlet-titlebar" role="sectionhead">
+    <div class="card-header portlet-titlebar" role="sectionhead">
         <h2 class="title" role="heading">
             <a href="${ userUrl }">${ fn:escapeXml(person.name )}</a> >
             <spring:message code="permissions"/>
@@ -113,7 +113,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
     </div> <!-- end: portlet-titlebar -->
 
     <!-- Portlet Content -->
-    <div id="${n}permissionBrowser" class="fl-widget-content portlet-content">
+    <div id="${n}permissionBrowser" class="card-body portlet-content">
 
         <!-- Portlet Section -->
         <div id="${n}permissionAddingTabs" class="portlet-section view-permissions" role="region">

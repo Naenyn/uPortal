@@ -33,22 +33,22 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 | the user interface of this portlet
 | including HTML, CSS, JavaScript, accessibilty,
 | naming conventions, 3rd Party libraries
-| (like jQuery and the Fluid Skinning System)
+| (like jQuery and Bootstrap)
 | and more, refer to:
 | docs/SKINNING_UPORTAL.md
 -->
 
 <!-- Portlet -->
-<div class="fl-widget portlet prm-mgr view-listperms container-fluid" role="section">
+<div class="card portlet prm-mgr view-listperms container-fluid" role="section">
 
   <!-- Portlet Titlebar -->
-  <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
+  <div class="card-header titlebar portlet-titlebar" role="sectionhead">
       <h2 role="heading" class="title"><spring:message code="permissions.by.category"/></h2>
   </div>
   <!-- end: portlet-titlebar -->
 
   <!-- Portlet Content -->
-  <div class="fl-widget-content portlet-content row">
+  <div class="card-body portlet-content row">
 
     <div class="permission-lookup">
         <form id="${n}permissionLookupForm" class="d-flex flex-wrap align-items-center gap-3" action="${permissionLookupUrl}" method="POST">
@@ -104,7 +104,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
     <div class="fl-col-flex2 card-list icon-large">
 
         <!-- 2 column layout -->
-        <div class="fl-col fl-force-left">
+        <div class="fl-col float-start">
             <c:set var="numOwners" value="${ fn:length(owners) }" />
             <c:set var="split" value="${ numOwners / 2 }" />
             <c:forEach items="${ owners }" var="owner" varStatus="ownerStatus">
