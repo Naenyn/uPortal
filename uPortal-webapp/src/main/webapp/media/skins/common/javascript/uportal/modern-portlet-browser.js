@@ -26,7 +26,7 @@ class PortletBrowser {
             
             // Initialize drag manager for Add Content tab
             if (this.options.buttonAction === 'add') {
-                this.dragManager = new LayoutDraggableManager(this.container, {
+                this.dragManager = window.up.LayoutDraggableManager(this.container, {
                     onDropTarget: (method, targetID, portletData) => {
                         this.onPortletDrop(portletData, method, targetID);
                     }
@@ -194,6 +194,7 @@ class PortletRegistry {
         if (categoryData.channels) {
             categoryData.channels.forEach(channel => {
                 const portlet = this.createPortlet(channel);
+                portlet.categoryId = categoryData.id; // Add category reference
                 this.portlets.push(portlet);
                 category.deepPortlets.push(portlet);
             });
@@ -228,12 +229,10 @@ class PortletRegistry {
     }
 
     getMemberPortlets(categoryId, deep = false) {
-        return this.portlets.filter(portlet => {
-            if (deep) {
-                return portlet.categories && portlet.categories.includes(categoryId);
-            }
-            return portlet.categoryId === categoryId;
-        });
+        if (!categoryId) return this.portlets; // Return all for empty category (ALL)
+        
+        const category = this.categories.find(cat => cat.id === categoryId);
+        return category ? category.deepPortlets : [];
     }
 }
 
@@ -241,7 +240,9 @@ class CategoryListView {
     constructor(container, browser) {
         this.container = container.querySelector('.categories');
         this.browser = browser;
-        this.refresh();
+        if (this.container) {
+            this.refresh();
+        }
     }
 
     refresh() {
@@ -251,30 +252,44 @@ class CategoryListView {
         const categories = [
             { id: '', name: 'ALL', description: 'All Categories' },
             ...this.browser.registry.getAllCategories()
-                .filter(cat => cat.id !== 'local.1' && cat.deepPortlets && cat.deepPortlets.length > 0)
+                .filter(cat => 
+                    cat.id !== 'local.1' && 
+                    cat.name !== 'uPortal' && 
+                    cat.deepPortlets && 
+                    cat.deepPortlets.length > 0
+                )
                 .sort((a, b) => a.name.localeCompare(b.name))
         ];
 
-        // Clear and rebuild
-        this.container.innerHTML = '';
-        
-        categories.forEach(category => {
-            const isActive = category.id === this.browser.state.currentCategory;
-            const categoryEl = this.createCategoryElement(category, isActive);
-            this.container.appendChild(categoryEl);
+        // Remove existing category elements (but keep h4)
+        const existingUls = this.container.querySelectorAll('ul');
+        existingUls.forEach(ul => {
+            if (!ul.querySelector('.category-choice-container')) {
+                ul.remove();
+            }
         });
+        
+        // Find h4 element
+        const h4 = this.container.querySelector('h4');
+        if (!h4) return;
+        
+        // Create separate ul for each category in reverse order to maintain correct sequence
+        for (let i = categories.length - 1; i >= 0; i--) {
+            const category = categories[i];
+            const isActive = category.id === this.browser.state.currentCategory;
+            const ul = this.createCategoryElement(category, isActive, i === 0);
+            h4.insertAdjacentElement('afterend', ul);
+        }
     }
 
-    createCategoryElement(category, isActive) {
-        const template = this.container.querySelector('.category-choice-container');
-        const element = template ? template.cloneNode(true) : document.createElement('div');
+    createCategoryElement(category, isActive, isFirst = false) {
+        const ul = document.createElement('ul');
+        const li = document.createElement('li');
+        li.className = `category-choice ${isActive ? 'active' : ''} ${isFirst ? 'first' : ''}`;
         
-        element.className = `category-choice-container ${isActive ? 'active' : ''}`;
+        li.innerHTML = `<a href="#" class="category-choice-link"><span class="category-choice-name">${category.name}</span></a>`;
         
-        const nameEl = element.querySelector('.category-choice-name');
-        if (nameEl) nameEl.textContent = category.name;
-        
-        const linkEl = element.querySelector('.category-choice-link');
+        const linkEl = li.querySelector('.category-choice-link');
         if (linkEl) {
             linkEl.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -282,17 +297,60 @@ class CategoryListView {
             });
         }
         
-        return element;
+        ul.appendChild(li);
+        return ul;
     }
 }
 
 class PortletListView {
     constructor(container, browser) {
-        this.container = container.querySelector('.portlet-results');
+        this.container = container;
         this.browser = browser;
-        this.pageSize = 6;
         this.currentPage = 0;
+        this.itemsPerRow = 3; // Default 3 columns
+        this.rowsPerPage = 2; // Default 2 rows
         this.refresh();
+        this.setupResizeObserver();
+    }
+
+    setupResizeObserver() {
+        // Recalculate layout when container size changes
+        if (window.ResizeObserver) {
+            const observer = new ResizeObserver(() => {
+                this.calculateLayout();
+                this.refresh();
+            });
+            
+            const listContainer = this.container.querySelector('.portlet-list, .results-list');
+            if (listContainer) {
+                observer.observe(listContainer);
+            }
+        }
+    }
+
+    calculateLayout() {
+        const listContainer = this.container.querySelector('.portlet-list, .results-list');
+        if (!listContainer) return;
+
+        const containerWidth = listContainer.clientWidth;
+        const containerHeight = listContainer.clientHeight;
+        
+        // Estimate portlet dimensions (similar to release version)
+        const portletWidth = 648; // From release CSS analysis
+        const portletHeight = 82;  // From release CSS analysis
+        const margin = 5; // From release margins
+        
+        // Calculate how many fit horizontally
+        this.itemsPerRow = Math.max(1, Math.floor((containerWidth + margin) / (portletWidth + margin)));
+        
+        // Calculate how many rows fit vertically
+        this.rowsPerPage = Math.max(1, Math.floor((containerHeight + margin) / (portletHeight + margin)));
+        
+
+    }
+
+    get pageSize() {
+        return 6; // Fixed: 2 rows × 3 columns like release
     }
 
     refresh() {
@@ -330,9 +388,12 @@ class PortletListView {
     }
 
     renderPortlets(portlets) {
-        const listContainer = this.container.querySelector('.portlet-list');
+        const listContainer = this.container.querySelector('#addContentPortletList, #useContentPortletList, .portlet-list');
         if (!listContainer) return;
 
+        // Calculate layout first
+        this.calculateLayout();
+        
         listContainer.innerHTML = '';
         
         portlets.forEach(portlet => {
@@ -382,22 +443,25 @@ class PortletListView {
 
     renderPagination(totalItems) {
         const totalPages = Math.ceil(totalItems / this.pageSize);
-        if (totalPages <= 1) return;
+        if (totalPages <= 1) {
+            // Hide pager if only one page
+            const pagerEl = this.container.querySelector('.pager');
+            if (pagerEl) pagerEl.style.display = 'none';
+            return;
+        }
 
         const pagerEl = this.container.querySelector('.pager');
         if (pagerEl) {
+            pagerEl.style.display = 'block';
             pagerEl.innerHTML = `
-                <div class="pager-button-up flc-pager-previous">
-                    <a class="pager-button-up-inner" href="#" ${this.currentPage === 0 ? 'style="opacity: 0.5; pointer-events: none;"' : ''}>
-                        <span>up</span>
+                <div class="pager-button-up flc-pager-previous ${this.currentPage === 0 ? 'fl-pager-disabled' : ''}">
+                    <a class="pager-button-up-inner" href="#">
+                        <span></span>
                     </a>
                 </div>
-                <div class="pager-pagination">
-                    Page ${this.currentPage + 1} of ${totalPages}
-                </div>
-                <div class="pager-button-down flc-pager-next">
-                    <a class="pager-button-down-inner" href="#" ${this.currentPage === totalPages - 1 ? 'style="opacity: 0.5; pointer-events: none;"' : ''}>
-                        <span>down</span>
+                <div class="pager-button-down flc-pager-next ${this.currentPage === totalPages - 1 ? 'fl-pager-disabled' : ''}">
+                    <a class="pager-button-down-inner" href="#">
+                        <span></span>
                     </a>
                 </div>
             `;

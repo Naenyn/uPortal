@@ -493,18 +493,100 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
           }
         }
 
+        // Gallery column layout (replaces Fluid column system)
+        .results-wrapper.portlet-results {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .pager-column {
+          width: 74px;
+          float: right;
+          margin: 0;
+          padding: 0;
+        }
+        
+        .results-column {
+          margin-right: 74px;
+          position: relative;
+        }
+
         .pager {
+          width: 74px;
+          height: 162px;
+          position: static;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+
           .pager-pagination {
-            color: $galleryPagerText;
+            display: none; // Hide page text completely
           }
 
-          .pager-button-up,
-          .pager-button-down {
+          .pager-button-up {
             background: $galleryPagerButtonBackground;
             border: $galleryPagerButtonBorder;
+            width: 74px;
+            height: 62px;
+            margin: 0;
+            display: block;
+            text-align: center;
 
             @include vertical-gradient($galleryPagerButtonGradient1, $galleryPagerButtonGradient2);
             @include border-radius();
+
+            a {
+              display: block;
+              width: 72px;
+              height: 59px;
+              text-decoration: none;
+              font-size: 10px;
+              text-align: center;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-image: url("./common/images/gallery-pager-up-inactive.png");
+
+              span {
+                display: block;
+                height: 59px;
+                overflow: hidden;
+                visibility: hidden;
+                width: 72px;
+              }
+            }
+          }
+
+          .pager-button-down {
+            background: $galleryPagerButtonBackground;
+            border: $galleryPagerButtonBorder;
+            width: 74px;
+            height: 62px;
+            margin: 0px;
+            display: block;
+            text-align: center;
+
+            @include vertical-gradient($galleryPagerButtonGradient1, $galleryPagerButtonGradient2);
+            @include border-radius();
+
+            a {
+              display: block;
+              width: 72px;
+              height: 59px;
+              text-decoration: none;
+              font-size: 10px;
+              text-align: center;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-image: url("./common/images/gallery-pager-down-active.png");
+
+              span {
+                display: block;
+                height: 59px;
+                overflow: hidden;
+                visibility: hidden;
+                width: 72px;
+              }
+            }
           }
 
           .pager-button-up:hover,
@@ -512,7 +594,6 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
           .pager-button-down:hover,
           .pager-button-down:focus {
             background: $galleryPagerBtnBackgroundHover;
-
             @include border(steelblue);
             @include vertical-gradient(#4d4d4d, #0d0d0d);
           }
@@ -524,6 +605,8 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
 
             a {
               cursor: default !important;
+              pointer-events: none;
+              background-image: url("./common/images/gallery-pager-up-inactive.png") !important;
             }
           }
         } // end .pager
@@ -569,9 +652,32 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
 
 /* Gallery Portlet List - CRITICAL LAYOUT RULES */
 .up-gallery .portlet-list li {
-  width: 32% !important;
+  width: 32%;
   height: 50%;
+  margin: 0px 5px 5px 0px;
 }
+
+/* Fluid fl-col-main replacement for gallery layout */
+.up-gallery-col-main {
+  margin-right: 74px;
+  flex: 0 1 auto;
+  width: auto;
+}
+
+/* Apply to results-column */
+.up-gallery .results-column {
+  margin-right: 74px;
+  flex: 0 1 auto;
+  width: auto;
+}
+
+/* Override Bootstrap flexbox to match Fluid layout dimensions */
+.portal .up-gallery .content-results-wrapper.col {
+  width: 70.5%;
+  flex: none;
+}
+
+
 
 .up-gallery .portlet-list li .portlet-wrapper {
   height: 80px;
@@ -603,4 +709,145 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
   margin: 0;
   position: relative;
   float: left;
+}
+
+/* Portlet Result Item Typography Fixes */
+.up-gallery .ri-titlebar,
+.up-gallery .portlet-thumb-titlebar {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 15.7143px;
+  color: rgb(255, 255, 255);
+  margin: 0;
+  padding: 0;
+}
+
+.up-gallery .ri-description,
+.up-gallery .portlet-thumb-description {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14.2857px;
+  color: rgb(216, 216, 216);
+  margin: 0;
+  padding: 0;
+}
+
+/* Hide thumbnail text like release version */
+.up-gallery .ri-icon span,
+.up-gallery .portlet-thumb-icon span {
+  visibility: hidden;
+}
+
+/* Search Input Styling - Match Release Version */
+.up-gallery .portlet-search-input {
+  width: 157px;
+  height: 32.375px;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  background: rgb(105, 105, 105);
+  border: 2px inset rgb(118, 118, 118);
+  padding: 4.2px;
+  box-sizing: border-box;
+}
+
+.up-gallery .portlet-search-input::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+/* Hide search label and submit button like release version */
+.up-gallery .portlet-search-view label {
+  display: none;
+}
+
+.up-gallery .portlet-search-submit {
+  display: none;
+}
+
+/* Category List Styling - Match Release Version */
+.up-gallery .categories {
+  display: block;
+  width: 178px;
+  white-space: normal;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: normal;
+  text-align: start;
+  line-height: 1.2;
+}
+
+.up-gallery .categories h4 {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgb(229, 229, 229);
+  margin: 10px 0px 3px;
+  padding: 0px 0px 1px;
+}
+
+.up-gallery .category-choice {
+  display: inline;
+  margin-right: 2px;
+}
+
+/* Handle new span-based structure */
+.up-gallery .category-list-inline {
+  display: block;
+  width: 178px;
+  margin: 0;
+  padding: 0;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.up-gallery .category-list-inline .category-choice {
+  display: inline;
+  margin-right: 2px;
+}
+
+/* Match release version ul/li structure exactly */
+.portal .up-gallery .categories ul {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portal .up-gallery .categories li {
+  display: inline;
+  margin: 0 2px 0 0;
+  padding: 0;
+}
+
+.up-gallery .category-choice-link {
+  display: inline;
+  white-space: normal;
+  word-wrap: normal;
+  word-break: normal;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  line-height: 14.2857px;
+}
+
+.up-gallery .category-choice-link:hover {
+  color: $galleryCatLinkHover !important;
+}
+
+.up-gallery .category-choice.active .category-choice-link {
+  color: rgb(255, 255, 255) !important;
+  font-weight: 400 !important;
+}
+
+/* Special styling for ALL category */
+.up-gallery .category-choice.first .category-choice-link {
+  font-weight: 400;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+/* Override Bootstrap font family for categories column */
+.up-gallery .categories-column {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 14px !important;
+  color: rgb(51, 51, 51) !important;
 }

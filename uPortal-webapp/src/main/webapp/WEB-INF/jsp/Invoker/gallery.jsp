@@ -50,9 +50,7 @@
                             <div class="categories-wrapper active">
                                <div class="portlet-search-view">
                                     <form class="portlet-search-form">
-                                        <label for="portletSearch" class="form-label"><spring:message code="search.stuff.add"/></label>
-                                        <input id="portletSearch" name="portletSearch" class="portlet-search-input" type="text" value="<spring:message code="search"/>" />
-                                        <input type="submit" value="<spring:message code="search"/>" class="portlet-search-submit"/>
+                                        <input id="portletSearch" name="portletSearch" class="portlet-search-input" type="text" placeholder="Search for stuff" />
                                     </form>
                                 </div>
                                 <div class="categories">
@@ -114,7 +112,7 @@
                                             </div>
                                         </div>
                                         <div class="results-column col ui-helper-clearfix">
-                                            <ul id="addContentPortletList" class="results-list portlet-list">
+                                            <ul id="addContentPortletList" class="results-list portlet-list modern-portlet-container">
                                                 <li class="result-item portlet">
                                                     <div class="ri-wrapper portlet-wrapper">
                                                         <a class="ri-utility portlet-thumb-gripper" href="#" title="<spring:message code="drag.to.add.content"/>"><span>Drag Handle</span></a>
@@ -148,9 +146,7 @@
                             <div class="categories-wrapper active">
                                 <div class="portlet-search-view">
                                     <form class="portlet-search-form">
-                                        <div class="search">
-                                            <input class="portlet-search-input" type="text"/>
-                                        </div>
+                                        <input class="portlet-search-input" type="text" placeholder="Search for stuff" />
                                     </form>
                                 </div>
                                 <div class="categories">
@@ -212,7 +208,7 @@
                                             </div>
                                         </div>
                                         <div class="results-column col ui-helper-clearfix">
-                                            <ul id="useContentPortletList" class="results-list portlet-list">
+                                            <ul id="useContentPortletList" class="results-list portlet-list modern-portlet-container">
                                                 <li class="result-item portlet">
                                                     <div class="ri-wrapper portlet-wrapper">
                                                         <div class="ri-utility"></div>

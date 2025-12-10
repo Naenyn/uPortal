@@ -50,5 +50,8 @@
   -->
 
   <js import="true">../common/common_skin.xml</js>
+  
+  <!-- Modern portlet list CSS fix -->
+  <css>../../common/css/modern-portlet-list.css</css>
 
 </resources>

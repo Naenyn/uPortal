@@ -4,7 +4,7 @@
  */
 'use strict';
 
-class LayoutDraggableManager {
+class ModernLayoutDraggableManager {
     constructor(container, options = {}) {
         this.container = container;
         this.options = {
@@ -252,5 +252,9 @@ class LayoutDraggableManager {
 // Global initialization function to replace Fluid component
 window.up = window.up || {};
 window.up.LayoutDraggableManager = function(container, options) {
-    return new LayoutDraggableManager(container, options);
+    const element = typeof container === 'string' ? document.querySelector(container) : container;
+    return new ModernLayoutDraggableManager(element, options);
 };
+
+// Export class globally for modern components
+window.ModernLayoutDraggableManager = ModernLayoutDraggableManager;

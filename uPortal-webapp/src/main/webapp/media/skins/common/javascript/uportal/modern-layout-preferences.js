@@ -321,7 +321,8 @@ class TabManager {
 
 class PortletReorderer {
     constructor(selector, options = {}) {
-        return new ModernLayoutDraggableManager(selector, options);
+        const container = typeof selector === 'string' ? document.querySelector(selector) : selector;
+        return window.up.LayoutDraggableManager(container, options);
     }
 }
 

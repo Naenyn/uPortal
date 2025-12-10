@@ -143,6 +143,7 @@ import org.jasig.resource.aggr.AggregationRequest
 import org.jasig.resource.aggr.ResourcesAggregator
 import org.jasig.resource.aggr.ResourcesAggregatorImpl
 task aggregateRespondrSkins {
+    inputs.files fileTree('src/main/webapp/media/skins/common')
     doLast {
         final ResourcesAggregator aggr = new ResourcesAggregatorImpl();
         aggr.setDisplayJsWarnings(true);
