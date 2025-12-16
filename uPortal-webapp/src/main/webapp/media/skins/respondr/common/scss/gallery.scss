@@ -193,6 +193,11 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
   .up-gallery {
     background: $galleryBackground;
     border: $galleryBorder;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+
 
     div {
       margin: 0;
@@ -501,9 +506,12 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
         
         .pager-column {
           width: 74px;
-          float: right;
+          position: absolute;
+          right: 0;
+          top: 8px;
           margin: 0;
           padding: 0;
+          z-index: 1;
         }
         
         .results-column {
@@ -561,7 +569,7 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
             border: $galleryPagerButtonBorder;
             width: 74px;
             height: 62px;
-            margin: 0px;
+            margin: 38px 0 0 0;
             display: block;
             text-align: center;
 
@@ -629,10 +637,14 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
     }
 
     .content-results-wrapper {
-      margin: 0 0 0 220px;
+      margin: 0;
       display: block;
       height: 172px;
       padding: 0;
+    }
+
+    .content-filters-wrapper + .content-results-wrapper {
+      margin-left: 220px;
     }
 
     .column-inner {
@@ -691,6 +703,8 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
   cursor: pointer;
   padding: 1px 8px;
   text-align: center;
+  font-size: 10px;
+  line-height: 14px;
 }
 
 .up-gallery .portlet-wrapper .ri-icon {
@@ -850,4 +864,105 @@ $galleryPagerBtnBorderDisabled: 1px solid $grayscale7 !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 14px !important;
   color: rgb(51, 51, 51) !important;
+}
+
+/* Skin Selector Styling - Match Release Version */
+.up-gallery .skins-list li.results-item.skin {
+  width: 136px;
+  height: auto;
+  margin: 0px 5px 5px 0px;
+  display: block;
+  list-style: none;
+  padding: 0;
+  position: relative;
+  float: left;
+}
+
+.up-gallery .skins-wrapper {
+  height: auto;
+}
+
+.up-gallery .ri-link.skin-link {
+  display: block;
+  width: 136px;
+  padding: 5px;
+  margin: 0px 0px -6px;
+}
+
+.up-gallery .skin-titlebar {
+  width: 120px;
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 15.7143px;
+  color: rgb(255, 255, 255);
+}
+
+.up-gallery .skins-wrapper .ri-content {
+  width: 120px;
+  height: 70px;
+  display: block;
+  margin: 0px;
+  padding: 0px;
+}
+
+.up-gallery .portlet-wrapper .ri-content {
+  width: auto;
+  height: auto;
+}
+
+/* Layout-specific styling */
+.up-gallery .layout-wrapper .ri-link {
+  display: block;
+  width: 140px;
+  padding: 5px;
+  margin: 0px;
+}
+
+.up-gallery .layout-wrapper .ri-content {
+  display: flex;
+  align-items: center;
+  width: 128px;
+  height: 27px;
+}
+
+.up-gallery .layout-wrapper .ri-titlebar {
+  width: 128px;
+}
+
+.up-gallery .layout-wrapper .ri-icon {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.up-gallery .layout-wrapper .ri-description {
+  width: auto;
+  height: auto;
+  display: inline;
+  flex: 1;
+}
+
+.up-gallery .results-item.layout {
+  width: 140px;
+  margin: 0 5px 5px 0;
+}
+
+.up-gallery .layouts-list .layout {
+  margin: 0 5px 5px 0;
+}
+
+.up-gallery .skin-thumb {
+  width: 120px;
+  height: 70px;
+  display: block;
+  margin: 0px;
+  padding: 0px;
+}
+
+.up-gallery .skin-thumb span {
+  visibility: hidden;
 }

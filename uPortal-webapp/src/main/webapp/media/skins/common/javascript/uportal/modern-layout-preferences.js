@@ -54,6 +54,8 @@ class LayoutPreferences {
             this.components.gallery = new PortalGallery(this.options.gallerySelector, {
                 isOpen: false
             });
+            // Store global reference for PortletBrowser access
+            window.up.gallery = this.components.gallery;
         }
     }
 

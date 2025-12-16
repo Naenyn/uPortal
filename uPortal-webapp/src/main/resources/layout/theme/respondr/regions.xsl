@@ -210,7 +210,7 @@
                                     <xsl:call-template name="regions.portlet.decorator" />
                                 </xsl:for-each>
                         </div>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#customizeOptions"><xsl:value-of select="upMsg:getMessage('customize', $USER_LANG)"/> <i class="fa"></i></button>
+                        <button type="button" class="btn btn-secondary" id="customizeButton"><xsl:value-of select="upMsg:getMessage('customize', $USER_LANG)"/> <i class="fa fa-caret-down"></i></button>
                     </div>
                 </div>
             </xsl:if>

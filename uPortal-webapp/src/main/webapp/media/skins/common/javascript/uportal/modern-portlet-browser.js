@@ -19,10 +19,12 @@ class PortletBrowser {
     }
 
     async init() {
+        console.log('FLOW: PortletBrowser.init() starting');
         try {
-            // Load portlet registry
+            console.log('FLOW: Loading portlet registry');
             this.registry = new PortletRegistry(this.options.portletListUrl);
             await this.registry.load();
+            console.log('FLOW: Registry loaded, initializing components');
             
             // Initialize drag manager for Add Content tab
             if (this.options.buttonAction === 'add') {
@@ -40,8 +42,21 @@ class PortletBrowser {
             // Set up search
             this.setupSearch();
             
+            console.log('FLOW: Components initialized, calling onLoad after delay');
+            // Add delay to show loading spinner before hiding it
+            setTimeout(() => {
+                console.log('FLOW: Content ready, calling onLoad callback');
+                if (this.options.onLoad) {
+                    this.options.onLoad();
+                }
+            }, 1000);
+            
         } catch (error) {
-            console.error('Failed to initialize PortletBrowser:', error);
+            console.error('FLOW: PortletBrowser init failed:', error);
+            // Still call onLoad on error to hide loading spinner
+            if (this.options.onLoad) {
+                this.options.onLoad();
+            }
         }
     }
 
@@ -452,7 +467,7 @@ class PortletListView {
 
         const pagerEl = this.container.querySelector('.pager');
         if (pagerEl) {
-            pagerEl.style.display = 'block';
+            pagerEl.removeAttribute('style'); // Remove inline styles to allow CSS
             pagerEl.innerHTML = `
                 <div class="pager-button-up flc-pager-previous ${this.currentPage === 0 ? 'fl-pager-disabled' : ''}">
                     <a class="pager-button-up-inner" href="#">

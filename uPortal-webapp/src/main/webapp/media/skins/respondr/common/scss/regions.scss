@@ -223,6 +223,12 @@
        ========================================================================== */
   #region-customize {
     position: relative;
+    
+    .background-preference [id*="background-edit-control"] {
+      position: absolute;
+      right: 12px;
+      top: 0;
+    }
 
     button {
       margin-top: -1px;
@@ -260,13 +266,7 @@
       @include border($grayscale4);
     }
 
-    #customizeOptions + button i::after {
-      content: "\f0d7";
-    }
 
-    #customizeOptions.show + button i::after {
-      content: "\f0d8";
-    }
   }
 
   /* ==========================================================================

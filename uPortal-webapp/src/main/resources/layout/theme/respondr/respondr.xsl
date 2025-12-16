@@ -545,11 +545,7 @@
                 }
             };
             var layoutPreferences = up.LayoutPreferences("body", options);
-            // For the portlet/Respondr version of the gallery control,
-            // we must open it ourselves (if present) when the page loads.
-            if (layoutPreferences.components.gallery) {
-                layoutPreferences.components.gallery.openGallery();
-            }
+            // Gallery will only open when user clicks the customize button
             </xsl:if>
         });
     </script>
