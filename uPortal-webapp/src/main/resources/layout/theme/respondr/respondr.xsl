@@ -378,7 +378,7 @@
 <xsl:template name="page.dialogs.dashboard">
 
     <xsl:if test="$IS_FRAGMENT_ADMIN_MODE='true'">
-        <div class="edit-page-permissions-dialog" title="{upMsg:getMessage('edit.page.permissions', $USER_LANG)}">
+        <div class="edit-page-permissions-dialog" title="{upMsg:getMessage('edit.page.permissions', $USER_LANG)}" style="display:none;">
             <div class="fl-widget portlet">
                 <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
                     <h2 class="title" role="heading"><xsl:value-of select="/layout/navigation/tab[@activeTab='true']/@name"/></h2>
@@ -406,7 +406,7 @@
                 </div>
             </div>
         </div>
-        <div class="edit-column-permissions-dialog" title="{upMsg:getMessage('edit.column.permissions', $USER_LANG)}">
+        <div class="edit-column-permissions-dialog" title="{upMsg:getMessage('edit.column.permissions', $USER_LANG)}" style="display:none;">
             <div class="fl-widget portlet">
                 <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
                     <h2 class="title" role="heading"></h2>
@@ -428,7 +428,7 @@
                 </div>
             </div>
         </div>
-        <div class="edit-portlet-permissions-dialog" title="{upMsg:getMessage('edit.portlet.permissions', $USER_LANG)}">
+        <div class="edit-portlet-permissions-dialog" title="{upMsg:getMessage('edit.portlet.permissions', $USER_LANG)}" style="display:none;">
             <div class="fl-widget portlet">
                 <div class="fl-widget-titlebar titlebar portlet-titlebar" role="sectionhead">
                     <h2 class="title" role="heading"></h2>
@@ -469,12 +469,17 @@
             }
 
             <xsl:if test="$IS_FRAGMENT_ADMIN_MODE='true'">
-            up.FragmentPermissionsManager("body", {
-                savePermissionsUrl: '<xsl:value-of select="$CONTEXT_PATH"/>/api/layout',
-                messages: {
-                    columnX: '<xsl:value-of select="upMsg:getMessageForEmacsScript('column.x', $USER_LANG)"/>',
-                }
-            });
+            try {
+                up.FragmentPermissionsManager("body", {
+                    savePermissionsUrl: '<xsl:value-of select="$CONTEXT_PATH"/>/api/layout',
+                    messages: {
+                        columnX: '<xsl:value-of select="upMsg:getMessageForEmacsScript('column.x', $USER_LANG)"/>',
+                    }
+                });
+                console.log('FragmentPermissionsManager initialized successfully');
+            } catch (e) {
+                console.error('FragmentPermissionsManager initialization failed:', e);
+            }
             </xsl:if>
             <xsl:if test="$AUTHENTICATED='true'">
             var options = {
@@ -705,16 +710,13 @@
                                 <xsl:call-template name="focused-fragment-header" />
                                 <xsl:call-template name="region.pre-content" />
                                 <!-- For editing page permissions in fragment-admin mode  -->
-                                <xsl:if test="$IS_FRAGMENT_ADMIN_MODE='true'">
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            <div id="portalEditPagePermissions" class="fl-fix">
-                                                <a class="button" id="editPagePermissionsLink" href="#" title="{upMsg:getMessage('edit.page.permissions', $USER_LANG)}">
-                                                    <i class="fa fa-align-justify"></i>
-                                                    <xsl:value-of select="upMsg:getMessage('edit.page.permissions', $USER_LANG)"/>
-                                                </a>
-                                            </div>
+                                <xsl:if test="$IS_FRAGMENT_ADMIN_MODE='true' and $PORTAL_VIEW!='focused'">
+                                    <div class="d-flex justify-content-end mb-3" style="position: relative; left: 0; right: auto; margin-left: 0; float: none;">
+                                        <div id="portalEditPagePermissions" class="fl-fix">
+                                            <a class="button" id="editPagePermissionsLink" href="#" title="{upMsg:getMessage('edit.page.permissions', $USER_LANG)}">
+                                                <i class="fa fa-align-justify"></i>
+                                                <xsl:value-of select="upMsg:getMessage('edit.page.permissions', $USER_LANG)"/>
+                                            </a>
                                         </div>
                                     </div>
                                 </xsl:if>

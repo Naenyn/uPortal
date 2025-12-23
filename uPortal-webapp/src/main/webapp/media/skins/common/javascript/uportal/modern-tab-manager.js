@@ -65,21 +65,25 @@ class ModernTabManager {
         // Modern inline editing without Fluid dependency
         this.setupModernInlineEdit(editElement, textElement);
 
-        // Add hover effects for text editing
-        textElement.addEventListener('mouseenter', () => {
-            textElement.style.cursor = 'text';
-            textElement.focus();
-        });
+        // Add hover effects for text editing (only for span elements)
+        if (textElement.tagName === 'SPAN') {
+            textElement.addEventListener('mouseenter', () => {
+                textElement.style.cursor = 'text';
+                textElement.focus();
+            });
 
-        textElement.addEventListener('mouseleave', () => {
-            textElement.style.cursor = 'pointer';
-            textElement.blur();
-        });
+            textElement.addEventListener('mouseleave', () => {
+                textElement.style.cursor = 'pointer';
+                textElement.blur();
+            });
+        }
 
         // Auto-trigger edit mode for new tabs
         const numberOfPortlets = parseInt(this.options.numberOfPortlets);
         if (numberOfPortlets === 0 && textElement.textContent.trim() === this.options.addTabLabel) {
-            textElement.click();
+            setTimeout(() => {
+                textElement.click();
+            }, 100);
         }
     }
 
@@ -108,7 +112,9 @@ class ModernTabManager {
         if (removeElement) {
             removeElement.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.events.onTabRemove(e.target);
+                // Find the tab container (li element) that contains this delete button
+                const tabElement = e.target.closest('.portal-navigation');
+                this.events.onTabRemove(tabElement);
             });
         }
     }
@@ -122,15 +128,12 @@ class ModernTabManager {
             
             addElement.addEventListener('click', (e) => {
                 e.preventDefault();
-                console.log('Add tab clicked:', this.options.addTabLabel, this.options.addTabWidths, tabGroup);
                 this.events.onTabAdd(
                     this.options.addTabLabel,
                     this.options.addTabWidths,
                     tabGroup
                 );
             });
-        } else {
-            console.warn('Add tab button not found with selector:', this.options.selectors.add);
         }
     }
 
@@ -228,34 +231,51 @@ class ModernTabManager {
     }
 
     setupModernInlineEdit(editElement, textElement) {
+        // Check if textElement is already an input (tab in edit mode)
+        if (textElement.tagName === 'INPUT') {
+            this.setupExistingInput(textElement, null);
+            return;
+        }
+        
         let isEditing = false;
         
-        textElement.addEventListener('click', () => {
+        textElement.addEventListener('click', (e) => {
+            // Prevent the parent link from navigating when clicking to edit
+            e.preventDefault();
+            e.stopPropagation();
+            
             if (isEditing) return;
             
             isEditing = true;
-            this.hideEditControls();
             
             const originalText = textElement.textContent;
             const input = document.createElement('input');
             input.type = 'text';
             input.value = originalText;
-            input.className = textElement.className;
+            input.className = 'portal-navigation-label';
             
+            // Size input to match text width
+            const textWidth = textElement.offsetWidth;
+            input.style.cssText = `display: inline-block; border: 1px solid #ccc; padding: 2px 4px; font-size: inherit; font-family: inherit; background: white; width: ${Math.max(textWidth, 60)}px;`;
+            
+            let isFinishing = false;
             const finishEdit = () => {
+                if (isFinishing) return;
+                isFinishing = true;
+                
                 const newValue = input.value.trim();
                 textElement.textContent = newValue || originalText;
-                textElement.style.display = '';
-                input.remove();
+                textElement.style.display = 'inline';
+                if (input.parentNode) {
+                    input.parentNode.removeChild(input);
+                }
                 isEditing = false;
-                this.showEditControls();
                 
                 if (newValue && newValue !== originalText) {
                     this.events.onTabEdit(newValue, originalText, editElement, textElement);
                 }
             };
             
-            input.addEventListener('blur', finishEdit);
             input.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -266,11 +286,61 @@ class ModernTabManager {
                 }
             });
             
+            input.addEventListener('blur', () => {
+                setTimeout(finishEdit, 100);
+            });
+            
+            // Replace the text element with the input
             textElement.style.display = 'none';
-            textElement.parentNode.insertBefore(input, textElement);
+            textElement.parentNode.insertBefore(input, textElement.nextSibling);
             input.focus();
             input.select();
         });
+    }
+    
+    setupExistingInput(input, textSpan) {
+        const originalText = input.value;
+        let isFinishing = false;
+        
+        input.style.cssText = `display: inline-block; border: 1px solid #ccc; padding: 2px 4px; font-size: inherit; font-family: inherit; background: white; width: ${Math.max(input.value.length * 8 + 20, 60)}px;`;
+        
+        const finishEdit = () => {
+            if (isFinishing) return;
+            isFinishing = true;
+            
+            const newValue = input.value.trim();
+            
+            // Convert input to span
+            const span = document.createElement('span');
+            span.className = 'portal-navigation-label flc-inlineEdit-text';
+            span.textContent = newValue || originalText;
+            
+            input.parentNode.replaceChild(span, input);
+            
+            // Re-initialize editing for the new span
+            this.setupModernInlineEdit(input.parentNode, span);
+            
+            if (newValue && newValue !== originalText) {
+                this.events.onTabEdit(newValue, originalText, input.parentNode, span);
+            }
+        };
+        
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                finishEdit();
+            } else if (e.key === 'Escape') {
+                input.value = originalText;
+                finishEdit();
+            }
+        });
+        
+        input.addEventListener('blur', () => {
+            setTimeout(finishEdit, 100);
+        });
+        
+        input.focus();
+        input.select();
     }
 
     setupModernDragDrop() {

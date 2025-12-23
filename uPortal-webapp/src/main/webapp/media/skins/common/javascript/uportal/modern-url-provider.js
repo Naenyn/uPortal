@@ -24,11 +24,17 @@ var up = up || {};
  */
 class ModernUrlProvider {
     constructor(container, options = {}) {
+        console.log('🔗 URL-PROVIDER: Initializing ModernUrlProvider');
+        console.log('🔗 URL-PROVIDER: Container:', container);
+        console.log('🔗 URL-PROVIDER: Options:', options);
+        
         this.container = container;
         this.options = {
             portalContext: '/uPortal',
             ...options
         };
+        
+        console.log('🔗 URL-PROVIDER: Final options:', this.options);
     }
 
     getPortletUrl(fname) {
@@ -36,7 +42,9 @@ class ModernUrlProvider {
     }
 
     getTabUrl(tabId) {
-        return this.options.portalContext + '/f/' + tabId;
+        const url = this.options.portalContext + '/f/' + tabId;
+        console.log('🔗 URL-PROVIDER: Generated tab URL for', tabId, ':', url);
+        return url;
     }
 
     getPortalHomeUrl() {

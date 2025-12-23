@@ -212,3 +212,60 @@
 .portal-search {
   padding: 0;
 }
+
+/* Attributes Swapper Buttons */
+.buttons {
+  .button.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0;
+    font-size: 14px;
+    color: rgb(105, 105, 105);
+    background: rgb(239, 239, 239);
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px;
+  }
+}
+
+/* Primary Buttons */
+.button.btn.btn-primary,
+a.button.btn.btn-primary {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 0;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  background: rgb(51, 122, 183);
+  border: 1px solid rgb(46, 109, 164);
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+/* Emergency Alert Page Styling */
+h2.title {
+  font-size: 17.5px;
+  font-weight: 500;
+  color: rgb(51, 51, 51);
+}
+
+.lead.bg-warning {
+  background: rgb(252, 248, 227) !important;
+  color: rgb(51, 51, 51);
+  padding: 0;
+  font-size: 21px;
+  border-radius: 0;
+  margin: 0 0 20px;
+  
+  strong {
+    font-weight: 700;
+  }
+}
+
+.btn.btn-primary.btn-lg {
+  background: rgb(51, 122, 183);
+  border: 1px solid rgb(46, 109, 164);
+  padding: 10px 16px;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  border-radius: 6px;
+}

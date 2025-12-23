@@ -28,9 +28,6 @@ class ModernLayoutPreferencesPersistence {
      */
     async update(data, success) {
         try {
-            console.log('Sending layout update request:', data);
-            console.log('URL:', this.options.saveLayoutUrl);
-            
             // Handle array parameters properly for server
             const formData = new URLSearchParams();
             Object.keys(data).forEach(key => {
@@ -51,8 +48,6 @@ class ModernLayoutPreferencesPersistence {
                 },
                 body: formData
             });
-            
-            console.log('Response status:', response.status, response.statusText);
             
             if (response.ok) {
                 let result = null;
@@ -141,8 +136,5 @@ class ModernLayoutPreferencesPersistence {
     }
 }
 
-// Global initialization function to replace Fluid component
-window.up = window.up || {};
-window.up.LayoutPreferencesPersistence = function(container, options) {
-    return new ModernLayoutPreferencesPersistence(container, options);
-};
+// Make class available globally for modern-layout-preferences.js to use
+window.ModernLayoutPreferencesPersistence = ModernLayoutPreferencesPersistence;

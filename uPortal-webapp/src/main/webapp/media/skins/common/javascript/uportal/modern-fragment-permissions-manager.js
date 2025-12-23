@@ -96,18 +96,20 @@ class ModernFragmentPermissionsManager {
         
         // Column permissions links (delegated event handling)
         document.addEventListener('click', (e) => {
-            if (e.target.matches(this.options.selectors.columnDialogLink) && this.menus.columnPermissionsManager) {
+            const columnLink = e.target.closest(this.options.selectors.columnDialogLink);
+            if (columnLink && this.menus.columnPermissionsManager) {
                 e.preventDefault();
-                this.menus.columnPermissionsManager.refresh(e.target);
+                this.menus.columnPermissionsManager.refresh(columnLink);
                 this.openDialog(this.options.selectors.columnDialog);
             }
         });
         
         // Portlet permissions links (delegated event handling)
         document.addEventListener('click', (e) => {
-            if (e.target.matches(this.options.selectors.portletDialogLink) && this.menus.portletPermissionsManager) {
+            const portletLink = e.target.closest(this.options.selectors.portletDialogLink);
+            if (portletLink && this.menus.portletPermissionsManager) {
                 e.preventDefault();
-                this.menus.portletPermissionsManager.refresh(e.target);
+                this.menus.portletPermissionsManager.refresh(portletLink);
                 this.openDialog(this.options.selectors.portletDialog);
             }
         });
@@ -115,26 +117,19 @@ class ModernFragmentPermissionsManager {
     
     openDialog(selector) {
         const dialog = document.querySelector(selector);
-        if (dialog && window.jQuery && window.jQuery.fn.dialog) {
-            // Force close any existing dialogs and clean overlays
-            window.jQuery('.ui-dialog-content').dialog('close');
-            window.jQuery('.ui-widget-overlay, .modal-backdrop').remove();
+        if (dialog && window.up && window.up.jQuery && window.up.jQuery.fn.dialog) {
+            const $dialog = window.up.jQuery(dialog);
             
-            const $dialog = window.jQuery(dialog);
             // Initialize dialog if not already done
             if (!$dialog.hasClass('ui-dialog-content')) {
                 $dialog.dialog({
                     width: 550,
                     modal: true,
-                    autoOpen: false,
-                    close: () => {
-                        // Clean up any modal artifacts on close
-                        window.jQuery('.ui-widget-overlay, .modal-backdrop').remove();
-                        document.body.style.overflow = '';
-                    }
+                    autoOpen: true
                 });
+            } else {
+                $dialog.dialog('open');
             }
-            $dialog.dialog('open');
         }
     }
     
@@ -289,10 +284,10 @@ class PermissionsMenu {
     }
     
     closeDialog() {
-        if (window.jQuery && window.jQuery.fn.dialog) {
-            window.jQuery(this.container).dialog('close');
+        if (window.up && window.up.jQuery && window.up.jQuery.fn.dialog) {
+            window.up.jQuery(this.container).dialog('close');
             // Force cleanup of any modal artifacts
-            window.jQuery('.ui-widget-overlay, .modal-backdrop').remove();
+            window.up.jQuery('.ui-widget-overlay, .modal-backdrop').remove();
             document.body.style.overflow = '';
         }
     }

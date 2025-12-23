@@ -160,6 +160,11 @@ body {
   @import "grids";
 
   /* ==========================================================================
+     Fragment Permissions
+     ========================================================================== */
+  @import "fragment-permissions";
+
+  /* ==========================================================================
      jQuery UI Dialog Fixes
      ========================================================================== */
   // Note: Close button styling reverted due to hover state and icon positioning issues

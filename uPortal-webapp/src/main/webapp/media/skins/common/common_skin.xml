@@ -24,6 +24,8 @@
  xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 
 
+  <!-- <js>javascript/uportal/reload-detection.js</js> -->
+  <js>javascript/uportal/page-load-tracker.js</js>
   <js>javascript/uportal/modern-util.js</js>
   <js>javascript/uportal/modern-portlet-registry.js</js>
   <js>javascript/uportal/modern-url-provider.js</js>
@@ -33,9 +35,9 @@
   <js>javascript/uportal/modern-portlet-browser.js</js>
   <js>javascript/uportal/modern-portal-gallery.js</js>
   <js>javascript/uportal/modern-tab-manager.js</js>
+  <js>javascript/uportal/modern-layout-preferences-persistence.js</js>
   <js>javascript/uportal/modern-layout-preferences.js</js>
   <js>javascript/uportal/modern-fragment-permissions-manager.js</js>
-  <js>javascript/uportal/modern-layout-preferences-persistence.js</js>
 
   <js>javascript/uportal/modern-autocomplete.js</js>
   <js>javascript/uportal/modern-show-hide-toggle.js</js>

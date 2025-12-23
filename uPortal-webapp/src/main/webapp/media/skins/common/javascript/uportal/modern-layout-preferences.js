@@ -68,15 +68,19 @@ class LayoutPreferences {
                         action: 'renameTab',
                         tabId: this.getActiveTabId(),
                         tabName: newValue
+                    }, () => {
+                        // Success callback - stay on current page, no navigation needed
+                    }, (error) => {
+                        // Error callback - handle failure
+                        console.error('Tab rename failed:', error);
                     });
                 },
-                onTabRemove: (anchor) => {
+                onTabRemove: (tabContainer) => {
                     if (!confirm(this.options.messages.confirmRemoveTab)) {
                         return false;
                     }
                     
-                    const li = anchor.parentNode;
-                    const id = window.up.defaultNodeIdExtractor(li);
+                    const id = window.up.defaultNodeIdExtractor(tabContainer);
                     this.persistence.update({
                         action: 'removeElement',
                         elementID: id
@@ -91,7 +95,8 @@ class LayoutPreferences {
                         widths: columns,
                         tabGroup: tabGroup
                     }, (data) => {
-                        window.location = this.urlProvider.getTabUrl(data.tabId);
+                        const tabUrl = this.urlProvider.getTabUrl(data.tabId);
+                        window.location = tabUrl;
                     });
                 },
                 onTabMove: (sourceId, method, elementId, tabPosition) => {
@@ -300,24 +305,29 @@ class FocusedLayoutPreferences {
 // Placeholder classes for dependencies that need to be modernized separately
 class LayoutPreferencesPersistence {
     constructor(container, options = {}) {
-        this.options = options;
-        // Use existing Fluid implementation for now
-        if (window.up && window.up.LayoutPreferencesPersistence) {
-            return window.up.LayoutPreferencesPersistence(container, options);
+        try {
+            const modern = new ModernLayoutPreferencesPersistence(container, options);
+            Object.setPrototypeOf(this, Object.getPrototypeOf(modern));
+            Object.assign(this, modern);
+        } catch (error) {
+            console.error('Error during LayoutPreferencesPersistence initialization:', error);
+            throw error;
         }
     }
 }
 
 class UrlProvider {
     constructor(container, options = {}) {
-        return new ModernUrlProvider(container, options);
+        const modern = new ModernUrlProvider(container, options);
+        return modern;
     }
 }
 
 class TabManager {
     constructor(selector, options = {}) {
         // Use ModernTabManager instead of old Fluid implementation
-        return new ModernTabManager(selector, options);
+        const modern = new ModernTabManager(selector, options);
+        return modern;
     }
 }
 
@@ -331,9 +341,11 @@ class PortletReorderer {
 // Global initialization function to replace Fluid component
 window.up = window.up || {};
 window.up.LayoutPreferences = function(container, options) {
-    return new LayoutPreferences(container, options);
+    const instance = new LayoutPreferences(container, options);
+    return instance;
 };
 
 window.up.FocusedLayoutPreferences = function(container, options) {
-    return new FocusedLayoutPreferences(container, options);
+    const instance = new FocusedLayoutPreferences(container, options);
+    return instance;
 };
