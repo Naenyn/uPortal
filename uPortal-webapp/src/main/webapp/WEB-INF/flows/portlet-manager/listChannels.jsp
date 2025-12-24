@@ -237,6 +237,19 @@ up.jQuery(function() {
                 $("div.toolbar-br").html('<BR>');
                 $("div.toolbar-filter").html('<h4><spring:message code="filters" htmlEscape="false" javaScriptEscape="true"/></h4>');
                 $(".column-filter-widget select").addClass("form-control");
+                
+                // Debug SearchPanes
+                console.log('DataTable initialized, checking SearchPanes...');
+                console.log('Table data:', portletList_configuration.main.table.fnGetData());
+                
+                // Force SearchPanes rebuild after data loads
+                setTimeout(function() {
+                    var api = portletList_configuration.main.table.api();
+                    if (api.searchPanes) {
+                        console.log('Rebuilding SearchPanes...');
+                        api.searchPanes.rebuildPane();
+                    }
+                }, 500);
             },
             fnServerData: function (sUrl, aoData, fnCallback, oSettings) {
                 oSettings.jqXHR = $.ajax({
@@ -274,14 +287,24 @@ up.jQuery(function() {
                 $('td:eq(4)', nRow).html( getDeleteURL(aData.id) );
             },
             // Setting the top and bottom controls
-            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><"toolbar-filter-options"W><"toolbar-br"><"dataTables-inline dataTables-right"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>',
-            // Filtering
-            oColumnFilterWidgets: {
-                sSeparator: ',', // Used for multivalue column Categories
-                aiExclude: [portletList_configuration.column.name,
-                                portletList_configuration.column.type,
-                                portletList_configuration.column.placeHolderForEditLink,
-                                portletList_configuration.column.placeHolderForDeleteLink]
+            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><"toolbar-filter-options"P><"toolbar-br"><"dataTables-inline dataTables-right"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>',
+            // SearchPanes configuration (modern replacement for ColumnFilterWidgets)
+            searchPanes: {
+                columns: [
+                    {
+                        header: 'State',
+                        targets: [2]
+                    },
+                    {
+                        header: 'Category', 
+                        targets: [5]
+                    }
+                ],
+                cascadePanes: true,
+                viewTotal: true,
+                threshold: 0.1,
+                emptyMessage: 'No filters available',
+                initCollapsed: false
             }
         });
     };

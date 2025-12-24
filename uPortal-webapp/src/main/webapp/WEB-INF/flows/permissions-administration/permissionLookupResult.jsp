@@ -228,11 +228,13 @@ up.jQuery(function() {
                 $('td:eq(1)', nRow).html( getActivityValue(aData.activityName, aData.inherited) );
             },
             // Setting the top and bottom controls
-            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><W><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>',
-            // Filtering
-            oColumnFilterWidgets: {
-                sSeparator: ',', // Used for multivalue column Categories
-                aiExclude: [principalList_configuration.column.placeHolderForEditLink]
+            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><P><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>',
+            // SearchPanes configuration (modern replacement for ColumnFilterWidgets)
+            searchPanes: {
+                columns: [0, 1, 2], // Owner, Activity, and Target columns
+                cascadePanes: true,
+                viewTotal: true,
+                layout: 'columns-3'
             }
         });
     };

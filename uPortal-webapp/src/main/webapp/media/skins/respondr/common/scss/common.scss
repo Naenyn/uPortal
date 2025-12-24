@@ -169,3 +169,263 @@ body {
      ========================================================================== */
   // Note: Close button styling reverted due to hover state and icon positioning issues
 }
+  /* ==========================================================================
+     User Administration Form Fixes
+     ========================================================================== */
+  
+  // Fix form control sizing to match Bootstrap 3 behavior
+  .form-control {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+  }
+  
+  // Fix column padding to match Bootstrap 3 grid
+  .col-md-6 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  // Fix button styling to match Bootstrap 3 behavior
+  .btn {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 4px;
+    background-color: #efefef;
+    color: #696969;
+  }
+  
+  // Fix DataTables filtering and pagination styling
+  .view-filter {
+    padding: 15px;
+    margin: 0px -15px 20px;
+    border-radius: 4px;
+  }
+  
+  .dataTables-inline.dataTables-right {
+    display: inline-block;
+  }
+  
+  .dataTables_length select {
+    height: 20px;
+    padding: 0px;
+    font-size: 14px;
+    border: 1px solid #767676;
+    border-radius: 0px;
+    background-color: #ffffff;
+  }
+  
+  /* Permission lookup form styling fixes */
+  .permission-lookup {
+    .form-control {
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .btn {
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 20px;
+      border-radius: 4px;
+    }
+    
+    .btn-primary {
+      border: 1px solid #2e6da4;
+    }
+  }
+  
+  /* Import/Export portlet button styling fixes */
+  .imp-exp {
+    .btn {
+      font-size: 14px;
+      line-height: 20px;
+      border-radius: 4px;
+    }
+    
+    .btn-group .btn {
+      height: 36px;
+      padding: 0px 5px;
+      color: #333;
+    }
+    
+    .btn-group .btn:first-child {
+      border-radius: 4px 0px 0px 4px;
+    }
+    
+    .btn-group .btn:last-child {
+      border-radius: 0px 4px 4px 0px;
+    }
+    
+    .btn-primary,
+    .btn-success,
+    .btn-danger,
+    .btn-warning,
+    .btn-default {
+      height: 34px;
+      padding: 6px 12px;
+    }
+    
+    .btn-default {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      color: #333;
+    }
+    
+    .btn-warning {
+      background-color: #f0ad4e;
+      border: 1px solid #eea236;
+      color: #fff;
+    }
+    
+    .btn-success {
+      background-color: #5cb85c;
+      border: 1px solid #4cae4c;
+      color: #fff;
+    }
+    
+    .btn-danger {
+      background-color: #d9534f;
+      border: 1px solid #d43f3a;
+      color: #fff;
+    }
+  }
+  
+  /* Permission lookup form layout and styling fixes */
+  .permission-lookup form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    
+    .principal-input,
+    .activity-input {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .form-label {
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+    
+    .btn-primary {
+      background-color: #337ab7;
+      border-color: #2e6da4;
+      color: #fff;
+    }
+    
+    .punctuation {
+      font-weight: bold;
+      margin: 0 4px;
+    }
+  }
+  
+  /* Fragment admin dropdown styling fixes */
+  #fragmentOwner {
+    width: 224px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Portlet options menu button styling fixes */
+  .portlet-options-menu .btn {
+    background-color: transparent;
+  }
+  
+  /* Panel list and card list button styling fixes */
+  .panel-list .btn-primary,
+  .card-list .btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+  }
+  
+  /* Global primary button styling fixes */
+  .btn-primary {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+  }
+  
+  /* Logout button styling fixes */
+  .portal-logout.btn {
+    background-color: transparent;
+    padding: 1px 5px;
+    font-size: 12px;
+  }
+  
+  /* View filter and DataTables layout fixes */
+  .view-filter {
+    display: block;
+    flex-wrap: nowrap;
+  }
+  
+  .dataTables-inline.dataTables-right {
+    display: inline-block;
+    float: none;
+    width: auto;
+  }
+  
+  .dataTables-inline.dataTables-left {
+    display: block;
+    float: left;
+    width: auto;
+  }
+  
+  /* Alert info background color fix */
+  .alert-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+  }
+  
+  /* DataTables pagination styling fixes */
+  .dataTables_length select {
+    width: auto;
+    height: 20px;
+    padding: 0px;
+    font-size: 14px;
+    border: 1px solid #767676;
+    border-radius: 0px;
+    background-color: #ffffff;
+    vertical-align: baseline;
+  }
+  
+  .pagination .page-link {
+    background-color: transparent;
+    border: none;
+    color: #337ab7;
+    padding: 3px 6px;
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: transparent;
+    border: none;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  .pagination .page-item.disabled .page-link {
+    background-color: transparent;
+    border: none;
+    color: #999;
+  }
+  
+  /* Sign out button vertical alignment fix */
+  .portal-logout.btn {
+    background-color: transparent;
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+  }

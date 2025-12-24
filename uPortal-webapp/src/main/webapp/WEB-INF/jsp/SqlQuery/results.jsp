@@ -147,9 +147,13 @@
             fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             },
             // Setting the top and bottom controls
-            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><W><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>',
-            // Filtering
-            oColumnFilterWidgets: { }
+            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><P><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>',
+            // SearchPanes configuration (modern replacement for ColumnFilterWidgets)
+            searchPanes: {
+                cascadePanes: true,
+                viewTotal: true,
+                layout: 'columns-3'
+            }
         });
     };
     initializeTable();

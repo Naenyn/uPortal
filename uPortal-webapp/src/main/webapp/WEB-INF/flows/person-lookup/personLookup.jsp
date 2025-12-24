@@ -228,7 +228,14 @@
                     $('td:eq(1)', nRow).html( getSelectPersonAnchorTag(aData.attributes.username, aData.attributes.username) );
                 },
                 // Setting the top and bottom controls
-                sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><W><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>'
+                sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><P><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>',
+                // SearchPanes configuration (modern replacement for ColumnFilterWidgets)
+                searchPanes: {
+                    columns: [0, 1], // Name and Username columns
+                    cascadePanes: true,
+                    viewTotal: true,
+                    layout: 'columns-2'
+                }
             });
             $("#${n}searchResults").show();
             // Adding formatting to sDom

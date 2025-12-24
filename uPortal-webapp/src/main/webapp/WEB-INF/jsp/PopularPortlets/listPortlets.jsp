@@ -233,9 +233,14 @@ up.jQuery(function() {
                 $('td:eq(0)', nRow).html( getDeepLinkAnchorTag(aData.portletFName, aData.portletDescription, aData.portletTitle) );
             },
             // Setting the top and bottom controls
-            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><W><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>',
-            // Filtering
-            oColumnFilterWidgets: { }
+            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><P><"toolbar-br"><"dataTables-inline dataTables-left"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>>',
+            // SearchPanes configuration (modern replacement for ColumnFilterWidgets)
+            searchPanes: {
+                columns: [0, 1], // Title and Times columns
+                cascadePanes: true,
+                viewTotal: true,
+                layout: 'columns-2'
+            }
         });
     };
 
