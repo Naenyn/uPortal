@@ -501,7 +501,7 @@
                               (function($) {
                               $( document ).ready(function() {
                               $('.addToFavoriteLink<xsl:value-of
-                              select="@chanID"/>').click({
+                              select="@chanID"/>').on('click', {
                               portletId : '<xsl:value-of select="@chanID"/>',
                               context : '<xsl:value-of select="$CONTEXT_PATH"/>'}, up.addToFavorite);
                               });
@@ -520,7 +520,7 @@
                           <script type="text/javascript">
                               (function($) {
                               $( document ).ready(function() {
-                              $('.removeFromFavoriteLink<xsl:value-of select="@chanID"/>').click({portletId : '<xsl:value-of select="@chanID"/>', context : '<xsl:value-of select="$CONTEXT_PATH"/>'}, up.removeFromFavorite);
+                              $('.removeFromFavoriteLink<xsl:value-of select="@chanID"/>').on('click', {portletId : '<xsl:value-of select="@chanID"/>', context : '<xsl:value-of select="$CONTEXT_PATH"/>'}, up.removeFromFavorite);
                               });
                               })(up.jQuery);
                           </script>

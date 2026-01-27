@@ -199,11 +199,11 @@
             elements.menu = $('#${n}background-edit-control .background-edit-menu');
             elements.form = $("#${n}background-edit-control .background-edit-form");
 
-            elements.form.submit(function() {
+            elements.form.on('submit', function() {
                 $.post(this.action, elements.form.serialize());
                 return false;
             });
-            elements.button.click(function () {
+            elements.button.on('click', function () {
                 setWidth();
                 toggleMenu();
             });

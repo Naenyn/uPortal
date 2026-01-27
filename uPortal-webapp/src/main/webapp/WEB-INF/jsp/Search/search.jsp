@@ -160,7 +160,7 @@
     });
 
     // Only search if the user entered some text to search for
-    $('#${n}searchForm').submit(function(event) {
+    $('#${n}searchForm').on('submit', function(event) {
         if ($('#${n}searchInput').val().trim().length == 0) {
             event.preventDefault();
         } else {

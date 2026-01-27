@@ -296,10 +296,10 @@ up.jQuery(function() {
       }
    };
 
-   $(window).resize(resizeChart);
+   $(window).on('resize', resizeChart);
 
    $("#${n} .datepicker").datepicker();
-   $('#${n}_reportForm').submit(function(event) {
+   $('#${n}_reportForm').on('submit', function(event) {
        if (!validateIntervals()) {
            return false;
        }
@@ -349,7 +349,7 @@ up.jQuery(function() {
        event.preventDefault();
    });
 
-   $("#${n}_editChart").click(function() { editChart(); return false; });
+   $("#${n}_editChart").on('click', function() { editChart(); return false; });
    $("#${n}_downloadPng").mousedown(downloadPng);
 
    // Add validation listeners

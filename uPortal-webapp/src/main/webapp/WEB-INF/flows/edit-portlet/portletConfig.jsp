@@ -1001,7 +1001,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
         // clicking anywhere on the page should dismiss the currently visible
         // tooltip.
-        $('body').click(function (evt) {
+        $('body').on('click', function (evt) {
             var $target = $(evt.target);
 
             $(helpIconSelector).each(function (idx, el) {
@@ -1057,11 +1057,11 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                 const curDate = new Date();
                 $("#${n}PortletLifecycle #timezoneOffsetInHours").val(curDate.getTimezoneOffset() / 60);
             }
-            $("#${n}PortletLifecycle .clear-date").click(function (e) {
+            $("#${n}PortletLifecycle .clear-date").on('click', function (e) {
                 e.preventDefault();
                 $(this).parent().css("display", "none").prev().val("");
             });
-            $("#${n}PortletLifecycle .lifecycle-state").click(function () {
+            $("#${n}PortletLifecycle .lifecycle-state").on('click', function () {
                 updateOptionalInputs();
             });
             updateOptionalInputs();
@@ -1096,7 +1096,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
             }
         }
 
-        $('.lifecycle-state').click(function() {
+        $('.lifecycle-state').on('click', function() {
             if ($('#lifecycle-MAINTENANCE').is(":checked")) {
                 return;
 			}
@@ -1106,15 +1106,15 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 			resetRestartManually(true);
         });
 
-        $(stopImmediatelyFieldName).click(function() {
+        $(stopImmediatelyFieldName).on('click', function() {
             resetStopImmediately($(stopImmediatelyFieldName).is(':checked'));
         })
 
-        $(restartManuallyFieldName).click(function() {
+        $(restartManuallyFieldName).on('click', function() {
             resetRestartManually($(restartManuallyFieldName).is(':checked'));
         });
 
-        $("#cancelStopDate").click(function() {
+        $("#cancelStopDate").on('click', function() {
 			$(stopImmediatelyFieldName).prop("checked", true);
 			resetStopImmediately(true);
             $(restartManuallyFieldName).prop("checked", true);
@@ -1127,7 +1127,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
         resetStopImmediately($(stopImmediatelyFieldName).is(':checked'));
         resetRestartManually($(restartManuallyFieldName).is(':checked'));
 
-        $('#accordion a[data-bs-toggle="collapse"]').click(function(e) {
+        $('#accordion a[data-bs-toggle="collapse"]').on('click', function(e) {
             $(this).find('i.fa').toggleClass('fa-chevron-down fa-chevron-up');
         });
     });

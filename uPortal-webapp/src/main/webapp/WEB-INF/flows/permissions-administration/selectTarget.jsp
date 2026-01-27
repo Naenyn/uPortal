@@ -140,7 +140,7 @@ up.jQuery(function() {
     $(function(){
 
 
-        $("#${n}targetForm").submit(submitForm);
+        $("#${n}targetForm").on('submit', submitForm);
     });
 
 });

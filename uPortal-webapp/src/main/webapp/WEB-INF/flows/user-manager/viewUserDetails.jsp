@@ -136,14 +136,15 @@
 <script type="text/javascript">
 (function($) {
     // Impersonation requests must be an actionURL and a POST...
-    $('#${n} .up-impersonation-menu a').click(function() {
+    $('#${n} .up-impersonation-menu a').on('click', function(e) {
+        e.preventDefault();
         var url = $(this).attr('data-href');
         var form = $('<form />', {
             action: url,
             method: 'POST',
             style: 'display: none;'
         });
-        form.appendTo('body').submit();
+        form.appendTo('body')[0].submit();
     });
 })(up.jQuery);
 </script>

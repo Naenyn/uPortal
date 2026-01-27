@@ -528,7 +528,7 @@
                 $("#${n}alphabetical-sort-button").removeClass("active");
             } 
 
-            $(".${n}marketplace_category_link").click(function(){
+            $(".${n}marketplace_category_link").on('click', function(){
                 setFilter(this.textContent);
                 clearKeywordFilter();
             });
@@ -536,14 +536,14 @@
             disableCategoriesWidgets();
             enableAZIndexWidgets();
 
-            $("#${n}alphabetical-sort-button").click(function(){
+            $("#${n}alphabetical-sort-button").on('click', function(){
                 disableCategoriesWidgets();
                 enableAZIndexWidgets();
                 clearFilter();
                 sortColumns(0);
             });
 
-            $("#${n}category-sort-button").click(function(){
+            $("#${n}category-sort-button").on('click', function(){
                 disableAZIndexWidgets();
                 enableCategoriesWidgets();
             });
@@ -554,7 +554,7 @@
                 setFilter(this.value);
             });
 
-            $("#${n}clear_filter_button").click(function(){
+            $("#${n}clear_filter_button").on('click', function(){
                 disableCategoriesWidgets();
                 enableAZIndexWidgets();
                 clearFilter();						

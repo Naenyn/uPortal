@@ -25,7 +25,6 @@
 
 
   <!-- <js>javascript/uportal/reload-detection.js</js> -->
-  <js>javascript/uportal/page-load-tracker.js</js>
   <js>javascript/uportal/modern-util.js</js>
   <js>javascript/uportal/modern-portlet-registry.js</js>
   <js>javascript/uportal/modern-url-provider.js</js>

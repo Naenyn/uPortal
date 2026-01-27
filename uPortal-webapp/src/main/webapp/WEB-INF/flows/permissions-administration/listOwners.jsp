@@ -215,7 +215,7 @@ up.jQuery(function() {
             }
         );
 
-        $("#${n}permissionLookupForm").submit(function () {
+        $("#${n}permissionLookupForm").on('submit', function () {
             var form, errorContainer;
             form = this;
             errorContainer = $(form).find(".permission-lookup-error-container");

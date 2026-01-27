@@ -126,7 +126,7 @@
             method: 'POST',
             style: 'display: none;'
         });
-        form.appendTo('body').submit();
+        form.appendTo('body')[0].submit();
     }
 
     var initDynSkin = function($, settings, portletSelector, formSelector) {
@@ -138,9 +138,9 @@
             $(settings.portletSelector).find(".loadingMessage").removeClass("hidden");
         };
 
-        $('#${n}skinManagerConfig .cancelButton').click(exitConfigMode);
+        $('#${n}skinManagerConfig .cancelButton').on('click', exitConfigMode);
 
-        $(settings.formSelector).submit(function (event) {
+        $(settings.formSelector).on('submit', function (event) {
             showLoading();
             $.ajax({
                 url: formUrl,

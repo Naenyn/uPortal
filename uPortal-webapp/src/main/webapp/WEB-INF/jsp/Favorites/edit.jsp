@@ -162,7 +162,7 @@ up.jQuery(function() {
         $('#${n}fav_edit li').disableSelection();
 
         // Removing a favorite requires an actionURL and a POST...
-        $('#${n}fav_edit a.up-remove-favorite').click(function() {
+        $('#${n}fav_edit a.up-remove-favorite').on('click', function() {
             var url = $(this).attr('data-href');
             var form = $('<form />', {
                 action: url,

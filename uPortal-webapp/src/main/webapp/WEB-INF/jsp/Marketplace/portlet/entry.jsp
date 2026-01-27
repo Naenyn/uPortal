@@ -1074,7 +1074,7 @@
         </c:if>
 
         // Submit function
-        $("#${n}save_rating_form").submit(function (e) {
+        $("#${n}save_rating_form").on('submit', function (e) {
             var reviewText = $("#${n}marketplace_user_review_input").val();
             $.ajax({
                 url: '${saveRatingUrl}',

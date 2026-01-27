@@ -106,7 +106,7 @@
 
 <script type="text/javascript">
 (function($){
-    $('#${n} .up-favorite-remove').click({
+    $('#${n} .up-favorite-remove').on('click', {
         context : '${renderRequest.contextPath}'
     }, function(event) {
         event.data.portletId = $(this).attr('data-portlet-id');

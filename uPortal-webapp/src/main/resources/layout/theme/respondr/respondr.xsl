@@ -289,7 +289,8 @@
         var navMenuToggle = function() {
           var menu = $(".portal-nav .menu"), menuToggle = $("#up-sticky-nav .menu-toggle");
           // Toggle the nav visibility when the button is clicked.
-          menuToggle.click(function() {
+          menuToggle.on('click', function(e) {
+            e.preventDefault();
             // Open and animate the offcanvas
             $('.row-offcanvas').toggleClass('active');
             // show the nav
@@ -320,7 +321,8 @@
           $('div.hover-toolbar').filter('.hidden').has('li').removeClass('hidden');
 
           // Attach behavior to the Move Portlet options menu
-          $('.portlet-options-menu .up-portlet-control.move').click(function() {
+          $('.portlet-options-menu .up-portlet-control.move').on('click', function(e) {
+             e.preventDefault();
              // If Move Portlet, unhide the grab handle and change the menu text
              if ($(this).text() === $(this).attr('data-move-text')) {
                 $(this).parents('.up-portlet-titlebar').find('.grab-handle').removeClass('hidden');

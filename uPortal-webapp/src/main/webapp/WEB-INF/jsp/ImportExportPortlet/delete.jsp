@@ -106,7 +106,7 @@
     up.jQuery(document).ready(function () {
         var $ = up.jQuery;
 
-        $("#${n}form").submit(function () {
+        $("#${n}form").on('submit', function () {
            var form, entityType, sysId, href;
 
            form = this;

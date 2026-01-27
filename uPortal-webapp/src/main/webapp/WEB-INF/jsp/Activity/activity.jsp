@@ -110,11 +110,11 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 </div>
 
 <script>
-up.jQuery( "#portalActivityToggle" ).click(function() {
+up.jQuery( "#portalActivityToggle" ).on('click', function() {
     up.jQuery( "#portalActivity" ).slideToggle( "slow" );
 });
 
-up.jQuery( "#portalSearchActivityToggle" ).click(function() {
+up.jQuery( "#portalSearchActivityToggle" ).on('click', function() {
     up.jQuery( "#portalSearchActivity" ).slideToggle( "slow" );
 });
 </script>

@@ -77,21 +77,11 @@
         });
     }
 
-    console.log('🗺️ SITEMAP: Starting fetch for:', '${layoutApiUrl}');
-    console.log('🗺️ SITEMAP: Current URL:', window.location.href);
-    console.log('🗺️ SITEMAP: Document ready state:', document.readyState);
-    
     fetch('${layoutApiUrl}', {credentials: 'same-origin'})
         .then(function (response) {
-            console.log('🗺️ SITEMAP: Fetch response received:', response.status, response.statusText);
-            console.log('🗺️ SITEMAP: Response headers:', [...response.headers.entries()]);
-            console.log('🗺️ SITEMAP: Response redirected:', response.redirected);
-            console.log('🗺️ SITEMAP: Response URL:', response.url);
-            
             if (response.status >= 200 && response.status < 300) {
                 return response;
             } else {
-                console.log('🗺️ SITEMAP: Non-2xx response, throwing error');
                 var error = new Error(response.statusText);
                 error.response = response;
                 throw error;
@@ -103,31 +93,21 @@
         })
         // Generate sitemap
         .then(function (response) {
-            console.log('🗺️ SITEMAP: Starting sitemap generation');
-            console.log('🗺️ SITEMAP: Response data:', response);
-            
             if (sitemapJsonCheck(response, ['layout.navigation.tabs'], "Missing required object path ")) {
-                console.log('🗺️ SITEMAP: Missing layout.navigation.tabs, throwing error');
                 throw new Error("Missing 'layout.navigation.tabs' in the layout.");
             }
 
-            console.log('🗺️ SITEMAP: Found', response.layout.navigation.tabs.length, 'tabs');
-            
             // Begin tab row
             var tabRowTemplate = document.getElementById('sitemap-tab-row-template');
             var tabRow = document.importNode(tabRowTemplate.content, true).querySelector('div');
             _.forEach(response.layout.navigation.tabs, function (tab, tabIndex) {
-                console.log('🗺️ SITEMAP: Processing tab', tabIndex, ':', tab.name, 'externalId:', tab.externalId);
-                
                 if (!sitemapJsonCheck(tab, ['name', 'externalId', 'content'], "Missing required object path [layout.navigation.tabs] > ")) {
-                    console.log('🗺️ SITEMAP: Tab validation passed, creating tab header');
                     // Setup tab link
                     var tabTemplate = document.getElementById('sitemap-tab-template');
                     var tabHeader = document.importNode(tabTemplate.content, true).querySelector('div');
                     // Add content to tab header template
                     var tabHeaderLink = tabHeader.querySelector('a');
                     tabHeaderLink.textContent = _.unescape(tab.name);
-                    console.log('🗺️ SITEMAP: Setting tab href to:', '${portalContextPath}/f/' + tab.externalId + '/normal/render.uP');
                     tabHeaderLink.href = '${portalContextPath}/f/' + tab.externalId + '/normal/render.uP';
                     var portletList = tabHeader.querySelector('ul');
 
@@ -161,34 +141,22 @@
                     });
 
                     tabRow.appendChild(tabHeader);
-                } else {
-                    console.log('🗺️ SITEMAP: Tab validation failed, skipping tab');
                 }
 
-                console.log('🗺️ SITEMAP: Finished processing tab', tabIndex);
-                
                 if (tabIndex === (response.layout.navigation.tabs.length - 1)) {
-                    console.log('🗺️ SITEMAP: Adding final tab row to page');
                     // Add final tab row to page
                     document.getElementById('sitemap-holder').appendChild(tabRow);
                 } else if (tabIndex % 4 === 3) { // Four per row
-                    console.log('🗺️ SITEMAP: Adding tab row and starting new row');
                     // Add tab row to page, and initialize a new tab row
                     document.getElementById('sitemap-holder').appendChild(tabRow);
                     tabRow = document.importNode(tabRowTemplate.content, true).querySelector('div');
                 }
             });
-            
-            console.log('🗺️ SITEMAP: Sitemap generation completed successfully');
-            console.log('🗺️ SITEMAP: Current URL after completion:', window.location.href);
         })
         // Let user know and log error to browser console
         .catch(function(error) {
-            console.log('🗺️ SITEMAP: Catch handler triggered - suppressing to prevent reload loop');
-            console.log('🗺️ SITEMAP: Error message:', error.message);
-            
             // Silently fail - don't add error message to DOM or do anything that might trigger reload
-            console.log('🗺️ SITEMAP: Error suppressed, continuing normally');
+            console.error('Sitemap generation failed:', error.message);
         });
 
 })();

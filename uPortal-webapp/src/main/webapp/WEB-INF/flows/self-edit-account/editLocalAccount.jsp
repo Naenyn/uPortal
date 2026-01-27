@@ -178,7 +178,7 @@
                     }
                 }
             );
-            $("#${n}accountForm").submit(function(e) {
+            $("#${n}accountForm").on('submit', function(e) {
                 if ($("#${n}password").get(0).textLength > 0
                        && $("#${n}password").get(0).value != $("#${n}confirmPassword").get(0).value) {
                     alert ("<spring:message code="passwords.must.match" htmlEscape="false" javaScriptEscape="true"/>");

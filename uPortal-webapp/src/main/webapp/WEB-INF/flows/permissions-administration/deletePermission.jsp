@@ -94,7 +94,7 @@ up.jQuery(function() {
     var $ = up.jQuery;
 
     $(function(){
-        $('#${n}deletePermissionButton').click(function(e){
+        $('#${n}deletePermissionButton').on('click', function(e){
             e.preventDefault();
             $.ajax({
                 url: "<c:url value="/api/deletePermission"/>",
