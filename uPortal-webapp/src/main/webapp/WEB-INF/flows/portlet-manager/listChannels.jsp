@@ -61,6 +61,10 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 #${n}portletBrowser .dataTables-inline, #${n}portletBrowser .column-filter-widgets {
     display: inline-block;
 }
+#${n}portletBrowser .view-filter {
+    padding-bottom: 15px;
+    overflow: hidden;
+}
 #${n}portletBrowser .dataTables_wrapper {
     width: 100%;
 }
@@ -96,11 +100,29 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
 #${n}portletBrowser .filter-term {
     display: block;
-    text-align:bottom;
+    margin: 2px 0;
+    padding: 2px 8px;
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+    border-radius: 3px;
+    color: #31708f;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+    width: fit-content;
+}
+#${n}portletBrowser .filter-term:hover {
+    background-color: #c4e3f3;
+    text-decoration: none;
 }
 
 #${n}portletBrowser .dataTables_length label {
     font-weight: normal;
+}
+#${n}portletBrowser .dataTables_length select {
+    display: inline-block !important;
+    width: auto;
+    margin: 0 5px;
 }
 #${n}portletBrowser .datatable-search-view {
     text-align:right;
@@ -150,7 +172,6 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
               <th><spring:message code="state"/></th>
               <th><spring:message code="edit"/></th>
               <th><spring:message code="delete"/></th>
-              <th><spring:message code="category"/></th>
             </tr>
           </thead>
         </table>
@@ -189,130 +210,189 @@ up.jQuery(function() {
         return '<a href="' + url + '"><spring:message code="delete" htmlEscape="false" javaScriptEscape="true"/> <span class="float-end"><i class="fa fa-trash-o"></i></span></a>';
     };
 
+    // Global variables for category filtering
+    var selectedCategories = [];
+    var categorySearchFunction = function(settings, data, dataIndex) {
+        if (selectedCategories.length === 0) return true;
+        
+        var table = portletList_configuration.main.table;
+        var portlet = table.row(dataIndex).data();
+        if (!portlet.categories || !Array.isArray(portlet.categories)) return false;
+        
+        // OR logic: show if portlet has ANY of the selected categories
+        return selectedCategories.some(function(term) {
+            return portlet.categories.indexOf(term) !== -1;
+        });
+    };
+    
+    var createFilters = function(table) {
+        var $columnFilterWidgets = $('<div class="column-filter-widgets"></div>');
+        
+        // State filter
+        var stateSelect = $('<select class="form-control"><option value="">State</option></select>');
+        var stateData = table.column(2).data().unique().sort();
+        stateData.each(function(state) {
+            stateSelect.append('<option value="' + state + '">' + state + '</option>');
+        });
+        stateSelect.on('change', function() {
+            table.column(2).search(this.value).draw();
+        });
+        
+        // Category filter
+        var categorySelect = $('<select class="form-control"><option value="">Category</option></select>');
+        var allCategories = [];
+        table.data().each(function(portlet) {
+            if (portlet.categories && Array.isArray(portlet.categories)) {
+                allCategories = allCategories.concat(portlet.categories);
+            }
+        });
+        var uniqueCategories = [...new Set(allCategories)].sort();
+        uniqueCategories.forEach(function(cat) {
+            categorySelect.append('<option value="' + cat + '">' + cat + '</option>');
+        });
+        
+        var $categoryWidget = $('<div class="column-filter-widget"></div>');
+        $categoryWidget.append(categorySelect);
+        
+        categorySelect.on('change', function() {
+            var selectedValue = this.value;
+            if (selectedValue && selectedCategories.indexOf(selectedValue) === -1) {
+                selectedCategories.push(selectedValue);
+                
+                var $filterTerm = $('<a class="filter-term" href="#">' + selectedValue + '</a>');
+                $filterTerm.on('click', function(e) {
+                    e.preventDefault();
+                    var termText = $(this).text();
+                    selectedCategories = selectedCategories.filter(function(cat) {
+                        return cat !== termText;
+                    });
+                    $(this).remove();
+                    updateCategoryFilter();
+                });
+                $categoryWidget.append($filterTerm);
+                updateCategoryFilter();
+            }
+            this.value = '';
+        });
+        
+        function updateCategoryFilter() {
+            // Remove existing search function
+            $.fn.dataTable.ext.search = $.fn.dataTable.ext.search.filter(function(fn) {
+                return fn !== categorySearchFunction;
+            });
+            
+            // Add it back if we have selected categories
+            if (selectedCategories.length > 0) {
+                $.fn.dataTable.ext.search.push(categorySearchFunction);
+            }
+            
+            table.draw();
+        }
+        
+        $columnFilterWidgets.append(
+            $('<div class="column-filter-widget">').append(stateSelect)
+        ).append($categoryWidget);
+        
+        $('.toolbar-filter-options').append($columnFilterWidgets);
+    };
+
     // Created as its own
     var initializeTable = function() {
-        portletList_configuration.main.table = $("#${n}portletsList").dataTable({
-            iDisplayLength: portletList_configuration.main.pageSize,
-            aLengthMenu: [5, 10, 20, 50],
-            bServerSide: false,
-            sAjaxSource: '<c:url value="/api/portlets.json"/>',
-            sAjaxDataProp: "portlets",
-            bDeferRender: false,
-            bProcessing: true,
-            bAutoWidth: false,
-            sPaginationType: 'full_numbers',
-            oLanguage: {
-                sLengthMenu: '<spring:message code="datatables.length-menu.message" htmlEscape="false" javaScriptEscape="true"/>',
-                oPaginate: {
-                    sPrevious: '<spring:message code="datatables.paginate.previous" htmlEscape="false" javaScriptEscape="true"/>',
-                    sNext: '<spring:message code="datatables.paginate.next" htmlEscape="false" javaScriptEscape="true"/>'
+        portletList_configuration.main.table = $("#${n}portletsList").DataTable({
+            pageLength: portletList_configuration.main.pageSize,
+            lengthMenu: [5, 10, 20, 50],
+            serverSide: false,
+            ajax: {
+                url: '<c:url value="/api/portlets.json"/>',
+                dataSrc: "portlets",
+                error: function (xhr, error, thrown) {
+                    console.error('AJAX Error:', xhr.status, xhr.responseText, error, thrown);
                 }
             },
-            aoColumns: [
-                { mData: 'name', sType: 'html', sWidth: '30%' },  // Name
-                { mData: 'type', sType: 'html', sWidth: '30%' },  // Type
-                { mData: 'lifecycleState', sType: 'html', sWidth: '20%' },  // Lifecycle State
-                { mData: 'id', sType: 'html', bSearchable: false, sWidth: '10%' },  // Edit Link
-                { mData: 'id', sType: 'html', bSearchable: false, sWidth: '10%' },  // Delete Link
-                {
-                    mData: function(source, type) {
-                        // this function sets the value (set), returns original source of value (undefined), and then returns the value
-                        if (type === undefined) {
-                            return source.categories;
-                        } else if (type === 'set') {
-                            source.display = source.categories.join();
-                            return;
-                        }
-                        // 'display', 'filter', 'sort', and 'type' all just use the formatted string
-                        return source.display;
-                    },
-                    bSearchable: true,
-                    bVisible: false,
-                    asSorting: [ "desc", "asc" ]
-                }  // Categories - hidden
+            deferRender: false,
+            processing: true,
+            autoWidth: false,
+            pagingType: 'full_numbers',
+            language: {
+                lengthMenu: '_MENU_ per page',
+                paginate: {
+                    previous: '<spring:message code="datatables.paginate.previous" htmlEscape="false" javaScriptEscape="true"/>',
+                    next: '<spring:message code="datatables.paginate.next" htmlEscape="false" javaScriptEscape="true"/>'
+                }
+            },
+            columns: [
+                { data: 'name', type: 'html', width: '30%' },
+                { data: 'type', type: 'html', width: '30%' },
+                { data: 'lifecycleState', type: 'html', width: '20%' },
+                { data: 'id', type: 'html', searchable: false, width: '10%' },
+                { data: 'id', type: 'html', searchable: false, width: '10%' }
             ],
-            fnInitComplete: function (oSettings) {
-                //portletList_configuration.main.table.fnDraw();
-                // Adding formatting to sDom
-                $("div.toolbar-br").html('<BR>');
-                $("div.toolbar-filter").html('<h4><spring:message code="filters" htmlEscape="false" javaScriptEscape="true"/></h4>');
-                $(".column-filter-widget select").addClass("form-control");
-                
-                // Debug SearchPanes
-                console.log('DataTable initialized, checking SearchPanes...');
-                console.log('Table data:', portletList_configuration.main.table.fnGetData());
-                
-                // Force SearchPanes rebuild after data loads
-                setTimeout(function() {
-                    var api = portletList_configuration.main.table.api();
-                    if (api.searchPanes) {
-                        console.log('Rebuilding SearchPanes...');
-                        api.searchPanes.rebuildPane();
-                    }
-                }, 500);
+            initComplete: function (settings) {
+                this.api().draw();
+                $("div.toolbar-br").html('<br>');
+                $("div.toolbar-filter").html('<h4>Filters</h4>');
             },
-            fnServerData: function (sUrl, aoData, fnCallback, oSettings) {
-                oSettings.jqXHR = $.ajax({
-                    url: sUrl,
-                    data: aoData,
-                    dataType: "json",
-                    cache: false,
-                    type: oSettings.sServerMethod,
-                    success: function (json) {
-                        if (json.sError) {
-                            oSettings.oApi._fnLog(oSettings, 0, json.sError);
-                        }
-
-                        $(oSettings.oInstance).trigger('xhr', [oSettings, json]);
-                        fnCallback(json);
-                    },
-                    error: function (xhr, error, thrown) {
-                        lib.handleError(xhr, error, thrown);
-                    }
-                });
+            rowCallback: function (row, data, displayNum, displayIndex, dataIndex) {
+                $('td:eq(3)', row).html( getEditURL(data.id) );
+                $('td:eq(4)', row).html( getDeleteURL(data.id) );
             },
-            fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+            infoCallback: function( settings, start, end, max, total, pre ) {
                 var infoMessage = '<spring:message code="datatables.info.message" htmlEscape="false" javaScriptEscape="true"/>';
-                var iCurrentPage = Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength) + 1;
-                infoMessage = infoMessage.replace(/_START_/g, iStart).
-                                      replace(/_END_/g, iEnd).
-                                      replace(/_TOTAL_/g, iTotal).
-                                      replace(/_CURRENT_PAGE_/g, iCurrentPage);
+                var currentPage = Math.ceil(settings._iDisplayStart / settings._iDisplayLength) + 1;
+                infoMessage = infoMessage.replace(/_START_/g, start)
+                                    .replace(/_END_/g, end)
+                                    .replace(/_TOTAL_/g, total)
+                                    .replace(/_CURRENT_PAGE_/g, currentPage);
                 return infoMessage;
             },
-            // Add links to the proper columns after we get the data
-            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                // Create edit and delete links
-                $('td:eq(3)', nRow).html( getEditURL(aData.id) );
-                $('td:eq(4)', nRow).html( getDeleteURL(aData.id) );
+            drawCallback: function() {
+                var table = this.api();
+                
+                // Wait for data to be loaded
+                if (table.data().length === 0) {
+                    return;
+                }
+                
+                // Only create filters once
+                if ($('.toolbar-filter-options').children().length === 0) {
+                    createFilters(table);
+                }
+                
+                // Convert pagination to match release version structure
+                var $paginate = $('.dataTables_paginate');
+                var $ul = $paginate.find('ul');
+                if ($ul.length) {
+                    $ul.find('.paginate_button').each(function() {
+                        var $li = $(this);
+                        var $link = $li.find('a');
+                        if ($link.length) {
+                            var newClass = $li.attr('class').replace('page-item', 'paginate_button').replace(/\bpage-link\b/g, '');
+                            $link.attr('class', newClass);
+                            $paginate.append($link);
+                        }
+                    });
+                    $ul.remove();
+                }
+                
+                $('.dataTables_length select').removeClass('form-select form-select-sm');
             },
-            // Setting the top and bottom controls
-            sDom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><"toolbar-filter-options"P><"toolbar-br"><"dataTables-inline dataTables-right"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>',
-            // SearchPanes configuration (modern replacement for ColumnFilterWidgets)
-            searchPanes: {
-                columns: [
-                    {
-                        header: 'State',
-                        targets: [2]
-                    },
-                    {
-                        header: 'Category', 
-                        targets: [5]
-                    }
-                ],
-                cascadePanes: true,
-                viewTotal: true,
-                threshold: 0.1,
-                emptyMessage: 'No filters available',
-                initCollapsed: false
-            }
+            dom: 'r<"row alert alert-info view-filter"<"toolbar-filter"><"toolbar-filter-options"><"toolbar-br"><"dataTables-inline dataTables-right"p><"dataTables-inline dataTables-left"i><"dataTables-inline dataTables-left"l>><"row"<"span12"t>>'
         });
     };
 
     initializeTable();
     // Hide the out of the box search and populate it with our text box
-    $('#${n}portletBrowser .portlet-search-input').keyup(function(){
-        portletList_configuration.main.table.fnFilter( $(this).val() );
+    $('#${n}portletBrowser .portlet-search-input').on('keyup', function(){
+        portletList_configuration.main.table.search( $(this).val() ).draw();
+    });
+    
+    // Cleanup on page unload to prevent memory leaks
+    $(window).on('beforeunload', function() {
+        if (portletList_configuration.main.table != undefined && $.fn.DataTable.isDataTable('#${n}portletsList')) {
+            portletList_configuration.main.table.clear();
+            portletList_configuration.main.table.destroy();
+            portletList_configuration.main.table = null;
+        }
     });
 });
 </script>

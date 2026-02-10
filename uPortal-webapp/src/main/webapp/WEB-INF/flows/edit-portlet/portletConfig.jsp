@@ -51,6 +51,21 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 --%>
 
 <%-- Styles specific to this portlet --%>
+<style>
+/* Large radio buttons for lifecycle management */
+.lifecycle-state[type="radio"] {
+    appearance: radio !important;
+    -webkit-appearance: radio !important;
+    width: 20px !important;
+    height: 20px !important;
+    transform: scale(1.5) !important;
+    margin: 8px !important;
+    cursor: pointer !important;
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+</style>
 
 <div class="card portlet ptl-mgr" id="${n}">
 
@@ -994,7 +1009,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
                 helpIconSelector = '#${n} .glyphicon-info-sign';
 
         /* Enable the help tooltips */
-        $(helpIconSelector).bootstrapTooltip({
+        $(helpIconSelector).tooltip({
             container: 'body',
             trigger: 'click'
         });
@@ -1006,7 +1021,7 @@ PORTLET DEVELOPMENT STANDARDS AND GUIDELINES
 
             $(helpIconSelector).each(function (idx, el) {
                 if (!$(el).is($target)) {
-                    $(el).bootstrapTooltip('hide');
+                    $(el).tooltip('hide');
                 }
             });
         });
