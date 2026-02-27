@@ -73,12 +73,13 @@ import org.apache.commons.compress.compressors.pack200.Pack200CompressorInputStr
 import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tika.detect.DefaultDetector;
 import org.apache.tika.detect.Detector;
-import org.apache.tika.io.CloseShieldInputStream;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.metadata.TikaCoreProperties;
 import org.apache.tika.mime.MediaType;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apereo.portal.concurrency.CallableWithoutResult;
@@ -526,7 +527,7 @@ public class JaxbPortalDataHandlerService implements IPortalDataHandlerService {
         try {
             final Detector detector = new DefaultDetector();
             final Metadata metadata = new Metadata();
-            metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+            metadata.set(TikaCoreProperties.RESOURCE_NAME_KEY, fileName);
 
             final MediaType type = detector.detect(tikaInputStreamStream, metadata);
             logger.debug("Determined '{}' for '{}'", type, fileName);

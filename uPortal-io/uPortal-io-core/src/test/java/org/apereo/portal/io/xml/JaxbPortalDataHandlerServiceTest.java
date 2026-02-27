@@ -1,0 +1,84 @@
+package org.apereo.portal.io.xml;
+
+import static org.junit.Assert.assertEquals;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import org.apache.commons.compress.archivers.jar.JarArchiveEntry;
+import org.apache.commons.compress.archivers.jar.JarArchiveOutputStream;
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
+import org.apache.tika.mime.MediaType;
+import org.junit.Test;
+
+public class JaxbPortalDataHandlerServiceTest {
+
+    private MediaType invokeGetMediaType(byte[] data, String filename) throws Exception {
+        final JaxbPortalDataHandlerService service = new JaxbPortalDataHandlerService();
+        final Method method =
+                JaxbPortalDataHandlerService.class.getDeclaredMethod(
+                        "getMediaType", BufferedInputStream.class, String.class);
+        method.setAccessible(true);
+        final BufferedInputStream stream = new BufferedInputStream(new ByteArrayInputStream(data));
+        stream.mark(data.length);
+        return (MediaType) method.invoke(service, stream, filename);
+    }
+
+    @Test
+    public void testGetMediaTypeXml() throws Exception {
+        final byte[] xml =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root/>"
+                        .getBytes(StandardCharsets.UTF_8);
+        assertEquals(MediaType.APPLICATION_XML, invokeGetMediaType(xml, "test.xml"));
+    }
+
+    @Test
+    public void testGetMediaTypeZip() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ZipOutputStream zos = new ZipOutputStream(baos)) {
+            zos.putNextEntry(new ZipEntry("test.xml"));
+            zos.write("<root/>".getBytes(StandardCharsets.UTF_8));
+            zos.closeEntry();
+        }
+        assertEquals(MediaType.APPLICATION_ZIP, invokeGetMediaType(baos.toByteArray(), "test.zip"));
+    }
+
+    @Test
+    public void testGetMediaTypeJar() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (JarArchiveOutputStream jos = new JarArchiveOutputStream(baos)) {
+            final byte[] content = "Manifest-Version: 1.0\n".getBytes(StandardCharsets.UTF_8);
+            final JarArchiveEntry entry = new JarArchiveEntry("META-INF/MANIFEST.MF");
+            entry.setSize(content.length);
+            jos.putArchiveEntry(entry);
+            jos.write(content);
+            jos.closeArchiveEntry();
+        }
+        assertEquals(
+                MediaType.application("java-archive"),
+                invokeGetMediaType(baos.toByteArray(), "test.jar"));
+    }
+
+    @Test
+    public void testGetMediaTypeGzip() throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (GzipCompressorOutputStream gzos = new GzipCompressorOutputStream(baos);
+                TarArchiveOutputStream tos = new TarArchiveOutputStream(gzos)) {
+            final byte[] content = "<root/>".getBytes(StandardCharsets.UTF_8);
+            final TarArchiveEntry entry = new TarArchiveEntry("test.xml");
+            entry.setSize(content.length);
+            tos.putArchiveEntry(entry);
+            tos.write(content);
+            tos.closeArchiveEntry();
+        }
+        assertEquals(
+                MediaType.application("gzip"),
+                invokeGetMediaType(baos.toByteArray(), "test.tar.gz"));
+    }
+}
