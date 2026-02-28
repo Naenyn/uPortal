@@ -137,21 +137,19 @@ class PortletBrowser {
             options.position = 'insertBefore';
         }
         
-        // Use the existing persistence component
-        if (window.up && window.up.LayoutPreferencesPersistence) {
-            const persistence = window.up.LayoutPreferencesPersistence(document.body, {
-                saveLayoutUrl: '/uPortal/api/layout'
-            });
-            
-            persistence.update(options, (data) => {
-                if (data.error) {
-                    console.error('Error adding portlet:', data.error);
-                } else {
-                    // Reload page to show new portlet
-                    window.location.reload();
-                }
-            });
-        }
+        // Use the modern persistence component
+        const persistence = new ModernLayoutPreferencesPersistence(document.body, {
+            saveLayoutUrl: '/uPortal/api/layout'
+        });
+        
+        persistence.update(options, (data) => {
+            if (data.error) {
+                console.error('Error adding portlet:', data.error);
+            } else {
+                // Reload page to show new portlet
+                window.location.reload();
+            }
+        });
     }
 }
 

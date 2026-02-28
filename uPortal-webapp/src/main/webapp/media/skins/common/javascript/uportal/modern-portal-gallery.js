@@ -451,6 +451,11 @@ class UseContentPane extends GalleryPane {
         
         if (pane) pane.style.display = 'block';
         if (paneLink) paneLink.classList.add('active');
+        
+        // Initialize content if not already done
+        if (!this.initialized) {
+            this.initializeContent();
+        }
     }
 }
 
@@ -469,19 +474,17 @@ class SkinPane extends GalleryPane {
             if (paneElement) {
                 this.skinSelector = new SkinSelector(paneElement, {
                     onSelectSkin: (skin) => {
-                        // Use same persistence mechanism as Fluid
-                        if (window.up && window.up.LayoutPreferencesPersistence) {
-                            const persistence = window.up.LayoutPreferencesPersistence(document.body, {
-                                saveLayoutUrl: '/uPortal/api/layout'
-                            });
-                            
-                            persistence.update({
-                                action: 'chooseSkin',
-                                skinName: skin.key
-                            }, () => {
-                                window.location.reload();
-                            });
-                        }
+                        // Use the modern persistence component
+                        const persistence = new ModernLayoutPreferencesPersistence(document.body, {
+                            saveLayoutUrl: '/uPortal/api/layout'
+                        });
+                        
+                        persistence.update({
+                            action: 'chooseSkin',
+                            skinName: skin.key
+                        }, () => {
+                            window.location.reload();
+                        });
                     }
                 });
             }
@@ -517,39 +520,37 @@ class LayoutPane extends GalleryPane {
             if (paneElement) {
                 this.layoutSelector = new LayoutSelector(paneElement, {
                     onLayoutSelect: (layout) => {
-                        // Use same persistence mechanism as Fluid
-                        if (window.up && window.up.LayoutPreferencesPersistence) {
-                            const persistence = window.up.LayoutPreferencesPersistence(document.body, {
-                                saveLayoutUrl: '/uPortal/api/layout'
-                            });
-                            
-                            const getActiveTabId = () => {
-                                const activeTab = document.querySelector('#portalNavigationList li.active');
-                                return activeTab ? window.up.defaultNodeIdExtractor(activeTab) : null;
-                            };
-                            
-                            // Server expects at least 2 widths, pad single column with 0
-                            const widths = layout.columns.length === 1 ? [layout.columns[0], 0] : layout.columns;
-                            
-                            const options = {
-                                action: 'changeColumns',
-                                tabId: getActiveTabId(),
-                                widths: widths
-                            };
-                            
-                            console.log('Sending layout update:', options);
-                            console.log('Layout columns array:', layout.columns);
-                            console.log('Widths array length:', layout.columns.length);
-                            
-                            persistence.update(options, (data) => {
-                                console.log('Layout update response:', data);
-                                if (data && data.error) {
-                                    console.error('Layout update error:', data.error);
-                                } else {
-                                    window.location.reload();
-                                }
-                            });
-                        }
+                        // Use the modern persistence component
+                        const persistence = new ModernLayoutPreferencesPersistence(document.body, {
+                            saveLayoutUrl: '/uPortal/api/layout'
+                        });
+                        
+                        const getActiveTabId = () => {
+                            const activeTab = document.querySelector('#portalNavigationList li.active');
+                            return activeTab ? window.up.defaultNodeIdExtractor(activeTab) : null;
+                        };
+                        
+                        // Server expects at least 2 widths, pad single column with 0
+                        const widths = layout.columns.length === 1 ? [layout.columns[0], 0] : layout.columns;
+                        
+                        const options = {
+                            action: 'changeColumns',
+                            tabId: getActiveTabId(),
+                            widths: widths
+                        };
+                        
+                        console.log('Sending layout update:', options);
+                        console.log('Layout columns array:', layout.columns);
+                        console.log('Widths array length:', layout.columns.length);
+                        
+                        persistence.update(options, (data) => {
+                            console.log('Layout update response:', data);
+                            if (data && data.error) {
+                                console.error('Layout update error:', data.error);
+                            } else {
+                                window.location.reload();
+                            }
+                        });
                     }
                 });
             }

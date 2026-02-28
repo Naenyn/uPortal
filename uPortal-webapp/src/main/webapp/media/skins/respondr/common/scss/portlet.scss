@@ -269,3 +269,32 @@ h2.title {
   color: rgb(255, 255, 255);
   border-radius: 6px;
 }
+
+/* Portlet Drag and Drop */
+.layout-draggable-drop-target {
+  background-color: #e6f3ff !important;
+  border: 2px dashed #0066cc !important;
+  border-radius: 4px;
+  height: 80px !important;
+  min-height: 80px !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  margin: 10px 0;
+  text-align: center;
+  color: #0066cc;
+  font-weight: bold;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+.layout-draggable-drop-target span {
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.ui-draggable-dragging {
+  z-index: 9999 !important;
+}

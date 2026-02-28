@@ -552,6 +552,8 @@
                 }
             };
             var layoutPreferences = up.LayoutPreferences("body", options);
+            // Store global reference for debugging and external access
+            window.up.layoutPreferences = layoutPreferences;
             // Gallery will only open when user clicks the customize button
             </xsl:if>
         });

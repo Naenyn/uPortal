@@ -34,9 +34,12 @@ class ModernLayoutDraggableManager {
     }
     
     initializeDraggables() {
-        const portletItems = this.container.querySelectorAll('.portlet-list .portlet');
+        // Handle both gallery portlets and page portlets
+        const galleryPortlets = this.container.querySelectorAll('.portlet-list .portlet');
+        const pagePortlets = document.querySelectorAll('[id*=portlet_].movable');
         
-        portletItems.forEach(item => {
+        // Initialize gallery portlets (for Add Stuff functionality)
+        galleryPortlets.forEach(item => {
             if (item.draggable) return; // Already initialized
             
             const dragHandle = item.querySelector('.portlet-thumb-gripper');
@@ -75,6 +78,40 @@ class ModernLayoutDraggableManager {
                 this.enableDropZones();
                 
                 e.dataTransfer.effectAllowed = 'copy';
+                e.dataTransfer.setData('text/plain', title);
+            });
+            
+            item.addEventListener('dragend', () => {
+                this.disableDropZones();
+                this.currentDragData = null;
+            });
+        });
+        
+        // Initialize page portlets (for moving existing portlets)
+        pagePortlets.forEach(item => {
+            if (item.draggable) return; // Already initialized
+            
+            const dragHandle = item.querySelector('.grab-handle');
+            if (!dragHandle) return;
+            
+            // Make item draggable
+            item.draggable = true;
+            item.classList.add('draggable-portlet');
+            
+            const titleEl = item.querySelector('.up-portlet-titlebar .up-portlet-title');
+            const title = titleEl ? titleEl.textContent : 'Portlet';
+            
+            item.addEventListener('dragstart', (e) => {
+                this.currentDragData = {
+                    id: window.up.defaultNodeIdExtractor(item),
+                    title: title,
+                    element: item
+                };
+                
+                // Enable drop zones
+                this.enableDropZones();
+                
+                e.dataTransfer.effectAllowed = 'move';
                 e.dataTransfer.setData('text/plain', title);
             });
             
